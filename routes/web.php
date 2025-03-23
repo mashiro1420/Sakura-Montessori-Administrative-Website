@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('dang_nhap',[DangNhapController::class, 'index'])->name('dang_nhap');
+Route::post('xu_ly_dang_nhap',[DangNhapController::class, 'login']);

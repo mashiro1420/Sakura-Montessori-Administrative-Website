@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TaiKhoanModel;
+use Illuminate\Support\Facades\Log;
 
 class DangNhapController extends Controller
 {
@@ -66,41 +67,42 @@ class DangNhapController extends Controller
         //
     }
     public function login(Request $request)
-  {
-    $tai_khoan = $request->tai_khoan;
-    $mat_khau = md5($request->mat_khau);
-    $tai_khoans = TaiKhoanModel::where('tai_khoan', $tai_khoan);
-    session()->put('bao_loi', '');
-    session()->put('trang_thai', 200);
-    if ($tai_khoans->count() == 0) {
-      session()->put('bao_loi', 'Tài khoản không tồn tại');
-      session()->put('trang_thai', 422);
-    } else {
-        if($tai_khoans->where('la_khach', '=', 1)->count() == 0) {
-            session()->put('bao_loi', 'Tài khoản bị khóa');
-            session()->put('trang_thai', 422);
-        }
-        else{
-            $nguoi_dung = $tai_khoans->first();
+    {
+        $tai_khoan = $request->tai_khoan;
+        $mat_khau = md5($request->mat_khau);
+        $nguoi_dungs = TaiKhoanModel::where('tai_khoan', '=', $tai_khoan);
+        session()->put('bao_loi', '');
+        if ($nguoi_dungs->count() == 0) {
+            $request->session()->put('bao_loi', 'Tài khoản không tồn tại');
+            Log::info($request->session()->get('bao_loi'));
+        } else {
+            $nguoi_dung = $nguoi_dungs->first();
             if ($nguoi_dung->mat_khau != $mat_khau) {
-                session()->put('bao_loi', 'Sai mật khẩu!');
-                session()->put('trang_thai', 401);
-            
+                $request->session()->put('bao_loi', 'Sai mật khẩu');
+                Log::info($request->session()->get('bao_loi'));
+            } else {
+                $request->session()->put('bao_loi', '');
+                $request->session()->put('tai_khoan', $tai_khoan);
+                if($nguoi_dung->la_khach == 1) {
+					$request->session()->put('la_khach', 'true');
+                    Log::info($request->session()->get('la_khach'));
+				}
+				else {
+					$request->session()->put('id_quyen', $nguoi_dung->id_quyen);
+                    Log::info($request->session()->get('id_quyen'));
+				}
             }
         }
-    }
-    if (session('trang_thai') == 200) {
-      return response()->json([
-        'login' => 'true',
-        'quyen' =>session('quyen'),
-        'nguoi_dung' => session('nguoi_dung'),
-        'token' => session()->getId(),
-    ],session('trang_thai'));
-    } else {
-      return response()->json([
-        'error' => session('bao_loi'),
-        'login' => 'false'
-      ],session('trang_thai'));
-    }
+        if (session('bao_loi') == '') {
+			// if(session('id_quyen') == '') {
+				return redirect()->route('dang_nhap');
+			// }
+			// else{
+			// 	return redirect()->route('dang_nhap');
+			// }
+            
+        } else {
+            return redirect()->route('dang_nhap');
+        }
   }
 }
