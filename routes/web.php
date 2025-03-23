@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DangNhapController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('dang_nhap',[DangNhapController::class, 'index'])->name('dang_nhap');
