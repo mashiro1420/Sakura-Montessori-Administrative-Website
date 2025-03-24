@@ -26,46 +26,44 @@
           </div>
 
           <!-- Search and Filter Section -->
-          <div class="search-container">
+          <!-- < class="search-container"> -->
+          <form class="search-container" action="{{url('ql_nv')}}" method="get">
+            @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
                 <label for="name-search">Họ và tên</label>
-                <input type="text" id="name-search" class="form-control" placeholder="Tìm kiếm theo họ tên">
+                <input type="text" id="name-search" name = "tk_ho_ten" {{!empty($tk_ho_ten)?"value=$tk_ho_ten":""}} class="form-control" placeholder="Tìm kiếm theo họ tên">
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="gender-filter">Giới tính</label>
-                <select id="gender-filter" class="form-select">
+                <select id="gender-filter" name = "tk_gioi_tinh" class="form-select">
                   <option value="">Tất cả</option>
-                  <option value="male">Nam</option>
-                  <option value="female">Nữ</option>
+                  <option value="Nam" {{!empty($tk_gioi_tinh)&&$tk_gioi_tinh=="Nam"?"selected":""}}>Nam</option>
+                  <option value="Nữ" {{!empty($tk_gioi_tinh)&&$tk_gioi_tinh=="Nữ"?"selected":""}}>Nữ</option>
                 </select>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="birthplace-search">Nơi sinh</label>
-                <input type="text" id="birthplace-search" class="form-control" placeholder="Tìm kiếm theo nơi sinh">
+                <input type="text" id="birthplace-search" name = "tk_noi_sinh" {{!empty($tk_noi_sinh)?"value=$tk_noi_sinh":""}} class="form-control" placeholder="Tìm kiếm theo nơi sinh">
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="seniority-search">Thâm niên</label>
-                <input type="text" id="seniority-search" class="form-control" placeholder="Tìm kiếm theo thâm niên">
+                <input type="text" id="seniority-search" name = "tk_tham_nien" {{!empty($tk_tham_nien)?"value=$tk_tham_nien":""}} class="form-control" placeholder="Tìm kiếm theo thâm niên">
               </div>
             </div>
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
                 <label for="position-filter">Chức vụ</label>
-                <select id="position-filter" class="form-select">
+                <select id="position-filter" name = "tk_chuc_vu" class="form-select">
                   <option value="">Tất cả chức vụ</option>
-                  <option value="1">Hiệu trưởng</option>
-                  <option value="2">Hiệu phó</option>
-                  <option value="3">Giáo viên</option>
-                  <option value="4">Kế toán trưởng</option>
-                  <option value="5">Nhân viên kế toán</option>
-                  <option value="6">Trưởng phòng nhân sự</option>
-                  <option value="7">Nhân viên nhân sự</option>
+                  @foreach($chuc_vus as $chuc_vu)
+                  <option value="{{$chuc_vu->id}}" {{!empty($tk_chuc_vu)&&$tk_chuc_vu==$chuc_vu->id?"selected":""}}>{{$chuc_vu->ten_chuc_vu}}</option>
+                  @endforeach
                 </select>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="status-filter">Trạng thái</label>
-                <select id="status-filter" class="form-select">
+                <select id="status-filter" name = "tk_trang_thai" class="form-select">
                   <option value="">Tất cả trạng thái</option>
                   <option value="active">Đang làm việc</option>
                   <option value="inactive">Đã nghỉ việc</option>
@@ -83,7 +81,7 @@
                 </button>
               </div>
               <div>
-                <a class="btn btn-primary" href="../quan_ly_nhan_vien/them_nhan_vien/index.html">
+                <a class="btn btn-primary" href="{{route('them_nv')}}">
                   <i class="fa-solid fa-plus me-1"></i> Thêm nhân viên mới
                 </a>
                 <button class="btn btn-outline-secondary ms-2">
@@ -91,7 +89,7 @@
                 </button>
               </div>
             </div>
-          </div>
+          </form>
 
           <!-- Table Section -->
           <div class="data-container">
@@ -104,61 +102,30 @@
                   <th>Nơi sinh</th>
                   <th>Ngày sinh</th>
                   <th>Ngày vào làm</th>
+                  <th>Ngày nghỉ việc</th>
                   <th>Thâm niên</th>
                   <th>Chức vụ</th>
-                  <th>Trạng thái</th>
                   <th>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
+                @foreach($nhan_viens as $nhan_vien)
                 <tr>
-                  <td>1</td>
-                  <td>Nguyễn Văn A</td>
-                  <td>Nam</td>
-                  <td>Hà Nội</td>
-                  <td>01/01/1990</td>
-                  <td>10/10/2010</td>
-                  <td>12 năm</td>
-                  <td>Quản lý</td>
-                  <td><span class="status-inactive">Đã nghỉ việc</span></td>
+                  <td>{{$nhan_vien->id}}</td>
+                  <td>{{$nhan_vien->ho_ten}}</td>
+                  <td>{{$nhan_vien->gioi_tinh}}</td>
+                  <td>{{$nhan_vien->noi_sinh}}</td>
+                  <td>{{$nhan_vien->ngay_sinh}}</td>
+                  <td>{{$nhan_vien->ngay_vao_lam}}</td>
+                  <td>{{$nhan_vien->ngay_nghi_viec}}</td>
+                  <td>{{$nhan_vien->tham_nien}}</td>
+                  <td>{{$nhan_vien->ChucVu->ten_chuc_vu}}</td>
                   <td class="action-column">
                     <button class="action-button" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></button>
-                    <button class="action-button" title="Chỉnh sửa"><i class="fa-solid fa-edit"></i></button>
-                    <button class="action-button delete" title="Xóa"><i class="fa-solid fa-trash"></i></button>
+                    <button class="action-button" title="Chỉnh sửa"><a href="{{route('sua_nv',['id' => $nhan_vien->id])}}"><i class="fa-solid fa-edit"></i></a></button>
                   </td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Nguyễn Thị B</td>
-                  <td>Nữ</td>
-                  <td>Hà Nội</td>
-                  <td>15/05/1992</td>
-                  <td>01/03/2015</td>
-                  <td>7 năm</td>
-                  <td>Giáo viên</td>
-                  <td><span class="status-active">Đang làm việc</span></td>
-                  <td class="action-column">
-                    <button class="action-button" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></button>
-                    <button class="action-button" title="Chỉnh sửa"><i class="fa-solid fa-edit"></i></button>
-                    <button class="action-button delete" title="Xóa"><i class="fa-solid fa-trash"></i></button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Trần Văn C</td>
-                  <td>Nam</td>
-                  <td>Hải Phòng</td>
-                  <td>22/08/1988</td>
-                  <td>05/09/2012</td>
-                  <td>10 năm</td>
-                  <td>Kế toán trưởng</td>
-                  <td><span class="status-active">Đang làm việc</span></td>
-                  <td class="action-column">
-                    <button class="action-button" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></button>
-                    <button class="action-button" title="Chỉnh sửa"><i class="fa-solid fa-edit"></i></button>
-                    <button class="action-button delete" title="Xóa"><i class="fa-solid fa-trash"></i></button>
-                  </td>
-                </tr>
+                @endforeach
               </tbody>
             </table>
           </div>

@@ -11,5 +11,11 @@ class TaiKhoanModel extends Model
     protected $table = 'ql_taikhoan';
     protected $primaryKey = 'tai_khoan';
     protected $keytype = 'string';
+    public $incrementing = false;
     public $timestamps = false;
+
+    public function NhanVien()
+    {
+        return $this->hasOne(NhanVienModel::class, 'id_nhan_vien', 'id');
+    }
 }

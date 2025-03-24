@@ -39,89 +39,83 @@
             </a>
           </div>
           <!-- Form to update employee -->
-          <form class="search-container" action="" method="">
+          <form class="search-container" action="{{url('xl_sua_nv')}}" method="POST">
+            @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
+                <label for="id">Mã nhân viên</label>
+                <input type="text" id="id" name="id" value="{{ $nhan_vien->id }}" class="form-control" readonly>
+              </div>
+              <div class="search-item d-inline-block w-25">
                 <label for="ho_ten">Họ và tên</label>
-                <input type="text" id="ho_ten" class="form-control" placeholder="Nhập họ và tên" required>
+                <input type="text" id="ho_ten" name="ho_ten" value="{{ $nhan_vien->ho_ten }}" class="form-control" placeholder="Nhập họ và tên" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="gioi_tinh">Giới tính</label>
-                <select id="gioi_tinh" class="form-select" required>
-                  <option value="">Nam</option>
-                  <option value="">Nữ</option>
+                <select id="gioi_tinh" name="gioi_tinh" class="form-select" required>
+                  <option value="Nam" {{ $nhan_vien->gioi_tinh=='Nam'?"selected":"" }}>Nam</option>
+                  <option value="Nữ" {{ $nhan_vien->gioi_tinh=='Nữ'?"selected":"" }}>Nữ</option>
                 </select>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="noi_sinh">Nơi sinh</label>
-                <input type="text" id="noi_sinh" class="form-control" placeholder="Nhập nơi sinh" required>
+                <input type="text" id="noi_sinh" name="noi_sinh" value="{{ $nhan_vien->ho_ten }}" class="form-control" placeholder="Nhập nơi sinh" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ngay_sinh">Ngày sinh</label>
-                <input type="date" id="ngay_sinh" class="form-control" required>
+                <input type="date" id="ngay_sinh" name="ngay_sinh" value="{{ $nhan_vien->ngay_sinh }}" class="form-control" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ngay_vao_lam">Ngày vào làm</label>
-                <input type="date" id="ngay_vao_lam" class="form-control">
+                <input type="date" id="ngay_vao_lam" name="ngay_vao_lam" value="{{ $nhan_vien->ngay_vao_lam }}" class="form-control">
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ngay_nghi_viec">Ngày nghỉ việc</label>
-                <input type="date" id="ngay_nghi_viec" class="form-control">
+                <input type="date" id="ngay_nghi_viec" name="ngay_nghi_viec" value="{{ $nhan_vien->ngay_nghi_viec }}" class="form-control">
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="tham_nien">Thâm niên</label>
-                <input type="text" id="tham_nien" class="form-control" placeholder="Nhập thâm niên">
+                <input type="text" id="tham_nien" name="tham_nien" value="{{ $nhan_vien->tham_nien }}" class="form-control" placeholder="Nhập thâm niên">
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="cmnd">Số căn cước công dân</label>
-                <input type="text" id="cmnd" class="form-control" placeholder="Nhập số căn cước công dân" required>
+                <input type="text" id="cmnd" name="cmnd" value="{{ $nhan_vien->cmnd }}" class="form-control" placeholder="Nhập số căn cước công dân" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ngay_cap">Ngày cấp</label>
-                <input type="date" id="ngay_cap" class="form-control" required>
+                <input type="date" id="ngay_cap" name="ngay_cap" value="{{ $nhan_vien->ngay_cap }}" class="form-control" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="noi_cap">Nơi cấp</label>
-                <input type="text" id="noi_cap" class="form-control" placeholder="Nhập nơi cấp" required>
+                <input type="text" id="noi_cap" name="noi_cap" value="{{ $nhan_vien->noi_cap }}" class="form-control" placeholder="Nhập nơi cấp" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="quoc_tich">Quốc tịch</label>
-                <input type="text" id="quoc_tich" class="form-control" placeholder="Nhập quốc tích" required>
+                <input type="text" id="quoc_tich" name="quoc_tich" value="{{ $nhan_vien->quoc_tich }}" class="form-control" placeholder="Nhập quốc tích" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="dan_toc">Dân tộc</label>
-                <input type="text" id="dan_toc" class="form-control" placeholder="Nhập dân tộc" required>
+                <input type="text" id="dan_toc" name="dan_toc" value="{{ $nhan_vien->dan_toc }}" class="form-control" placeholder="Nhập dân tộc" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ton_giao">Tôn giáo</label>
-                <input type="text" id="ton_giao" class="form-control" placeholder="Nhập tôn giáo" required>
+                <input type="text" id="ton_giao" name="ton_giao" value="{{ $nhan_vien->ton_giao }}" class="form-control" placeholder="Nhập tôn giáo" required>
               </div>
             </div>
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
                 <label for="chuc_vu">Chức vụ</label>
-                <select id="chuc_vu" class="form-select" required>
-                  <option value="1">Hiệu trưởng</option>
-                  <option value="2">Hiệu phó</option>
-                  <option value="3">Giáo viên</option>
-                  <option value="4">Kế toán trưởng</option>
-                  <option value="5">Nhân viên kế toán</option>
-                  <option value="6">Trưởng phòng nhân sự</option>
-                  <option value="7">Nhân viên nhân sự</option>
-                </select>
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="trang_thai">Trạng thái</label>
-                <select id="trang_thai" class="form-select" required>
-                  <option value="active">Đang làm việc</option>
-                  <option value="inactive">Đã nghỉ việc</option>
+                <select id="chuc_vu" name="chuc_vu" class="form-select" required>
+                  @foreach($chuc_vus as $chuc_vu)
+                    <option value="{{$chuc_vu->id}}"{{ $nhan_vien->ChucVu->id==$chuc_vu->id?"selected":"" }} >{{$chuc_vu->ten_chuc_vu}}</option>
+                  @endforeach
                 </select>
               </div>
             </div>
 
             <div class="action-buttons">
               <div>
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" type="submit">
                   <i class="fa-solid fa-save me-1"></i> Lưu
                 </button>
                 <button type="reset" id="reset-btn" class="btn btn-outline-secondary ms-2">

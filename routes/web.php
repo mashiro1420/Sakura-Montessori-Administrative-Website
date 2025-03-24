@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DangNhapController;
+use App\Http\Controllers\QLHocSinhController;
+use App\Http\Controllers\QLNhanVienController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,16 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', function () {
+    return view('Dang_nhap.dang_nhap');
+});
+Route::get('dang_nhap',[DangNhapController::class, 'viewDangNhap'])->name('dang_nhap');
+Route::post('xl_dang_nhap',[DangNhapController::class, 'login']);
 
-Route::get('dang_nhap',[DangNhapController::class, 'index'])->name('dang_nhap');
-Route::post('xu_ly_dang_nhap',[DangNhapController::class, 'login']);
+
+Route::get('ql_nv',[QLNhanVienController::class, 'viewQuanLy'])->name('ql_nv');
+Route::get('them_nv',[QLNhanVienController::class, 'viewThem'])->name('them_nv');
+Route::get('sua_nv',[QLNhanVienController::class, 'viewSua'])->name('sua_nv');
+
+Route::post('xl_them_nv',[QLNhanVienController::class, 'xlThem']);
+Route::post('xl_sua_nv',[QLNhanVienController::class, 'xlSua']);

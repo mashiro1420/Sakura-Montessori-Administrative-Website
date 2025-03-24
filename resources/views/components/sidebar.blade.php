@@ -43,7 +43,7 @@
       </ul>
     </li>
     <li class="sidebar-item">
-      <a href="{{url(quan_ly_dich_vu_dao_tao}}" class="sidebar-link">
+      <a href="{{url('quan_ly_dich_vu_dao_tao')}}" class="sidebar-link">
         <i class="fa-solid fa-school"></i>
         <span class="text">Quản lý dịch vụ đào tạo</span>
       </a>
