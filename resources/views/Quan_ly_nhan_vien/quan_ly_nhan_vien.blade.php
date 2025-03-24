@@ -65,8 +65,8 @@
                 <label for="status-filter">Trạng thái</label>
                 <select id="status-filter" name = "tk_trang_thai" class="form-select">
                   <option value="">Tất cả trạng thái</option>
-                  <option value="active">Đang làm việc</option>
-                  <option value="inactive">Đã nghỉ việc</option>
+                  <option value="active" {{!empty($tk_trang_thai)&&$tk_trang_thai=="active"?"selected":""}}>Đang làm việc</option>
+                  <option value="inactive" {{!empty($tk_trang_thai)&&$tk_trang_thai=="inactive"?"selected":""}}>Đã nghỉ việc</option>
                 </select>
               </div>
             </div>
