@@ -35,7 +35,10 @@ class QLNhanVienController extends Controller
             $query->where('tham_nien',$request->tk_tham_nien);
             $data['tk_tham_nien'] = $request->tk_tham_nien;
         }
-        echo $query->toSql();
+        if ($request->has('tk_trang_thai')&& !empty($request->tk_trang_thai)){
+            $query->where('trang_thai',$request->tk_trang_thai);
+            $data['tk_tham_nien'] = $request->tk_tham_nien;
+        }
         $data['nhan_viens'] = $query->get();
         $data['chuc_vus'] = ChucVuModel::all();
         return view('Quan_ly_nhan_vien.quan_ly_nhan_vien',$data);
@@ -89,7 +92,6 @@ class QLNhanVienController extends Controller
     }
     public function xlSua(Request $request){
         $nhan_vien = NhanVienModel::find($request->id);
-        echo $nhan_vien->TaiKhoan()->get();
         $nhan_vien->ho_ten = $request->ho_ten;
         $nhan_vien->gioi_tinh = $request->gioi_tinh;
         $nhan_vien->noi_sinh = $request->noi_sinh;

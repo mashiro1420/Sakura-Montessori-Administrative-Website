@@ -123,7 +123,7 @@
                 </button>
               </div>
               <div>
-                <a class="btn btn-outline-secondary ms-2" href="{{url('quan_ly_nhan_vien')}}">
+                <a class="btn btn-outline-secondary ms-2" href="{{url('ql_nv')}}">
                   <i class="fa-solid fa-arrow-left me-1"></i> Quay lại danh sách nhân viên
                 </a>
               </div>
