@@ -46,11 +46,6 @@
                 <label for="birthplace-search">Nơi sinh</label>
                 <input type="text" id="birthplace-search" name = "tk_noi_sinh" {{!empty($tk_noi_sinh)?"value=$tk_noi_sinh":""}} class="form-control" placeholder="Tìm kiếm theo nơi sinh">
               </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="seniority-search">Thâm niên</label>
-                <input type="text" id="seniority-search" name = "tk_tham_nien" {{!empty($tk_tham_nien)?"value=$tk_tham_nien":""}} class="form-control" placeholder="Tìm kiếm theo thâm niên">
-              </div>
-            </div>
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
                 <label for="position-filter">Chức vụ</label>
@@ -85,12 +80,23 @@
                   <i class="fa-solid fa-plus me-1"></i> Thêm nhân viên mới
                 </a>
                 <button class="btn btn-outline-secondary ms-2">
-                  <i class="fa-solid fa-file-export me-1"></i> Xuất Excel
+                  <a href="{{route('export_nv',[
+                      'tk_ho_ten'=>!empty($tk_ho_ten)?$tk_ho_ten:"",
+                      'tk_gioi_tinh'=>!empty($tk_gioi_tinh)?$tk_gioi_tinh:"",
+                      'tk_noi_sinh'=>!empty($tk_noi_sinh)?$tk_noi_sinh:"",
+                      'tk_chuc_vu'=>!empty($tk_chuc_vu)?$tk_chuc_vu:"",
+                      'tk_trang_thai'=>!empty($tk_trang_thai)?$tk_trang_thai:""])}}">
+                    <i class="fa-solid fa-file-export me-1"></i> Xuất Excel
+                  </a>
                 </button>
               </div>
             </div>
           </form>
-
+          <form action="{{ url('/import_nv') }}" method="post" enctype="multipart/form-data">
+              @csrf
+              <input type="file" name="file" required>
+              <button type="submit">Import Excel</button>
+          </form>
           <!-- Table Section -->
           <div class="data-container">
             <table class="table table-bordered">

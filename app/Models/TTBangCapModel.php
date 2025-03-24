@@ -16,6 +16,6 @@ class TTBangCapModel extends Model
 
     public function NhanVien()
     {
-        return $this->hasOne(NhanVienModel::class, 'id_nhan_vien', 'id');
+        return $this->belongsTo(NhanVienModel::class);
     }
 }

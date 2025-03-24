@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\NhanVienExport;
 use App\Http\Controllers\Controller;
+use App\Imports\NhanVienImport;
 use App\Models\ChucVuModel;
 use App\Models\NhanVienModel;
 use App\Models\TaiKhoanModel;
 use App\Models\TTBangCapModel;
 use App\Models\TTDanSuModel;
 use App\Models\TTHonNhanModel;
+use App\Models\TTHopDongModel;
 use App\Models\TTLienHeModel;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class QLNhanVienController extends Controller
 {
     public function viewQuanLy(Request $request)
     {
         $data=[];
-        $data['tim_kiem'] = true;
         $query = NhanVienModel::query()->select ('*');
         if ($request->has('tk_ho_ten') && !empty($request->tk_ho_ten)){
             $query->where('ho_ten','like','%'.$request->tk_ho_ten.'%');
@@ -34,10 +37,6 @@ class QLNhanVienController extends Controller
         if ($request->has('tk_noi_sinh')&& !empty($request->tk_noi_sinh)){
             $query->where('noi_sinh',$request->tk_noi_sinh);
             $data['tk_noi_sinh'] = $request->tk_noi_sinh;
-        }
-        if ($request->has('tk_tham_nien')&& !empty($request->tk_tham_nien)){
-            $query->where('tham_nien',$request->tk_tham_nien);
-            $data['tk_tham_nien'] = $request->tk_tham_nien;
         }
         if ($request->has('tk_trang_thai')&& !empty($request->tk_trang_thai)){
             if($request->tk_trang_thai == 'active'){
@@ -195,5 +194,73 @@ class QLNhanVienController extends Controller
         $bang_cap->montessori = $request->montessori;
         $bang_cap->save();
         return redirect()->route('ql_nv');
+    }
+    public function xlTTHD(Request $request){
+        $hop_dong = TTHopDongModel::where('id_nhan_vien',$request->id);
+        if($hop_dong->count() == 0){
+            $hop_dong = new TTLienHeModel();
+            $hop_dong->id_nhan_vien = $request->id;
+        }
+        $hop_dong->loai_hd = $request->loai_hd;
+        $hop_dong->so_hd = $request->so_hd;
+        $hop_dong->ngay_ky = $request->ngay_ky;
+        $hop_dong->ngay_ket_thuc = $request->ngay_ket_thuc;
+        $hop_dong->save();
+        return redirect()->route('ql_nv');
+    }
+    public function import(Request $request){
+        Excel::import(new NhanVienImport, $request->file('file'));
+
+        return back()->with('success', 'Dữ liệu đã được nhập thành công!');
+    }
+    public function export(Request $request){
+        $query = NhanVienModel::query()->select ('ql_nhanvien.id',
+            'ql_nhanvien.ho_ten','ql_nhanvien.gioi_tinh','ql_nhanvien.noi_sinh','ql_nhanvien.ngay_sinh','ql_nhanvien.ngay_vao_lam','ql_nhanvien.ngay_nghi_viec','dm_chucvu.ten_chuc_vu as chuc_vu','ql_nhanvien.cmnd','ql_nhanvien.ngay_cap','ql_nhanvien.noi_cap','ql_nhanvien.quoc_tich','ql_nhanvien.dan_toc','ql_nhanvien.ton_giao',
+            'tt_lienhe.sdt_rieng','tt_lienhe.sdt_noi_bo','tt_lienhe.email_rieng','tt_lienhe.email_noi_bo',
+            'tt_honnhan.tinh_trang_hon_nhan','tt_honnhan.so_con',
+            'tt_dansu.so_bhxh','tt_dansu.thang_tham_gia_bhxh','tt_dansu.ma_so_thue','tt_dansu.thuong_tru','tt_dansu.tam_tru','tt_dansu.khai_sinh',
+            'dm_chuyennganh.ten_chuyen_nganh as chuyen_nganh',
+            'tt_bangcap.trinh_do_hoc_van',
+            'tt_bangcap.trinh_do_chuyen_mon',
+            'tt_bangcap.trinh_do_chinh',
+            'tt_bangcap.truong_dao_tao',
+            'tt_bangcap.xep_loai',
+            'tt_bangcap.hinh_thuc_dao_tao',
+            'tt_bangcap.nam_tot_nghiep',
+            'tt_bangcap.chung_chi',
+            'tt_bangcap.montessori',
+            'tt_hopdong.loai_hd',
+            'tt_hopdong.so_hd',
+            'tt_hopdong.ngay_ky',
+            'tt_hopdong.ngay_ket_thuc')
+        ->leftJoin('dm_chucvu','ql_nhanvien.id_chuc_vu','=','dm_chucvu.id')
+        ->leftJoin('tt_honnhan','ql_nhanvien.id','=','tt_honnhan.id_nhan_vien')
+        ->leftJoin('tt_lienhe','ql_nhanvien.id','=','tt_lienhe.id_nhan_vien')
+        ->leftJoin('tt_bangcap','ql_nhanvien.id','=','tt_bangcap.id_nhan_vien')
+        ->leftJoin('tt_dansu','ql_nhanvien.id','=','tt_dansu.id_nhan_vien')
+        ->leftJoin('tt_hopdong','ql_nhanvien.id','=','tt_hopdong.id_nhan_vien')
+        ->leftJoin('dm_chuyennganh','tt_bangcap.id_chuyen_nganh','=','dm_chuyennganh.id');
+        if ($request->has('tk_ho_ten') && !empty($request->tk_ho_ten)){
+            $query->where('ho_ten','like','%'.$request->tk_ho_ten.'%');
+        }
+        if ($request->has('tk_chuc_vu')&& !empty($request->tk_chuc_vu)){
+            $query->where('id_chuc_vu',$request->tk_chuc_vu);
+        }
+        if ($request->has('tk_gioi_tinh')&& !empty($request->tk_gioi_tinh)){
+            $query->where('gioi_tinh','like','%'.$request->tk_gioi_tinh.'%');
+        }
+        if ($request->has('tk_noi_sinh')&& !empty($request->tk_noi_sinh)){
+            $query->where('noi_sinh',$request->tk_noi_sinh);
+        }
+        if ($request->has('tk_trang_thai')&& !empty($request->tk_trang_thai)){
+            if($request->tk_trang_thai == 'active'){
+                $query->whereNull('ngay_nghi_viec');
+            }
+            else if($request->tk_trang_thai == 'inactive'){
+                $query->whereNotNull('ngay_nghi_viec');
+            }
+        }
+        $query = $query->get();
+        return Excel::download(new NhanVienExport($query), 'export.xlsx');
     }
 }

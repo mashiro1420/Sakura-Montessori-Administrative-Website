@@ -19,6 +19,26 @@ class NhanVienModel extends Model
     }
     public function TaiKhoan()
     {
-        return $this->hasOne(NhanVienModel::class, 'id', 'id_nhan_vien');
+        return $this->hasOne(TaiKhoanModel::class, 'id', 'id_nhan_vien');
+    }
+    public function BangCap()
+    {
+        return $this->hasOne(TTBangCapModel::class, 'id', 'id_nhan_vien');
+    }
+    public function LienHe()
+    {
+        return $this->hasOne(TTLienHeModel::class, 'id', 'id_nhan_vien');
+    }
+    public function DanSu()
+    {
+        return $this->hasOne(TTDanSuModel::class, 'id', 'id_nhan_vien');
+    }
+    public function HonNhan()
+    {
+        return $this->hasOne(TTHonNhanModel::class, 'id', 'id_nhan_vien');
+    }
+    public function HopDong()
+    {
+        return $this->hasOne(TTHopDongModel::class, 'id', 'id_nhan_vien');
     }
 }
