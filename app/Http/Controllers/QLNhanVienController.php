@@ -56,12 +56,33 @@ class QLNhanVienController extends Controller
         $data['nhan_vien'] = NhanVienModel::find($request->id);
         return view('Quan_ly_nhan_vien.sua_nhan_vien',$data);
     }
-    public function viewDanSu()
+    public function viewCapNhatTTDS()
     {
         $data=[];
-        $data['bao_loi'] = session('bao_loi');
-		session()->put('bao_loi', '');
-        return view('Quan_ly_nhan_vien.quan_ly_nhan_vien',$data);
+        // $data['bao_loi'] = session('bao_loi');
+		// session()->put('bao_loi', '');
+        return view('Quan_ly_nhan_vien.cap_nhat_thong_tin_dan_su',$data);
+    }
+    public function viewCapNhatTTHN()
+    {
+        $data=[];
+        // $data['bao_loi'] = session('bao_loi');
+		// session()->put('bao_loi', '');
+        return view('Quan_ly_nhan_vien.cap_nhat_thong_tin_hon_nhan',$data);
+    }
+    public function viewCapNhatTTLH()
+    {
+        $data=[];
+        // $data['bao_loi'] = session('bao_loi');
+		// session()->put('bao_loi', '');
+        return view('Quan_ly_nhan_vien.cap_nhat_thong_tin_lien_he',$data);
+    }
+    public function viewCapNhatTTBC()
+    {
+        $data=[];
+        // $data['bao_loi'] = session('bao_loi');
+		// session()->put('bao_loi', '');
+        return view('Quan_ly_nhan_vien.cap_nhat_thong_tin_bang_cap',$data);
     }
     public function xlThem(Request $request){
         $all_nhan_vien = NhanVienModel::all();

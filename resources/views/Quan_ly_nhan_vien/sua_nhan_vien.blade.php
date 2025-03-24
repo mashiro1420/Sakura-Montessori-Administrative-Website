@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Page</title>
+  <title>Sửa nhân viên</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -25,16 +25,16 @@
             <h2><i class="fa-solid fa-chalkboard-user"></i> Cập nhật Nhân Viên</h2>
           </div>
           <div class="mb-3">
-            <a class="btn btn-primary ms-2">
+            <a class="btn btn-primary ms-2" href="{{url('cap_nhat_ttbc')}}">
               <i class="fa-solid fa-rotate me-1"></i> Cập nhật thông tin bằng cấp
             </a>
-            <a class="btn btn-primary ms-2">
+            <a class="btn btn-primary ms-2" href="{{url('cap_nhat_tthn')}}">
               <i class="fa-solid fa-rotate me-1"></i> Cập nhật thông tin hôn nhân
             </a>
-            <a class="btn btn-primary ms-2" href="{{url('cap_nhat_thong_tin_dan_su')}}">
+            <a class="btn btn-primary ms-2" href="{{url('cap_nhat_ttds')}}">
               <i class="fa-solid fa-rotate me-1"></i> Cập nhật thông tin dân sự
             </a>
-            <a class="btn btn-primary ms-2">
+            <a class="btn btn-primary ms-2" href="{{url('cap_nhat_ttlh')}}">
               <i class="fa-solid fa-rotate me-1"></i> Cập nhật thông tin liên hệ
             </a>
           </div>
