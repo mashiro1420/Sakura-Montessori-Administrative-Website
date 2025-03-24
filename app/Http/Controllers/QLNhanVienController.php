@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\ChucVuModel;
 use App\Models\NhanVienModel;
 use App\Models\TaiKhoanModel;
+use App\Models\TTBangCapModel;
+use App\Models\TTDanSuModel;
+use App\Models\TTHonNhanModel;
+use App\Models\TTLienHeModel;
 use Illuminate\Http\Request;
 
 class QLNhanVienController extends Controller
@@ -36,8 +40,13 @@ class QLNhanVienController extends Controller
             $data['tk_tham_nien'] = $request->tk_tham_nien;
         }
         if ($request->has('tk_trang_thai')&& !empty($request->tk_trang_thai)){
-            $query->where('trang_thai',$request->tk_trang_thai);
-            $data['tk_tham_nien'] = $request->tk_tham_nien;
+            if($request->tk_trang_thai == 'active'){
+                $query->whereNull('ngay_nghi_viec');
+            }
+            else if($request->tk_trang_thai == 'inactive'){
+                $query->whereNotNull('ngay_nghi_viec');
+            }
+            $data['tk_trang_thai'] = $request->tk_trang_thai;
         }
         $data['nhan_viens'] = $query->get();
         $data['chuc_vus'] = ChucVuModel::all();
@@ -84,6 +93,7 @@ class QLNhanVienController extends Controller
 		// session()->put('bao_loi', '');
         return view('Quan_ly_nhan_vien.cap_nhat_thong_tin_bang_cap',$data);
     }
+//----------------------------------------------------------------------------------------------------------------
     public function xlThem(Request $request){
         $all_nhan_vien = NhanVienModel::all();
         $so_nv = count($all_nhan_vien);
@@ -128,5 +138,62 @@ class QLNhanVienController extends Controller
         $nhan_vien->save();
         return redirect()->route('ql_nv');
     }
-
+    public function xlTTDS(Request $request){
+        $dan_su = TTDanSuModel::where('id_nhan_vien',$request->id);
+        if($dan_su->count() == 0){
+            $dan_su = new TTDanSuModel();
+            $dan_su->id_nhan_vien = $request->id;
+        }
+        $dan_su->so_bhxh = $request->so_bhxh;
+        $dan_su->thang_tham_gia_bhxh = $request->thang_tham_gia_bhxh;
+        $dan_su->ma_so_thue = $request->ma_so_thue;
+        $dan_su->thuong_tru = $request->thuong_tru;
+        $dan_su->tam_tru = $request->tam_tru;
+        $dan_su->khai_sinh = $request->khai_sinh;
+        $dan_su->save();
+        return redirect()->route('ql_nv');
+    }
+    public function xlTTLH(Request $request){
+        $lien_he = TTLienHeModel::where('id_nhan_vien',$request->id);
+        if($lien_he->count() == 0){
+            $lien_he = new TTLienHeModel();
+            $lien_he->id_nhan_vien = $request->id;
+        }
+        $lien_he->sdt_rieng = $request->sdt_rieng;
+        $lien_he->sdt_noi_bo = $request->sdt_noi_bo;
+        $lien_he->email_rieng = $request->email_rieng;
+        $lien_he->email_noi_bo = $request->email_noi_bo;
+        $lien_he->save();
+        return redirect()->route('ql_nv');
+    }
+    public function xlTTHN(Request $request){
+        $hon_nhan = TTHonNhanModel::where('id_nhan_vien',$request->id);
+        if($hon_nhan->count() == 0){
+            $hon_nhan = new TTLienHeModel();
+            $hon_nhan->id_nhan_vien = $request->id;
+        }
+        $hon_nhan->so_con = $request->so_con;
+        $hon_nhan->tinh_trang_hon_nhan = $request->tinh_trang_hon_nhan;
+        $hon_nhan->save();
+        return redirect()->route('ql_nv');
+    }
+    public function xlTTBC(Request $request){
+        $bang_cap = TTBangCapModel::where('id_nhan_vien',$request->id);
+        if($bang_cap->count() == 0){
+            $bang_cap = new TTLienHeModel();
+            $bang_cap->id_nhan_vien = $request->id;
+        }
+        $bang_cap->id_chuyen_nganh = $request->id_chuyen_nganh;
+        $bang_cap->trinh_do_hoc_van = $request->trinh_do_hoc_van;
+        $bang_cap->trinh_do_chuyen_mon = $request->trinh_do_chuyen_mon;
+        $bang_cap->trinh_do_chinh = $request->trinh_do_chinh;
+        $bang_cap->truong_dao_tao = $request->truong_dao_tao;
+        $bang_cap->xep_loai = $request->xep_loai;
+        $bang_cap->hinh_thuc_dao_tao = $request->hinh_thuc_dao_tao;
+        $bang_cap->nam_tot_nghiep = $request->nam_tot_nghiep;
+        $bang_cap->chung_chi = $request->chung_chi;
+        $bang_cap->montessori = $request->montessori;
+        $bang_cap->save();
+        return redirect()->route('ql_nv');
+    }
 }
