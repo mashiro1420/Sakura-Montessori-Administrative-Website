@@ -25,58 +25,63 @@
             <h2><i class="fa-solid fa-chalkboard-user"></i> Cập nhật thông tin bằng cấp</h2>
           </div>
           <!-- Form to add new employee -->
-          <form class="search-container" action="{{url('')}}" method="post">
+          <form class="search-container" action="{{url('xl_ttbc')}}" method="post">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
+                <label for="id">Mã nhân viên</label>
+                <input type="text" name="id" class="form-control" value="{{ $nhan_vien->id }}" readonly>
+              </div>
+              <div class="search-item d-inline-block w-25">
                 <label for="trinh_do_hoc_van">Trình độ học vấn</label>
-                <input type="text" name="trinh_do_hoc_van" class="form-control" placeholder="Nhập trình độ học vấn" required>
+                <input type="text" name="trinh_do_hoc_van" value="{{ $bang_cap->trinh_do_hoc_van }}" class="form-control" placeholder="Nhập trình độ học vấn" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="trinh_do_chuyen_mon">Trình độ chuyên môn</label>
-                <input type="text" name="trinh_do_chuyen_mon" class="form-control" placeholder="Nhập trình độ chuyên môn" required>
+                <input type="text" name="trinh_do_chuyen_mon" value="{{ $bang_cap->trinh_do_chuyen_mon }}" class="form-control" placeholder="Nhập trình độ chuyên môn" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="trinh_do_chinh">Trình độ chuyên môn chính</label>
-                <input type="text" name="trinh_do_chinh" class="form-control" placeholder="Nhập trình độ chuyên môn chính" required>
+                <input type="text" name="trinh_do_chinh" value="{{ $bang_cap->trinh_do_chinh }}" class="form-control" placeholder="Nhập trình độ chuyên môn chính" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="truong_dao_tao">Trường đào tạo</label>
-                <input type="text" name="truong_dao_tao" class="form-control" placeholder="Nhập trường đào tạo" required>
+                <input type="text" name="truong_dao_tao" value="{{ $bang_cap->truong_dao_tao }}" class="form-control" placeholder="Nhập trường đào tạo" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="xep_loai">Xếp loại</label>
-                <input type="text" name="xep_loai" class="form-control" placeholder="Nhập xếp loại" required>
+                <input type="text" name="xep_loai" value="{{ $bang_cap->xep_loai }}" class="form-control" placeholder="Nhập xếp loại" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="hinh_thuc_dao_tao">Hình thức đào tạo</label>
-                <input type="text" name="hinh_thuc_dao_tao" class="form-control" placeholder="Nhập hình thức đào tạo" required>
+                <input type="text" name="hinh_thuc_dao_tao" value="{{ $bang_cap->hinh_thuc_dao_tao }}" class="form-control" placeholder="Nhập hình thức đào tạo" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="nam_tot_nghiep">Năm tốt nghiệp</label>
-                <input type="text" name="nam_tot_nghiep" class="form-control" placeholder="Nhập năm tốt nghiệp" required>
+                <input type="text" name="nam_tot_nghiep" value="{{ $bang_cap->nam_tot_nghiep }}" class="form-control" placeholder="Nhập năm tốt nghiệp" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="chung_chi">Chứng chỉ</label>
-                <input type="text" name="chung_chi" class="form-control" placeholder="Nhập chứng chỉ" required>
+                <input type="text" name="chung_chi" value="{{ $bang_cap->chung_chi }}" class="form-control" placeholder="Nhập chứng chỉ" required>
               </div>
             </div>
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
                 <label for="chuyen_nganh">Chuyên ngành</label>
                 <select name="chuyen_nganh" class="form-select" required>                 
-                    <option value=""></option>
+                    @foreach($chuyen_nganhs as $chuyen_nganh)
+                      <option value="{{$chuyen_nganh->id}}" {{!empty($bang_cap->id_chuyen_nganh)&&$bang_cap->id_chuyen_nganh==$chuyen_nganh->id?"selected":""}}>{{$chuyen_nganh->ten_chuyen_nganh}}</option>
+                    @endforeach
                 </select>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="montessori">Montessori</label>
                 <select name="montessori" class="form-select" required>                 
                     <option value="0">Không</option>
-                    <option value="1">Có</option>
+                    <option value="1" {{!empty($bang_cap->montessori)&&$bang_cap->montessori==1?"selected":""}}>Có</option>
                 </select>
               </div>
             </div>
-
             <div class="action-buttons">
               <div>
                 <button class="btn btn-primary" type="submit">
@@ -87,8 +92,8 @@
                 </button>
               </div>
               <div>
-                <a class="btn btn-outline-secondary ms-2" href="{{url('ql_nv')}}">
-                  <i class="fa-solid fa-arrow-left me-1"></i> Quay lại danh sách nhân viên
+                <a class="btn btn-outline-secondary ms-2" href="{{route('sua_nv',['id' => $nhan_vien->id])}}">
+                  <i class="fa-solid fa-arrow-left me-1"></i> Quay lại
                 </a>
               </div>
             </div>

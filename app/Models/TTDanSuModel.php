@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TTDanSuModel extends Model
 {
     use HasFactory;
+    protected $fillable = ['id_nhan_vien'];
     protected $table = 'tt_dansu';
     protected $primaryKey = 'id';
     protected $keytype = 'int';

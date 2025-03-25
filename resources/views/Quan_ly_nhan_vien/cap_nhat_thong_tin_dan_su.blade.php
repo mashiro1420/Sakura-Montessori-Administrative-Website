@@ -25,32 +25,36 @@
             <h2><i class="fa-solid fa-chalkboard-user"></i> Cập nhật thông tin dân sự</h2>
           </div>
           <!-- Form to add new information -->
-          <form class="search-container" action="{{url('')}}" method="post">
+          <form class="search-container" action="{{url('xl_ttds')}}" method="post">
           @csrf
             <div class="filter-row">
+              <div div class="search-item d-inline-block w-25">
+                <label for="id">Mã nhân viên</label>
+                <input type="text" name="id" class="form-control" value="{{ $nhan_vien->id }}" readonly>
+              </div>
               <div class="search-item d-inline-block w-25">
                 <label for="so_bhxh">Số bảo hiểm xã hội</label>
-                <input type="text" name="so_bhxh" class="form-control" placeholder="Nhập số bảo hiểm xã hội" required>
+                <input type="text" name="so_bhxh" class="form-control" value="{{ $dan_su->so_bhxh }}" placeholder="Nhập số bảo hiểm xã hội" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="thang_tham_gia_bhxh">Tháng tham gia bảo hiểm xã hội</label>
-                <input type="number" name="thang_tham_gia_bhxh" class="form-control" placeholder="Nhập tháng tham gia BHXH" required>
+                <input type="number" name="thang_tham_gia_bhxh" class="form-control" value="{{ $dan_su->thang_tham_gia_bhxh }}" placeholder="Nhập tháng tham gia BHXH" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ma_so_thue">Mã số thuế</label>
-                <input type="text" name="ma_so_thue" class="form-control" placeholder="Nhập mã số thuế" required>
+                <input type="text" name="ma_so_thue" class="form-control" value="{{ $dan_su->ma_so_thue }}" placeholder="Nhập mã số thuế" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="thuong_tru">Thường trú</label>
-                <textarea name="thuong_tru" class="form-control" placeholder="Nhập thường trú"></textarea required>
+                <textarea name="thuong_tru" class="form-control" value="{{ $dan_su->thuong_tru }}" placeholder="Nhập thường trú"></textarea required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="tam_tru">Tạm trú</label>
-                <textarea type="textarea" name="tam_tru" class="form-control" placeholder="Nhập tạm trú"></textarea required>
+                <textarea type="textarea" name="tam_tru" value="{{ $dan_su->tam_tru }}" class="form-control" placeholder="Nhập tạm trú"></textarea required>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="khai_sih">Khai sinh</label>
-                <textarea type="textarea" name="khai_sih" class="form-control" placeholder="Nhập nơi khai sinh" ></textarea required>
+                <label for="khai_sinh">Khai sinh</label>
+                <textarea type="textarea" name="khai_sinh" value="{{ $dan_su->khai_sinh }}" class="form-control" placeholder="Nhập nơi khai sinh" ></textarea required>
               </div>
               <div class="action-buttons">
                 <div>
@@ -62,8 +66,8 @@
                   </button>
                 </div>
                 <div>
-                  <a class="btn btn-outline-secondary ms-2" href="{{url('ql_nv')}}">
-                    <i class="fa-solid fa-arrow-left me-1"></i> Quay lại danh sách nhân viên
+                  <a class="btn btn-outline-secondary ms-2" href="{{route('sua_nv',['id' => $nhan_vien->id])}}">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Quay lại
                   </a>
                 </div>
               </div>

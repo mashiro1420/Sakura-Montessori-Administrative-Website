@@ -25,17 +25,20 @@
             <h2><i class="fa-solid fa-chalkboard-user"></i> Cập nhật Nhân Viên</h2>
           </div>
           <div class="mb-3">
-            <a class="btn btn-primary ms-2" href="{{url('cap_nhat_ttbc')}}">
+            <a class="btn btn-primary ms-2" href="{{route('cap_nhat_ttbc',['id' => $nhan_vien->id])}}">
               <i class="fa-solid fa-rotate me-1"></i> Cập nhật thông tin bằng cấp
             </a>
-            <a class="btn btn-primary ms-2" href="{{url('cap_nhat_tthn')}}">
+            <a class="btn btn-primary ms-2" href="{{route('cap_nhat_tthn',['id' => $nhan_vien->id])}}">
               <i class="fa-solid fa-rotate me-1"></i> Cập nhật thông tin hôn nhân
             </a>
-            <a class="btn btn-primary ms-2" href="{{url('cap_nhat_ttds')}}">
+            <a class="btn btn-primary ms-2" href="{{route('cap_nhat_ttds',['id' => $nhan_vien->id])}}">
               <i class="fa-solid fa-rotate me-1"></i> Cập nhật thông tin dân sự
             </a>
-            <a class="btn btn-primary ms-2" href="{{url('cap_nhat_ttlh')}}">
+            <a class="btn btn-primary ms-2" href="{{route('cap_nhat_ttlh',['id' => $nhan_vien->id])}}">
               <i class="fa-solid fa-rotate me-1"></i> Cập nhật thông tin liên hệ
+            </a>
+            <a class="btn btn-primary ms-2" href="{{route('cap_nhat_tthd',['id' => $nhan_vien->id])}}">
+              <i class="fa-solid fa-rotate me-1"></i> Cập nhật thông tin hợp đồng
             </a>
           </div>
           <!-- Form to update employee -->

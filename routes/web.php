@@ -20,6 +20,7 @@ Route::get('/', function () {
 });
 Route::get('dang_nhap',[DangNhapController::class, 'viewDangNhap'])->name('dang_nhap');
 Route::post('xl_dang_nhap',[DangNhapController::class, 'login']);
+Route::get('xl_dang_xuat',[DangNhapController::class, 'logout']);
 
 //Nhan vien
 Route::get('ql_nv',[QLNhanVienController::class, 'viewQuanLy'])->name('ql_nv');
@@ -29,6 +30,7 @@ Route::get('cap_nhat_ttds',[QLNhanVienController::class, 'viewCapNhatTTDS'])->na
 Route::get('cap_nhat_tthn', [QLNhanVienController::class, 'viewCapNhatTTHN'])->name('cap_nhat_tthn');
 Route::get('cap_nhat_ttlh', [QLNhanVienController::class, 'viewCapNhatTTLH'])->name('cap_nhat_ttlh');
 Route::get('cap_nhat_ttbc', [QLNhanVienController::class, 'viewCapNhatTTBC'])->name('cap_nhat_ttbc');
+Route::get('cap_nhat_tthd', [QLNhanVienController::class, 'viewCapNhatTTHD'])->name('cap_nhat_tthd');
 
 //----------------------------
 Route::post('xl_them_nv',[QLNhanVienController::class, 'xlThem']);

@@ -40,15 +40,25 @@ class DangNhapController extends Controller
             }
         }
         if (session('bao_loi') == '') {
-			// if(session('id_quyen') == '') {
+			if(session('id_quyen') == '1') {
 				return redirect()->route('ql_nv');
-			// }
-			// else{
-			// 	return redirect()->route('dang_nhap');
-			// }
+			}
+            elseif (session('id_quyen') == '3') {
+                return redirect()->route('ql_nv');
+            }
+            elseif (session('id_quyen') == '2') {
+                return redirect()->route('ql_nv');
+            }
+			else{
+				return redirect()->route('dang_nhap');
+			}
             
         } else {
             return redirect()->route('dang_nhap');
         }
-  }
+    }
+    public function logout(){
+        session()->flush();
+        return redirect()->route('dang_nhap');
+    }
 }

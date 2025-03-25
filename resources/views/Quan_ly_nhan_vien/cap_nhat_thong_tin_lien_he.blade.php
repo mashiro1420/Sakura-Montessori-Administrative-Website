@@ -25,24 +25,28 @@
             <h2><i class="fa-solid fa-chalkboard-user"></i> Cập nhật thông tin liên hệ</h2>
           </div>
           <!-- Form to add new employee -->
-          <form class="search-container" action="{{url('')}}" method="post">
+          <form class="search-container" action="{{url('xl_ttlh')}}" method="post">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
+                <label for="id">Mã nhân viên</label>
+                <input type="text" name="id" class="form-control" value="{{ $nhan_vien->id }}" readonly>
+              </div>
+              <div class="search-item d-inline-block w-25">
                 <label for="sdt_rieng">Số điện thoại riêng</label>
-                <input type="text" nname="sdt_rieng" class="form-control" placeholder="Nhập số điện thoại riêng" required>
+                <input type="text" name="sdt_rieng" class="form-control" value="{{ $lien_he->sdt_rieng }}" placeholder="Nhập số điện thoại riêng" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="sdt_noi_bo">Số điện thoại nội bộ</label>
-                <input type="text" name="sdt_noi_bo" class="form-control" placeholder="Nhập số điện thoại nội bộ" required>
+                <input type="text" name="sdt_noi_bo" class="form-control" value="{{ $lien_he->sdt_noi_bo }}" placeholder="Nhập số điện thoại nội bộ" >
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="email_rieng">Email riêng</label>
-                <input type="email" name="email_rieng" class="form-control" placeholder="Nhập email riêng" required>
+                <input type="email" name="email_rieng" class="form-control" value="{{ $lien_he->email_rieng }}" placeholder="Nhập email riêng" >
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="email_noi_bo">Email nội bộ</label>
-                <input type="email" name="email_noi_bo" class="form-control" placeholder="Nhập email nội bộ" required>
+                <input type="email" name="email_noi_bo" class="form-control" value="{{ $lien_he->email_noi_bo }}" placeholder="Nhập email nội bộ" >
               </div>
             </div>
             <div class="action-buttons">
@@ -55,8 +59,8 @@
                 </button>
               </div>
               <div>
-                <a class="btn btn-outline-secondary ms-2" href="{{url('ql_nv')}}">
-                  <i class="fa-solid fa-arrow-left me-1"></i> Quay lại danh sách nhân viên
+                <a class="btn btn-outline-secondary ms-2" href="{{route('sua_nv',['id' => $nhan_vien->id])}}">
+                  <i class="fa-solid fa-arrow-left me-1"></i> Quay lại
                 </a>
               </div>
             </div>

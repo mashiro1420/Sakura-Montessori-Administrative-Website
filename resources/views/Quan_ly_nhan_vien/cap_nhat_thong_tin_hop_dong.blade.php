@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cập nhật thông tin hôn nhân</title>
+  <title>Cập nhật thông tin hợp đồng</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -22,10 +22,10 @@
         <div class="container-fluid">
           <!-- Page Header -->
           <div class="page-header">
-            <h2><i class="fa-solid fa-chalkboard-user"></i>Cập nhật thông tin hôn nhân</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i> Cập nhật thông tin hợp đồng</h2>
           </div>
           <!-- Form to add new employee -->
-          <form class="search-container" action="{{url('xl_tthn')}}" method="post">
+          <form class="search-container" action="{{url('xl_tthd')}}" method="post">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
@@ -33,17 +33,20 @@
                 <input type="text" name="id" class="form-control" value="{{ $nhan_vien->id }}" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="tinh_trang_hon_nhan">Tình trạng hôn nhân</label>
-                <select name="tinh_trang_hon_nhan" class="form-select" required>
-                  <option value="Độc thân" {{!empty($hon_nhan->tinh_trang_hon_nhan)&&$hon_nhan->tinh_trang_hon_nhan=="Độc thân"?"selected":""}}>Độc thân</option>
-                  <option value="Đã kết hôn" {{!empty($hon_nhan->tinh_trang_hon_nhan)&&$hon_nhan->tinh_trang_hon_nhan=="Đã kết hôn"?"selected":""}}>Đã kết hôn</option>
-                  <option value="Ly hôn" {{!empty($hon_nhan->tinh_trang_hon_nhan)&&$hon_nhan->tinh_trang_hon_nhan=="Ly hôn"?"selected":""}}>Ly hôn</option>
-                  <option value="Góa chồng hoặc vợ" {{!empty($hon_nhan->tinh_trang_hon_nhan)&&$hon_nhan->tinh_trang_hon_nhan=="Góa chồng hoặc vợ"?"selected":""}}>Góa chồng hoặc vợ</option>
-                </select>
+                <label for="loai_hd">Loại hợp đồng</label>
+                <input type="text" name="loai_hd" class="form-control" value="{{ $hop_dong->loai_hd }}" placeholder="Nhập loại hợp đồng" required>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="so_con">Số con</label>
-                <input type="number" name="so_con" class="form-control" value="{{ $hon_nhan->so_con }}" placeholder="Nhập số con">
+                <label for="so_hd">Số hợp đồng</label>
+                <input type="text" name="so_hd" class="form-control" value="{{ $hop_dong->so_hd }}" placeholder="Nhập số hợp đồng" required>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="ngay_ky">Ngày ký hợp đồng</label>
+                <input type="date" name="ngay_ky" class="form-control" value="{{ $hop_dong->ngay_ky }}" placeholder="Nhập email riêng" required>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="ngay_ket_thuc">Ngày kết thúc hợp đồng</label>
+                <input type="date" name="ngay_ket_thuc" class="form-control" value="{{ $hop_dong->ngay_ket_thuc }}" placeholder="Nhập email nội bộ" required>
               </div>
             </div>
             <div class="action-buttons">

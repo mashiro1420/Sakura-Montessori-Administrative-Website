@@ -5,18 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TTHopDongModel extends Model
+class ChuyenNganhModel extends Model
 {
     use HasFactory;
-    protected $fillable = ['id_nhan_vien'];
-    protected $table = 'tt_hopdong';
+    protected $table = 'dm_chuyennganh';
     protected $primaryKey = 'id';
     protected $keytype = 'int';
     public $incrementing = true;
     public $timestamps = false;
 
-    public function NhanVien()
+    public function BangCap()
     {
-        return $this->belongsTo(NhanVienModel::class);
+        return $this->belongsTo(TTBangCapModel::class);
     }
 }

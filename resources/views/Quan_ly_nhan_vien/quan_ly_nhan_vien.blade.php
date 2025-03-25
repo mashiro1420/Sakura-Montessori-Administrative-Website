@@ -126,7 +126,7 @@
                   <td>{{$nhan_vien->ChucVu->ten_chuc_vu}}</td>
                   <td class="action-column">
                     <button class="action-button" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></button>
-                    <button class="action-button" title="Chỉnh sửa"><a href="{{route('sua_nv',['id' => $nhan_vien->id])}}"><i class="fa-solid fa-edit"></i></a></button>
+                    <a class="action-button" title="Chỉnh sửa" href="{{route('sua_nv',['id' => $nhan_vien->id])}}"><i class="fa-solid fa-edit"></i></a>
                   </td>
                 </tr>
                 @endforeach
