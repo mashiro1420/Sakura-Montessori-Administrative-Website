@@ -83,7 +83,7 @@ class NhanVienImport implements ToModel,WithHeadingRow
             'id_nhan_vien' => $row['ma_nhan_vien'],
             'loai_hd' => $row['loai_hop_dong'],
             'so_hd' => $row['so_hop_dong'],
-            'ngay_ky' => $row['ngay_ky_hop_don'],
+            'ngay_ky' => $row['ngay_ky_hop_dong'],
             'ngay_ket_thuc' => $row['ngay_ket_thuc_hop_dong'],
         ],['id'], ['loai_hd', 'so_hd', 'ngay_ky', 'ngay_ket_thuc']);
     }

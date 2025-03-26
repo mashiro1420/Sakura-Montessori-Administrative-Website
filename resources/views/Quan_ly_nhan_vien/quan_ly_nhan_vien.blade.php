@@ -94,7 +94,7 @@
           </form>
           <form action="{{ url('/import_nv') }}" method="post" enctype="multipart/form-data">
               @csrf
-              <input type="file" name="file" required>
+              <input type="file" name="file" class="btn btn-outline-secondary ms-2" required>
               <button type="submit">Import Excel</button>
           </form>
           <!-- Table Section -->
@@ -125,7 +125,7 @@
                   <td>{{$nhan_vien->ngay_nghi_viec}}</td>
                   <td>{{$nhan_vien->ChucVu->ten_chuc_vu}}</td>
                   <td class="action-column">
-                    <button class="action-button" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></button>
+                    <a class="action-button" href="{{route('ql_nv',['id' => $nhan_vien->id])}}" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a>
                     <a class="action-button" title="Chỉnh sửa" href="{{route('sua_nv',['id' => $nhan_vien->id])}}"><i class="fa-solid fa-edit"></i></a>
                   </td>
                 </tr>

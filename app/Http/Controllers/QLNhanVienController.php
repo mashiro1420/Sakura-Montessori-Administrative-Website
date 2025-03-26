@@ -52,6 +52,45 @@ class QLNhanVienController extends Controller
         $data['chuc_vus'] = ChucVuModel::all();
         return view('Quan_ly_nhan_vien.quan_ly_nhan_vien',$data);
     }
+    public function viewChiTiet(Request $request)
+    {
+        $data=[];
+        $query = NhanVienModel::query()->select ('*');
+        if ($request->has('tk_ho_ten') && !empty($request->tk_ho_ten)){
+            $query->where('ho_ten','like','%'.$request->tk_ho_ten.'%');
+            $data['tk_ho_ten'] = $request->tk_ho_ten;
+        }
+        if ($request->has('tk_chuc_vu')&& !empty($request->tk_chuc_vu)){
+            $query->where('id_chuc_vu',$request->tk_chuc_vu);
+            $data['tk_chuc_vu'] = $request->tk_chuc_vu;
+        }
+        if ($request->has('tk_gioi_tinh')&& !empty($request->tk_gioi_tinh)){
+            $query->where('gioi_tinh','like','%'.$request->tk_gioi_tinh.'%');
+            $data['tk_gioi_tinh'] = $request->tk_gioi_tinh;
+        }
+        if ($request->has('tk_noi_sinh')&& !empty($request->tk_noi_sinh)){
+            $query->where('noi_sinh',$request->tk_noi_sinh);
+            $data['tk_noi_sinh'] = $request->tk_noi_sinh;
+        }
+        if ($request->has('tk_trang_thai')&& !empty($request->tk_trang_thai)){
+            if($request->tk_trang_thai == 'active'){
+                $query->whereNull('ngay_nghi_viec');
+            }
+            else if($request->tk_trang_thai == 'inactive'){
+                $query->whereNotNull('ngay_nghi_viec');
+            }
+            $data['tk_trang_thai'] = $request->tk_trang_thai;
+        }
+        $data['nhan_viens'] = $query->get();
+        $data['chuc_vus'] = ChucVuModel::all();
+        $data['nhan_vien'] = NhanVienModel::find($request->id);
+        $data['dan_su'] = TTDanSuModel::where('id_nhan_vien',$request->id)->first();
+        $data['hon_nhan'] = TTHonNhanModel::where('id_nhan_vien',$request->id)->first();
+        $data['lien_he'] = TTLienHeModel::where('id_nhan_vien',$request->id)->first();
+        $data['bang_cap'] = TTBangCapModel::where('id_nhan_vien',$request->id)->first();
+        $data['hop_dong'] = TTHopDongModel::where('id_nhan_vien',$request->id)->first();
+        return view('Quan_ly_nhan_vien.quan_ly_nhan_vien',$data);
+    }
     public function viewThem()
     {
         $data=[];
@@ -158,7 +197,7 @@ class QLNhanVienController extends Controller
     }
     public function xlTTDS(Request $request){
         $dan_su = TTDanSuModel::where('id_nhan_vien',$request->id)->first();
-        if($dan_su->count() == 0){
+        if(empty($dan_su)){
             $dan_su = new TTDanSuModel();
             $dan_su->id_nhan_vien = $request->id;
         }
@@ -173,7 +212,7 @@ class QLNhanVienController extends Controller
     }
     public function xlTTLH(Request $request){
         $lien_he = TTLienHeModel::where('id_nhan_vien',$request->id)->first();
-        if($lien_he->count() == 0){
+        if(empty($lien_he)){
             $lien_he = new TTLienHeModel();
             $lien_he->id_nhan_vien = $request->id;
         }
@@ -186,7 +225,7 @@ class QLNhanVienController extends Controller
     }
     public function xlTTHN(Request $request){
         $hon_nhan = TTHonNhanModel::where('id_nhan_vien',$request->id)->first();
-        if($hon_nhan->count() == 0){
+        if(empty($hon_nhan)){
             $hon_nhan = new TTHonNhanModel();
             $hon_nhan->id_nhan_vien = $request->id;
         }
@@ -197,7 +236,7 @@ class QLNhanVienController extends Controller
     }
     public function xlTTBC(Request $request){
         $bang_cap = TTBangCapModel::where('id_nhan_vien',$request->id)->first();
-        if($bang_cap->count() == 0){
+        if(empty($bang_cap)){
             $bang_cap = new TTBangCapModel();
             $bang_cap->id_nhan_vien = $request->id;
         }
@@ -216,7 +255,7 @@ class QLNhanVienController extends Controller
     }
     public function xlTTHD(Request $request){
         $hop_dong = TTHopDongModel::where('id_nhan_vien',$request->id)->first();
-        if($hop_dong->count() == 0){
+        if(empty($hop_dong)){
             $hop_dong = new TTHopDongModel();
             $hop_dong->id_nhan_vien = $request->id;
         }

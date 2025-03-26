@@ -24,6 +24,7 @@ Route::get('xl_dang_xuat',[DangNhapController::class, 'logout']);
 
 //Nhan vien
 Route::get('ql_nv',[QLNhanVienController::class, 'viewQuanLy'])->name('ql_nv');
+Route::get('chi_tiet_nv',[QLNhanVienController::class, 'viewChiTiet'])->name('chi_tiet_nv');
 Route::get('them_nv',[QLNhanVienController::class, 'viewThem'])->name('them_nv');
 Route::get('sua_nv',[QLNhanVienController::class, 'viewSua'])->name('sua_nv');
 Route::get('cap_nhat_ttds',[QLNhanVienController::class, 'viewCapNhatTTDS'])->name('cap_nhat_ttds');
