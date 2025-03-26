@@ -49,13 +49,13 @@
       </a>
     </li>
     <li class="sidebar-item">
-      <a href="" class="sidebar-link">
+      <a href="{{url('ql_nv')}}" class="sidebar-link">
         <i class="fa-solid fa-chalkboard-user"></i>
         <span class="text">Quản lý nhân viên</span>
       </a>
     </li>
     <li class="sidebar-item">
-      <a href="../../quan_ly_hoc_sinh/index.html" class="sidebar-link">
+      <a href="{{url('ql_hs')}}" class="sidebar-link">
         <i class="fa-solid fa-graduation-cap"></i>
         <span class="text">Quản lý học sinh</span>
       </a>

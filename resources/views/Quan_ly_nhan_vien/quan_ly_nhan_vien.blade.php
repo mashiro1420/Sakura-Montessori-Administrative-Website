@@ -11,7 +11,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <link rel="icon" type="image/png" href="{{ asset('/imgs/favicon-skr.png') }}">
-  <link rel="stylesheet" href="{{ asset('css/Quan_ly_nhan_vien/Quan_ly_nhan_vien.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/main/main.css') }}">
 </head>
 <body>
   <div class="wrapper">
@@ -65,7 +65,22 @@
                 </select>
               </div>
             </div>
-
+            {{-- <div class="search-item">
+              <label for="status-filter">Thêm nhiều nhân viên</label>
+              <form action="{{ url('/import_nv') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="file" class="btn btn-outline-secondary ms-2" required>
+                <button type="submit">Import Excel</button>
+              </form>
+            </div> --}}
+            <div class="search-item">
+              <label for="status-filter">Thêm nhiều nhân viên</label>
+              <form action="{{ url('/import_nv') }}" method="post" enctype="multipart/form-data" id="import-form">
+                @csrf
+                <input type="file" name="file" id="file-input" class="d-none" required>
+                <button type="button" class="btn btn-outline-secondary ms-2" id="import-button">Import Excel</button>
+              </form>
+            </div>
             <div class="action-buttons">
               <div>
                 <button class="btn btn-primary">
@@ -91,11 +106,6 @@
                 </button>
               </div>
             </div>
-          </form>
-          <form action="{{ url('/import_nv') }}" method="post" enctype="multipart/form-data">
-              @csrf
-              <input type="file" name="file" class="btn btn-outline-secondary ms-2" required>
-              <button type="submit">Import Excel</button>
           </form>
           <!-- Table Section -->
           <div class="data-container">
@@ -125,7 +135,7 @@
                   <td>{{$nhan_vien->ngay_nghi_viec}}</td>
                   <td>{{$nhan_vien->ChucVu->ten_chuc_vu}}</td>
                   <td class="action-column">
-                    <a class="action-button" href="{{route('ql_nv',['id' => $nhan_vien->id])}}" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a>
+                    <a class="action-button" href="{{route('chi_tiet_nv',['id' => $nhan_vien->id])}}" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a>
                     <a class="action-button" title="Chỉnh sửa" href="{{route('sua_nv',['id' => $nhan_vien->id])}}"><i class="fa-solid fa-edit"></i></a>
                   </td>
                 </tr>
@@ -258,6 +268,15 @@
   // Khởi tạo trang ban đầu
   createPagination(1);
   displayPageData(1);
+  </script>
+  <script>
+    document.getElementById('import-button').addEventListener('click', function() {
+      document.getElementById('file-input').click(); // Mở file picker khi nhấn nút
+    });
+
+    document.getElementById('file-input').addEventListener('change', function() {
+      document.getElementById('import-form').submit(); // Tự động submit form khi chọn file
+    });
   </script>
 </body>
 </html>

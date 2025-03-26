@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\HocSinhModel;
 use Illuminate\Http\Request;
 
 class QLHocSinhController extends Controller
@@ -11,7 +12,9 @@ class QLHocSinhController extends Controller
     {
         $data=[];
         $data['bao_loi'] = session('bao_loi');
+        $query = HocSinhModel::query()->select('*');
 		session()->put('bao_loi', '');
+        $data['hoc_sinhs'] = $query->get();
         return view('Quan_ly_hoc_sinh.quan_ly_hoc_sinh',$data);//
     }
     public function viewThem()

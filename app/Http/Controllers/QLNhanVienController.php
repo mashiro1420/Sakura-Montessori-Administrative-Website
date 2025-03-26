@@ -90,7 +90,7 @@ class QLNhanVienController extends Controller
         $data['lien_he'] = TTLienHeModel::where('id_nhan_vien',$request->id)->first();
         $data['bang_cap'] = TTBangCapModel::where('id_nhan_vien',$request->id)->first();
         $data['hop_dong'] = TTHopDongModel::where('id_nhan_vien',$request->id)->first();
-        return view('Quan_ly_nhan_vien.quan_ly_nhan_vien',$data);
+        return view('Quan_ly_nhan_vien.xem_chi_tiet_nhan_vien',$data);
     }
     public function viewThem()
     {
