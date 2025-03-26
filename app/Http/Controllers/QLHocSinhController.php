@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\HocSinhExport;
+use App\Imports\HocSinhImport;
 use App\Http\Controllers\Controller;
 use App\Models\HocSinhModel;
 use App\Models\TaiKhoanModel;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class QLHocSinhController extends Controller
 {
@@ -118,5 +121,14 @@ class QLHocSinhController extends Controller
         $hoc_sinh->lien_he_khan = $request->lien_he_khan;
         $hoc_sinh->loai_hoc_phi = $request->loai_hoc_phi;
         return redirect()->route('ql_hs');
+    }
+    public function export(Request $request){
+        $query = HocSinhModel::query()->select ('*');
+        $query = $query->get();
+        return Excel::download(new HocSinhExport($query), 'export.xlsx');
+    }
+    public function import(Request $request){
+        Excel::import(new HocSinhImport, $request->file('file'));
+        return back()->with('success', 'Dữ liệu đã được nhập thành công!');
     }
 }
