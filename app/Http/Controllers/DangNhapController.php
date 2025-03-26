@@ -15,7 +15,7 @@ class DangNhapController extends Controller
 		session()->put('bao_loi', '');
         return view('Dang_nhap.dang_nhap',$data);//
     }
-
+//-----------------------------------------
     public function login(Request $request)
     {
         $tai_khoan = $request->tai_khoan;

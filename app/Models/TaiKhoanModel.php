@@ -18,4 +18,8 @@ class TaiKhoanModel extends Model
     {
         return $this->hasOne(NhanVienModel::class, 'id_nhan_vien', 'id');
     }
+    public function Quyen()
+    {
+        return $this->belongsTo(QuyenModel::class);
+    }
 }

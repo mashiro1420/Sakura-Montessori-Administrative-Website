@@ -83,7 +83,8 @@ class QLNhanVienController extends Controller
         }
         $data['nhan_viens'] = $query->get();
         $data['chuc_vus'] = ChucVuModel::all();
-        $data['nhan_vien'] = NhanVienModel::find($request->id);
+        //thông tin để chuyển sang bảng chi tiết
+        $data['chi_tiet'] = NhanVienModel::find($request->id);
         $data['dan_su'] = TTDanSuModel::where('id_nhan_vien',$request->id)->first();
         $data['hon_nhan'] = TTHonNhanModel::where('id_nhan_vien',$request->id)->first();
         $data['lien_he'] = TTLienHeModel::where('id_nhan_vien',$request->id)->first();
