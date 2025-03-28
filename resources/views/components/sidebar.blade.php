@@ -22,7 +22,7 @@
       </a>
       <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
         <li class="sidebar-item">
-          <a href="ql_dm_chuc_vu" class="sidebar-link">Danh mục khóa học</a>
+          <a href="#" class="sidebar-link">Danh mục khóa học</a>
         </li>
         <li class="sidebar-item">
           <a href="#" class="sidebar-link">Danh mục hệ đào tạo</a>
@@ -37,10 +37,10 @@
           <a href="#" class="sidebar-link">Danh mục lớp học</a>
         </li>
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link">Danh mục chức vụ</a>
+          <a href="ql_dm_chuc_vu" class="sidebar-link">Danh mục chức vụ</a>
         </li>
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link">Danh mục chương trình
+          <a href="" class="sidebar-link">Danh mục chương trình
             học</a>
         </li>
         <li class="sidebar-item">

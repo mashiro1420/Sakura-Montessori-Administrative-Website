@@ -31,46 +31,22 @@
             @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
-                <label for="ho_va_ten_search">Họ và tên</label>
-                <input type="text" id="ho_va_ten_search" name = "tk_ho_ten" {{!empty($tk_ho_ten)?"value=$tk_ho_ten":""}} class="form-control" placeholder="Tìm kiếm theo họ tên">
+                <label for="ten_chuc_vu_search">Tên chức vụ</label>
+                <input type="text" id="ten_chuc_vu_search" name = "tk_ten_chuc_vu" {{!empty($tk_ten_chuc_vu)?"value=$tk_ten_chuc_vu":""}} class="form-control" placeholder="Tìm kiếm tên chức vụ">
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="gioi_tinh_filter">Giới tính</label>
-                <select id="gioi_tinh_filter" name = "tk_gioi_tinh" class="form-select">
-                  <option value="">Tất cả</option>
-                  <option value="Nam" {{!empty($tk_gioi_tinh)&&$tk_gioi_tinh=="Nam"?"selected":""}}>Nam</option>
-                  <option value="Nữ" {{!empty($tk_gioi_tinh)&&$tk_gioi_tinh=="Nữ"?"selected":""}}>Nữ</option>
-                </select>
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="quoc_tich_search">Quốc tịch</label>
-                <input type="text" id="quoc_tich_search" name = "tk_quoc_tich" {{!empty($tk_quoc_tich)?"value=$tk_quoc_tich":""}} class="form-control" placeholder="Tìm kiếm theo quốc tịch">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="ngay_nhap_hoc_search">Ngày nhập học</label>
-                <input type="date" id="ngay_nhap_hoc_search" name = "tk_ngay_nhap_hoc" {{!empty($tk_ngay_nhap_hoc)?"value=$tk_ngay_nhap_hoc":""}} class="form-control">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="ngay_thoi_hoc_search">Ngày thôi học</label>
-                <input type="date" id="ngay_thoi_hoc_search" name = "tk_ngay_thoi_hoc" {{!empty($tk_ngay_thoi_hoc)?"value=$tk_ngay_thoi_hoc":""}} class="form-control">
+                <label for="khoi_nhan_vien_search">Khối nhân viên</label>
+                <input type="text" id="khoi_nhan_vien_search" name = "tk_khoi_nhan_vien" {{!empty($tk_khoi_nhan_vien)?"value=$tk_khoi_nhan_vien":""}} class="form-control" placeholder="Tìm kiếm khối nhân viên">
               </div>
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
                 <label for="status-filter">Trạng thái</label>
                 <select id="status-filter" name = "tk_trang_thai" class="form-select">
                   <option value="">Tất cả trạng thái</option>
-                  <option value="active" {{!empty($tk_trang_thai)&&$tk_trang_thai=="active"?"selected":""}}></option>
-                  <option value="inactive" {{!empty($tk_trang_thai)&&$tk_trang_thai=="inactive"?"selected":""}}></option>
+                  <option value="1">Mở</option>
+                  <option value="0">Khóa</option>
                 </select>
               </div>
-            </div>
-            <div class="search-item">
-              <label for="status-filter">Thêm nhiều học sinh</label>
-              <form action="{{ url('') }}" method="post" enctype="multipart/form-data" id="import-form">
-                @csrf
-                <input type="file" name="file" id="file-input" class="d-none" required>
-                <button type="button" class="btn btn-outline-secondary ms-2" id="import-button">Import Excel</button>
-              </form>
             </div>
             <div class="action-buttons">
               <div>
@@ -82,19 +58,9 @@
                 </button>
               </div>
               <div>
-                <a class="btn btn-primary" href="{{route('them_hs')}}">
-                  <i class="fa-solid fa-plus me-1"></i> Thêm học sinh mới
+                <a class="btn btn-primary" href="{{route('ql_them_chuc_vu')}}">
+                  <i class="fa-solid fa-plus me-1"></i> Thêm chức vụ mới
                 </a>
-                <button class="btn btn-outline-secondary ms-2">
-                  <a href="{{route('export_nv',[
-                      'tk_ho_ten'=>!empty($tk_ho_ten)?$tk_ho_ten:"",
-                      'tk_gioi_tinh'=>!empty($tk_gioi_tinh)?$tk_gioi_tinh:"",
-                      'tk_noi_sinh'=>!empty($tk_noi_sinh)?$tk_noi_sinh:"",
-                      'tk_chuc_vu'=>!empty($tk_chuc_vu)?$tk_chuc_vu:"",
-                      'tk_trang_thai'=>!empty($tk_trang_thai)?$tk_trang_thai:""])}}">
-                    <i class="fa-solid fa-file-export me-1"></i> Xuất Excel
-                  </a>
-                </button>
               </div>
             </div>
           </form>
@@ -104,32 +70,29 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Họ tên</th>
-                  <th>Ngày nhập học</th>
+                  <th>Tên chức vụ</th>
+                  <th>Khối nhân viên</th>
+                  <th>Bộ phận</th>
                   <th>Trạng thái</th>
-                  <th>Ngày thôi học</th>
-                  <th>Nick name</th>
-                  <th>Giới tính</th>
-                  <th>Ngày sinh</th>
-                  <th>Quốc tịch</th>
                   <th>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach($hoc_sinhs as $hoc_sinh)
+                @foreach($chuc_vus as $chuc_vu)
                 <tr>
-                  <td>{{$hoc_sinh->id}}</td>
-                  <td>{{$hoc_sinh->ho_ten}}</td>
-                  <td>{{$hoc_sinh->ngay_nhap_hoc}}</td>
-                  <td>{{$hoc_sinh->trang_thai}}</td>
-                  <td>{{$hoc_sinh->ngay_thoi_hoc}}</td>
-                  <td>{{$hoc_sinh->nickname}}</td>
-                  <td>{{$hoc_sinh->gioi_tinh}}</td>
-                  <td>{{$hoc_sinh->ngay_sinh}}</td>
-                  <td>{{$hoc_sinh->quoc_tich}}</td>
+                  <td>{{$chuc_vu->id}}</td>
+                  <td>{{$chuc_vu->ten_chuc_vu}}</td>
+                  <td>{{$chuc_vu->khoi_nhan_vien}}</td>
+                  <td>{{$chuc_vu->bo_phan}}</td>
+                  <td>
+                    @if($chuc_vu->trang_thai == 1)
+                      Mở
+                    @else
+                      Khóa
+                    @endif
+                  </td>
                   <td class="action-column">
-                    <a class="action-button" href="{{route('chi_tiet_nv',['id' => $hoc_sinh->id])}}" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a>
-                    <a class="action-button" title="Chỉnh sửa" href="{{route('sua_nv',['id' => $hoc_sinh->id])}}"><i class="fa-solid fa-edit"></i></a>
+                    <a class="action-button" title="Chỉnh sửa" href="{{route('ql_sua_chuc_vu',['id' => $chuc_vu->id])}}"><i class="fa-solid fa-edit"></i></a>
                   </td>
                 </tr>
                 @endforeach
