@@ -22,7 +22,7 @@
         <div class="container-fluid">
           <!-- Page Header -->
           <div class="page-header">
-            <h2><i class="fa-solid fa-chalkboard-user"></i> Thêm Nhân Viên</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i> Thêm nhân viên</h2>
           </div>
           <!-- Form to add new employee -->
           <form class="search-container" action="{{url('xl_them_nv')}}" method="post">

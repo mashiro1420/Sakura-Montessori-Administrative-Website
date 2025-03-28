@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sửa nhân viên</title>
+  <title>Cập nhật nhân viên</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -22,22 +22,22 @@
         <div class="container-fluid">
           <!-- Page Header -->
           <div class="page-header">
-            <h2><i class="fa-solid fa-chalkboard-user"></i> Cập nhật Nhân Viên</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i> Cập nhật nhân Viên</h2>
           </div>
           <div class="mb-3">
-            <a class="btn btn-primary ms-2" href="{{route('cap_nhat_ttbc',['id' => $nhan_vien->id])}}">
+            <a class="btn btn-primary ms-2 mb-2" href="{{route('cap_nhat_ttbc',['id' => $nhan_vien->id])}}">
               <i class="fa-solid fa-rotate me-1"></i> Cập nhật thông tin bằng cấp
             </a>
-            <a class="btn btn-primary ms-2" href="{{route('cap_nhat_tthn',['id' => $nhan_vien->id])}}">
+            <a class="btn btn-primary ms-2 mb-2" href="{{route('cap_nhat_tthn',['id' => $nhan_vien->id])}}">
               <i class="fa-solid fa-rotate me-1"></i> Cập nhật thông tin hôn nhân
             </a>
-            <a class="btn btn-primary ms-2" href="{{route('cap_nhat_ttds',['id' => $nhan_vien->id])}}">
+            <a class="btn btn-primary ms-2 mb-2" href="{{route('cap_nhat_ttds',['id' => $nhan_vien->id])}}">
               <i class="fa-solid fa-rotate me-1"></i> Cập nhật thông tin dân sự
             </a>
-            <a class="btn btn-primary ms-2" href="{{route('cap_nhat_ttlh',['id' => $nhan_vien->id])}}">
+            <a class="btn btn-primary ms-2 mb-2" href="{{route('cap_nhat_ttlh',['id' => $nhan_vien->id])}}">
               <i class="fa-solid fa-rotate me-1"></i> Cập nhật thông tin liên hệ
             </a>
-            <a class="btn btn-primary ms-2" href="{{route('cap_nhat_tthd',['id' => $nhan_vien->id])}}">
+            <a class="btn btn-primary ms-2 mb-2" href="{{route('cap_nhat_tthd',['id' => $nhan_vien->id])}}">
               <i class="fa-solid fa-rotate me-1"></i> Cập nhật thông tin hợp đồng
             </a>
           </div>
@@ -62,7 +62,7 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="noi_sinh">Nơi sinh</label>
-                <input type="text" id="noi_sinh" name="noi_sinh" value="{{ $nhan_vien->ho_ten }}" class="form-control" placeholder="Nhập nơi sinh" required>
+                <input type="text" id="noi_sinh" name="noi_sinh" value="{{ $nhan_vien->noi_sinh }}" class="form-control" placeholder="Nhập nơi sinh" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ngay_sinh">Ngày sinh</label>
@@ -121,12 +121,9 @@
                 <button class="btn btn-primary" type="submit">
                   <i class="fa-solid fa-save me-1"></i> Lưu
                 </button>
-                <button type="reset" id="reset-btn" class="btn btn-outline-secondary ms-2">
-                  <i class="fa-solid fa-rotate me-1"></i> Làm mới
-                </button>
               </div>
               <div>
-                <a class="btn btn-outline-secondary ms-2" href="{{url('ql_nv')}}">
+                <a class="btn btn-outline-secondary ms-2 mb-2" href="{{url('ql_nv')}}">
                   <i class="fa-solid fa-arrow-left me-1"></i> Quay lại danh sách nhân viên
                 </a>
               </div>
@@ -142,18 +139,6 @@
   const hamBurger = document.querySelector(".toggle-btn");
   hamBurger.addEventListener("click", function () {
     document.querySelector("#sidebar").classList.toggle("expand");
-  });
-  // Nút làm mới phần thêm nhân viên
-  document.getElementById('reset-btn').addEventListener('click', function () {
-    const inputs = document.querySelectorAll('.search-container input, .search-container select');
-
-    inputs.forEach(input => {
-      if (input.tagName === 'SELECT') {
-        input.selectedIndex = 0;
-      } else {
-        input.value = '';
-      }
-    });
   });
   </script>
 </body>

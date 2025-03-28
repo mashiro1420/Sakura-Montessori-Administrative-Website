@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản lý học sinh</title>
+  <title>Quản lý tài khoản</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -22,7 +22,7 @@
         <div class="container-fluid">
           <!-- Page Header -->
           <div class="page-header">
-            <h2><i class="fa-solid fa-chalkboard-user"></i> Quản lý học sinh</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i> Quản lý tài khoản</h2>
           </div>
 
           <!-- Search and Filter Section -->
@@ -103,34 +103,39 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Họ tên</th>
-                  <th>Ngày nhập học</th>
-                  <th>Trạng thái</th>
-                  <th>Ngày thôi học</th>
-                  <th>Nick name</th>
-                  <th>Giới tính</th>
-                  <th>Ngày sinh</th>
-                  <th>Quốc tịch</th>
-                  <th>Thao tác</th>
+                  <th>Tài khoản</th>
+                  <th>Là khách</th>
+                  <th>Mã học sinh</th>
+                  <th>Mã nhân viên</th>
+                  <th>Quyền</th>
+                  {{-- <th>Thao tác</th> --}}
                 </tr>
               </thead>
               <tbody>
-                @foreach($hoc_sinhs as $hoc_sinh)
+                @foreach($tai_khoans as $tai_khoan)
                 <tr>
-                  <td>{{$hoc_sinh->id}}</td>
-                  <td>{{$hoc_sinh->ho_ten}}</td>
-                  <td>{{$hoc_sinh->ngay_nhap_hoc}}</td>
-                  <td>{{$hoc_sinh->trang_thai}}</td>
-                  <td>{{$hoc_sinh->ngay_thoi_hoc}}</td>
-                  <td>{{$hoc_sinh->nickname}}</td>
-                  <td>{{$hoc_sinh->gioi_tinh}}</td>
-                  <td>{{$hoc_sinh->ngay_sinh}}</td>
-                  <td>{{$hoc_sinh->quoc_tich}}</td>
-                  <td class="action-column">
-                    <a class="action-button" href="{{route('chi_tiet_nv',['id' => $hoc_sinh->id])}}" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a>
-                    <a class="action-button" title="Chỉnh sửa" href="{{route('sua_nv',['id' => $hoc_sinh->id])}}"><i class="fa-solid fa-edit"></i></a>
+                  <td>{{$tai_khoan->tai_khoan}}</td>
+                  <td>{{$tai_khoan->la_khach}}</td>
+                  <td>{{$tai_khoan->id_hoc_sinh}}</td>
+                  <td>{{$tai_khoan->id_nhan_vien}}</td>
+                  <td>
+                  <form action="{{ route('xl_quyen') }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn thay đổi quyền không?')">
+                      @csrf
+                      <input type="hidden" name="tai_khoan" value="{{$tai_khoan->tai_khoan}}">
+                      <select name="id_quyen" class="form-control">
+                          @foreach($quyens as $quyen)
+                              <option value="{{$quyen->id}}" {{ $tai_khoan->id_quyen == $quyen->id ? 'selected' : '' }}>
+                                  {{$quyen->ten_quyen}}
+                              </option>
+                          @endforeach
+                      </select>
+                        <button type="submit" class="btn btn-primary btn-sm mt-2">Đổi quyền</button>
+                    </form>
                   </td>
+                  {{-- <td class="action-column">
+                    <a class="action-button" href="{{route('chi_tiet_nv',['id' => $hoc_sinh->id])}}" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a>
+                    <a class="action-button" title="Chỉnh sửa" href="{{route('cai_dat_tk',['id' => $tai_khoan->id])}}"><i class="fa-solid fa-edit"></i></a>
+                  </td> --}}
                 </tr>
                 @endforeach
               </tbody>
