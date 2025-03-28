@@ -9,6 +9,12 @@
   </div>
   <ul class="sidebar-nav">
     <li class="sidebar-item">
+      <a href="{{url('ql_tk')}}" class="sidebar-link">
+        <i class="fa-solid fa-user"></i>
+        <span class="text">Quản lý tài khoản</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
       <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth"
         aria-expanded="false" aria-controls="auth">
         <i class="fa-solid fa-table-list"></i>
@@ -16,7 +22,7 @@
       </a>
       <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link">Danh mục khóa học</a>
+          <a href="ql_dm_chuc_vu" class="sidebar-link">Danh mục khóa học</a>
         </li>
         <li class="sidebar-item">
           <a href="#" class="sidebar-link">Danh mục hệ đào tạo</a>
@@ -61,7 +67,7 @@
       </a>
     </li>
     <li class="sidebar-item">
-      <a href="../../thong_ke_bao_cao/index.html" class="sidebar-link">
+      <a href="#" class="sidebar-link">
         <i class="fa-solid fa-chart-pie"></i>
         <span class="text">Thống kê báo cáo</span>
       </a>

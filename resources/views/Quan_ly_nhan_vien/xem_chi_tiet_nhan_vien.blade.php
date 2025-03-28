@@ -103,7 +103,7 @@
           </div>
           <div class="search-container mt-4">
             <h2>Thông tin bằng cấp</h2>
-            {{-- <div class="search-item d-inline-block w-25">
+            <div class="search-item d-inline-block w-25">
               <label for="chuyen_nganh">Chuyên ngành</label>
               <input type="text" id="chuyen_nganh" name="chuyen_nganh" class="form-control" value="{{ $bang_cap->id_chuyen_nganh }}" readonly>
             </div>
@@ -150,11 +150,11 @@
             <div class="search-item d-inline-block w-25">
               <label for="montessori">Montessori</label>
               <input type="text" id="montessori" name="montessori" class="form-control" value="{{ $bang_cap->montessori }}" readonly>
-            </div> --}}
+            </div>
           </div>
           <div class="search-container mt-4">
             <h2>Thông tin dân sự</h2>
-            {{-- <div class="search-item d-inline-block w-25">
+            <div class="search-item d-inline-block w-25">
               <label for="so_bhxh">Số bảo hiểm xã hội</label>
               <input type="text" id="so_bhxh" name="so_bhxh" class="form-control" value="{{ $dan_su->so_bhxh }}" readonly>
             </div>
@@ -177,27 +177,27 @@
             <div class="search-item d-inline-block w-25">
               <label for="khai_sinh">Khai sinh</label>
               <input type="text" id="khai_sinh" name="khai_sinh" class="form-control" value="{{ $dan_su->khai_sinh }}" readonly>
-            </div> --}}
+            </div>
           </div>
           <div class="search-container mt-4">
             <h2>Thông tin hôn nhân</h2>
-            {{-- <div class="search-item d-inline-block w-25">
+            <div class="search-item d-inline-block w-25">
               <label for="tinh_trang_hon_nhan">Tình trạng hôn nhân</label>
               <input type="text" id="tinh_trang_hon_nhan" name="tinh_trang_hon_nhan" class="form-control" value="{{ $hon_nhan->tinh_trang_hon_nhan }}" readonly>
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="so_con">Số con</label>
               <input type="text" id="so_con" name="so_con" class="form-control" value="{{ $hon_nhan->so_con }}" readonly>
-            </div> --}}
+            </div>
           </div>
           <div class="search-container mt-4">
             <h2>Thông tin hợp đồng</h2>
-            {{-- <div class="search-item d-inline-block w-25">
+            <div class="search-item d-inline-block w-25">
               <label for="loai_hop_dong">Loại hợp đồng</label>
               <input type="text" id="loai_hop_dong" name="loai_hop_dong" class="form-control" value="{{ $hop_dong->loai_hop_dong }}" readonly>
             </div>
             <div class="search-item d-inline-block w-25">
-              <label for="so_hop_dong">Số hợp đồng/label>
+              <label for="so_hop_dong">Số hợp đồng</label>
               <input type="text" id="so_hop_dong" name="so_hop_dong" class="form-control" value="{{ $hop_dong->so_hop_dong }}" readonly>
             </div>
             <div class="search-item d-inline-block w-25">
@@ -207,11 +207,11 @@
             <div class="search-item d-inline-block w-25">
               <label for="ngay_ket_thuc">Ngày kết thúc</label>
               <input type="text" id="ngay_ket_thuc" name="ngay_ket_thuc" class="form-control" value="{{ $hop_dong->ngay_ket_thuc }}" readonly>
-            </div> --}}
+            </div>
           </div>
           <div class="search-container mt-4">
             <h2>Thông tin liên hệ</h2>
-            {{-- <div class="search-item d-inline-block w-25">
+            <div class="search-item d-inline-block w-25">
               <label for="sdt_rieng">Số điện thoại riêng</label>
               <input type="text" id="sdt_rieng" name="sdt_rieng" class="form-control" value="{{ $lien_he->sdt_rieng }}" readonly>
             </div>
@@ -226,7 +226,7 @@
             <div class="search-item d-inline-block w-25">
               <label for="email_noi_bo">Email nội bộ</label>
               <input type="text" id="email_noi_bo" name="email_noi_bo" class="form-control" value="{{ $lien_he->email_noi_bo }}" readonly>
-            </div> --}}
+            </div>
           </div>
         </div>
       </div>

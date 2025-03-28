@@ -16,25 +16,25 @@ class QLHocSinhController extends Controller
     {
         $data = [];
         $data['hoc_sinhs'] = HocSinhModel::all();
-        return view('Hoc_sinh.hoc_sinh', $data);
+        return view('Quan_ly_hoc_sinh.quan_ly_hoc_sinh', $data);
     }
     public function viewChiTiet(Request $request)
     {
         $data = [];
         $data['hoc_sinhs'] = HocSinhModel::all();
         $data['hoc_sinh'] = HocSinhModel::find($request->id);
-        return view('Hoc_sinh.hoc_sinh', $data);
+        return view('Quan_ly_hoc_sinh.xem_chi_tiet_hoc_sinh', $data);
     }
     public function viewThem(Request $request)
     {
         $data = [];
-        return view('Hoc_sinh.them_hoc_sinh', $data);
+        return view('Quan_ly_hoc_sinh.them_hoc_sinh', $data);
     }
     public function viewSua(Request $request)
     {
         $data = [];
         $data['hoc_sinh'] = HocSinhModel::find($request->id);
-        return view('Hoc_sinh.sua_hoc_sinh', $data);
+        return view('Quan_ly_hoc_sinh.sua_hoc_sinh', $data);
     }
 //-------------------------------------------------
     public function xlThem(Request $request)
