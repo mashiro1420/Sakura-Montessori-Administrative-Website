@@ -20,150 +20,150 @@ class DanhMucController extends Controller
     public function viewDMChucVu(Request $request)
     {
         $data = [];
-        $data['chuc_vu'] = ChucVuModel::all();
-        return view('Quan_ly_danh_muc.quan_ly_dm_chuc_vu', $data);
+        $data['chuc_vus'] = ChucVuModel::all();
+        return view('Quan_ly_danh_muc.Danh_muc_chuc_vu.quan_ly_dm_chuc_vu', $data);
     }
     public function viewDMChuyenNganh(Request $request)
     {
         $data = [];
-        $data['chuyen_nganh'] = ChuyenNganhModel::all();
-        return view('Quan_ly_danh_muc.quan_ly_dm_chuyen_nganh', $data);
+        $data['chuyen_nganhs'] = ChuyenNganhModel::all();
+        return view('Quan_ly_danh_muc.Danh_muc_chuyen_nganh.quan_ly_dm_chuyen_nganh', $data);
     }public function viewDMDichVu(Request $request)
     {
         $data = [];
-        $data['dich_vu'] = DichVuModel::all();
-        return view('Quan_ly_danh_muc.quan_ly_dm_dich_vu', $data);
+        $data['dich_vus'] = DichVuModel::all();
+        return view('Quan_ly_danh_muc.Danh_muc_dich_vu.quan_ly_dm_dich_vu', $data);
     }public function viewDMHeDaoTao(Request $request)
     {
         $data = [];
-        $data['he_dao_tao'] = HeDaoTaoModel::all();
-        return view('Quan_ly_danh_muc.quan_ly_dm_he_dao_tao', $data);
+        $data['he_dao_taos'] = HeDaoTaoModel::all();
+        return view('Quan_ly_danh_muc.Danh_muc_he_dao_tao.quan_ly_dm_he_dao_tao', $data);
     }public function viewDMKhoaHoc(Request $request)
     {
         $data = [];
-        $data['khoa_hoc'] = KhoaHocModel::all();
-        return view('Quan_ly_danh_muc.quan_ly_dm_khoa_hoc', $data);
+        $data['khoa_hocs'] = KhoaHocModel::all();
+        return view('Quan_ly_danh_muc.Danh_muc_khoa_hoc.quan_ly_dm_khoa_hoc', $data);
     }public function viewDMKhoi(Request $request)
     {
         $data = [];
-        $data['khoi'] = KhoiModel::all();
-        return view('Quan_ly_danh_muc.quan_ly_dm_khoi', $data);
+        $data['khois'] = KhoiModel::all();
+        return view('Quan_ly_danh_muc.Danh_muc_khoi.quan_ly_dm_khoi', $data);
     }public function viewDMLop(Request $request)
     {
         $data = [];
-        $data['lop'] = LopModel::all();
-        return view('Quan_ly_danh_muc.quan_ly_dm_lop', $data);
+        $data['lops'] = LopModel::all();
+        return view('Quan_ly_danh_muc.Danh_muc_lop.quan_ly_dm_lop', $data);
     }public function viewDMMonHoc(Request $request)
     {
         $data = [];
-        $data['mon_hoc'] = MonHocModel::all();
-        return view('Quan_ly_danh_muc.quan_ly_dm_mon_hoc', $data);
+        $data['mon_hocs'] = MonHocModel::all();
+        return view('Quan_ly_danh_muc.Danh_muc_mon_hoc.quan_ly_dm_mon_hoc', $data);
     }public function viewDMPhongHoc(Request $request)
     {
         $data = [];
-        $data['phong_hoc'] = PhongHocModel::all();
-        return view('Quan_ly_danh_muc.quan_ly_dm_phong_hoc', $data);
+        $data['phong_hocs'] = PhongHocModel::all();
+        return view('Quan_ly_danh_muc.Danh_muc_phong_hoc.quan_ly_dm_phong_hoc', $data);
     }public function viewDMQuyen(Request $request)
     {
         $data = [];
-        $data['quyen'] = QuyenModel::all();
-        return view('Quan_ly_danh_muc.quan_ly_dm_quyen', $data);
+        $data['quyens'] = QuyenModel::all();
+        return view('Quan_ly_danh_muc.Danh_muc_quyen.quan_ly_dm_quyen', $data);
     }
 //-------------------------------------
 public function viewThemChucVu(Request $request)
     {
         $data = [];
-        return view('Quan_ly_danh_muc.quan_ly_them_chuc_vu', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_chuc_vu.quan_ly_them_chuc_vu', $data);
     }
     public function viewThemChuyenNganh(Request $request)
     {
         $data = [];
-        return view('Quan_ly_danh_muc.quan_ly_them_chuyen_nganh', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_chuyen_nganh.quan_ly_them_chuyen_nganh', $data);
     }public function viewThemDichVu(Request $request)
     {
         $data = [];
-        return view('Quan_ly_danh_muc.quan_ly_them_dich_vu', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_dich_vu.quan_ly_them_dich_vu', $data);
     }public function viewThemHeDaoTao(Request $request)
     {
         $data = [];
-        return view('Quan_ly_danh_muc.quan_ly_them_he_dao_tao', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_he_dao_tao.quan_ly_them_he_dao_tao', $data);
     }public function viewThemKhoaHoc(Request $request)
     {
         $data = [];
-        return view('Quan_ly_danh_muc.quan_ly_them_khoa_hoc', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_khoa_hoc.quan_ly_them_khoa_hoc', $data);
     }public function viewThemKhoi(Request $request)
     {
         $data = [];
-        return view('Quan_ly_danh_muc.quan_ly_them_khoi', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_khoi.quan_ly_them_khoi', $data);
     }public function viewThemLop(Request $request)
     {
         $data = [];
-        return view('Quan_ly_danh_muc.quan_ly_them_lop', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_lop.quan_ly_them_lop', $data);
     }public function viewThemMonHoc(Request $request)
     {
         $data = [];
-        return view('Quan_ly_danh_muc.quan_ly_them_mon_hoc', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_mon_hoc.quan_ly_them_mon_hoc', $data);
     }public function viewThemPhongHoc(Request $request)
     {
         $data = [];
-        return view('Quan_ly_danh_muc.quan_ly_them_phong_hoc', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_phong_hoc.quan_ly_them_phong_hoc', $data);
     }public function viewThemQuyen(Request $request)
     {
         $data = [];
-        return view('Quan_ly_danh_muc.quan_ly_them_quyen', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_quyen.quan_ly_them_quyen', $data);
     } 
 //-------------------------------------
 public function viewSuaChucVu(Request $request)
     {
         $data = [];
         $data['chuc_vu'] = ChucVuModel::find($request->id);
-        return view('Quan_ly_danh_muc.quan_ly_sua_chuc_vu', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_chuc_vu.quan_ly_sua_chuc_vu', $data);
     }
     public function viewSuaChuyenNganh(Request $request)
     {
         $data = [];
         $data['chuyen_nganh'] = ChuyenNganhModel::find($request->id);
-        return view('Quan_ly_danh_muc.quan_ly_sua_chuyen_nganh', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_chuyen_nganh.quan_ly_sua_chuyen_nganh', $data);
     }public function viewSuaDichVu(Request $request)
     {
         $data = [];
         $data['dich_vu'] = DichVuModel::find($request->id); 
-        return view('Quan_ly_danh_muc.quan_ly_sua_dich_vu', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_dich_vu.quan_ly_sua_dich_vu', $data);
     }public function viewSuaHeDaoTao(Request $request)
     {
         $data = [];
         $data['he_dao_tao'] = HeDaoTaoModel::find($request->id); 
-        return view('Quan_ly_danh_muc.quan_ly_sua_he_dao_tao', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_dao_tao.quan_ly_sua_he_dao_tao', $data);
     }public function viewSuaKhoaHoc(Request $request)
     {
         $data = [];
         $data['khoa_hoc'] = KhoaHocModel::find($request->id);
-        return view('Quan_ly_danh_muc.quan_ly_sua_khoa_hoc', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_khoa_hoc.quan_ly_sua_khoa_hoc', $data);
     }public function viewSuaKhoi(Request $request)
     {
         $data = [];
         $data['khoi'] = KhoiModel::find($request->id); 
-        return view('Quan_ly_danh_muc.quan_ly_sua_khoi', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_khoi.quan_ly_sua_khoi', $data);
     }public function viewSuaLop(Request $request)
     {
         $data = [];
         $data['lop'] = LopModel::find($request->id); 
-        return view('Quan_ly_danh_muc.quan_ly_sua_lop', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_lop.quan_ly_sua_lop', $data);
     }public function viewSuaMonHoc(Request $request)
     {
         $data = [];
         $data['mon_hoc'] = MonHocModel::find($request->id); 
-        return view('Quan_ly_danh_muc.quan_ly_sua_mon_hoc', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_mon_hoc.quan_ly_sua_mon_hoc', $data);
     }public function viewSuaPhongHoc(Request $request)
     {
         $data = [];
         $data['phong_hoc'] = PhongHocModel::find($request->id); 
-        return view('Quan_ly_danh_muc.quan_ly_sua_phong_hoc', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_phong_hoc.quan_ly_sua_phong_hoc', $data);
     }public function viewSuaQuyen(Request $request)
     {
         $data = [];
         $data['quyen'] = QuyenModel::find($request->id); 
-        return view('Quan_ly_danh_muc.quan_ly_sua_quyen', $data);
+        return view('Quan_ly_danh_muc.Danh_muc_quyen.quan_ly_sua_quyen', $data);
     } 
 //-------------------------------------
     public function xlDMChucVu(Request $request){
