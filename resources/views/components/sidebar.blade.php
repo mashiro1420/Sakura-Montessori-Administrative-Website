@@ -22,29 +22,31 @@
       </a>
       <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link">Danh mục khóa học</a>
-        </li>
-        <li class="sidebar-item">
-          <a href="#" class="sidebar-link">Danh mục hệ đào tạo</a>
-        </li>
-        <li class="sidebar-item">
-          <a href="#" class="sidebar-link">Danh mục bằng cấp trình độ</a>
-        </li>
-        <li class="sidebar-item">
-          <a href="#" class="sidebar-link">Danh mục khối</a>
-        </li>
-        <li class="sidebar-item">
-          <a href="#" class="sidebar-link">Danh mục lớp học</a>
-        </li>
-        <li class="sidebar-item">
           <a href="ql_dm_chuc_vu" class="sidebar-link">Danh mục chức vụ</a>
         </li>
         <li class="sidebar-item">
-          <a href="" class="sidebar-link">Danh mục chương trình
-            học</a>
+          <a href="ql_dm_chuyen_nganh" class="sidebar-link">Danh mục chuyên ngành</a>
         </li>
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link">Danh mục phòng học</a>
+          <a href="ql_dm_dich_vu" class="sidebar-link">Danh mục dịch vụ</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="ql_dm_he_dao_tao" class="sidebar-link">Danh mục hệ đào tạo</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="ql_dm_khoa_hoc" class="sidebar-link">Danh mục khóa học</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="ql_dm_khoi" class="sidebar-link">Danh mục khối</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="ql_dm_lop" class="sidebar-link">Danh mục lớp học</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="ql_dm_phong_hoc" class="sidebar-link">Danh mục phòng học</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="ql_dm_quyen" class="sidebar-link">Danh mục quyền</a>
         </li>
       </ul>
     </li>
