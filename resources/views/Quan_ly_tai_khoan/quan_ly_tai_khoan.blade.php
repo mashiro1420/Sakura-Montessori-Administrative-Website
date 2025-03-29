@@ -27,43 +27,34 @@
 
           <!-- Search and Filter Section -->
           <!-- < class="search-container"> -->
-          <form class="search-container" action="{{url('ql_nv')}}" method="get">
+          <form class="search-container" action="{{url('ql_tk')}}" method="get">
             @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
-                <label for="ho_va_ten_search">Họ và tên</label>
-                <input type="text" id="ho_va_ten_search" name = "tk_ho_ten" {{!empty($tk_ho_ten)?"value=$tk_ho_ten":""}} class="form-control" placeholder="Tìm kiếm theo họ tên">
+                <label for="tai_khoan_search">Tài khoản</label>
+                <input type="text" id="tai_khoan_search" name = "tk_tai_khoan" {{!empty($tk_tai_khoan)?"value=$tk_tai_khoan":""}} class="form-control" placeholder="Tìm kiếm theo tài khoản">
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="gioi_tinh_filter">Giới tính</label>
-                <select id="gioi_tinh_filter" name = "tk_gioi_tinh" class="form-select">
-                  <option value="">Tất cả</option>
-                  <option value="Nam" {{!empty($tk_gioi_tinh)&&$tk_gioi_tinh=="Nam"?"selected":""}}>Nam</option>
-                  <option value="Nữ" {{!empty($tk_gioi_tinh)&&$tk_gioi_tinh=="Nữ"?"selected":""}}>Nữ</option>
-                </select>
+                <label for="ma_hoc_sinh_search">Mã học sinh</label>
+                <input type="text" id="ma_hoc_sinh_search" name = "tk_ma_hoc_sinh" {{!empty($tk_ma_hoc_sinh)?"value=$tk_ma_hoc_sinh":""}} class="form-control" placeholder="Tìm kiếm theo mã học sinh">
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="quoc_tich_search">Quốc tịch</label>
-                <input type="text" id="quoc_tich_search" name = "tk_quoc_tich" {{!empty($tk_quoc_tich)?"value=$tk_quoc_tich":""}} class="form-control" placeholder="Tìm kiếm theo quốc tịch">
+                <label for="ma_nhan_vien_search">Mã nhân viên</label>
+                <input type="text" id="ma_nhan_vien_search" name = "tk_nhan_vien" {{!empty($tk_nhan_vien)?"value=$tk_nhan_vien":""}} class="form-control" placeholder="Tìm kiếm theo mã nhân viên">
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="ngay_nhap_hoc_search">Ngày nhập học</label>
-                <input type="date" id="ngay_nhap_hoc_search" name = "tk_ngay_nhap_hoc" {{!empty($tk_ngay_nhap_hoc)?"value=$tk_ngay_nhap_hoc":""}} class="form-control">
+                  <label for="quyen_filter">Quyền</label>
+                  <select id="quyen_filter" name="tk_quyen" class="form-select">
+                      <option value="">Tất cả</option>
+                      @foreach($quyens as $quyen)
+                          <option value="{{ $quyen->id }}" 
+                              {{ !empty($request->tk_quyen) && $request->tk_quyen == $quyen->id ? 'selected' : '' }}>
+                              {{ $quyen->ten_quyen }}  <!-- Giả sử bạn có trường `ten_quyen` trong bảng `dm_quyen` -->
+                          </option>
+                      @endforeach
+                  </select>
               </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="ngay_thoi_hoc_search">Ngày thôi học</label>
-                <input type="date" id="ngay_thoi_hoc_search" name = "tk_ngay_thoi_hoc" {{!empty($tk_ngay_thoi_hoc)?"value=$tk_ngay_thoi_hoc":""}} class="form-control">
-              </div>
-            <div class="filter-row">
-              <div class="search-item d-inline-block w-25">
-                <label for="status-filter">Trạng thái</label>
-                <select id="status-filter" name = "tk_trang_thai" class="form-select">
-                  <option value="">Tất cả trạng thái</option>
-                  <option value="active" {{!empty($tk_trang_thai)&&$tk_trang_thai=="active"?"selected":""}}></option>
-                  <option value="inactive" {{!empty($tk_trang_thai)&&$tk_trang_thai=="inactive"?"selected":""}}></option>
-                </select>
-              </div>
-            </div>
+            </div>  
             <div class="search-item">
               <label for="status-filter">Thêm nhiều học sinh</label>
               <form action="{{ url('') }}" method="post" enctype="multipart/form-data" id="import-form">
@@ -87,7 +78,7 @@
                 </a>
                 <button class="btn btn-outline-secondary ms-2">
                   <a href="{{route('export_nv',[
-                      'tk_ho_ten'=>!empty($tk_ho_ten)?$tk_ho_ten:"",
+                      'tk_tai_khoan'=>!empty($tk_tai_khoan)?$tk_tai_khoan:"",
                       'tk_gioi_tinh'=>!empty($tk_gioi_tinh)?$tk_gioi_tinh:"",
                       'tk_noi_sinh'=>!empty($tk_noi_sinh)?$tk_noi_sinh:"",
                       'tk_chuc_vu'=>!empty($tk_chuc_vu)?$tk_chuc_vu:"",
