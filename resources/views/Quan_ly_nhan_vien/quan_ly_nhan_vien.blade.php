@@ -73,14 +73,6 @@
                 <button type="submit">Import Excel</button>
               </form>
             </div> --}}
-            <div class="search-item">
-              <label for="status-filter">Thêm nhiều nhân viên</label>
-              <form action="{{ url('/import_nv') }}" method="post" enctype="multipart/form-data" id="import-form">
-                @csrf
-                <input type="file" name="file" id="file-input" class="d-none" required>
-                <button type="button" class="btn btn-outline-secondary ms-2" id="import-button">Import Excel</button>
-              </form>
-            </div>
             <div class="action-buttons">
               <div>
                 <button class="btn btn-primary">

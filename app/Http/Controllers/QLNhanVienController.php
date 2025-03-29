@@ -89,7 +89,7 @@ class QLNhanVienController extends Controller
         $data['hon_nhan'] = TTHonNhanModel::where('id_nhan_vien',$request->id)->first();
         $data['lien_he'] = TTLienHeModel::where('id_nhan_vien',$request->id)->first();
         $data['bang_cap'] = TTBangCapModel::where('id_nhan_vien',$request->id)->first();
-        $data['hop_dong'] = TTHopDongModel::where('id_nhan_vien',$request->id)->first();
+        $data['hop_dong'] = TTHopDongModel::where('id_nhan_vien',$request->id)->whereRaw('NOW() BETWEEN tt_hopdong.ngay_ky AND tt_hopdong.ngay_ket_thuc')->first();
         return view('Quan_ly_nhan_vien.xem_chi_tiet_nhan_vien',$data);
     }
     public function viewThem()
@@ -269,7 +269,7 @@ class QLNhanVienController extends Controller
     }
     public function import(Request $request){
         Excel::import(new NhanVienImport, $request->file('file'));
-
+        
         return back()->with('success', 'Dữ liệu đã được nhập thành công!');
     }
     public function export(Request $request){
@@ -297,7 +297,10 @@ class QLNhanVienController extends Controller
         ->leftJoin('tt_lienhe','ql_nhanvien.id','=','tt_lienhe.id_nhan_vien')
         ->leftJoin('tt_bangcap','ql_nhanvien.id','=','tt_bangcap.id_nhan_vien')
         ->leftJoin('tt_dansu','ql_nhanvien.id','=','tt_dansu.id_nhan_vien')
-        ->leftJoin('tt_hopdong','ql_nhanvien.id','=','tt_hopdong.id_nhan_vien')
+        ->leftJoin('tt_hopdong',function($join) {
+            $join->on('ql_nhanvien.id','=','tt_hopdong.id_nhan_vien')
+             ->whereRaw('NOW() BETWEEN tt_hopdong.ngay_ky AND tt_hopdong.ngay_ket_thuc');
+            })
         ->leftJoin('dm_chuyennganh','tt_bangcap.id_chuyen_nganh','=','dm_chuyennganh.id');
         if ($request->has('tk_ho_ten') && !empty($request->tk_ho_ten)){
             $query->where('ho_ten','like','%'.$request->tk_ho_ten.'%');
@@ -320,6 +323,8 @@ class QLNhanVienController extends Controller
             }
         }
         $query = $query->get();
+
+        
         return Excel::download(new NhanVienExport($query), 'export.xlsx');
     }
 }

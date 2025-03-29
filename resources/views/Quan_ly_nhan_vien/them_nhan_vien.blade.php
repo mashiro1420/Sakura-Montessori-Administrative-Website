@@ -25,6 +25,14 @@
             <h2><i class="fa-solid fa-chalkboard-user"></i> Thêm nhân viên</h2>
           </div>
           <!-- Form to add new employee -->
+          <div class="search-item">
+              <label for="status-filter">Thêm nhiều nhân viên</label>
+              <form action="{{ url('/import_nv') }}" method="post" enctype="multipart/form-data" id="import-form">
+                @csrf
+                <input type="file" name="file" id="file-input" class="d-none" required>
+                <button type="submit" name="import" class="btn btn-outline-secondary ms-2" id="import-button">Import Excel</button>
+              </form>
+            </div>
           <form class="search-container" action="{{url('xl_them_nv')}}" method="post">
           @csrf
             <div class="filter-row">
@@ -127,5 +135,14 @@
     });
   });
   </script>
+    <script>
+      document.getElementById('import-button').addEventListener('click', function() {
+        document.getElementById('file-input').click(); // Mở file picker khi nhấn nút
+      });
+  
+      document.getElementById('file-input').addEventListener('change', function() {
+        document.getElementById('import-form').submit(); // Tự động submit form khi chọn file
+      });
+    </script>
 </body>
 </html>

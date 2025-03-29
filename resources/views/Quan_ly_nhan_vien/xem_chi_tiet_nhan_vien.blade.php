@@ -194,19 +194,19 @@
             <h2>Thông tin hợp đồng</h2>
             <div class="search-item d-inline-block w-25">
               <label for="loai_hop_dong">Loại hợp đồng</label>
-              <input type="text" id="loai_hop_dong" name="loai_hop_dong" class="form-control" value="{{ $hop_dong->loai_hop_dong }}" readonly>
+              <input type="text" id="loai_hop_dong" name="loai_hop_dong" class="form-control" value="{{ !empty($hop_dong->loai_hop_dong)?$hop_dong->loai_hop_dong:"" }}" readonly>
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="so_hop_dong">Số hợp đồng</label>
-              <input type="text" id="so_hop_dong" name="so_hop_dong" class="form-control" value="{{ $hop_dong->so_hop_dong }}" readonly>
+              <input type="text" id="so_hop_dong" name="so_hop_dong" class="form-control" value="{{ !empty($hop_dong->so_hop_dong)?$hop_dong->so_hop_dong:"" }}" readonly>
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="ngay_ky">Ngày ký</label>
-              <input type="text" id="ngay_ky" name="ngay_ky" class="form-control" value="{{ $hop_dong->ngay_ky }}" readonly>
+              <input type="text" id="ngay_ky" name="ngay_ky" class="form-control" value="{{ !empty($hop_dong->ngay_ky)?$hop_dong->ngay_ky:"" }}" readonly>
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="ngay_ket_thuc">Ngày kết thúc</label>
-              <input type="text" id="ngay_ket_thuc" name="ngay_ket_thuc" class="form-control" value="{{ $hop_dong->ngay_ket_thuc }}" readonly>
+              <input type="text" id="ngay_ket_thuc" name="ngay_ket_thuc" class="form-control" value="{{ !empty($hop_dong->ngay_ket_thuc)?$hop_dong->ngay_ket_thuc:"" }}" readonly>
             </div>
           </div>
           <div class="search-container mt-4">
