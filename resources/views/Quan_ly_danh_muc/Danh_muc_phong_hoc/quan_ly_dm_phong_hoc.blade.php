@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản lý danh mục chức vụ</title>
+  <title>Quản lý danh mục phòng học</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -22,23 +22,26 @@
         <div class="container-fluid">
           <!-- Page Header -->
           <div class="page-header">
-            <h2><i class="fa-solid fa-chalkboard-user"></i> Quản lý danh mục chức vụ</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i> Quản lý danh mục phòng học</h2>
           </div>
 
           <!-- Search and Filter Section -->
           <!-- < class="search-container"> -->
-          <form class="search-container" action="{{url('ql_dm_chuc_vu')}}" method="get">
+          <form class="search-container" action="{{url('ql_dm_phong_hoc')}}" method="get">
             @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
-                <label for="ten_chuc_vu_search">Tên chức vụ</label>
-                <input type="text" id="ten_chuc_vu_search" name = "tk_ten_chuc_vu" {{!empty($tk_ten_chuc_vu)?"value=$tk_ten_chuc_vu":""}} class="form-control" placeholder="Tìm kiếm tên chức vụ">
+                <label for="ten_phong_hoc_search">Tên phòng học</label>
+                <input type="text" id="ten_phong_hoc_search" name = "tk_ten_phong_hoc" {{!empty($tk_ten_phong_hoc)?"value=$tk_ten_phong_hoc":""}} class="form-control" placeholder="Tìm kiếm tên phòng học">
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="khoi_nhan_vien_search">Khối nhân viên</label>
-                <input type="text" id="khoi_nhan_vien_search" name = "tk_khoi_nhan_vien" {{!empty($tk_khoi_nhan_vien)?"value=$tk_khoi_nhan_vien":""}} class="form-control" placeholder="Tìm kiếm khối nhân viên">
+                <label for="ten_phong_hoc_search">Số tầng</label>
+                <input type="number" id="ten_phong_hoc_search" name = "tk_ten_phong_hoc" {{!empty($tk_ten_phong_hoc)?"value=$tk_ten_phong_hoc":""}} class="form-control" placeholder="Tìm kiếm theo số tầng">
               </div>
-            <div class="filter-row">
+              <div class="search-item d-inline-block w-25">
+                <label for="ten_phong_hoc_search">Sức chứa</label>
+                <input type="number" id="ten_phong_hoc_search" name = "tk_ten_phong_hoc" {{!empty($tk_ten_phong_hoc)?"value=$tk_ten_phong_hoc":""}} class="form-control" placeholder="Tìm kiếm theo sức chứa">
+              </div>
               <div class="search-item d-inline-block w-25">
                 <label for="status-filter">Trạng thái</label>
                 <select id="status-filter" name = "tk_trang_thai" class="form-select">
@@ -47,7 +50,6 @@
                   <option value="0">Khóa</option>
                 </select>
               </div>
-            </div>
             <div class="action-buttons">
               <div>
                 <button class="btn btn-primary">
@@ -58,8 +60,8 @@
                 </button>
               </div>
               <div>
-                <a class="btn btn-primary" href="{{route('ql_them_chuc_vu')}}">
-                  <i class="fa-solid fa-plus me-1"></i> Thêm chức vụ mới
+                <a class="btn btn-primary" href="{{route('ql_them_phong_hoc')}}">
+                  <i class="fa-solid fa-plus me-1"></i> Thêm phòng học mới
                 </a>
               </div>
             </div>
@@ -70,29 +72,29 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Tên chức vụ</th>
-                  <th>Khối nhân viên</th>
-                  <th>Bộ phận</th>
+                  <th>Tên phòng học</th>
+                  <th>Số tầng</th>
+                  <th>Sức chứa</th>
                   <th>Trạng thái</th>
                   <th>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach($chuc_vus as $chuc_vu)
+                @foreach($phong_hocs as $phong_hoc)
                 <tr>
-                  <td>{{$chuc_vu->id}}</td>
-                  <td>{{$chuc_vu->ten_chuc_vu}}</td>
-                  <td>{{$chuc_vu->khoi_nhan_vien}}</td>
-                  <td>{{$chuc_vu->bo_phan}}</td>
+                  <td>{{$phong_hoc->id}}</td>
+                  <td>{{$phong_hoc->ten_phong_hoc}}</td>
+                  <td>{{$phong_hoc->so_tang}}</td>
+                  <td>{{$phong_hoc->suc_chua}}</td>
                   <td>
-                    @if($chuc_vu->trang_thai == 1)
+                    @if($phong_hoc->trang_thai == 1)
                       Mở
                     @else
                       Khóa
                     @endif
                   </td>
                   <td class="action-column">
-                    <a class="action-button" title="Chỉnh sửa" href="{{route('ql_sua_chuc_vu',['id' => $chuc_vu->id])}}"><i class="fa-solid fa-edit"></i></a>
+                    <a class="action-button" title="Chỉnh sửa" href="{{route('ql_sua_phong_hoc',['id' => $phong_hoc->id])}}"><i class="fa-solid fa-edit"></i></a>
                   </td>
                 </tr>
                 @endforeach
