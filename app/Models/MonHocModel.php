@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MonHocModel extends Model
 {
     use HasFactory;
+    protected $fillable = ['ten_mon_hoc'];
     
     protected $table = 'dm_monhoc';
     protected $primaryKey = 'id';

@@ -32,11 +32,11 @@ class QLNhanVienController extends Controller
             $data['tk_chuc_vu'] = $request->tk_chuc_vu;
         }
         if ($request->has('tk_gioi_tinh')&& !empty($request->tk_gioi_tinh)){
-            $query->where('gioi_tinh','like','%'.$request->tk_gioi_tinh.'%');
+            $query->where('gioi_tinh',$request->tk_gioi_tinh);
             $data['tk_gioi_tinh'] = $request->tk_gioi_tinh;
         }
         if ($request->has('tk_noi_sinh')&& !empty($request->tk_noi_sinh)){
-            $query->where('noi_sinh',$request->tk_noi_sinh);
+            $query->where('noi_sinh','like','%'.$request->tk_noi_sinh.'%');
             $data['tk_noi_sinh'] = $request->tk_noi_sinh;
         }
         if ($request->has('tk_trang_thai')&& !empty($request->tk_trang_thai)){
@@ -48,41 +48,13 @@ class QLNhanVienController extends Controller
             }
             $data['tk_trang_thai'] = $request->tk_trang_thai;
         }
-        $data['nhan_viens'] = $query->get();
+        $data['nhan_viens'] = $query->orderBy('id')->get();
         $data['chuc_vus'] = ChucVuModel::all();
         return view('Quan_ly_nhan_vien.quan_ly_nhan_vien',$data);
     }
     public function viewChiTiet(Request $request)
     {
         $data=[];
-        $query = NhanVienModel::query()->select ('*');
-        if ($request->has('tk_ho_ten') && !empty($request->tk_ho_ten)){
-            $query->where('ho_ten','like','%'.$request->tk_ho_ten.'%');
-            $data['tk_ho_ten'] = $request->tk_ho_ten;
-        }
-        if ($request->has('tk_chuc_vu')&& !empty($request->tk_chuc_vu)){
-            $query->where('id_chuc_vu',$request->tk_chuc_vu);
-            $data['tk_chuc_vu'] = $request->tk_chuc_vu;
-        }
-        if ($request->has('tk_gioi_tinh')&& !empty($request->tk_gioi_tinh)){
-            $query->where('gioi_tinh','like','%'.$request->tk_gioi_tinh.'%');
-            $data['tk_gioi_tinh'] = $request->tk_gioi_tinh;
-        }
-        if ($request->has('tk_noi_sinh')&& !empty($request->tk_noi_sinh)){
-            $query->where('noi_sinh',$request->tk_noi_sinh);
-            $data['tk_noi_sinh'] = $request->tk_noi_sinh;
-        }
-        if ($request->has('tk_trang_thai')&& !empty($request->tk_trang_thai)){
-            if($request->tk_trang_thai == 'active'){
-                $query->whereNull('ngay_nghi_viec');
-            }
-            else if($request->tk_trang_thai == 'inactive'){
-                $query->whereNotNull('ngay_nghi_viec');
-            }
-            $data['tk_trang_thai'] = $request->tk_trang_thai;
-        }
-        $data['nhan_viens'] = $query->get();
-        $data['chuc_vus'] = ChucVuModel::all();
         //thông tin để chuyển sang bảng chi tiết
         $data['chi_tiet'] = NhanVienModel::find($request->id);
         $data['dan_su'] = TTDanSuModel::where('id_nhan_vien',$request->id)->first();
@@ -186,6 +158,7 @@ class QLNhanVienController extends Controller
         $nhan_vien->noi_sinh = $request->noi_sinh;
         $nhan_vien->ngay_sinh = $request->ngay_sinh;
         $nhan_vien->ngay_vao_lam = $request->ngay_vao_lam;
+        $nhan_vien->ngay_nghi_viec = $request->ngay_nghi_viec;
         $nhan_vien->cmnd = $request->cmnd;
         $nhan_vien->ngay_cap = $request->ngay_cap;
         $nhan_vien->noi_cap = $request->noi_cap;
@@ -270,7 +243,7 @@ class QLNhanVienController extends Controller
     public function import(Request $request){
         Excel::import(new NhanVienImport, $request->file('file'));
         
-        return back()->with('success', 'Dữ liệu đã được nhập thành công!');
+        return redirect()->route('ql_nv');
     }
     public function export(Request $request){
         $query = NhanVienModel::query()->select ('ql_nhanvien.id',
@@ -325,6 +298,6 @@ class QLNhanVienController extends Controller
         $query = $query->get();
 
         
-        return Excel::download(new NhanVienExport($query), 'export.xlsx');
+        return Excel::download(new NhanVienExport($query), 'export_nv.xlsx');
     }
 }

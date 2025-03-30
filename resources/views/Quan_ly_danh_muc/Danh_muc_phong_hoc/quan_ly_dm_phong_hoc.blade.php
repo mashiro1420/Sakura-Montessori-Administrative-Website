@@ -36,18 +36,18 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ten_phong_hoc_search">Số tầng</label>
-                <input type="number" id="ten_phong_hoc_search" name = "tk_ten_phong_hoc" {{!empty($tk_ten_phong_hoc)?"value=$tk_ten_phong_hoc":""}} class="form-control" placeholder="Tìm kiếm theo số tầng">
+                <input type="number" id="ten_phong_hoc_search" name = "tk_so_tang" {{!empty($tk_so_tang)?"value=$tk_so_tang":""}} class="form-control" placeholder="Tìm kiếm theo số tầng">
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ten_phong_hoc_search">Sức chứa</label>
-                <input type="number" id="ten_phong_hoc_search" name = "tk_ten_phong_hoc" {{!empty($tk_ten_phong_hoc)?"value=$tk_ten_phong_hoc":""}} class="form-control" placeholder="Tìm kiếm theo sức chứa">
+                <input type="number" id="ten_phong_hoc_search" name = "tk_suc_chua" {{!empty($tk_suc_chua)?"value=$tk_suc_chua":""}} class="form-control" placeholder="Tìm kiếm theo sức chứa">
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="status-filter">Trạng thái</label>
                 <select id="status-filter" name = "tk_trang_thai" class="form-select">
                   <option value="">Tất cả trạng thái</option>
-                  <option value="1">Mở</option>
-                  <option value="0">Khóa</option>
+                  <option value="0"{{!empty($tk_trang_thai)&&$tk_trang_thai=="empty"?"selected":""}}>Trống</option>
+                  <option value="1"{{!empty($tk_trang_thai)&&$tk_trang_thai=="booked"?"selected":""}}>Đang sử dụng</option>
                 </select>
               </div>
             <div class="action-buttons">
@@ -88,9 +88,9 @@
                   <td>{{$phong_hoc->suc_chua}}</td>
                   <td>
                     @if($phong_hoc->trang_thai == 1)
-                      Mở
+                      Đang sử dụng
                     @else
-                      Khóa
+                      Trống
                     @endif
                   </td>
                   <td class="action-column">

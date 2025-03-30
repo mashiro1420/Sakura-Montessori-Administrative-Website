@@ -15,7 +15,12 @@ class QLHocSinhController extends Controller
     public function viewQuanLy(Request $request)
     {
         $data = [];
-        $data['hoc_sinhs'] = HocSinhModel::all();
+        $query = HocSinhModel::query()->select ('*');
+        if ($request->has('tk_ho_ten') && !empty($request->tk_ho_ten)){
+            $query->where('ho_ten','like','%'.$request->tk_ho_ten.'%');
+            $data['tk_ho_ten'] = $request->tk_ho_ten;
+        }
+        $data['hoc_sinhs'] = $query->orderBy('id')->get();
         return view('Quan_ly_hoc_sinh.quan_ly_hoc_sinh', $data);
     }
     public function viewChiTiet(Request $request)

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PhongHocModel extends Model
 {
     use HasFactory;
+    protected $fillable = ['ten_phong_hoc'];
     protected $table = 'dm_phonghoc';
     protected $primaryKey = 'id';
     protected $keytype = 'int';

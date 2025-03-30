@@ -77,10 +77,6 @@
                 <input type="date" id="ngay_nghi_viec" name="ngay_nghi_viec" value="{{ $nhan_vien->ngay_nghi_viec }}" class="form-control">
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="tham_nien">Thâm niên</label>
-                <input type="text" id="tham_nien" name="tham_nien" value="{{ $nhan_vien->tham_nien }}" class="form-control" placeholder="Nhập thâm niên">
-              </div>
-              <div class="search-item d-inline-block w-25">
                 <label for="cmnd">Số căn cước công dân</label>
                 <input type="text" id="cmnd" name="cmnd" value="{{ $nhan_vien->cmnd }}" class="form-control" placeholder="Nhập số căn cước công dân" required>
               </div>

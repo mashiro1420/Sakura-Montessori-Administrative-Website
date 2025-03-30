@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class DichVuModel extends Model
 {
     use HasFactory;
+    protected $fillable = ['ten_dich_vu'];
+
     protected $table = 'dm_dichvu';
     protected $primaryKey = 'id';
     protected $keytype = 'int';

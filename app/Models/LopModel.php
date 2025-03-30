@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LopModel extends Model
 {
     use HasFactory;
+    protected $fillable = ['ten_lop'];
     protected $table = 'dm_lop';
     protected $primaryKey = 'id';
     protected $keytype = 'int';

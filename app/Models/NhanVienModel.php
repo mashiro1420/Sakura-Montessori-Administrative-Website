@@ -8,6 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class NhanVienModel extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'id',
+        'ho_ten',
+        'gioi_tinh',
+        'noi_sinh',
+        'id_chuc_vu',
+        'ngay_sinh',
+        'ngay_vao_lam',
+        'cmnd',
+        'ngay_cap',
+        'noi_cap',
+        'dan_toc',
+        'ton_giao',
+        'quoc_tich'
+    ];
     protected $table = 'ql_nhanvien';
     protected $primaryKey = 'id';
     protected $keytype = 'string';

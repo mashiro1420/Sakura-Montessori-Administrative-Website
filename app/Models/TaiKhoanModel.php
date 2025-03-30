@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TaiKhoanModel extends Model
 {
     use HasFactory;
+    protected $fillable = ['tai_khoan'];
     protected $table = 'ql_taikhoan';
     protected $primaryKey = 'tai_khoan';
     protected $keytype = 'string';

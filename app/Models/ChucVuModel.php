@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ChucVuModel extends Model
 {
     use HasFactory;
+    protected $fillable = ['ten_chuc_vu'];
     protected $table = 'dm_chucvu';
     protected $primaryKey = 'id';
     protected $keytype = 'int';

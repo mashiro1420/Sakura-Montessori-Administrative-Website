@@ -68,10 +68,6 @@
                 <input type="date" id="ngay_nghi_viec" name="ngay_nghi_viec" value="{{ $chi_tiet->ngay_nghi_viec }}" class="form-control">
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="tham_nien">Thâm niên</label>
-                <input type="text" id="tham_nien" name="tham_nien" value="{{ $chi_tiet->tham_nien }}" class="form-control">
-              </div>
-              <div class="search-item d-inline-block w-25">
                 <label for="cmnd">Số căn cước công dân</label>
                 <input type="text" id="cmnd" name="cmnd" value="{{ $chi_tiet->cmnd }}" class="form-control" readonly>
               </div>
@@ -105,7 +101,7 @@
             <h2>Thông tin bằng cấp</h2>
             <div class="search-item d-inline-block w-25">
               <label for="chuyen_nganh">Chuyên ngành</label>
-              <input type="text" id="chuyen_nganh" name="chuyen_nganh" class="form-control" value="{{ $bang_cap->id_chuyen_nganh }}" readonly>
+              <input type="text" id="chuyen_nganh" name="chuyen_nganh" class="form-control" value="{{ $bang_cap->ChuyenNganh->ten_chuyen_nganh }}" readonly>
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="trinh_do_hoc_van">Trình độ học vấn</label>

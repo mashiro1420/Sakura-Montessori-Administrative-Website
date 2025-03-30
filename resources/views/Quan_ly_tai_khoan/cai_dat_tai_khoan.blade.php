@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cập nhật môn học</title>
+  <title>Cập nhật thông tin hôn nhân</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -22,34 +22,27 @@
         <div class="container-fluid">
           <!-- Page Header -->
           <div class="page-header">
-            <h2><i class="fa-solid fa-chalkboard-user"></i>Cập nhật môn học</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i>Thay đổi mật khẩu</h2>
           </div>
           <!-- Form to add new employee -->
-          <form class="search-container" action="{{url('xl_dm_phong_hoc')}}" method="post">
+          <form class="search-container" action="{{url('xl_doi_mk')}}" method="post">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
-                <label for="id">Mã môn học</label>
-                <input type="text" name="id" class="form-control" value="{{$phong_hoc->id}}" readonly>
+                <label for="tai_khoan">Tên tài khoản</label>
+                <input type="text" name="tai_khoan" class="form-control" value="{{ session('tai_khoan') }}" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="ten_phong_hoc">Tên phòng học</label>
-                <input type="text" name="ten_phong_hoc" value="{{$phong_hoc->ten_phong_hoc}}" class="form-control" placeholder="Nhập tên phòng học" required>
+                <label for="mat_khau_cu">Mật khẩu cũ</label>
+                <input type="password" name="mat_khau_cu" class="form-control" placeholder="Nhập mật khẩu mới" required>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="so_tang">Số tầng</label>
-                <input type="number" name="so_tang" class="form-control" value="{{$phong_hoc->so_tang}}" placeholder="Nhập số tầng" required>
+                <label for="mat_khau_moi">Mật khẩu mới</label>
+                <input type="password" name="mat_khau_moi" class="form-control" placeholder="Nhập mật khẩu mới" required>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="suc_chua">Sức chứa</label>
-                <input type="number" name="suc_chua" class="form-control" value="{{$phong_hoc->suc_chua}}" placeholder="Nhập sức chứa" required>
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="trang_thai">Trạng thái</label>
-                <select name="trang_thai" class="form-select" required>
-                  <option value="0" {{$phong_hoc->trang_thai=='0'?"selected":""}}>Trống</option>
-                  <option value="1" {{$phong_hoc->trang_thai=='1'?"selected":""}}>Đang sử dụng</option>
-                </select>
+                <label for="xac_nhan">Nhập lại mật khẩu mới</label>
+                <input type="password" name="xac_nhan" class="form-control" placeholder="Nhập lại mật khẩu mới" required>
               </div>
             </div>
             <div class="action-buttons">
@@ -57,10 +50,13 @@
                 <button class="btn btn-primary" type="submit">
                   <i class="fa-solid fa-save me-1"></i> Lưu
                 </button>
+                <button type="reset" id="reset-btn" class="btn btn-outline-secondary ms-2">
+                  <i class="fa-solid fa-rotate me-1"></i> Làm mới
+                </button>
               </div>
               <div>
-                <a class="btn btn-outline-secondary ms-2" href="{{url('ql_hs')}}">
-                  <i class="fa-solid fa-arrow-left me-1"></i> Quay lại danh mục môn học
+                <a class="btn btn-outline-secondary ms-2" href="{{route('ql_hs')}}">
+                  <i class="fa-solid fa-arrow-left me-1"></i> Quay lại
                 </a>
               </div>
             </div>
@@ -75,6 +71,18 @@
   const hamBurger = document.querySelector(".toggle-btn");
   hamBurger.addEventListener("click", function () {
     document.querySelector("#sidebar").classList.toggle("expand");
+  });
+  // Nút làm mới phần thêm nhân viên
+  document.getElementById('reset-btn').addEventListener('click', function () {
+    const inputs = document.querySelectorAll('.search-container input, .search-container select');
+
+    inputs.forEach(input => {
+      if (input.tagName === 'SELECT') {
+        input.selectedIndex = 0;
+      } else {
+        input.value = '';
+      }
+    });
   });
   </script>
 </body>

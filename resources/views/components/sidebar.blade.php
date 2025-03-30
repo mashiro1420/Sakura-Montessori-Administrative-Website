@@ -43,6 +43,9 @@
           <a href="ql_dm_lop" class="sidebar-link">Danh mục lớp học</a>
         </li>
         <li class="sidebar-item">
+          <a href="ql_dm_mon_hoc" class="sidebar-link">Danh mục môn học</a>
+        </li>
+        <li class="sidebar-item">
           <a href="ql_dm_phong_hoc" class="sidebar-link">Danh mục phòng học</a>
         </li>
         <li class="sidebar-item">
@@ -51,7 +54,7 @@
       </ul>
     </li>
     <li class="sidebar-item">
-      <a href="{{url('quan_ly_dich_vu_dao_tao')}}" class="sidebar-link">
+      <a href="#" class="sidebar-link">
         <i class="fa-solid fa-school"></i>
         <span class="text">Quản lý dịch vụ đào tạo</span>
       </a>
@@ -76,6 +79,10 @@
     </li>
   </ul>
   <div class="sidebar-footer">
+    <a href="{{route('cai_dat_tk')}}" class="sidebar-link">
+      <i class="lni lni-gears-3"></i>
+      <span>Cài đặt tài khoản</span>
+    </a>
     <a href="{{url('xl_dang_xuat')}}" class="sidebar-link">
       <i class="lni lni-exit"></i>
       <span>Logout</span>

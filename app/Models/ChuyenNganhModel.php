@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ChuyenNganhModel extends Model
 {
     use HasFactory;
+    protected $fillable = ['ten_chuyen_nganh'];
+
     protected $table = 'dm_chuyennganh';
     protected $primaryKey = 'id';
     protected $keytype = 'int';
@@ -16,6 +18,6 @@ class ChuyenNganhModel extends Model
 
     public function BangCap()
     {
-        return $this->belongsTo(TTBangCapModel::class);
+        return $this->hasMany(TTBangCapModel::class, 'id_chuyen_nganh');
     }
 }

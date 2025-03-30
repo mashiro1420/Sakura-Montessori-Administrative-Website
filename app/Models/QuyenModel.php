@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class QuyenModel extends Model
 {
     use HasFactory;
+    protected $fillable = ['ten_quyen'];
     protected $table = 'dm_quyen';
     protected $primaryKey = 'id';
     protected $keytype = 'int';

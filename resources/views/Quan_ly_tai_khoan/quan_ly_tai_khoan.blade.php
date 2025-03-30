@@ -55,14 +55,6 @@
                   </select>
               </div>
             </div>  
-            <div class="search-item">
-              <label for="status-filter">Thêm nhiều học sinh</label>
-              <form action="{{ url('') }}" method="post" enctype="multipart/form-data" id="import-form">
-                @csrf
-                <input type="file" name="file" id="file-input" class="d-none" required>
-                <button type="button" class="btn btn-outline-secondary ms-2" id="import-button">Import Excel</button>
-              </form>
-            </div>
             <div class="action-buttons">
               <div>
                 <button class="btn btn-primary">
@@ -77,12 +69,11 @@
                   <i class="fa-solid fa-plus me-1"></i> Thêm học sinh mới
                 </a>
                 <button class="btn btn-outline-secondary ms-2">
-                  <a href="{{route('export_nv',[
+                  <a href="{{route('export_tk',[
                       'tk_tai_khoan'=>!empty($tk_tai_khoan)?$tk_tai_khoan:"",
-                      'tk_gioi_tinh'=>!empty($tk_gioi_tinh)?$tk_gioi_tinh:"",
-                      'tk_noi_sinh'=>!empty($tk_noi_sinh)?$tk_noi_sinh:"",
-                      'tk_chuc_vu'=>!empty($tk_chuc_vu)?$tk_chuc_vu:"",
-                      'tk_trang_thai'=>!empty($tk_trang_thai)?$tk_trang_thai:""])}}">
+                      'tk_gioi_tinh'=>!empty($tk_ma_hoc_sinh)?$tk_ma_hoc_sinh:"",
+                      'tk_noi_sinh'=>!empty($tk_nhan_vien)?$tk_nhan_vien:"",
+                      'tk_chuc_vu'=>!empty($tk_quyen)?$tk_quyen:""])}}">
                     <i class="fa-solid fa-file-export me-1"></i> Xuất Excel
                   </a>
                 </button>
@@ -95,7 +86,6 @@
               <thead>
                 <tr>
                   <th>Tài khoản</th>
-                  <th>Là khách</th>
                   <th>Mã học sinh</th>
                   <th>Mã nhân viên</th>
                   <th>Quyền</th>
@@ -106,7 +96,6 @@
                 @foreach($tai_khoans as $tai_khoan)
                 <tr>
                   <td>{{$tai_khoan->tai_khoan}}</td>
-                  <td>{{$tai_khoan->la_khach}}</td>
                   <td>{{$tai_khoan->id_hoc_sinh}}</td>
                   <td>{{$tai_khoan->id_nhan_vien}}</td>
                   <td>

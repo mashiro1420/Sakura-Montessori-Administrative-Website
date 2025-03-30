@@ -25,12 +25,12 @@
             <h2><i class="fa-solid fa-chalkboard-user"></i> Thêm khóa học</h2>
           </div>
           <!-- Form to add new employee -->
-          <form class="search-container" action="{{url('xl_dm_he_dao_tao')}}" method="post">
+          <form class="search-container" action="{{url('xl_dm_khoa_hoc')}}" method="post">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
-                <label for="ten_he_dao_tao">Tên khóa học</label>
-                <input type="text" name="ten_he_dao_tao" class="form-control" placeholder="Nhập tên khóa học" required>
+                <label for="ten_khoa_hoc">Tên khóa học</label>
+                <input type="text" name="ten_khoa_hoc" class="form-control" placeholder="Nhập tên khóa học" required>
               </div>
             </div>  
             <div class="action-buttons">
@@ -43,7 +43,7 @@
                 </button>
               </div>
               <div>
-                <a class="btn btn-outline-secondary ms-2" href="{{url('ql_dm_he_dao_tao')}}">
+                <a class="btn btn-outline-secondary ms-2" href="{{url('ql_dm_khoa_hoc')}}">
                   <i class="fa-solid fa-arrow-left me-1"></i> Quay lại danh mục khóa học
                 </a>
               </div>

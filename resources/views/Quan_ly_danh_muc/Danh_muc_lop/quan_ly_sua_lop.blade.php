@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cập nhật chuyên ngành</title>
+  <title>Cập nhật lớp</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -22,19 +22,19 @@
         <div class="container-fluid">
           <!-- Page Header -->
           <div class="page-header">
-            <h2><i class="fa-solid fa-chalkboard-user"></i>Cập nhật chuyên ngành</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i>Cập nhật lớp</h2>
           </div>
           <!-- Form to add new employee -->
-          <form class="search-container" action="{{url('xl_dm_chuyen_nganh')}}" method="post">
+          <form class="search-container" action="{{url('xl_dm_lop')}}" method="post">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
-                <label for="id">Mã chuyên ngành</label>
-                <input type="text" name="id" class="form-control" value="{{$chuyen_nganh->id}}" readonly>
+                <label for="id">Mã lớp</label>
+                <input type="text" name="id" class="form-control" value="{{$lop->id}}" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="ten_chuyen_nganh">Tên chuyên ngành</label>
-                <input type="text" name="ten_chuyen_nganh" class="form-control" value="{{$chuyen_nganh->ten_chuyen_nganh}}" required>
+                <label for="ten_lop">Tên lớp</label>
+                <input type="text" name="ten_lop" class="form-control" value="{{$lop->ten_lop}}" required>
               </div>
             </div>
             <div class="action-buttons">
@@ -45,7 +45,7 @@
               </div>
               <div>
                 <a class="btn btn-outline-secondary ms-2" href="{{url('ql_hs')}}">
-                  <i class="fa-solid fa-arrow-left me-1"></i> Quay lại danh mục chuyên ngành
+                  <i class="fa-solid fa-arrow-left me-1"></i> Quay lại danh mục lớp
                 </a>
               </div>
             </div>

@@ -38,8 +38,8 @@
                 <label for="status-filter">Trạng thái</label>
                 <select id="status-filter" name = "tk_trang_thai" class="form-select">
                   <option value="">Tất cả trạng thái</option>
-                  <option value="1">Mở</option>
-                  <option value="0">Khóa</option>
+                  <option value="1"{{!empty($tk_trang_thai)&&$tk_trang_thai=="booked"?"selected":""}}>Mở</option>
+                  <option value="0"{{!empty($tk_trang_thai)&&$tk_trang_thai=="empty"?"selected":""}}>Khóa</option>
                 </select>
               </div>
             <div class="action-buttons">

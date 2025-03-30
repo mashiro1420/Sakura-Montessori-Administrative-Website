@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TTBangCapModel extends Model
 {
     use HasFactory;
-    protected $fillable = ['id_nhan_vien'];
+    protected $fillable = ['id_nhan_vien','id_chuyen_nganh'];
     protected $table = 'tt_bangcap';
     protected $primaryKey = 'id';
     protected $keytype = 'int';
@@ -21,6 +21,6 @@ class TTBangCapModel extends Model
     }
     public function ChuyenNganh()
     {
-        return $this->hasOne(ChuyenNganhModel::class,'id_chuyen_nganh','id');
+        return $this->belongsTo(ChuyenNganhModel::class,'id_chuyen_nganh');
     }
 }
