@@ -145,6 +145,7 @@ class QLHocSinhController extends Controller
         $hoc_sinh->nguoi_dua_don = $request->nguoi_dua_don;
         $hoc_sinh->lien_he_khan = $request->lien_he_khan;
         $hoc_sinh->loai_hoc_phi = $request->loai_hoc_phi;
+        $hoc_sinh->save();
         return redirect()->route('ql_hs');
     }
     public function export(Request $request){
