@@ -20,13 +20,33 @@ class QLHocSinhController extends Controller
             $query->where('ho_ten','like','%'.$request->tk_ho_ten.'%');
             $data['tk_ho_ten'] = $request->tk_ho_ten;
         }
+        if ($request->has('tk_gioi_tinh') && $request->tk_gioi_tinh!=""){
+            $query->where('gioi_tinh',$request->tk_gioi_tinh);
+            $data['tk_gioi_tinh'] = $request->tk_gioi_tinh==0?"Nữ":"Nam";
+        }
+        if ($request->has('tk_quoc_tich') && !empty($request->tk_quoc_tich)){
+            $query->where('quoc_tich','like','%'.$request->tk_quoc_tich.'%');
+            $data['tk_quoc_tich'] = $request->tk_quoc_tich;
+        }
+        if ($request->has('tk_ngay_nhap_hoc') && !empty($request->tk_ngay_nhap_hoc)){
+            $query->where('ngay_nhap_hoc',$request->tk_ngay_nhap_hoc);
+            $data['tk_ngay_nhap_hoc'] = $request->tk_ngay_nhap_hoc;
+        }
+        if ($request->has('tk_ngay_thoi_hoc') && !empty($request->tk_ngay_thoi_hoc)){
+            $query->where('ngay_thoi_hoc',$request->tk_ngay_thoi_hoc);
+            $data['tk_ngay_thoi_hoc'] = $request->tk_ngay_thoi_hoc;
+        }
+        if ($request->has('tk_trang_thai') && $request->tk_trang_thai!=""){
+            dump($request->trang_thai);
+            $query->where('trang_thai',$request->tk_trang_thai);
+            $data['tk_trang_thai'] = $request->tk_trang_thai==0?"active":"inactive";
+        }
         $data['hoc_sinhs'] = $query->orderBy('id')->get();
         return view('Quan_ly_hoc_sinh.quan_ly_hoc_sinh', $data);
     }
     public function viewChiTiet(Request $request)
     {
         $data = [];
-        $data['hoc_sinhs'] = HocSinhModel::all();
         $data['hoc_sinh'] = HocSinhModel::find($request->id);
         return view('Quan_ly_hoc_sinh.xem_chi_tiet_hoc_sinh', $data);
     }
@@ -72,7 +92,7 @@ class QLHocSinhController extends Controller
         $hoc_sinh->ho_ten_bo = $request->ho_ten_bo;
         $hoc_sinh->sdt_bo = $request->sdt_bo;
         $hoc_sinh->email_bo = $request->email_bo;
-        $hoc_sinh->nghe_nghiep_bo = $request->nghe_nghiep_bo	;
+        $hoc_sinh->nghe_nghiep_bo = $request->nghe_nghiep_bo;
         $hoc_sinh->cmnd_bo = $request->cmnd_bo;
         $hoc_sinh->nam_sinh_bo = $request->nam_sinh_bo;
         $hoc_sinh->quoc_tich_bo = $request->quoc_tich_bo;
@@ -129,11 +149,36 @@ class QLHocSinhController extends Controller
     }
     public function export(Request $request){
         $query = HocSinhModel::query()->select ('*');
-        $query = $query->get();
-        return Excel::download(new HocSinhExport($query), 'export.xlsx');
+        if ($request->has('tk_ho_ten') && !empty($request->tk_ho_ten)){
+            $query->where('ho_ten','like','%'.$request->tk_ho_ten.'%');
+            $data['tk_ho_ten'] = $request->tk_ho_ten;
+        }
+        if ($request->has('tk_gioi_tinh') && $request->tk_gioi_tinh!=""){
+            $query->where('gioi_tinh',$request->tk_gioi_tinh);
+            $data['tk_gioi_tinh'] = $request->tk_gioi_tinh==0?"Nữ":"Nam";
+        }
+        if ($request->has('tk_quoc_tich') && !empty($request->tk_quoc_tich)){
+            $query->where('quoc_tich','like','%'.$request->tk_quoc_tich.'%');
+            $data['tk_quoc_tich'] = $request->tk_quoc_tich;
+        }
+        if ($request->has('tk_ngay_nhap_hoc') && !empty($request->tk_ngay_nhap_hoc)){
+            $query->where('ngay_nhap_hoc',$request->tk_ngay_nhap_hoc);
+            $data['tk_ngay_nhap_hoc'] = $request->tk_ngay_nhap_hoc;
+        }
+        if ($request->has('tk_ngay_thoi_hoc') && !empty($request->tk_ngay_thoi_hoc)){
+            $query->where('ngay_thoi_hoc',$request->tk_ngay_thoi_hoc);
+            $data['tk_ngay_thoi_hoc'] = $request->tk_ngay_thoi_hoc;
+        }
+        if ($request->has('tk_trang_thai') && $request->tk_trang_thai!=""){
+            dump($request->trang_thai);
+            $query->where('trang_thai',$request->tk_trang_thai);
+            $data['tk_trang_thai'] = $request->tk_trang_thai==0?"active":"inactive";
+        }
+        $query = $query->orderBy('id')->get();
+        return Excel::download(new HocSinhExport($query), 'export_hs.xlsx');
     }
     public function import(Request $request){
         Excel::import(new HocSinhImport, $request->file('file'));
-        return back()->with('success', 'Dữ liệu đã được nhập thành công!');
+        return redirect()->route('ql_hs');
     }
 }

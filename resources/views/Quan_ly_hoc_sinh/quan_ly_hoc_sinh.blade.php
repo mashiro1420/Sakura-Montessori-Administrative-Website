@@ -27,7 +27,7 @@
 
           <!-- Search and Filter Section -->
           <!-- < class="search-container"> -->
-          <form class="search-container" action="{{url('ql_nv')}}" method="get">
+          <form class="search-container" action="{{url('ql_hs')}}" method="get">
             @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
@@ -38,8 +38,8 @@
                 <label for="gioi_tinh_filter">Giới tính</label>
                 <select id="gioi_tinh_filter" name = "tk_gioi_tinh" class="form-select">
                   <option value="">Tất cả</option>
-                  <option value="Nam" {{!empty($tk_gioi_tinh)&&$tk_gioi_tinh=="Nam"?"selected":""}}>Nam</option>
-                  <option value="Nữ" {{!empty($tk_gioi_tinh)&&$tk_gioi_tinh=="Nữ"?"selected":""}}>Nữ</option>
+                  <option value="1" {{!empty($tk_gioi_tinh)&&$tk_gioi_tinh=="Nam"?"selected":""}}>Nam</option>
+                  <option value="0" {{!empty($tk_gioi_tinh)&&$tk_gioi_tinh=="Nữ"?"selected":""}}>Nữ</option>
                 </select>
               </div>
               <div class="search-item d-inline-block w-25">
@@ -59,18 +59,10 @@
                 <label for="status-filter">Trạng thái</label>
                 <select id="status-filter" name = "tk_trang_thai" class="form-select">
                   <option value="">Tất cả trạng thái</option>
-                  <option value="active" {{!empty($tk_trang_thai)&&$tk_trang_thai=="active"?"selected":""}}></option>
-                  <option value="inactive" {{!empty($tk_trang_thai)&&$tk_trang_thai=="inactive"?"selected":""}}></option>
+                  <option value="0" {{!empty($tk_trang_thai)&&$tk_trang_thai=="active"?"selected":""}}>Đã thôi học</option>
+                  <option value="1" {{!empty($tk_trang_thai)&&$tk_trang_thai=="inactive"?"selected":""}}>Đang học</option>
                 </select>
               </div>
-            </div>
-            <div class="search-item">
-              <label for="status-filter">Thêm nhiều học sinh</label>
-              <form action="{{ url('') }}" method="post" enctype="multipart/form-data" id="import-form">
-                @csrf
-                <input type="file" name="file" id="file-input" class="d-none" required>
-                <button type="button" class="btn btn-outline-secondary ms-2" id="import-button">Import Excel</button>
-              </form>
             </div>
             <div class="action-buttons">
               <div>
@@ -86,11 +78,12 @@
                   <i class="fa-solid fa-plus me-1"></i> Thêm học sinh mới
                 </a>
                 <button class="btn btn-outline-secondary ms-2">
-                  <a href="{{route('export_nv',[
+                  <a href="{{route('export_hs',[
                       'tk_ho_ten'=>!empty($tk_ho_ten)?$tk_ho_ten:"",
                       'tk_gioi_tinh'=>!empty($tk_gioi_tinh)?$tk_gioi_tinh:"",
-                      'tk_noi_sinh'=>!empty($tk_noi_sinh)?$tk_noi_sinh:"",
-                      'tk_chuc_vu'=>!empty($tk_chuc_vu)?$tk_chuc_vu:"",
+                      'tk_quoc_tich'=>!empty($tk_quoc_tich)?$tk_quoc_tich:"",
+                      'tk_ngay_nhap_hoc'=>!empty($tk_ngay_nhap_hoc)?$tk_ngay_nhap_hoc:"",
+                      'tk_ngay_thoi_hoc'=>!empty($tk_ngay_thoi_hoc)?$tk_ngay_thoi_hoc:"",
                       'tk_trang_thai'=>!empty($tk_trang_thai)?$tk_trang_thai:""])}}">
                     <i class="fa-solid fa-file-export me-1"></i> Xuất Excel
                   </a>
@@ -121,15 +114,15 @@
                   <td>{{$hoc_sinh->id}}</td>
                   <td>{{$hoc_sinh->ho_ten}}</td>
                   <td>{{$hoc_sinh->ngay_nhap_hoc}}</td>
-                  <td>{{$hoc_sinh->trang_thai}}</td>
+                  <td>{{$hoc_sinh->trang_thai==1?"Đang học":"Đã thôi học"}}</td>
                   <td>{{$hoc_sinh->ngay_thoi_hoc}}</td>
                   <td>{{$hoc_sinh->nickname}}</td>
-                  <td>{{$hoc_sinh->gioi_tinh}}</td>
+                  <td>{{$hoc_sinh->gioi_tinh==1?"Nam":"Nữ"}}</td>
                   <td>{{$hoc_sinh->ngay_sinh}}</td>
                   <td>{{$hoc_sinh->quoc_tich}}</td>
                   <td class="action-column">
-                    <a class="action-button" href="{{route('chi_tiet_nv',['id' => $hoc_sinh->id])}}" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a>
-                    <a class="action-button" title="Chỉnh sửa" href="{{route('sua_nv',['id' => $hoc_sinh->id])}}"><i class="fa-solid fa-edit"></i></a>
+                    <a class="action-button" href="{{route('chi_tiet_hs',['id' => $hoc_sinh->id])}}" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a>
+                    <a class="action-button" title="Chỉnh sửa" href="{{route('sua_hs',['id' => $hoc_sinh->id])}}"><i class="fa-solid fa-edit"></i></a>
                   </td>
                 </tr>
                 @endforeach
@@ -261,15 +254,6 @@
   // Khởi tạo trang ban đầu
   createPagination(1);
   displayPageData(1);
-  </script>
-  <script>
-    document.getElementById('import-button').addEventListener('click', function() {
-      document.getElementById('file-input').click(); // Mở file picker khi nhấn nút
-    });
-
-    document.getElementById('file-input').addEventListener('change', function() {
-      document.getElementById('import-form').submit(); // Tự động submit form khi chọn file
-    });
   </script>
 </body>
 </html>

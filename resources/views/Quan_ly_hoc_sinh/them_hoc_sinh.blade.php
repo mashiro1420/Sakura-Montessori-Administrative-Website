@@ -24,49 +24,41 @@
           <div class="page-header">
             <h2><i class="fa-solid fa-chalkboard-user"></i> Thêm học sinh</h2>
           </div>
+          <div class="search-item">
+            <label for="status-filter">Thêm nhiều học sinh</label>
+            <form action="{{ url('import_hs') }}" method="post" enctype="multipart/form-data" id="import-form">
+              @csrf
+              <input type="file" name="file" id="file-input" class="d-none" required>
+              <button type="submit" name="import" class="btn btn-outline-secondary ms-2" id="import-button">Import Excel</button>
+            </form>
+          </div>
           <!-- Form to add new employee -->
           <form class="search-container" action="{{url('xl_them_hs')}}" method="post">
           @csrf
             <div class="filter-row">
+              <h2>Thông tin cơ bản</h2>
               <div class="search-item d-inline-block w-25">
                 <label for="ho_ten">Họ và tên</label>
                 <input type="text" name="ho_ten" class="form-control" placeholder="Nhập họ và tên" required>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="nickname">Nick name</label>
+                <input type="text" name="nickname" class="form-control" placeholder="Nhập nick name">
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="gioi_tinh">Giới tính</label>
+                <select name="gioi_tinh" class="form-select" required>
+                  <option value="1">Nam</option>
+                  <option value="0">Nữ</option>
+                </select>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ngay_sinh">Ngày sinh</label>
                 <input type="date" name="ngay_sinh" class="form-control" required>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="gioi_tinh">Giới tính</label>
-                <select name="gioi_tinh" class="form-select" required>
-                  <option value="Nam">Nam</option>
-                  <option value="Nữ">Nữ</option>
-                </select>
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="di_bus">Đi bus</label>
-                <select name="di_bus" class="form-select" required>
-                  <option value="Có">Có</option>
-                  <option value="Không">Không</option>
-                </select>
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="loai_hoc_phi">Loại học phí</label>
-                <select name="loai_hoc_phi" class="form-select">
-                  {{-- @foreach($loai_hoc_phis as $loai_hoc_phi)
-                    <option value="{{$loai_hoc_phi->id}}">{{$loai_hoc_phi->ten_loai_hoc_phi}}</option>
-                  @endforeach --}}
-                  <option value="Loại học phí 1">Loại học phí 1</option>
-                  <option value="Loại học phí 2">Loại học phí 2</option>
-                </select>
-              </div>
-              <div class="search-item d-inline-block w-25">
                 <label for="ngay_nhap_hoc">Ngày nhập học</label>
                 <input type="date" name="ngay_nhap_hoc" class="form-control" required>
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="nickname">Nick name</label>
-                <input type="text" name="nickname" class="form-control" placeholder="Nhập nick name" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="quoc_tich">Quốc tịch</label>
@@ -74,15 +66,30 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ngon_ngu">Ngôn ngữ</label>
-                <input type="text" name="ngon_ngu" class="form-control" placeholder="Nhập ngôn ngữ">
+                <input type="text" name="ngon_ngu" class="form-control" placeholder="Nhập ngôn ngữ" required>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="can_nang">Cân nặng</label>
-                <input type="text" name="can_nang" class="form-control" placeholder="Nhập cân nặng">
+                <label for="thuong_tru">Thường trú</label>
+                <input type="text" name="thuong_tru" class="form-control" placeholder="Nhập thường trú" required>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="chieu_cao">Chiều cao</label>
-                <input type="text" name="chieu_cao" class="form-control" placeholder="Nhập chiều cao">
+                <label for="loai_hoc_phi">Loại học phí</label>
+                <select name="loai_hoc_phi" class="form-select" required>
+                  <option value="0">Học phí kỳ</option>
+                  <option value="1">Học phí năm</option>
+                  <option value="2">Học phí tháng</option>
+                </select>
+              </div>
+            </div>
+            <div class="filter-row">
+              <h2>Thông tin sức khỏe</h2>
+              <div class="search-item d-inline-block w-25">
+                <label for="can_nang">Cân nặng (KG)</label>
+                <input type="number" name="can_nang" class="form-control" placeholder="Nhập cân nặng">
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="chieu_cao">Chiều cao (CM)</label>
+                <input type="number" name="chieu_cao" class="form-control" placeholder="Nhập chiều cao">
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="noi_sinh">Nơi sinh</label>
@@ -90,51 +97,40 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="thong_tin_suc_khoe">Thông tin sức khỏe</label>
-                <input type="text" name="thong_tin_suc_khoe" class="form-control" placeholder="Nhập thông tin sức khỏe">
+                <textarea type="text" name="thong_tin_suc_khoe" class="form-control" placeholder="Nhập thông tin sức khỏe"></textarea>
               </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="thuong_tru">Thường trú</label>
-                <input type="text" name="thuong_tru" class="form-control" placeholder="Nhập thường trú">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="dia_chi">Địa chỉ</label>
-                <input type="text" name="dia_chi" class="form-control" placeholder="Nhập địa chỉ">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="nguoi_dua_don">Người đưa đón</label>
-                <input type="text" name="nguoi_dua_don" class="form-control" placeholder="Nhập người đưa đón">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="lien_he_khan">Liên hệ khẩn</label>
-                <input type="text" name="lien_he_khan" class="form-control" placeholder="Nhập liên hệ khẩn">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="ho_ten_me">Họ tên mẹ</label>
-                <input type="text" name="ho_ten_me" class="form-control" placeholder="Nhập họ tên mẹ">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="sdt_me">Số điện thoại của mẹ</label>
-                <input type="text" name="sdt_me" class="form-control" placeholder="Nhập số điện thoại của mẹ">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="email_me">Email của mẹ</label>
-                <input type="email" name="email_me" class="form-control" placeholder="Nhập email của mẹ">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="nghe_nghiep_me">Nghề nghiệp của mẹ</label>
-                <input type="text" name="nghe_nghiep_me" class="form-control" placeholder="Nhập nghề nghiệp của mẹ">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="cmnd_me">Số căn cước của mẹ</label>
-                <input type="text" name="cmnd_me" class="form-control" placeholder="Nhập số căn cước của mẹ">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="nam_sinh_me">Năm sinh của mẹ</label>
-                <input type="text" name="nam_sinh_me" class="form-control" placeholder="Nhập năm sinh của mẹ">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="quoc_tich_me">Quốc tịch của mẹ</label>
-                <input type="text" name="quoc_tich_me" class="form-control" placeholder="Nhập quốc tịch của mẹ">
+            </div>
+            <div class="filter-row">
+              <h2>Thông tin phụ huynh</h2>
+              <div>
+                <div class="search-item d-inline-block w-25">
+                  <label for="ho_ten_me">Họ tên mẹ</label>
+                  <input type="text" name="ho_ten_me" class="form-control" placeholder="Nhập họ tên mẹ">
+                </div>
+                <div class="search-item d-inline-block w-25">
+                  <label for="sdt_me">Số điện thoại của mẹ</label>
+                  <input type="text" name="sdt_me" class="form-control" placeholder="Nhập số điện thoại của mẹ">
+                </div>
+                <div class="search-item d-inline-block w-25">
+                  <label for="email_me">Email của mẹ</label>
+                  <input type="email" name="email_me" class="form-control" placeholder="Nhập email của mẹ">
+                </div>
+                <div class="search-item d-inline-block w-25">
+                  <label for="nghe_nghiep_me">Nghề nghiệp của mẹ</label>
+                  <input type="text" name="nghe_nghiep_me" class="form-control" placeholder="Nhập nghề nghiệp của mẹ">
+                </div>
+                <div class="search-item d-inline-block w-25">
+                  <label for="cmnd_me">Số căn cước của mẹ</label>
+                  <input type="text" name="cmnd_me" class="form-control" placeholder="Nhập số căn cước của mẹ">
+                </div>
+                <div class="search-item d-inline-block w-25">
+                  <label for="nam_sinh_me">Năm sinh của mẹ</label>
+                  <input type="text" name="nam_sinh_me" class="form-control" placeholder="Nhập năm sinh của mẹ">
+                </div>
+                <div class="search-item d-inline-block w-25">
+                  <label for="quoc_tich_me">Quốc tịch của mẹ</label>
+                  <input type="text" name="quoc_tich_me" class="form-control" placeholder="Nhập quốc tịch của mẹ">
+                </div>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ho_ten_bo">Họ tên bố</label>
@@ -163,6 +159,28 @@
               <div class="search-item d-inline-block w-25">
                 <label for="quoc_tich_bo">Quốc tịch của bố</label>
                 <input type="text" name="quoc_tich_bo" class="form-control" placeholder="Nhập quốc tịch của bố">
+              </div>
+            </div>
+            <div class="filter-row">
+              <h2>Thông tin đưa đón</h2>
+              <div class="search-item d-inline-block w-25">
+                <label for="di_bus">Đi bus</label>
+                <select name="di_bus" class="form-select" required>
+                  <option value="0">Không</option>
+                  <option value="1">Có</option>
+                </select>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="dia_chi">Địa chỉ</label>
+                <input type="text" name="dia_chi" class="form-control" placeholder="Nhập địa chỉ">
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="nguoi_dua_don">Người đưa đón</label>
+                <input type="text" name="nguoi_dua_don" class="form-control" placeholder="Nhập người đưa đón">
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="lien_he_khan">Liên hệ khẩn</label>
+                <input type="text" name="lien_he_khan" class="form-control" placeholder="Nhập liên hệ khẩn">
               </div>
             </div>
             <div class="action-buttons">
@@ -204,6 +222,15 @@
       }
     });
   });
+  </script>
+   <script>
+    document.getElementById('import-button').addEventListener('click', function() {
+      document.getElementById('file-input').click(); // Mở file picker khi nhấn nút
+    });
+
+    document.getElementById('file-input').addEventListener('change', function() {
+      document.getElementById('import-form').submit(); // Tự động submit form khi chọn file
+    });
   </script>
 </body>
 </html>
