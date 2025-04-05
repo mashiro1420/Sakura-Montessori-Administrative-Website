@@ -101,7 +101,7 @@
             <h2>Thông tin bằng cấp</h2>
             <div class="search-item d-inline-block w-25">
               <label for="chuyen_nganh">Chuyên ngành</label>
-              <input type="text" id="chuyen_nganh" name="chuyen_nganh" class="form-control" value="{{ $bang_cap->ChuyenNganh->ten_chuyen_nganh }}" readonly>
+              <input type="text" id="chuyen_nganh" name="chuyen_nganh" class="form-control" value="{{ !empty($bang_cap->ChuyenNganh)?$bang_cap->ChuyenNganh->ten_chuyen_nganh:"" }}" readonly>
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="trinh_do_hoc_van">Trình độ học vấn</label>
