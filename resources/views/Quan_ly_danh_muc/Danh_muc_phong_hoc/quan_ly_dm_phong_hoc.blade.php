@@ -125,12 +125,12 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-  // Ẩn hiện sidebar
+   
   const hamBurger = document.querySelector(".toggle-btn");
   hamBurger.addEventListener("click", function () {
     document.querySelector("#sidebar").classList.toggle("expand");
   });
-  // Nút làm mới phần tìm kiếm
+   
   document.getElementById('reset-btn').addEventListener('click', function () {
     const inputs = document.querySelectorAll('.search-container input, .search-container select');
 
@@ -142,28 +142,28 @@
       }
     });
   });
-  // Phần phân trang
-  const rows = document.querySelectorAll('.table tbody tr'); // tất cả các dòng của bảng
-  const itemsPerPage = 5; // Số phần tử mỗi trang
-  const maxPageLinks = 5; // Số link page item hiển thị tối đa
+   
+  const rows = document.querySelectorAll('.table tbody tr');  
+  const itemsPerPage = 5;  
+  const maxPageLinks = 5;  
 
-  // Tính toán số trang tổng cộng
+   
   const totalItems = rows.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const paginationContainer = document.querySelector('.pagination');
 
-  // Hàm tạo pagination
+   
   function createPagination(currentPage) {
     let pageItems = [];
 
     if (totalPages <= maxPageLinks) {
-      // Nếu tổng số trang nhỏ hơn hoặc bằng 5, hiển thị tất cả các trang
+       
       for (let i = 1; i <= totalPages; i++) {
         pageItems.push(i);
       }
     } else {
-      // Nếu số trang lớn hơn 5, xử lý các trang xung quanh trang hiện tại
+       
       if (currentPage <= 3) {
         pageItems = [1, 2, 3, 4, 5];
       } else if (currentPage >= totalPages - 2) {
@@ -199,7 +199,7 @@
     paginationContainer.innerHTML = paginationHTML;
   }
 
-  // Hàm thay đổi trang
+ 
   function changePage(pageNumber) {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
       createPagination(pageNumber);
@@ -207,33 +207,33 @@
     }
   }
 
-  // Hàm hiển thị dữ liệu cho trang hiện tại
+ 
   function displayPageData(currentPage) {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = currentPage * itemsPerPage;
 
-    // Ẩn tất cả các dòng dữ liệu
+ 
     rows.forEach(row => {
       row.style.display = 'none';
     });
 
-    // Hiển thị các dòng dữ liệu cho trang hiện tại
+ 
     for (let i = startIndex; i < endIndex && i < totalItems; i++) {
       rows[i].style.display = '';
     }
   }
 
-  // Khởi tạo trang ban đầu
+ 
   createPagination(1);
   displayPageData(1);
   </script>
   <script>
     document.getElementById('import-button').addEventListener('click', function() {
-      document.getElementById('file-input').click(); // Mở file picker khi nhấn nút
+      document.getElementById('file-input').click();  
     });
 
     document.getElementById('file-input').addEventListener('change', function() {
-      document.getElementById('import-form').submit(); // Tự động submit form khi chọn file
+      document.getElementById('import-form').submit();  
     });
   </script>
 </body>
