@@ -13,6 +13,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command("app:tao-tuan-command")->yearlyOn(12,1,'0:0');
+        $schedule->command("app:tao-ky-command")->yearlyOn(6,1,'0:0');
     }
 
     /**
