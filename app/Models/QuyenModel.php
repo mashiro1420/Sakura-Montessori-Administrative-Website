@@ -14,8 +14,8 @@ class QuyenModel extends Model
     protected $keytype = 'int';
     public $incrementing = true;
     public $timestamps = false;
-    public function TaiKhoan()
+    public function PhanQuyen()
     {
-        return $this->hasMany(TaiKhoanModel::class, 'id_quyen', 'id');
+        return $this->belongsTo(PhanQuyenModel::class);
     }
 }

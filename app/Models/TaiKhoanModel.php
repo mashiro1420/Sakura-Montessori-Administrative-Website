@@ -19,8 +19,8 @@ class TaiKhoanModel extends Model
     {
         return $this->hasOne(NhanVienModel::class, 'id_nhan_vien', 'id');
     }
-    public function Quyen()
+    public function PhanQuyen()
     {
-        return $this->belongsTo(QuyenModel::class);
+        return $this->belongsTo(PhanQuyenModel::class);
     }
 }

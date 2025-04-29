@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\TaiKhoanExport;
 use App\Http\Controllers\Controller;
+use App\Models\PhanQuyenModel;
 use App\Models\QuyenModel;
 use App\Models\TaiKhoanModel;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class TaiKhoanController extends Controller
     {
         $data=[];
         $data['quyen'] = 
-        $query = TaiKhoanModel::query()->select('*');
+        $query = TaiKhoanModel::query()->select('*')->leftJoin('ql_phanquyen','ql_taikhoan.id','='.'ql_phanquyen.id_tai_khoan');
         if($request->has('tk_tai_khoan')&& !empty($request->tk_tai_khoan)){
             $query = $query->where('tai_khoan', 'like', '%'.$request->tk_tai_khoan.'%');
             $data['tk_tai_khoan'] = $request->tk_tai_khoan;
@@ -36,26 +37,6 @@ class TaiKhoanController extends Controller
         $data['quyens'] = QuyenModel::all();
         return view('Quan_ly_tai_khoan.quan_ly_tai_khoan',$data);
     }
-    public function xlQuyen(Request $request)
-    {
-        // Lấy tài khoản và quyền mới
-        $tai_khoan = TaiKhoanModel::where('tai_khoan', $request->tai_khoan)->first();
-
-        if ($tai_khoan) {
-            // Cập nhật quyền cho tài khoản
-            $tai_khoan->id_quyen = $request->id_quyen;
-            $tai_khoan->save();
-
-            // Truyền thông báo thành công qua session và redirect về trang danh sách
-            return redirect()->route('ql_tk')->with('success', 'Cập nhật quyền thành công');
-        }
-
-        // Nếu không tìm thấy tài khoản, redirect về trang danh sách và thông báo lỗi
-        return redirect()->route('ql_tk')->with('error', 'Không tìm thấy tài khoản');
-    }
-
-
-
     public function viewCaiDat(Request $request)
     {
         $data=[];
@@ -79,9 +60,16 @@ class TaiKhoanController extends Controller
         
     }
     public function xlPhanQuyen(Request $request){
-        $tai_khoan = TaiKhoanModel::find($request->tai_khoan);
-        $tai_khoan->id_quyen = $request->quyen;
-        $tai_khoan->save();
+        $phan_quyens = PhanQuyenModel::where('id_tai_khoan','=',$request->tai_khoan)->get();
+        foreach($phan_quyens as $phan_quyen){
+            $phan_quyen->delete();
+        }
+        foreach($request->quyen as $quyen){
+            $phan_quyen = new PhanQuyenModel();
+            $phan_quyen->id_tai_khoan = $request->tai_khoan;
+            $phan_quyen->id_quyen = $quyen;
+            $phan_quyen->save();
+        }
         session()->flash('bao_loi', 'Cập nhật quyền thành công');
         return redirect()->route('ql_tk');
     }

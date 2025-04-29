@@ -27,7 +27,7 @@ Route::get('xl_dang_xuat',[DangNhapController::class, 'logout']);
 Route::get('ql_tk',[TaiKhoanController::class, 'viewQuanLy'])->name('ql_tk')->middleware(['session.check','quyen.check']);
 Route::get('cai_dat_tk',[TaiKhoanController::class, 'viewCaiDat'])->name('cai_dat_tk')->middleware(['session.check','quyen.check']);
 Route::post('xl_doi_mk',[TaiKhoanController::class, 'xlDoiMK'])->middleware(['session.check','quyen.check']);
-Route::post('xl_quyen', [TaiKhoanController::class, 'xlQuyen'])->name('xl_quyen')->middleware(['session.check','quyen.check']);
+Route::post('xl_quyen', [TaiKhoanController::class, 'xlPhanQuyen'])->name('xl_quyen')->middleware(['session.check','quyen.check']);
 Route::get('export_tk',[TaiKhoanController::class, 'export'])->name('export_tk')->middleware(['session.check','quyen.check']);
 //Danh muc
 Route::get('ql_dm_chuc_vu',[DanhMucController::class, 'viewDMChucVu'])->name('ql_dm_chuc_vu')->middleware(['session.check','quyen.check']);
