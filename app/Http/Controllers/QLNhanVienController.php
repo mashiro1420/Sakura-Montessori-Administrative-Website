@@ -158,7 +158,7 @@ class QLNhanVienController extends Controller
         $nhan_vien->noi_sinh = $request->noi_sinh;
         $nhan_vien->ngay_sinh = $request->ngay_sinh;
         $nhan_vien->ngay_vao_lam = $request->ngay_vao_lam;
-        $nhan_vien->ngay_nghi_viec = $request->ngay_nghi_viec;
+        // $nhan_vien->ngay_nghi_viec = $request->ngay_nghi_viec;
         $nhan_vien->cmnd = $request->cmnd;
         $nhan_vien->ngay_cap = $request->ngay_cap;
         $nhan_vien->noi_cap = $request->noi_cap;
