@@ -208,5 +208,6 @@
       document.getElementById('import-form').submit();  
     });
   </script>
+@include('components/bao_loi')
 </body>
 </html>

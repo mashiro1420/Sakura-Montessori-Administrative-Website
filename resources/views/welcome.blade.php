@@ -136,5 +136,6 @@
                 </div>
             </div>
         </div>
-    </body>
+    @include('components/bao_loi')
+</body>
 </html>

@@ -71,5 +71,6 @@
 	<script src="{{ asset('/vendor/countdowntime/countdowntime.js') }}"></script>
 	<script src="{{ asset('/js/Dang_nhap.js') }}"></script>
 
+@include('components/bao_loi')
 </body>
 </html>

@@ -255,5 +255,6 @@
   createPagination(1);
   displayPageData(1);
   </script>
+@include('components/bao_loi')
 </body>
 </html>

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class QuyenCheck
@@ -13,22 +14,14 @@ class QuyenCheck
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, $quyen): Response
     {
-        $quyen = session('id_quyen');
+        $quyens = session('quyen');
 
-        if ($quyen == 1) {
-            return $next($request);
+        if (!in_array($quyen, $quyens)) {
+            return redirect()->back()->with('bao_loi', 'Không có quyền truy cập vào trang này.');
         }
 
-        if ($quyen == 2 && $request->path() !== 'ql_hs') {
-            return redirect()->route('ql_hs')->with('error', 'Không có quyền truy cập.');
-        }
-
-        $trang_nv = ['ql_hs','ql_nv'];
-        if ($quyen == 3 && !in_array($request->path(), $trang_nv)) {
-            return redirect()->route('ql_nv')->with('error', 'Không có quyền truy cập.');
-        }
         return $next($request);
     }
 }

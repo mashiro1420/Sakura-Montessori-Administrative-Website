@@ -9,14 +9,14 @@ class PhanQuyenModel extends Model
 {
     use HasFactory;
     protected $fillable = ['id_tai_khoan','id_quyen'];
-    protected $table = 'ql_phanlop';
+    protected $table = 'ql_phanquyen';
     protected $primaryKey = 'id';
     protected $keytype = 'int';
     public $incrementing = true;
     public $timestamps = false;
     public function TaiKhoan()
     {
-        return $this->hasOne(TaiKhoanModel::class, 'id', 'id_tai_khoan');
+        return $this->belongsTo(TaiKhoanModel::class);
     }
     public function Quyen()
     {

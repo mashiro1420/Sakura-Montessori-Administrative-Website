@@ -248,5 +248,6 @@
     });
   });
   </script>
+@include('components/bao_loi')
 </body>
 </html>

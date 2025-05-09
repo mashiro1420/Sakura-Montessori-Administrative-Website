@@ -21,6 +21,6 @@ class TaiKhoanModel extends Model
     }
     public function PhanQuyen()
     {
-        return $this->belongsTo(PhanQuyenModel::class);
+        return $this->hasMany(PhanQuyenModel::class, 'id_tai_khoan', 'tai_khoan');
     }
 }

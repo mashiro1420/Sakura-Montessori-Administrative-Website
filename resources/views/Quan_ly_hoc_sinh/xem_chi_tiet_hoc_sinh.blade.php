@@ -195,5 +195,6 @@
     document.querySelector("#sidebar").classList.toggle("expand");
   });
   </script>
+@include('components/bao_loi')
 </body>
 </html>
