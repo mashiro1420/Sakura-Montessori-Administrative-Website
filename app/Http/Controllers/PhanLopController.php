@@ -115,7 +115,7 @@ class PhanLopController extends Controller
     {
         $ds_diem_danh = explode(',', $request->ds_diem_danh);
         foreach($ds_diem_danh as $diem_danh){
-            $di_hoc = DiemDanhModel::where('id_hoc_sinh', $diem_danh)->where('ngay',date('Y-m-d'))->first();
+            $di_hoc = DiemDanhModel::where('id_hoc_sinh', $diem_danh)->where('ngay',date('Y-m-d'))->where('loai_diem_danh',1)->first();
             $di_hoc->trang_thai = 1;
             $di_hoc->save();
         }

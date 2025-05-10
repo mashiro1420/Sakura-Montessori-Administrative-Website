@@ -53,6 +53,7 @@ class HocSinhExport implements FromCollection, WithHeadings
                 'Năm sinh bố' => $hoc_sinhs->nam_sinh_bo,
                 'Quốc tịch bố' => $hoc_sinhs->quoc_tich_bo,
                 'Đi bus' => $hoc_sinhs->di_bus==1?'Có':'Không',
+                'Ăn cơm' => $hoc_sinhs->an_com==1?'Có':'Không',
                 'Địa chỉ' => $hoc_sinhs->dia_chi,
                 'Người đưa đón' => $hoc_sinhs->nguoi_dua_don,
                 'Liên hệ khẩn' => $hoc_sinhs->lien_he_khan,

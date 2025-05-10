@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DangNhapController;
 use App\Http\Controllers\DanhMucController;
+use App\Http\Controllers\DichVuController;
 use App\Http\Controllers\PhanLopController;
 use App\Http\Controllers\QLHocSinhController;
 use App\Http\Controllers\QLNhanVienController;
@@ -127,4 +128,9 @@ Route::middleware(['session.check', 'quyen.check:phan_lop'])->group(function () 
     Route::post('xl_diem_danh',[PhanLopController::class, 'xlDiemDanh']);
     Route::get('export_lop',[PhanLopController::class, 'export'])->name('export_lop');
     // Route::post('import_hs',[PhanLopController::class, 'import'])->name('import_hs');
+});
+Route::middleware(['session.check', 'quyen.check:bus'])->group(function () {
+    //--------------------------------\
+    Route::post('xl_diem_danh_bus',[DichVuController::class, 'xlDiemDanh']);
+    Route::post('xl_upload_diem_danh',[DichVuController::class, 'xlUploadDiemDanh']);
 });

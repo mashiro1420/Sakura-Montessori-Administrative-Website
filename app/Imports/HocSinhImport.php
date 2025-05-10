@@ -32,7 +32,6 @@ class HocSinhImport implements ToModel, WithHeadingRow
             'chieu_cao' => $row['chieu_cao'],
             'noi_sinh' => $row['noi_sinh'],
             'thong_tin_suc_khoe' => $row['thong_tin_suc_khoe'],
-            'di_bus' => $row['di_bus']=="Có"?1:0,
             'ho_ten_me' => $row['ho_ten_me'],
             'sdt_me' => $row['sdt_me'],
             'email_me' => $row['email_me'],

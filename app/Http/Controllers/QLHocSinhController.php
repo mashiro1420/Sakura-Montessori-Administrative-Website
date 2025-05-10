@@ -82,7 +82,6 @@ class QLHocSinhController extends Controller
         $hoc_sinh->chieu_cao = $request->chieu_cao;
         $hoc_sinh->noi_sinh = $request->noi_sinh;
         $hoc_sinh->thong_tin_suc_khoe = $request->thong_tin_suc_khoe;
-        $hoc_sinh->di_bus = $request->di_bus;
         $hoc_sinh->ho_ten_me = $request->ho_ten_me;
         $hoc_sinh->sdt_me = $request->sdt_me;
         $hoc_sinh->email_me = $request->email_me;
@@ -126,7 +125,6 @@ class QLHocSinhController extends Controller
         $hoc_sinh->chieu_cao = $request->chieu_cao;
         $hoc_sinh->noi_sinh = $request->noi_sinh;
         $hoc_sinh->thong_tin_suc_khoe = $request->thong_tin_suc_khoe;
-        $hoc_sinh->di_bus = $request->di_bus;
         $hoc_sinh->ho_ten_me = $request->ho_ten_me;
         $hoc_sinh->sdt_me = $request->sdt_me;
         $hoc_sinh->email_me = $request->email_me;
@@ -137,7 +135,7 @@ class QLHocSinhController extends Controller
         $hoc_sinh->ho_ten_bo = $request->ho_ten_bo;
         $hoc_sinh->sdt_bo = $request->sdt_bo;
         $hoc_sinh->email_bo = $request->email_bo;
-        $hoc_sinh->nghe_nghiep_bo = $request->nghe_nghiep_bo	;
+        $hoc_sinh->nghe_nghiep_bo = $request->nghe_nghiep_bo;
         $hoc_sinh->cmnd_bo = $request->cmnd_bo;
         $hoc_sinh->nam_sinh_bo = $request->nam_sinh_bo;
         $hoc_sinh->quoc_tich_bo = $request->quoc_tich_bo;
