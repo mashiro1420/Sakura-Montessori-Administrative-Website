@@ -72,6 +72,24 @@
       </a>
     </li>
     <li class="sidebar-item">
+      <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth2"
+        aria-expanded="false" aria-controls="auth2">
+        <i class="fa-solid fa-users-rays"></i>
+        <span class="text">Quản lý dịch vụ</span>
+      </a>
+      <ul id="auth2" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+        <li class="sidebar-item">
+          <a href="{{url('ql_bg')}}" class="sidebar-link">Quản lý bảng giá</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="ql_tx" class="sidebar-link">Quản lý tuyến xe</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="ql_td" class="sidebar-link">Quản lý thực đơn</a>
+        </li>
+      </ul>
+    </li>
+    <li class="sidebar-item">
       <a href="#" class="sidebar-link">
         <i class="fa-solid fa-chart-pie"></i>
         <span class="text">Thống kê báo cáo</span>
