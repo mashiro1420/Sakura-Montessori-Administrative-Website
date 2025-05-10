@@ -5,6 +5,7 @@ use App\Http\Controllers\DanhMucController;
 use App\Http\Controllers\QLHocSinhController;
 use App\Http\Controllers\QLNhanVienController;
 use App\Http\Controllers\TaiKhoanController;
+use App\Http\Controllers\DichVuController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -107,4 +108,11 @@ Route::middleware(['session.check', 'quyen.check:hoc_sinh'])->group(function () 
     Route::post('xl_sua_hs',[QLHocSinhController::class, 'xlSua']);
     Route::get('export_hs',[QLHocSinhController::class, 'export'])->name('export_hs');
     Route::post('import_hs',[QLHocSinhController::class, 'import'])->name('import_hs');
+});
+Route::middleware(['session.check', 'quyen.check:bang_gia'])->group(function (){
+    Route::get('ql_bg',[DichVuController::class,'viewQuanLyBangGia'])->name('ql_bg');
+    Route::get('them_bg', [DichVuController::class,'viewThemBangGia'])->name('them_bg');
+    Route::get('sua_bg',[DichVuController::class, 'viewSuaBangGia'])->name('sua_bg');
+    // Route::get('ql_tx',[DichVuController::class, 'viewQuanLyTuyenXe'])->name('ql_tx');
+    // Route::get('ql_td', [DichVuController::class, 'viewQuanLyThucDon'])->name('ql_td');
 });
