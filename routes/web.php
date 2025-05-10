@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DangNhapController;
 use App\Http\Controllers\DanhMucController;
+use App\Http\Controllers\PhanLopController;
 use App\Http\Controllers\QLHocSinhController;
 use App\Http\Controllers\QLNhanVienController;
 use App\Http\Controllers\TaiKhoanController;
@@ -24,7 +25,6 @@ Route::get('/', function () {
 Route::get('dang_nhap',[DangNhapController::class, 'viewDangNhap'])->name('dang_nhap');
 Route::post('xl_dang_nhap',[DangNhapController::class, 'login']);
 Route::get('xl_dang_xuat',[DangNhapController::class, 'logout']);
-//Tai khoan
 Route::middleware(['session.check', 'quyen.check:tai_khoan'])->group(function () {
     Route::get('ql_tk',[TaiKhoanController::class, 'viewQuanLy'])->name('ql_tk');
     Route::get('cai_dat_tk',[TaiKhoanController::class, 'viewCaiDat'])->name('cai_dat_tk');
@@ -115,4 +115,16 @@ Route::middleware(['session.check', 'quyen.check:bang_gia'])->group(function (){
     Route::get('sua_bg',[DichVuController::class, 'viewSuaBangGia'])->name('sua_bg');
     // Route::get('ql_tx',[DichVuController::class, 'viewQuanLyTuyenXe'])->name('ql_tx');
     // Route::get('ql_td', [DichVuController::class, 'viewQuanLyThucDon'])->name('ql_td');
+    Route::post('xl_thoi_hoc',[QLHocSinhController::class, 'xlThoiHoc']);
+    Route::post('xl_quay_lai',[QLHocSinhController::class, 'xlQuayLai']);
+    Route::post('xl_chuyen_lop',[QLHocSinhController::class, 'xlChuyenLop']);
+});
+Route::middleware(['session.check', 'quyen.check:phan_lop'])->group(function () {
+    Route::get('diem_danh',[PhanLopController::class, 'viewDiemDanh'])->name('diem_danh');
+    //--------------------------------
+    Route::post('xl_phan_lop',[PhanLopController::class, 'xlPhanLop']);
+    Route::post('xl_sua_phan_lop',[PhanLopController::class, 'xlSuaPhanLop']);
+    Route::post('xl_diem_danh',[PhanLopController::class, 'xlDiemDanh']);
+    Route::get('export_lop',[PhanLopController::class, 'export'])->name('export_lop');
+    // Route::post('import_hs',[PhanLopController::class, 'import'])->name('import_hs');
 });

@@ -136,7 +136,6 @@ class QLNhanVienController extends Controller
         $tai_khoan->tai_khoan = $ma_nv;
         $tai_khoan->id_nhan_vien = $ma_nv;
         $tai_khoan->la_khach = false;
-        $tai_khoan->id_quyen = 3;
         $bang_cap = new TTBangCapModel(['id_nhan_vien'=>$ma_nv]);
         $lien_he = new TTLienHeModel(['id_nhan_vien'=>$ma_nv]);
         $dan_su = new TTDanSuModel(['id_nhan_vien'=>$ma_nv]);

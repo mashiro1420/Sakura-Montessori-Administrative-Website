@@ -43,7 +43,7 @@ class TaoKyCommand extends Command
             'ten_ky'=> 'Kỳ II năm '.$nam.' - '.$nam+1,
             'tu_ngay'=>$tu_ngay_ky_2,
             'den_ngay'=>$den_ngay_ky_2,
-            'nam_hoc'=>$nam,
+            'nam_hoc'=>$nam+1,
             'ky'=>2
         ];
         KyModel::insertOrIgnore($ky1);
