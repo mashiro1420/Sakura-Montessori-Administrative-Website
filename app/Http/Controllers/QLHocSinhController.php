@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\HocSinhExport;
 use App\Imports\HocSinhImport;
 use App\Http\Controllers\Controller;
+use App\Models\GiayToModel;
 use App\Models\HocSinhModel;
 use App\Models\TaiKhoanModel;
 use Illuminate\Http\Request;
@@ -63,7 +64,7 @@ class QLHocSinhController extends Controller
     }
 //-------------------------------------------------
     public function xlThem(Request $request)
-    {
+    { 
         $all_hoc_sinh = HocSinhModel::all();
         $so_hs = count($all_hoc_sinh);
         $ma_hs = 'SB'.str_pad($so_hs+1,10,'0',STR_PAD_LEFT);
@@ -147,6 +148,43 @@ class QLHocSinhController extends Controller
         $hoc_sinh->loai_hoc_phi = $request->loai_hoc_phi;
         $hoc_sinh->save();
         return redirect()->route('ql_hs');
+    }
+    public function xlThoiHoc(Request $request)
+    {
+        $hoc_sinh = HocSinhModel::find($request->id);
+        $giay_to = new GiayToModel();
+        $giay_to->id_hoc_sinh = $request->id;
+        $giay_to->ten_giay_to = 'Thôi học: '.$request->ten_giay_to;
+        if ($request->hasFile('file')) {
+            $file = $request->file;
+            $filename = md5(time().rand(1,100) . $request->file->getClientOriginalName()) . '.' . $request->file->getClientOriginalExtension();
+            $file->move('Giay_to/'.$request->id.'', $filename);
+            $giay_to->link_giay_to = $filename;
+        }
+        $hoc_sinh->trang_thai = 0;
+        $hoc_sinh->id_phan_lop = null;
+        $hoc_sinh->ngay_thoi_hoc = $request->ngay_thoi_hoc;
+        $hoc_sinh->save();
+        $giay_to->save();
+        return redirect()->back()->with('bao_loi','Lưu thành công');
+    }
+    public function xlQuayLai(Request $request)
+    {
+        $hoc_sinh = HocSinhModel::find($request->id);
+        $giay_to = new GiayToModel();
+        $giay_to->id_hoc_sinh = $request->id;
+        $giay_to->ten_giay_to = 'Quay lại: '.$request->ten_giay_to;
+        if ($request->hasFile('file')) {
+            $file = $request->file;
+            $filename = md5(time().rand(1,100) . $request->file->getClientOriginalName()) . '.' . $request->file->getClientOriginalExtension();
+            $file->move('Giay_to/'.$request->id.'', $filename);
+            $giay_to->link_giay_to = $filename;
+        }
+        $hoc_sinh->trang_thai = 1;
+        $hoc_sinh->ngay_thoi_hoc = null;
+        $hoc_sinh->save();
+        $giay_to->save();
+        return redirect()->back()->with('bao_loi','Lưu thành công');
     }
     public function export(Request $request){
         $query = HocSinhModel::query()->select ('*');

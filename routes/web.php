@@ -23,7 +23,6 @@ Route::get('/', function () {
 Route::get('dang_nhap',[DangNhapController::class, 'viewDangNhap'])->name('dang_nhap');
 Route::post('xl_dang_nhap',[DangNhapController::class, 'login']);
 Route::get('xl_dang_xuat',[DangNhapController::class, 'logout']);
-//Tai khoan
 Route::middleware(['session.check', 'quyen.check:tai_khoan'])->group(function () {
     Route::get('ql_tk',[TaiKhoanController::class, 'viewQuanLy'])->name('ql_tk');
     Route::get('cai_dat_tk',[TaiKhoanController::class, 'viewCaiDat'])->name('cai_dat_tk');
@@ -107,4 +106,6 @@ Route::middleware(['session.check', 'quyen.check:hoc_sinh'])->group(function () 
     Route::post('xl_sua_hs',[QLHocSinhController::class, 'xlSua']);
     Route::get('export_hs',[QLHocSinhController::class, 'export'])->name('export_hs');
     Route::post('import_hs',[QLHocSinhController::class, 'import'])->name('import_hs');
+    Route::post('xl_thoi_hoc',[QLHocSinhController::class, 'xlThoiHoc']);
+    Route::post('xl_quay_lai',[QLHocSinhController::class, 'xlQuayLai']);
 });
