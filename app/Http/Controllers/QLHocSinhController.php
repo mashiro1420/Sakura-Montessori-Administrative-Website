@@ -186,6 +186,23 @@ class QLHocSinhController extends Controller
         $giay_to->save();
         return redirect()->back()->with('bao_loi','Lưu thành công');
     }
+    public function xlChuyenLop(Request $request)
+    {
+        $hoc_sinh = HocSinhModel::find($request->id);
+        $giay_to = new GiayToModel();
+        $giay_to->id_hoc_sinh = $request->id;
+        $giay_to->ten_giay_to = 'Chuyển lớp: '.$request->ten_giay_to;
+        if ($request->hasFile('file')) {
+            $file = $request->file;
+            $filename = md5(time().rand(1,100) . $request->file->getClientOriginalName()) . '.' . $request->file->getClientOriginalExtension();
+            $file->move('Giay_to/'.$request->id.'', $filename);
+            $giay_to->link_giay_to = $filename;
+        }
+        $hoc_sinh->id_phan_lop = $request->phan_lop;
+        $hoc_sinh->save();
+        $giay_to->save();
+        return redirect()->back()->with('bao_loi','Lưu thành công');
+    }
     public function export(Request $request){
         $query = HocSinhModel::query()->select ('*');
         if ($request->has('tk_ho_ten') && !empty($request->tk_ho_ten)){

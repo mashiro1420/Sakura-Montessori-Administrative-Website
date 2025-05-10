@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DangNhapController;
 use App\Http\Controllers\DanhMucController;
+use App\Http\Controllers\PhanLopController;
 use App\Http\Controllers\QLHocSinhController;
 use App\Http\Controllers\QLNhanVienController;
 use App\Http\Controllers\TaiKhoanController;
@@ -108,4 +109,14 @@ Route::middleware(['session.check', 'quyen.check:hoc_sinh'])->group(function () 
     Route::post('import_hs',[QLHocSinhController::class, 'import'])->name('import_hs');
     Route::post('xl_thoi_hoc',[QLHocSinhController::class, 'xlThoiHoc']);
     Route::post('xl_quay_lai',[QLHocSinhController::class, 'xlQuayLai']);
+    Route::post('xl_chuyen_lop',[QLHocSinhController::class, 'xlChuyenLop']);
+});
+Route::middleware(['session.check', 'quyen.check:phan_lop'])->group(function () {
+    Route::get('diem_danh',[PhanLopController::class, 'viewDiemDanh'])->name('diem_danh');
+    //--------------------------------
+    Route::post('xl_phan_lop',[PhanLopController::class, 'xlPhanLop']);
+    Route::post('xl_sua_phan_lop',[PhanLopController::class, 'xlSuaPhanLop']);
+    Route::post('xl_diem_danh',[PhanLopController::class, 'xlDiemDanh']);
+    Route::get('export_lop',[PhanLopController::class, 'export'])->name('export_lop');
+    // Route::post('import_hs',[PhanLopController::class, 'import'])->name('import_hs');
 });
