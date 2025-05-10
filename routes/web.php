@@ -7,7 +7,6 @@ use App\Http\Controllers\PhanLopController;
 use App\Http\Controllers\QLHocSinhController;
 use App\Http\Controllers\QLNhanVienController;
 use App\Http\Controllers\TaiKhoanController;
-use App\Http\Controllers\DichVuController;
 use Illuminate\Support\Facades\Route;
 
 /*

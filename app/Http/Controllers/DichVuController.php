@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BangGiaModel;
+use App\Models\DichVuModel;
 use App\Models\DiemDanhModel;
 use App\Models\HocSinhModel;
 use App\Models\LoTrinhXeModel;
