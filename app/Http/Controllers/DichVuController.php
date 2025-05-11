@@ -7,6 +7,7 @@ use App\Models\DichVuModel;
 use App\Models\DiemDanhModel;
 use App\Models\HocSinhModel;
 use App\Models\LoTrinhXeModel;
+use App\Models\NhanVienModel;
 use Illuminate\Http\Request;
 
 class DichVuController extends Controller
@@ -92,5 +93,33 @@ public function xlSuaGia(Request $request)
             $file->move('Diem_danh/'.$tuyen_xe->ngay.$tuyen_xe->tuyen_xe.'', $filename);
             $tuyen_xe->danh_sach = $filename;
         }
+    }
+    //Lich trinh xe
+    public function viewQuanLyLoTrinh(Request $request)
+    {
+        $data = [];
+        $data['lai_xes'] = NhanVienModel::where('id_chuc_vu', 6)->get();
+        $data['monitors'] = NhanVienModel::where('id_chuc_vu', 7)->get();
+        $query = LoTrinhXeModel::query()
+            ->select('ql_lotrinhxe.*')
+            ->leftJoin('ql_nhanvien as ql_lai_xe', 'ql_lotrinhxe.id_lai_xe', '=', 'ql_lai_xe.id')
+            ->leftJoin('ql_nhanvien as ql_monitor', 'ql_lotrinhxe.id_monitor', '=', 'ql_monitor.id');
+        $data['lo_trinh_xes'] = $query->orderBy('ql_lotrinhxe.id')->get();
+        return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.quan_ly_lo_trinh_xe', $data);
+    }
+    public function viewDangKyBus()
+    {
+        $data = [];
+        $data['lai_xes'] = NhanVienModel::where('id_chuc_vu', 6)->get();
+        $data['monitors'] = NhanVienModel::where('id_chuc_vu', 7)->get();
+        return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.dang_ky_xe_bus', $data);
+    }
+    public function viewSuaLoTrinh(Request $request)
+    {
+        $data = [];
+        $data['lai_xes'] = NhanVienModel::where('id_chuc_vu', 6)->get();
+        $data['monitors'] = NhanVienModel::where('id_chuc_vu', 7)->get();
+        $data['lo_trinh_xe'] = LoTrinhXeModel::find($request->id);
+        return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.sua_dang_ky_xe', $data);
     }
 }

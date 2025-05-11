@@ -91,7 +91,7 @@
               </div>
             </div>
             <div class="filter-row">
-              <h2>Thông tin sức khỏe</h2>
+                
               <div class="search-item d-inline-block w-25">
                 <label for="can_nang">Cân nặng (KG)</label>
                 <input type="number" name="can_nang" class="form-control" placeholder="Nhập cân nặng">

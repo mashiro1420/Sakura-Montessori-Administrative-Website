@@ -85,6 +85,9 @@
       </a>
       <ul id="auth2" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
         <li class="sidebar-item">
+          <a href="{{url('ql_lt')}}" class="sidebar-link">Quản lý lộ trình xe</a>
+        </li>
+        <li class="sidebar-item">
           <a href="{{url('ql_bg')}}" class="sidebar-link">Quản lý bảng giá</a>
         </li>
         <li class="sidebar-item">
