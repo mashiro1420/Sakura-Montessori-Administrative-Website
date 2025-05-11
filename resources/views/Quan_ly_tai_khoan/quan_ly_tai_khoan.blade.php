@@ -12,7 +12,23 @@
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <link rel="icon" type="image/png" href="{{ asset('/imgs/favicon-skr.png') }}">
   <link rel="stylesheet" href="{{ asset('css/main/main.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 </head>
+<style>
+  .choices__list--dropdown .choices__item {
+    padding: 8px 12px;
+  }
+
+  .choices__list--dropdown {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .choices-multiple {
+    min-width: 250px;
+  }
+</style>
 <body>
   <div class="wrapper">
     @include('components/sidebar')
@@ -99,26 +115,30 @@
                   <td>{{$tai_khoan->id_hoc_sinh}}</td>
                   <td>{{$tai_khoan->id_nhan_vien}}</td>
                   <td>
-                  <form action="{{ route('xl_quyen') }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn thay đổi quyền không?')">
+                    @php
+                      $quyen_duoc_chon = $tai_khoan->quyen_ids ? explode(',', $tai_khoan->quyen_ids) : [];
+                    @endphp
+                
+                    <form action="{{ route('xl_quyen') }}" method="POST">
                       @csrf
-                      <input type="hidden" name="tai_khoan" value="{{$tai_khoan->tai_khoan}}">
-                      <select name="id_quyen" class="form-control">
-                          @foreach($quyens as $quyen)
-                              <option value="{{$quyen->id}}" {{ $tai_khoan->id_quyen == $quyen->id ? 'selected' : '' }}>
-                                  {{$quyen->ten_quyen}}
-                              </option>
-                          @endforeach
+                      <input type="hidden" name="tai_khoan" value="{{ $tai_khoan->tai_khoan }}">
+                
+                      <select name="quyen[]" class="form-select choices-multiple" multiple>
+                        @foreach($quyens as $quyen)
+                          <option value="{{ $quyen->id }}"
+                            {{ in_array($quyen->id, $quyen_duoc_chon) ? 'selected' : '' }}>
+                            {{ $quyen->ten_quyen }}
+                          </option>
+                        @endforeach
                       </select>
-                        <button type="submit" class="btn btn-primary btn-sm mt-2">Đổi quyền</button>
+                
+                      <button type="submit" class="btn btn-primary btn-sm mt-2">Đổi quyền</button>
                     </form>
                   </td>
-                  {{-- <td class="action-column">
-                    <a class="action-button" href="{{route('chi_tiet_nv',['id' => $hoc_sinh->id])}}" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a>
-                    <a class="action-button" title="Chỉnh sửa" href="{{route('cai_dat_tk',['id' => $tai_khoan->id])}}"><i class="fa-solid fa-edit"></i></a>
-                  </td> --}}
                 </tr>
                 @endforeach
-              </tbody>
+                </tbody>
+                
             </table>
           </div>
           <!-- Pagination -->
@@ -256,6 +276,21 @@
       document.getElementById('import-form').submit();  
     });
   </script>
-@include('components/bao_loi')
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.choices-multiple').forEach(function(selectEl) {
+        if (!selectEl.classList.contains('choices-initialized')) {
+          new Choices(selectEl, {
+            removeItemButton: true,
+            placeholderValue: 'Chọn quyền...',
+            searchEnabled: true,
+            shouldSort: false
+          });
+          selectEl.classList.add('choices-initialized');
+        }
+      });
+    });
+  </script>
+{{-- @include('components/bao_loi') --}}
 </body>
 </html>

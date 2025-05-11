@@ -9,33 +9,46 @@ use App\Models\QuyenModel;
 use App\Models\TaiKhoanModel;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-
+use Illuminate\Support\Facades\DB;
 class TaiKhoanController extends Controller
 {
+
     public function viewQuanLy(Request $request)
     {
-        $data=[];
-        $data['quyen'] = 
-        $query = TaiKhoanModel::query()->select('*')->leftJoin('ql_phanquyen','ql_taikhoan.id','='.'ql_phanquyen.id_tai_khoan');
-        if($request->has('tk_tai_khoan')&& !empty($request->tk_tai_khoan)){
-            $query = $query->where('tai_khoan', 'like', '%'.$request->tk_tai_khoan.'%');
-            $data['tk_tai_khoan'] = $request->tk_tai_khoan;
+        $query = DB::table('ql_taikhoan as tk')
+            ->select(
+                'tk.tai_khoan',
+                'tk.id_hoc_sinh',
+                'tk.id_nhan_vien',
+                DB::raw('GROUP_CONCAT(pq.id_quyen) as quyen_ids')
+            )
+            ->leftJoin('ql_phanquyen as pq', 'tk.tai_khoan', '=', 'pq.id_tai_khoan')
+            ->groupBy('tk.tai_khoan', 'tk.id_hoc_sinh', 'tk.id_nhan_vien');
+
+        // Lọc theo các điều kiện tìm kiếm
+        if ($request->filled('tk_tai_khoan')) {
+            $query->where('tk.tai_khoan', 'like', '%' . $request->tk_tai_khoan . '%');
         }
-        if($request->has('tk_quyen')&& !empty($request->tk_quyen)){
-            $query = $query->where('id_quyen', '=', $request->tk_quyen);
-            $data['tk_quyen'] = $request->tk_quyen;
+        if ($request->filled('tk_quyen')) {
+            $query->where('pq.id_quyen', '=', $request->tk_quyen);
         }
-        if($request->has('tk_ma_hoc_sinh')&& !empty($request->tk_ma_hoc_sinh)){
-            $query = $query->where('id_hoc_sinh', 'like', '%'.$request->tk_ma_hoc_sinh.'%');
-            $data['tk_ma_hoc_sinh'] = $request->tk_ma_hoc_sinh;
+        if ($request->filled('tk_ma_hoc_sinh')) {
+            $query->where('tk.id_hoc_sinh', 'like', '%' . $request->tk_ma_hoc_sinh . '%');
         }
-        if($request->has('tk_nhan_vien')&& !empty($request->tk_nhan_vien)){
-            $query = $query->where('id_nhan_vien', 'like', '%'.$request->tk_nhan_vien.'%');
-            $data['tk_nhan_vien'] = $request->tk_nhan_vien;
+        if ($request->filled('tk_nhan_vien')) {
+            $query->where('tk.id_nhan_vien', 'like', '%' . $request->tk_nhan_vien . '%');
         }
+
         $data['tai_khoans'] = $query->get();
-        $data['quyens'] = QuyenModel::all();
-        return view('Quan_ly_tai_khoan.quan_ly_tai_khoan',$data);
+        $data['quyens'] = DB::table('dm_quyen')->get(); // hoặc dùng QuyenModel::all();
+
+        // Giữ lại input lọc để đổ lại form
+        $data['tk_tai_khoan'] = $request->tk_tai_khoan;
+        $data['tk_quyen'] = $request->tk_quyen;
+        $data['tk_ma_hoc_sinh'] = $request->tk_ma_hoc_sinh;
+        $data['tk_nhan_vien'] = $request->tk_nhan_vien;
+
+        return view('Quan_ly_tai_khoan.quan_ly_tai_khoan', $data);
     }
     public function viewCaiDat(Request $request)
     {
@@ -59,20 +72,35 @@ class TaiKhoanController extends Controller
         return redirect()->route('cai_dat_tk');
         
     }
-    public function xlPhanQuyen(Request $request){
-        $phan_quyens = PhanQuyenModel::where('id_tai_khoan','=',$request->tai_khoan)->get();
-        foreach($phan_quyens as $phan_quyen){
-            $phan_quyen->delete();
+    // public function xlPhanQuyen(Request $request){
+    //     $phan_quyens = PhanQuyenModel::where('id_tai_khoan','=',$request->tai_khoan)->get();
+    //     foreach($phan_quyens as $phan_quyen){
+    //         $phan_quyen->delete();
+    //     }
+    //     foreach($request->quyen as $quyen){
+    //         $phan_quyen = new PhanQuyenModel();
+    //         $phan_quyen->id_tai_khoan = $request->tai_khoan;
+    //         $phan_quyen->id_quyen = $quyen;
+    //         $phan_quyen->save();
+    //     }
+    //     session()->flash('bao_loi', 'Cập nhật quyền thành công');
+    //     return redirect()->route('ql_tk');
+    // }
+    public function xlPhanQuyen(Request $request)
+    {
+        PhanQuyenModel::where('tai_khoan', $request->tai_khoan)->delete();
+
+        foreach ($request->quyen as $id_quyen) {
+            PhanQuyenModel::create([
+                'tai_khoan' => $request->tai_khoan,
+                'id_quyen' => $id_quyen,
+            ]);
         }
-        foreach($request->quyen as $quyen){
-            $phan_quyen = new PhanQuyenModel();
-            $phan_quyen->id_tai_khoan = $request->tai_khoan;
-            $phan_quyen->id_quyen = $quyen;
-            $phan_quyen->save();
-        }
+
         session()->flash('bao_loi', 'Cập nhật quyền thành công');
         return redirect()->route('ql_tk');
     }
+
     public function export(Request $request){
         $query = TaiKhoanModel::query()->select ('*')
         ->leftJoin('dm_quyen','ql_taikhoan.id_quyen','=','dm_quyen.id');
