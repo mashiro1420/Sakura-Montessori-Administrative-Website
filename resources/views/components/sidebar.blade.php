@@ -72,6 +72,12 @@
       </a>
     </li>
     <li class="sidebar-item">
+      <a href="{{url('ql_phan_lop')}}" class="sidebar-link">
+        <i class="fa-solid fa-chalkboard"></i>
+        <span class="text">Quản lý phân lớp</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
       <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth2"
         aria-expanded="false" aria-controls="auth2">
         <i class="fa-solid fa-users-rays"></i>

@@ -121,6 +121,9 @@ Route::middleware(['session.check', 'quyen.check:bang_gia'])->group(function (){
 });
 Route::middleware(['session.check', 'quyen.check:phan_lop'])->group(function () {
     Route::get('diem_danh',[PhanLopController::class, 'viewDiemDanh'])->name('diem_danh');
+    Route::get('ql_phan_lop',[PhanLopController::class, 'viewQuanLyPhanLop'])->name('ql_phan_lop');
+    Route::get('them_phan_lop',[PhanLopController::class, 'viewPhanLop'])->name('them_phan_lop');
+    Route::get('sua_phan_lop',[PhanLopController::class, 'viewSuaPhanLop'])->name('sua_phan_lop');
     //--------------------------------
     Route::post('xl_phan_lop',[PhanLopController::class, 'xlPhanLop']);
     Route::post('xl_sua_phan_lop',[PhanLopController::class, 'xlSuaPhanLop']);

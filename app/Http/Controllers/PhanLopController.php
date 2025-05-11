@@ -18,25 +18,43 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class PhanLopController extends Controller
 {
-    public function viewQuanLy(Request $request)
+    public function viewQuanLyPhanLop(Request $request)
     {
-        $query = PhanLopModel::query()->select ('*')
-            ->leftJoin('ql_nhanvien as ql_gv_cn','ql_phanlop.id_gv_cn','=','ql_gv_cn.id')
-            ->leftJoin('ql_nhanvien as ql_gv_nuoc_ngoai','ql_phanlop.id_gv_nuoc_ngoai','=','ql_gv_nuoc_ngoai.id')
-            ->leftJoin('ql_nhanvien as ql_gv_viet','ql_phanlop.id_gv_viet','=','ql_gv_viet.id')
-            ->leftJoin('dm_phonghoc','ql_phanlop.id_phong_hoc','=','ql_phonghoc.id')
-            ->leftJoin('dm_lop','ql_phanlop.id_lop','=','dm_nhanvien.id')
-            ->leftJoin('dm_khoi','ql_phanlop.id_khoi','=','dm_khoi.id')
-            ->leftJoin('dm_hedaotao','ql_phanlop.id_he_dao_tao','=','dm_hedaotao.id')
-            ->leftJoin('dm_khoahoc','ql_phanlop.id_khoa_hoc','=','dm_khoahoc.id')
-            ->leftJoin('tt_ky','ql_phanlop.id_ky','=','tt_ky.id');
-        // if ($request->has('tk_ho_ten') && !empty($request->tk_ho_ten)){
-        //     $query->where('ho_ten','like','%'.$request->tk_ho_ten.'%');
-        //     $data['tk_ho_ten'] = $request->tk_ho_ten;
-        // }
-        $data['phan_lops'] = $query->orderBy('id')->get();
+        $query = PhanLopModel::query()
+            ->select('ql_phanlop.*')
+            ->leftJoin('ql_nhanvien', 'ql_phanlop.id_gv_cn', '=', 'ql_nhanvien.id')
+            ->leftJoin('ql_nhanvien as ql_nv_nn', 'ql_phanlop.id_gv_nuoc_ngoai', '=', 'ql_nv_nn.id')
+            ->leftJoin('ql_nhanvien as ql_nv_vn', 'ql_phanlop.id_gv_viet', '=', 'ql_nv_vn.id')
+            ->leftJoin('dm_phonghoc', 'ql_phanlop.id_phong_hoc', '=', 'dm_phonghoc.id')
+            ->leftJoin('dm_lop', 'ql_phanlop.id_lop', '=', 'dm_lop.id')
+            ->leftJoin('dm_khoi', 'ql_phanlop.id_khoi', '=', 'dm_khoi.id')
+            ->leftJoin('dm_hedaotao', 'ql_phanlop.id_he_dao_tao', '=', 'dm_hedaotao.id')
+            ->leftJoin('dm_khoahoc', 'ql_phanlop.id_khoa_hoc', '=', 'dm_khoahoc.id')
+            ->leftJoin('tt_ky', 'ql_phanlop.id_ky', '=', 'tt_ky.id');
+
+        $data['phan_lops'] = $query->orderBy('ql_phanlop.id')->get();
+
+        // Danh sách dropdown, phân biệt theo quốc tịch
+        $data['gv_viets'] = NhanVienModel::where('quoc_tich', 'Việt Nam')
+            ->whereNull('ngay_nghi_viec')
+            ->get();
+
+        $data['gv_nuoc_ngoais'] = NhanVienModel::where('quoc_tich', '!=', 'Việt Nam')
+            ->whereNull('ngay_nghi_viec')
+            ->get();
+        $data['gv_cns'] = NhanVienModel::where('quoc_tich', 'Việt Nam')
+            ->whereNull('ngay_nghi_viec')
+            ->get();
+        $data['lops'] = LopModel::all();
+        $data['phong_hocs'] = PhongHocModel::where('trang_thai', 1)->get();
+        $data['khois'] = KhoiModel::all();
+        $data['he_dao_taos'] = HeDaoTaoModel::all();
+        $data['khoa_hocs'] = KhoaHocModel::where('trang_thai', 1)->get();
+        $data['kys'] = KyModel::where('nam_hoc', '>=', date('Y'))->get();
+
         return view('Quan_ly_phan_lop.quan_ly_phan_lop', $data);
     }
+
     public function viewPhanLop(Request $request)
     {
         $data['lops'] = LopModel::all();
@@ -102,7 +120,7 @@ class PhanLopController extends Controller
         ->leftJoin('ql_phanlop','ql_phanlop.id','=','ql_hocsinh.id_phan_lop')
         ->where('id_phan_lop',$request->id);
         $query = $query->get();
-        $phan_lop = PhanLopModel::leftJoin('dm_phonghoc','ql_phanlop.id_phong_hoc','=','ql_phonghoc.id')
+        $phan_lop = PhanLopModel::leftJoin('dm_phonghoc','ql_phanlop.id_phong_hoc','=','dm_phonghoc.id')
         ->leftJoin('dm_lop','ql_phanlop.id_lop','=','dm_nhanvien.id')
         ->leftJoin('dm_khoi','ql_phanlop.id_khoi','=','dm_khoi.id')
         ->leftJoin('dm_hedaotao','ql_phanlop.id_he_dao_tao','=','dm_hedaotao.id')
