@@ -33,7 +33,10 @@
           <div class="search-container">
           @csrf
           <div class="filter-row">
-            <h2>Thông tin cơ bản</h2>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2>Thông tin cơ bản</h2>
+              <a href="{{route('hien_thi_thanh_toan',['id' => $hoc_sinh->id])}}" class="btn btn-primary">Hiển thị thanh toán</a>
+            </div>
             <div class="search-item d-inline-block w-25">
               <label for="id">Mã học sinh</label>
               <input type="text" name="id" class="form-control" readonly value="{{$hoc_sinh->id}}">

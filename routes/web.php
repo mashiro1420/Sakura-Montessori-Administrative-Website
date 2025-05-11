@@ -103,6 +103,7 @@ Route::middleware(['session.check', 'quyen.check:hoc_sinh'])->group(function () 
     Route::get('chi_tiet_hs',[QLHocSinhController::class, 'viewChiTiet'])->name('chi_tiet_hs');
     Route::get('them_hs',[QLHocSinhController::class, 'viewThem'])->name('them_hs');
     Route::get('sua_hs',[QLHocSinhController::class, 'viewSua'])->name('sua_hs');
+    Route::get('hien_thi_thanh_toan',[QLHocSinhController::class, 'viewHienThiThanhToan'])->name('hien_thi_thanh_toan');
     //--------------------------------
     Route::post('xl_them_hs',[QLHocSinhController::class, 'xlThem']);
     Route::post('xl_sua_hs',[QLHocSinhController::class, 'xlSua']);

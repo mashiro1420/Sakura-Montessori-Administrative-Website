@@ -55,9 +55,6 @@
                 <button class="btn btn-primary" type="submit">
                   <i class="fa-solid fa-save me-1"></i> Lưu
                 </button>
-                <button type="reset" id="reset-btn" class="btn btn-outline-secondary ms-2">
-                  <i class="fa-solid fa-rotate me-1"></i> Làm mới
-                </button>
               </div>
               <div>
                 <a class="btn btn-outline-secondary ms-2" href="{{url('ql_bg')}}">
@@ -72,22 +69,9 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-   
   const hamBurger = document.querySelector(".toggle-btn");
   hamBurger.addEventListener("click", function () {
     document.querySelector("#sidebar").classList.toggle("expand");
-  });
-  // Nút làm mới phần Cập nhật bảng giá
-  document.getElementById('reset-btn').addEventListener('click', function () {
-    const inputs = document.querySelectorAll('.search-container input, .search-container select');
-
-    inputs.forEach(input => {
-      if (input.tagName === 'SELECT') {
-        input.selectedIndex = 0;
-      } else {
-        input.value = '';
-      }
-    });
   });
   </script>
     <script>

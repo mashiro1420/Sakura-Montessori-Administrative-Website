@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\GiayToModel;
 use App\Models\HocSinhModel;
 use App\Models\MonHocModel;
+use App\Models\HocPhiModel;
 use App\Models\TaiKhoanModel;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -238,5 +239,16 @@ class QLHocSinhController extends Controller
     public function import(Request $request){
         Excel::import(new HocSinhImport, $request->file('file'));
         return redirect()->route('ql_hs');
+    }
+    public function viewHienThiThanhToan(Request $request)
+    {
+        $data = [];
+        $query = HocPhiModel::query()
+            ->select('ql_hocphi.*', 'ql_hocsinh.ho_ten')
+            ->leftJoin('ql_hocsinh', 'ql_hocphi.id_hoc_sinh', '=', 'ql_hocsinh.id')
+            ->where('ql_hocphi.id_hoc_sinh', $request->id);
+
+        $data['thanh_toan'] = $query->orderBy('ql_hocphi.id', 'desc')->first();
+        return view('Quan_ly_hoc_sinh.hien_thi_thanh_toan', $data);
     }
 }
