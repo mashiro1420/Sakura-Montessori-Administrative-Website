@@ -26,16 +26,16 @@
           </div>
 
           <!-- Search and Filter Section -->
-          <form class="search-container" action="{{url('')}}" method="get">
+          <form class="search-container" action="{{route('ql_bg')}}" method="get">
             @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-50">
                 <label for="ten_gia_search">Tên dịch vụ</label>
-                <input type="text" id="ten_gia_search" name = "ten_gia" {{!empty($ten_gia)?"value=$ten_gia":""}} class="form-control" placeholder="Tìm kiếm theo tên giá">
+                <input type="text" id="ten_gia_search" name = "ten_gia_search" {{!empty($ten_gia_search)?"value=$ten_gia_search":""}} class="form-control" placeholder="Tìm kiếm theo tên giá">
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="ten_dich_vu_search">Tên loại dịch vụ</label>
-                <select id="ten_dich_vu_search" name = "ten_dich_vu" class="form-select">
+                <label for="search_dich_vu">Tên loại dịch vụ</label>
+                <select id="search_dich_vu" name = "search_dich_vu" class="form-select">
                     <option value="">Tất cả</option>
                     @foreach ($dich_vus as $dich_vu)
                         <option value="{{$dich_vu->id}}" {{ !empty($search_dich_vu)&&$search_dich_vu==$dich_vu->id?"selected":"" }}>
@@ -43,15 +43,6 @@
                         </option>
                     @endforeach
                 </select>
-              </div>
-              <div class="search-item d-inline-block w-50">
-                <label for="gia_search">Giá</label>
-                <div class="d-flex">
-                                    <span class="me-3">Từ</span>
-                <input type="int" class="form-control" name="search_tu_gia" value="{{ !empty($search_tu_gia)?$search_tu_gia:"" }}">VNĐ
-                <span class="mx-3">đến</span>
-                <input type="int" class="form-control" name="search_den_gia" value="{{ !empty($search_den_gia)?$search_den_gia:"" }}">VNĐ
-                </div>
               </div>
             <div class="action-buttons">
               <div>

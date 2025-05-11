@@ -115,9 +115,8 @@ Route::middleware(['session.check', 'quyen.check:bang_gia'])->group(function (){
     Route::get('sua_bg',[DichVuController::class, 'viewSuaBangGia'])->name('sua_bg');
     // Route::get('ql_tx',[DichVuController::class, 'viewQuanLyTuyenXe'])->name('ql_tx');
     // Route::get('ql_td', [DichVuController::class, 'viewQuanLyThucDon'])->name('ql_td');
-    Route::post('xl_thoi_hoc',[QLHocSinhController::class, 'xlThoiHoc']);
-    Route::post('xl_quay_lai',[QLHocSinhController::class, 'xlQuayLai']);
-    Route::post('xl_chuyen_lop',[QLHocSinhController::class, 'xlChuyenLop']);
+    Route::post('xl_sua_bg',[DichVuController::class, 'xlSuaGia']);
+    Route::post('xl_them_bg',[DichVuController::class, 'xlThemGia']);
 });
 Route::middleware(['session.check', 'quyen.check:phan_lop'])->group(function () {
     Route::get('diem_danh',[PhanLopController::class, 'viewDiemDanh'])->name('diem_danh');

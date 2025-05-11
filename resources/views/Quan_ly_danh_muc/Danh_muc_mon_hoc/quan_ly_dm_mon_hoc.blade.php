@@ -34,6 +34,10 @@
                 <label for="ten_mon_hoc_search">Tên môn học</label>
                 <input type="text" id="ten_mon_hoc_search" name = "tk_ten_mon_hoc" {{!empty($tk_ten_mon_hoc)?"value=$tk_ten_mon_hoc":""}} class="form-control" placeholder="Tìm kiếm tên môn học">
               </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="ten_mon_hoc">Năng khiếu</label>
+                <input type="checkbox" name="tk_nang_khieu" class="" {{!empty($tk_nang_khieu)?"checked":""}} >
+              </div>
             <div class="action-buttons">
               <div>
                 <button class="btn btn-primary">
@@ -57,6 +61,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Tên môn học</th>
+                  <th>Năng khiếu</th>
                   <th>Thao tác</th>
                 </tr>
               </thead>
@@ -65,6 +70,7 @@
                 <tr>
                   <td>{{$mon_hoc->id}}</td>
                   <td>{{$mon_hoc->ten_mon_hoc}}</td>
+                  <td>{{$mon_hoc->nang_khieu?"Có":"Không"}}</td>
                   <td class="action-column">
                     <a class="action-button" title="Chỉnh sửa" href="{{route('ql_sua_mon_hoc',['id' => $mon_hoc->id])}}"><i class="fa-solid fa-edit"></i></a>
                   </td>

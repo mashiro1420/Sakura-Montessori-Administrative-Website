@@ -7,6 +7,7 @@ use App\Imports\HocSinhImport;
 use App\Http\Controllers\Controller;
 use App\Models\GiayToModel;
 use App\Models\HocSinhModel;
+use App\Models\MonHocModel;
 use App\Models\TaiKhoanModel;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -48,17 +49,20 @@ class QLHocSinhController extends Controller
     public function viewChiTiet(Request $request)
     {
         $data = [];
+        $data['nang_khieu'] = MonHocModel::where('nang_khieu',1)->get();
         $data['hoc_sinh'] = HocSinhModel::find($request->id);
         return view('Quan_ly_hoc_sinh.xem_chi_tiet_hoc_sinh', $data);
     }
     public function viewThem(Request $request)
     {
         $data = [];
+        $data['nang_khieu'] = MonHocModel::where('nang_khieu',1)->get();
         return view('Quan_ly_hoc_sinh.them_hoc_sinh', $data);
     }
     public function viewSua(Request $request)
     {
         $data = [];
+        $data['nang_khieu'] = MonHocModel::where('nang_khieu',1)->get();
         $data['hoc_sinh'] = HocSinhModel::find($request->id);
         return view('Quan_ly_hoc_sinh.sua_hoc_sinh', $data);
     }

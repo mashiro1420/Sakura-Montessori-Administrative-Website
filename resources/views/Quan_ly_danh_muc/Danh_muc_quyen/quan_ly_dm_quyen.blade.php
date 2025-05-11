@@ -57,6 +57,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Tên quyền</th>
+                  <th>Mã quyền</th>
                   <th>Thao tác</th>
                 </tr>
               </thead>
@@ -65,6 +66,7 @@
                 <tr>
                   <td>{{$quyen->id}}</td>
                   <td>{{$quyen->ten_quyen}}</td>
+                  <td>{{$quyen->ma}}</td>
                   <td class="action-column">
                     <a class="action-button" title="Chỉnh sửa" href="{{route('ql_sua_quyen',['id' => $quyen->id])}}"><i class="fa-solid fa-edit"></i></a>
                   </td>

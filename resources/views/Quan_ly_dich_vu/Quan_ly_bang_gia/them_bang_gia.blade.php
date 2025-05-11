@@ -24,22 +24,12 @@
           <div class="page-header">
             <h2><i class="fa-solid fa-chalkboard-user"></i> Thêm bảng giá</h2>
           </div>
-          <!-- Form to add new employee -->
-          <div class="search-item">
-              <label for="status-filter">Thêm nhiều bảng giá</label>
-              <form action="{{ url('') }}" method="post" enctype="multipart/form-data" id="import-form">
-                @csrf
-                <input type="file" name="file" id="file-input" class="d-none">
-                <button type="submit" name="import" class="btn btn-outline-secondary ms-2" id="import-button">Import Excel</button>
-              </form>
-            </div>
-          <form class="search-container" action="{{url('xl_them_nv')}}" method="post">
+          <form class="search-container" action="{{url('xl_them_bg')}}" method="post">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
-                <label for="ten_dich_vu">Tên loại dịch vụ</label required>
-                <select id="ten_dich_vu" name = "ten_dich_vu" class="form-select">
-                    <option value="">Tất cả</option>
+                <label for="dich_vu">Tên loại dịch vụ</label required>
+                <select id="dich_vu" name = "dich_vu" class="form-select">
                     @foreach ($dich_vus as $dich_vu)
                         <option value="{{$dich_vu->id}}">
                             {{$dich_vu->ten_dich_vu}}
@@ -57,8 +47,7 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="dinh_nghia">Định nghĩa</label>
-                <textarea name="dinh_nghia" id="dinh_nghia" class="form-control" cols="30" rows="5">
-                </textarea>
+                <textarea name="dinh_nghia" id="dinh_nghia" class="form-control" cols="30" rows="5"></textarea>
               </div>
 
             <div class="action-buttons">

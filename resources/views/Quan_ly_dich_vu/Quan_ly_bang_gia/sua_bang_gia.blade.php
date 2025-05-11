@@ -24,13 +24,12 @@
           <div class="page-header">
             <h2><i class="fa-solid fa-chalkboard-user"></i> Cập nhật bảng giá</h2>
           </div>
-          <form class="search-container" action="{{url('xl_them_nv')}}" method="post">
+          <form class="search-container" action="{{url('xl_sua_bg')}}" method="post">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
-                <label for="ten_dich_vu">Tên loại dịch vụ</label required>
-                <select id="ten_dich_vu" name = "ten_dich_vu" class="form-select">
-                    <option value="">Tất cả</option>
+                <label for="dich_vu">Tên loại dịch vụ</label required>
+                <select id="dich_vu" name = "dich_vu" class="form-select">
                     @foreach ($dich_vus as $dich_vu)
                         <option value="{{$dich_vu->id}}" {{ $bang_gia->id_dich_vu==$dich_vu->id?"selected":"" }}>
                             {{$dich_vu->ten_dich_vu}}
@@ -48,9 +47,7 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="dinh_nghia">Định nghĩa</label>
-                <textarea name="dinh_nghia" id="dinh_nghia" class="form-control" cols="30" rows="5">
-                    {{$bang_gia->dinh_nghia}}
-                </textarea>
+                <textarea name="dinh_nghia" id="dinh_nghia" class="form-control" cols="30" rows="5">{{$bang_gia->dinh_nghia}}</textarea>
               </div>
 
             <div class="action-buttons">

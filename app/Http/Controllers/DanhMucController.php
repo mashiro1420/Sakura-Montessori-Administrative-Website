@@ -108,6 +108,10 @@ class DanhMucController extends Controller
             $query->where('ten_mon_hoc','like','%'.$request->tk_ten_mon_hoc.'%');
             $data['tk_ten_mon_hoc'] = $request->tk_ten_mon_hoc;
         }
+        if ($request->has('tk_nang_khieu') && !empty($request->tk_nang_khieu)){
+            $query->where('nang_khieu',1);
+            $data['tk_nang_khieu'] = $request->tk_nang_khieu;
+        }
         $data['mon_hocs'] = $query->orderBy('id')->get();
         return view('Quan_ly_danh_muc.Danh_muc_mon_hoc.quan_ly_dm_mon_hoc', $data);
     }public function viewDMPhongHoc(Request $request)
@@ -293,6 +297,8 @@ public function viewSuaChucVu(Request $request)
     public function xlDMMonHoc(Request $request){
         $mon_hoc = MonHocModel::firstOrNew(['id' => $request->id?$request->id : null]);
         $mon_hoc->ten_mon_hoc = $request->ten_mon_hoc;
+        if(!empty($request->nang_khieu)) $mon_hoc->nang_khieu = 1; 
+        else $mon_hoc->nang_khieu = 0;
         $mon_hoc->save();
         return redirect()->route('ql_dm_mon_hoc');
     }
@@ -310,6 +316,7 @@ public function viewSuaChucVu(Request $request)
     public function xlDMQuyen(Request $request){
         $quyen = QuyenModel::firstOrNew(['id' => $request->id?$request->id : null]);
         $quyen->ten_quyen = $request->ten_quyen;
+        $quyen->ma = $request->ma;
         $quyen->save();
         return redirect()->route('ql_dm_quyen');
     }

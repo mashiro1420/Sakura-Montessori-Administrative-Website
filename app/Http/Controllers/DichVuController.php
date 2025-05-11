@@ -14,8 +14,20 @@ class DichVuController extends Controller
     public function viewQuanLyBangGia(Request $request)
     {
         $data = [];
-        $data['bang_gias'] = BangGiaModel::all();
+        $query = BangGiaModel::query()
+            ->leftJoin('dm_dichvu', 'ql_banggia.id_dich_vu', '=', 'dm_dichvu.id')
+            ->select('ql_banggia.*', 'dm_dichvu.ten_dich_vu');
+        if ($request->filled('ten_gia_search')) {
+            $query->where('ten_gia', 'like', '%' . $request->ten_gia_search . '%');
+        }
+        if ($request->filled('search_dich_vu')) {
+            $query->where('id_dich_vu', $request->search_dich_vu);
+        }   
+        $data['bang_gias'] = $query->orderBy('ql_banggia.id')
+            ->get();
         $data['dich_vus'] = DichVuModel::all();
+        $data['ten_gia_search'] = $request->ten_gia_search;
+        $data['search_dich_vu'] = $request->search_dich_vu;
         return view('Quan_ly_dich_vu.Quan_ly_bang_gia.quan_ly_bang_gia', $data);
     }
     public function viewThemBangGia()
@@ -30,6 +42,26 @@ class DichVuController extends Controller
         $data['bang_gia'] = BangGiaModel::find($request->id);
         $data['dich_vus'] = DichVuModel::all();
         return view('Quan_ly_dich_vu.Quan_ly_bang_gia.sua_bang_gia', $data);
+    }
+    public function xlThemGia(Request $request)
+    {
+        $gia = new BangGiaModel();
+        $gia->id_dich_vu = $request->dich_vu;
+        $gia->ten_gia = $request->ten_gia;
+        $gia->dinh_nghia = $request->dinh_nghia;
+        $gia->gia = $request->gia;
+        $gia->save();
+        return redirect()->route('ql_bg')->with('bao_loi','Lưu thành công');
+    }
+public function xlSuaGia(Request $request)
+    {
+        $gia = BangGiaModel::find($request->id);
+        $gia->id_dich_vu = $request->dich_vu;
+        $gia->ten_gia = $request->ten_gia;
+        $gia->dinh_nghia = $request->dinh_nghia;
+        $gia->gia = $request->gia;
+        $gia->save();
+        return redirect()->route('ql_bg')->with('bao_loi','Lưu thành công');
     }
     public function xlDKTuyen(Request $request)
     {

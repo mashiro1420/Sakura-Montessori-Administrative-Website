@@ -80,6 +80,15 @@
                   <option value="2">Học phí tháng</option>
                 </select>
               </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="nang_khieu">Môn năng khiếu</label>
+                <select name="loai_hoc_phi" class="form-select" required>
+                  <option value="0" {{empty($hoc_sinh->nang_khieu)?"selected":""}}>Không đăng ký</option>
+                  @foreach ($nang_khieu as $mon)
+                  <option value="{{ $mon->id }}">{{$mon->ten_mon_hoc}}</option>
+                  @endforeach
+                </select>
+              </div>
             </div>
             <div class="filter-row">
               <h2>Thông tin sức khỏe</h2>

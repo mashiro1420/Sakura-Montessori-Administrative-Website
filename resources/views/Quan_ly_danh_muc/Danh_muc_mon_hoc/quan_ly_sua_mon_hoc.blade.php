@@ -36,6 +36,10 @@
                 <label for="ten_mon_hoc">Tên môn học</label>
                 <input type="text" name="ten_mon_hoc" class="form-control" value="{{$mon_hoc->ten_mon_hoc}}" required>
               </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="ten_mon_hoc">Năng khiếu</label>
+                <input type="checkbox" name="nang_khieu" class="" {{$mon_hoc->nang_khieu?"checked":""}} >
+              </div>
             </div>
             <div class="action-buttons">
               <div>

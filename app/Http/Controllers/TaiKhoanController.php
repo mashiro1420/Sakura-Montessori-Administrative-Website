@@ -72,31 +72,17 @@ class TaiKhoanController extends Controller
         return redirect()->route('cai_dat_tk');
         
     }
-    // public function xlPhanQuyen(Request $request){
-    //     $phan_quyens = PhanQuyenModel::where('id_tai_khoan','=',$request->tai_khoan)->get();
-    //     foreach($phan_quyens as $phan_quyen){
-    //         $phan_quyen->delete();
-    //     }
-    //     foreach($request->quyen as $quyen){
-    //         $phan_quyen = new PhanQuyenModel();
-    //         $phan_quyen->id_tai_khoan = $request->tai_khoan;
-    //         $phan_quyen->id_quyen = $quyen;
-    //         $phan_quyen->save();
-    //     }
-    //     session()->flash('bao_loi', 'Cập nhật quyền thành công');
-    //     return redirect()->route('ql_tk');
-    // }
-    public function xlPhanQuyen(Request $request)
-    {
-        PhanQuyenModel::where('tai_khoan', $request->tai_khoan)->delete();
-
-        foreach ($request->quyen as $id_quyen) {
-            PhanQuyenModel::create([
-                'tai_khoan' => $request->tai_khoan,
-                'id_quyen' => $id_quyen,
-            ]);
+    public function xlPhanQuyen(Request $request){
+        $phan_quyens = PhanQuyenModel::where('id_tai_khoan','=',$request->tai_khoan)->get();
+        foreach($phan_quyens as $phan_quyen){
+            $phan_quyen->delete();
         }
-
+        foreach($request->quyen as $quyen){
+            $phan_quyen = new PhanQuyenModel();
+            $phan_quyen->id_tai_khoan = $request->tai_khoan;
+            $phan_quyen->id_quyen = $quyen;
+            $phan_quyen->save();
+        }
         session()->flash('bao_loi', 'Cập nhật quyền thành công');
         return redirect()->route('ql_tk');
     }
@@ -107,5 +93,4 @@ class TaiKhoanController extends Controller
         $query = $query->get();
         return Excel::download(new TaiKhoanExport($query), 'export_tk.xlsx');
     }
-
 }

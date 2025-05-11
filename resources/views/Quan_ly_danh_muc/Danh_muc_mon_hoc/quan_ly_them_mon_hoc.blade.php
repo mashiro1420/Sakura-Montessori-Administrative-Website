@@ -32,6 +32,10 @@
                 <label for="ten_mon_hoc">Tên môn học</label>
                 <input type="text" name="ten_mon_hoc" class="form-control" placeholder="Nhập tên môn học" required>
               </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="ten_mon_hoc">Năng khiếu</label>
+                <input type="checkbox" name="nang_khieu" class="">
+              </div>
             </div>  
             <div class="action-buttons">
               <div>

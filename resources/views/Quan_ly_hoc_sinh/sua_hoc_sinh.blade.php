@@ -10,7 +10,7 @@
   <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-  <link rel="icon" type="image/png" href="{{ asset('/imgs/favicon-skr.png') }}">
+  <link rel="icon" type="image/png" href="{{ asset('imgs/favicon-skr.png') }}">
   <link rel="stylesheet" href="{{ asset('css/main/main.css') }}">
 </head>
 <body>
@@ -74,6 +74,15 @@
                   <option value="0" {{$hoc_sinh->loai_hoc_phi=='0'?"selected":""}}>Học phí kỳ</option>
                   <option value="1" {{$hoc_sinh->loai_hoc_phi=='1'?"selected":""}}>Học phí năm</option>
                   <option value="2" {{$hoc_sinh->loai_hoc_phi=='2'?"selected":""}}>Học phí tháng</option>
+                </select>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="nang_khieu">Môn năng khiếu</label>
+                <select name="loai_hoc_phi" class="form-select" required>
+                  <option value="0" {{empty($hoc_sinh->nang_khieu)?"selected":""}}>Không đăng ký</option>
+                  @foreach ($nang_khieu as $mon)
+                  <option value="{{ $mon->id }}" {{$hoc_sinh->nang_khieu==$mon->id?"selected":""}}>{{$mon->ten_mon_hoc}}</option>
+                  @endforeach
                 </select>
               </div>
             </div>

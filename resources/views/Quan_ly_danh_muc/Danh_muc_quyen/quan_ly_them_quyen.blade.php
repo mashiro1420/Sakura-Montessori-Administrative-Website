@@ -32,6 +32,10 @@
                 <label for="ten_quyen">Tên quyền</label>
                 <input type="text" name="ten_quyen" class="form-control" placeholder="Nhập tên quyền" required>
               </div>
+                <div class="search-item d-inline-block w-25">
+                <label for="ma">Mã quyền</label>
+                <input type="text" name="ma" class="form-control" placeholder="Nhập mã" required>
+              </div>
             </div>  
             <div class="action-buttons">
               <div>
