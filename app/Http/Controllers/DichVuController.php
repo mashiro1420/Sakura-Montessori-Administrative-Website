@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\MenuImport;
 use App\Models\BangGiaModel;
 use App\Models\DichVuModel;
 use App\Models\DiemDanhModel;
@@ -9,6 +10,7 @@ use App\Models\HocSinhModel;
 use App\Models\LoTrinhXeModel;
 use App\Models\NhanVienModel;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DichVuController extends Controller
 {
@@ -121,5 +123,9 @@ public function xlSuaGia(Request $request)
         $data['monitors'] = NhanVienModel::where('id_chuc_vu', 7)->get();
         $data['lo_trinh_xe'] = LoTrinhXeModel::find($request->id);
         return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.sua_dang_ky_xe', $data);
+    }
+    public function importMenu(Request $request){
+        Excel::import(new MenuImport, $request->file('file'));
+        return redirect()->route('ql_menu');
     }
 }
