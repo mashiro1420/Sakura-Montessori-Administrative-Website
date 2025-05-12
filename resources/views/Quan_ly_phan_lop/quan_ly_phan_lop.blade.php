@@ -113,7 +113,7 @@
               <div class="search-item d-inline-block w-25">
                 <label for="ky_search">Kỳ</label>
                 <select id="position-filter" name = "ky" class="form-select">
-                  <option value="">Tất cả các khóa học</option>
+                  <option value="">Tất cả các kỳ học</option>
                   @foreach($kys as $ky)
                     <option value="{{$ky->id}}" {{!empty($pl_ky)&&$pl_ky==$pl_ky->id?"selected":""}}>{{$ky->ten_ky}}</option>
                   @endforeach
