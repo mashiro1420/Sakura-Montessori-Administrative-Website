@@ -8,6 +8,7 @@ use App\Imports\NhanVienImport;
 use App\Models\ChucVuModel;
 use App\Models\ChuyenNganhModel;
 use App\Models\NhanVienModel;
+use App\Models\PhanQuyenModel;
 use App\Models\TaiKhoanModel;
 use App\Models\TTBangCapModel;
 use App\Models\TTDanSuModel;
@@ -141,6 +142,8 @@ class QLNhanVienController extends Controller
         $dan_su = new TTDanSuModel(['id_nhan_vien'=>$ma_nv]);
         $hon_nhan = new TTHonNhanModel(['id_nhan_vien'=>$ma_nv]);
         $hop_dong = new TTHopDongModel(['id_nhan_vien'=>$ma_nv]);
+        $phan_quyen = new PhanQuyenModel((['id_tai_khoan'=>$ma_nv,'id_quyen'=>7]));
+        $phan_quyen->save();
         $nhan_vien->save();
         $tai_khoan->save();
         $hon_nhan->save();

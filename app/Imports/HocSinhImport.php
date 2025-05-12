@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\HocSinhModel;
+use App\Models\PhanQuyenModel;
 use App\Models\TaiKhoanModel;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -56,7 +57,6 @@ class HocSinhImport implements ToModel, WithHeadingRow
             'tai_khoan' => $row['ma_hoc_sinh'],
             'id_hoc_sinh' => $row['ma_hoc_sinh'],
             'la_khach' => true,
-            'id_quyen' => 2,
-        ],['tai_khoan'], ['id_hoc_sinh', 'la_khach', 'id_quyen']);
+        ],['tai_khoan'], ['id_hoc_sinh', 'la_khach']);
     }
 }

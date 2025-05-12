@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\ChucVuModel;
 use App\Models\ChuyenNganhModel;
 use App\Models\NhanVienModel;
+use App\Models\PhanQuyenModel;
 use App\Models\TaiKhoanModel;
 use App\Models\TTBangCapModel;
 use App\Models\TTDanSuModel;
@@ -90,7 +91,10 @@ class NhanVienImport implements ToModel,WithHeadingRow
             'tai_khoan' => $row['ma_nhan_vien'],
             'id_nhan_vien' => $row['ma_nhan_vien'],
             'la_khach' => false,
-            'id_quyen' => 3,
-        ],['tai_khoan','id_nhan_vien'], ['la_khach', 'id_quyen']);
+        ],['tai_khoan','id_nhan_vien'], ['la_khach']);
+        PhanQuyenModel::upsert([
+            'id_tai_khoan' => $row['ma_nhan_vien'],
+            'id_quyen' => 7
+        ],['id_tai_khoan','id_quyen']);
     }   
 }
