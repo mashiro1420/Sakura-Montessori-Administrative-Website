@@ -35,7 +35,17 @@
           <div class="filter-row">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h2>Thông tin cơ bản</h2>
-              <a href="{{route('hien_thi_thanh_toan',['id' => $hoc_sinh->id])}}" class="btn btn-primary">Hiển thị thanh toán</a>
+              <div id="button_container">
+                <a id="hien_thi_thanh_toan_btn" href="{{route('hien_thi_thanh_toan',['id' => $hoc_sinh->id])}}" class="btn btn-primary">
+                  Hiển thị thanh toán
+                </a>  
+                <button id="nhap_hoc_lai_btn" class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#uploadNhapHocLaiModal">
+                  Nhập học lại
+                </button>
+                <button id="thoi_hoc_btn" class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#uploadThoiHocModal">
+                  Thôi học
+                </button>
+              </div>
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="id">Mã học sinh</label>
@@ -63,6 +73,10 @@
             <div class="search-item d-inline-block w-25">
               <label for="ngay_nhap_hoc">Ngày nhập học</label>
               <input type="date" name="ngay_nhap_hoc" class="form-control" readonly value="{{$hoc_sinh->ngay_nhap_hoc}}" readonly>
+            </div>
+            <div class="search-item d-inline-block w-25">
+              <label for="ngay_thoi_hoc">Ngày thôi học</label>
+              <input type="date" id="ngay_thoi_hoc" name="ngay_thoi_hoc" class="form-control" readonly value="{{$hoc_sinh->ngay_thoi_hoc}}" readonly>
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="quoc_tich">Quốc tịch</label>
@@ -199,13 +213,83 @@
       </div>
     </div>
   </div>
+  <!-- Model thôi học -->
+  <div class="modal fade" id="uploadThoiHocModal" tabindex="-1" aria-labelledby="uploadThoiHoc" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="import-form" action="" method="POST" enctype="multipart/form-data" class="modal-content">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title" id="uploadThoiHoc">Khai báo thôi học</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+        </div>
+        <div class="modal-body">
+          <label for="">File bằng chứng</label>
+          <input type="file" name="file" class="form-control" id="file-input" required>
+        </div>
+        <div class="modal-body">
+          <label for="ngay_thoi_hoc">Ngày thôi học</label>
+          <input type="date" name="file" class="form-control" name="ngay_thoi_hoc" id="ngay_thoi_hoc" name="ngay_thoi_hoc" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button type="submit" class="btn btn-primary">Tải lên</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Model nhập học lại -->
+  <div class="modal fade" id="uploadNhapHocLaiModal" tabindex="-1" aria-labelledby="uploadNhapHocLai" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="import-form" action="" method="POST" enctype="multipart/form-data" class="modal-content">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title" id="uploadNhapHocLai">Khai báo nhập học lại</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+        </div>
+        <div class="modal-body">
+          <label for="">File bằng chứng</label>
+          <input type="file" name="file" class="form-control" id="file-input" required>
+        </div>
+        <div class="modal-body">
+          <label for="ngay_thoi_hoc">Ngày nhập học lại</label>
+          <input type="date" name="file" class="form-control" name="ngay_thoi_hoc" id="ngay_thoi_hoc" name="ngay_thoi_hoc" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button type="submit" class="btn btn-primary">Tải lên</button>
+        </div>
+      </form>
+    </div>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-   
-  const hamBurger = document.querySelector(".toggle-btn");
-  hamBurger.addEventListener("click", function () {
-    document.querySelector("#sidebar").classList.toggle("expand");
-  });
+    const hamBurger = document.querySelector(".toggle-btn");
+    hamBurger.addEventListener("click", function () {
+      document.querySelector("#sidebar").classList.toggle("expand");
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const ngayThoiHocInput = document.getElementById('ngay_thoi_hoc');
+      const nhapHocLaiLink = document.getElementById('nhap_hoc_lai_btn');
+      const thoiHocLink = document.getElementById('thoi_hoc_btn');
+
+      function toggleLinks() {
+          if (ngayThoiHocInput.value.trim() === '') {
+              nhapHocLaiLink.classList.add('disabled');
+              thoiHocLink.classList.remove('disabled');
+          } else {
+              nhapHocLaiLink.classList.remove('disabled');
+              thoiHocLink.classList.add('disabled');
+          }
+      }
+
+      // Gọi hàm toggleLinks khi trang được tải
+      toggleLinks();
+
+      // Gọi hàm toggleLinks khi giá trị của input thay đổi
+      ngayThoiHocInput.addEventListener('input', toggleLinks);
+    });
   </script>
 @include('components/bao_loi')
 </body>

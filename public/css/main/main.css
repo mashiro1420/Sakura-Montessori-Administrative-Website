@@ -334,6 +334,11 @@ a.sidebar-link:hover {
   color: #bb2d3b;
 }
 
+.disable{
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 /* Responsive styles */
 @media (max-width: 992px) {
   .search-item {
