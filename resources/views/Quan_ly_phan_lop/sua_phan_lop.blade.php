@@ -5,7 +5,7 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Thêm phân lớp</title>
+<title>Sửa phân lớp</title>
  
   <!-- Icons and Fonts -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -47,25 +47,12 @@
       <div class="content" id="content" style="margin-left: 70px;">
         <div class="container-fluid">
           <div class="page-header">
-            <h2><i class="fa-solid fa-chalkboard-user"></i> Thêm phân lớp</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i> Sửa phân lớp</h2>
           </div>
- 
-          <!-- Import Excel -->
-          <div class="search-item">
-            <label for="status-filter">Thêm nhiều phân lớp</label>
-            <form action="{{ url('/import_nv') }}" method="post" enctype="multipart/form-data" id="import-form">
-              @csrf
-              <input type="file" name="file" id="file-input" class="d-none" required />
-              <button type="submit" name="import" class="btn btn-outline-secondary ms-2" id="import-button">
-                Import Excel
-              </button>
-            </form>
-          </div>
-          <!-- Form Thêm Phân Lớp -->
           <form class="search-container" action="" method="post">
             @csrf
             <div class="filter-row">
-              @foreach([
+                @foreach([
                 ['id' => 'gv_cn', 'label' => 'Giáo viên chủ nhiệm', 'list' => $gv_cns, 'text' => 'ho_ten'],
                 ['id' => 'gv_viet', 'label' => 'Giáo viên Việt', 'list' => $gv_viets, 'text' => 'ho_ten'],
                 ['id' => 'gv_nuoc_ngoai', 'label' => 'Giáo viên nước ngoài', 'list' => $gv_nuoc_ngoais, 'text' => 'ho_ten'],
@@ -75,17 +62,19 @@
                 ['id' => 'he_dao_tao', 'label' => 'Hệ đào tạo', 'list' => $he_dao_taos, 'text' => 'ten_he_dao_tao'],
                 ['id' => 'khoa_hoc', 'label' => 'Khóa học', 'list' => $khoa_hocs, 'text' => 'ten_khoa_hoc'],
                 ['id' => 'ky', 'label' => 'Kỳ', 'list' => $kys, 'text' => 'ten_ky']
-              ] as $field)
-              <div class="search-item d-inline-block w-25">
-                <label for="{{ $field['id'] }}">{{ $field['label'] }}</label>
-                <select id="{{ $field['id'] }}" name="{{ $field['id'] }}" class="select2-elem form-select" required>
-                  <option value="" disabled selected>Chọn hoặc tìm kiếm</option>
-                  @foreach($field['list'] as $item)
-                  <option value="{{ $item->id }}">{{ $item->{$field['text']} }}</option>
-                  @endforeach
-                </select>
-              </div>
-              @endforeach
+                ] as $field)
+                <div class="search-item d-inline-block w-25">
+                    <label for="{{ $field['id'] }}">{{ $field['label'] }}</label>
+                    <select id="{{ $field['id'] }}" name="{{ $field['id'] }}" class="select2-elem form-select" required>
+                    <option value="" disabled {{ old($field['id']) ? '' : 'selected' }}>Chọn hoặc tìm kiếm</option>
+                    @foreach($field['list'] as $item)
+                        <option value="{{ $item->id }}" {{ old($field['id']) == $item->id ? 'selected' : '' }}>
+                        {{ $item->{$field['text']} }}
+                        </option>
+                    @endforeach
+                    </select>
+                </div>
+                @endforeach
             </div>
  
             <!-- Nút hành động -->
