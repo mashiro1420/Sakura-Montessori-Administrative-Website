@@ -38,12 +38,7 @@
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
                 <label for="tuan">Tuần</label>
-                    <select id="position-filter" name = "tuan" class="form-select" required>
-                        <option value="" disable selected>Chọn tuần</option>
-                        @foreach($tuans as $tuan)
-                            <option value="{{$tuan->id}}">Tuần thứ {{$tuan->tuan}} năm {{$tuan->nam}}</option>
-                        @endforeach
-                    </select>
+                <input type="text" name="tuan" value-"" id="file-input" class="d-none" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="gioi_tinh">Lớp</label>
