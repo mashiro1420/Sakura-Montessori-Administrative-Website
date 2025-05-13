@@ -12,6 +12,117 @@
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <link rel="icon" type="image/png" href="{{ asset('/imgs/favicon-skr.png') }}">
   <link rel="stylesheet" href="{{ asset('css/main/main.css') }}">
+  <style>
+    .timetable-container {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .timetable {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    
+    .timetable th, .timetable td {
+      border: 1px solid #dee2e6;
+      padding: 10px;
+      text-align: center;
+      vertical-align: middle;
+      height: 60px;
+    }
+    
+    .timetable th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+      color: #495057;
+    }
+    
+    .timetable th.day-header {
+      background-color: #3b7ddd;
+      color: white;
+    }
+    
+    .timetable td input {
+      width: 100%;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      padding: 4px;
+      text-align: center;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    
+    .timetable td input:focus {
+      border-color: #3b7ddd;
+      box-shadow: 0 0 0 0.2rem rgba(59, 125, 221, 0.25);
+      outline: 0;
+    }
+    
+    .period-label {
+      background-color: #e9ecef;
+      font-weight: 500;
+    }
+    
+    .form-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .class-selector {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .import-section {
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #3b7ddd;
+    }
+    
+    .action-buttons {
+      margin-top: 30px;
+    }
+
+    /* Input trong ô thời khóa biểu */
+    .lesson-input {
+      height: 50px;
+      font-size: 0.9rem;
+    }
+    
+    /* Animation cho hover trên các ô */
+    .timetable td:hover {
+      background-color: rgba(59, 125, 221, 0.05);
+    }
+    
+    /* Styling cho tooltip hay pop-up */
+    .lesson-help {
+      position: relative;
+      cursor: help;
+    }
+    
+    .lesson-help:hover::after {
+      content: "Nhập tên môn học hoặc hoạt động";
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 10;
+    }
+  </style>
 </head>
 
 <body>
@@ -45,54 +156,56 @@
             @csrf
             
             <!-- Form Header with Class and Week Selection -->
-            <div class="form-section">
-              <h5>Thông tin chung</h5>
-              <div class="row mb-3">
-                <div class="col-md-4">
-                  <label for="phan_lop" class="form-label fw-bold">Lớp:</label>
-                  <select id="phan_lop" name="phan_lop" class="form-select" required>
-                    <option value="" disabled selected>Chọn lớp</option>
-                    @foreach($phan_lops as $phan_lop)
-                      <option value="{{$phan_lop->id}}">{{$phan_lop->id}}</option>
-                    @endforeach
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <label for="tuan" class="form-label fw-bold">Tuần:</label>
-                  <select id="tuan" name="tuan" class="form-select" required>
-                    <option value="" disabled selected>Chọn tuần</option>
-                    @foreach($tuans as $tuan)
-                      <option value="{{$tuan->id}}">Tuần {{$tuan->tuan}} ({{$tuan->tu_ngay}} đến {{$tuan->den_ngay}})</option>
-                    @endforeach
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <label for="thu" class="form-label fw-bold">Thứ:</label>
-                  <input type="text" id="thu" name="thu" class="form-control" placeholder="Nhập thứ trong tuần" required>
-                </div>
+            <div class="form-header">
+              <div class="col-md-4">
+                <label for="phan_lop" class="form-label fw-bold">Lớp:</label>
+                <select id="phan_lop" name="phan_lop" class="form-select" required>
+                  <option value="" disabled selected>Chọn lớp</option>
+                  @foreach($phan_lops as $phan_lop)
+                    <option value="{{$phan_lop->id}}">{{$phan_lop->id}}</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label for="tuan" class="form-label fw-bold">Tuần:</label>
+                <select id="tuan" name="tuan" class="form-select" required>
+                  <option value="" disabled selected>Chọn tuần</option>
+                  @foreach($tuans as $tuan)
+                    <option value="{{$tuan->id}}">{{$tuan->ten_tuan}}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
-            <div class="form-section">
-              <h5 id="timetable-heading">Thời khóa biểu</h5>
-              <div class="timetable-container">
-                <table class="timetable">
-                  <thead>
+            
+            <!-- Timetable -->
+            <div class="timetable-container">
+              <table class="timetable">
+                <thead>
+                  <tr>
+                    <th style="width: 80px;">Tiết</th>
+                    <th class="day-header">Thứ 2</th>
+                    <th class="day-header">Thứ 3</th>
+                    <th class="day-header">Thứ 4</th>
+                    <th class="day-header">Thứ 5</th>
+                    <th class="day-header">Thứ 6</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for ($i = 1; $i <= 11; $i++)
                     <tr>
-                      <th style="width: 80px;">Tiết</th>
-                      <th class="day-header" id="day-header">Môn học</th>
+                      <td class="period-label">Tiết {{$i}}</td>
+                      <td><input type="text" name="tiet{{$i}}t2" class="lesson-input form-control" placeholder=""></td>
+                      <td><input type="text" name="tiet{{$i}}t3" class="lesson-input form-control" placeholder=""></td>
+                      <td><input type="text" name="tiet{{$i}}t4" class="lesson-input form-control" placeholder=""></td>
+                      <td><input type="text" name="tiet{{$i}}t5" class="lesson-input form-control" placeholder=""></td>
+                      <td><input type="text" name="tiet{{$i}}t6" class="lesson-input form-control" placeholder=""></td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    @for ($i = 1; $i <= 11; $i++)
-                      <tr>
-                        <td class="period-label">Tiết {{$i}}</td>
-                        <td><input type="text" name="tiet{{$i}}" class="lesson-input form-control" placeholder="Nhập tên môn học"></td>
-                      </tr>
-                    @endfor
-                  </tbody>
-                </table>
-              </div>
+                  @endfor
+                </tbody>
+              </table>
             </div>
+            
+            <!-- Action Buttons -->
             <div class="action-buttons d-flex justify-content-between">
               <div>
                 <button class="btn btn-primary" type="submit">
@@ -116,10 +229,13 @@
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    // Sidebar toggle
     const hamBurger = document.querySelector(".toggle-btn");
     hamBurger.addEventListener("click", function () {
       document.querySelector("#sidebar").classList.toggle("expand");
     });
+    
+    // Reset button
     document.getElementById('reset-btn').addEventListener('click', function () {
       const inputs = document.querySelectorAll('input[type="text"], select');
       inputs.forEach(input => {
@@ -130,11 +246,8 @@
         }
       });
     });
-    document.getElementById('thu').addEventListener('change', function() {
-      const dayText = this.options[this.selectedIndex].text;
-      document.getElementById('day-header').textContent = dayText;
-      document.getElementById('timetable-heading').textContent = `Thời khóa biểu ${dayText}`;
-    });
+    
+    // Enhance UX with focus highlighting for table cells
     const lessonInputs = document.querySelectorAll('.lesson-input');
     lessonInputs.forEach(input => {
       input.addEventListener('focus', function() {
