@@ -128,4 +128,9 @@ public function xlSuaGia(Request $request)
         Excel::import(new MenuImport, $request->file('file'));
         return redirect()->route('ql_menu');
     }
+
+    // public function xlTinhHocPhi(Request $request)
+    // {
+    //     $hoc_sinhs = HocSinhModel::
+    // }
 }

@@ -83,8 +83,7 @@ class PhanLopController extends Controller
         $data['hoc_sinhs'] = $query->get();
         return view('', $data);
     }
-
-    public function xlPhanLop(Request $request)
+    public function xlTaoLop(Request $request)
     {
         $phan_lop = new PhanLopModel();
         $phan_lop->id_gv_cn = $request->gv_cn;
@@ -97,10 +96,14 @@ class PhanLopController extends Controller
         $phan_lop->khoa_hoc = $request->khoa_hoc;
         $phan_lop->id_ky = $request->ky;
         $phan_lop->save();
-        $phan_lop_moi = PhanLopModel::orderBy('id','desc')->first();
+        return redirect()->route('ql_phanlop')->with('bao_loi','Lưu thành công');
+    }
+    public function xlPhanLop(Request $request)
+    {
+        $phan_lop = PhanLopModel::find($request->id);
         foreach($request->hoc_sinhs as $id_hoc_sinh){
             $hoc_sinh = HocSinhModel::find($id_hoc_sinh);
-            $hoc_sinh->id_phan_lop = $phan_lop_moi->id;
+            $hoc_sinh->id_phan_lop = $phan_lop->id;
             $hoc_sinh->save();
         }
         return redirect()->route('ql_phanlop')->with('bao_loi','Lưu thành công');
