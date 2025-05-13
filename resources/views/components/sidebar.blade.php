@@ -97,10 +97,10 @@
           <a href="{{url('ql_bg')}}" class="sidebar-link">Quản lý bảng giá</a>
         </li>
         <li class="sidebar-item">
-          <a href="ql_tx" class="sidebar-link">Quản lý tuyến xe</a>
+          <a href="ql_td" class="sidebar-link">Quản lý thực đơn</a>
         </li>
         <li class="sidebar-item">
-          <a href="ql_td" class="sidebar-link">Quản lý thực đơn</a>
+          <a href="ql_dk_bus_hs" class="sidebar-link">Quản lý đăng ký xe bus</a>
         </li>
       </ul>
     </li>

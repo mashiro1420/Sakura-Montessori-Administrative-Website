@@ -109,12 +109,12 @@ public function xlSuaGia(Request $request)
         $data['lo_trinh_xes'] = $query->orderBy('ql_lotrinhxe.id')->get();
         return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.quan_ly_lo_trinh_xe', $data);
     }
-    public function viewDangKyBus()
+    public function viewThemLoTrinh()
     {
         $data = [];
         $data['lai_xes'] = NhanVienModel::where('id_chuc_vu', 6)->get();
         $data['monitors'] = NhanVienModel::where('id_chuc_vu', 7)->get();
-        return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.dang_ky_xe_bus', $data);
+        return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.them_lo_trinh_xe', $data);
     }
     public function viewSuaLoTrinh(Request $request)
     {
@@ -122,13 +122,30 @@ public function xlSuaGia(Request $request)
         $data['lai_xes'] = NhanVienModel::where('id_chuc_vu', 6)->get();
         $data['monitors'] = NhanVienModel::where('id_chuc_vu', 7)->get();
         $data['lo_trinh_xe'] = LoTrinhXeModel::find($request->id);
-        return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.sua_dang_ky_xe', $data);
+        return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.sua_lo_trinh', $data);
     }
     public function importMenu(Request $request){
         Excel::import(new MenuImport, $request->file('file'));
         return redirect()->route('ql_menu');
     }
-
+    public function viewQuanLyDangKyBusHS(Request $request)
+    {
+        $data = [];
+        $data['dky_bus_hss'] = HocSinhModel::all();
+        return view('Quan_ly_dich_vu.Dang_ky_xe_bus.ql_dang_ky_xe_bus_hs', $data);
+    }
+    public function viewDangKyBusHS()
+    {
+        $data = [];
+        $data['hoc_sinhs'] = HocSinhModel::all();
+        return view('Quan_ly_dich_vu.Dang_ky_xe_bus.dang_ky_xe_bus', $data);
+    }
+    public function viewSuaBusHS()
+    {
+        $data = [];
+        $data['hoc_sinhs'] = HocSinhModel::all();
+        return view('Quan_ly_dich_vu.Dang_ky_xe_bus.sua_dang_ky_bus', $data);
+    }
     // public function xlTinhHocPhi(Request $request)
     // {
     //     $hoc_sinhs = HocSinhModel::
