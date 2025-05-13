@@ -186,7 +186,7 @@
                   <td>{{$phan_lop->ten_khoa_hoc}}</td>
                   <td>{{$phan_lop->ten_ky}}</td>
                   <td class="action-column">
-                    {{-- <a class="action-button" href="{{route('chi_tiet_nv',['id' => $phan_lop->id])}}" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a> --}}
+                    <a class="action-button" href="{{route('phan_lop',['id' => $phan_lop->id])}}" title="Phân lớp"><i class="fa-solid fa-person-circle-plus"></i></a>
                     <a class="action-button" title="Chỉnh sửa" href="{{route('sua_nv',['id' => $phan_lop->id])}}"><i class="fa-solid fa-edit"></i></a>
                   </td>
                 </tr>

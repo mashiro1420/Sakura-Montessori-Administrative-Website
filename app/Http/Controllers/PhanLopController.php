@@ -55,7 +55,7 @@ class PhanLopController extends Controller
         return view('Quan_ly_phan_lop.quan_ly_phan_lop', $data);
     }
 
-    public function viewPhanLop(Request $request)
+    public function viewThemPhanLop(Request $request)
     {
         $data['lops'] = LopModel::all();
         $data['phong_hocs'] = PhongHocModel::where('trang_thai',1)->get();
@@ -71,6 +71,12 @@ class PhanLopController extends Controller
         $data['khoa_hocs'] = KhoaHocModel::where('trang_thai',1)->get();
         $data['kys'] = KyModel::where('nam_hoc','>=',date('Y'))->get();
         return view('Quan_ly_phan_lop.them_phan_lop', $data);
+    }
+    public function viewPhanLop(Request $request)
+    {
+        $data = [];
+        $data['hoc_sinhs'] = HocSinhModel::all();
+        return view('Quan_ly_phan_lop.phan_lop', $data);
     }
 
     public function viewDiemDanh(Request $request)
