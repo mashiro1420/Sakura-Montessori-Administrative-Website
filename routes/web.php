@@ -141,3 +141,4 @@ Route::middleware(['session.check', 'quyen.check:bang_gia'])->group(function () 
 Route::middleware(['',''])->group(function () {
     
 });
+Route::post('import_menu',[DichVuController::class, 'importMenu'])->name('import_menu');

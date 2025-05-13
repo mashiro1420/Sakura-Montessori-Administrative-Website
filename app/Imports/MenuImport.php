@@ -2,6 +2,9 @@
 
 namespace App\Imports;
 
+use App\Models\ThucDonModel;
+use App\Models\TuanModel;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 
@@ -9,46 +12,22 @@ class MenuImport implements ToCollection
 {
     public function collection(Collection $rows)
     {
-        foreach ($rows as $row) {
-            // Extract id_tuan and thu from the row
-            $id_tuan = $row[0];
-            $thu = $row[1];
-
-            // Find the record with matching id_tuan and thu
-            $record = YourModel::where('id_tuan', $id_tuan)
-                            ->where('thu', $thu)
-                            ->first();
-
-            if ($record) {
-                // Update the null cells
-                foreach ($row as $index => $value) {
-                    $column = $this->getColumnName($index);
-                    if (is_null($record->$column) && !is_null($value)) {
-                        $record->$column = $value;
-                    }
-                }
-                $record->save();
-            }
+        $so_tuan = $rows[0][1];
+        $tuan = TuanModel::where('tuan', $so_tuan)->first();
+        $thu = 2;
+        for ($thu;$thu<=6;$thu++) {
+            $menu = ThucDonModel::where('id_tuan', $tuan->id)->where('thu', $thu)->first();
+            $menu->sang1 = $rows[2][$thu];
+            $menu->sang2 = $rows[3][$thu];
+            $menu->chinh = $rows[4][$thu];
+            $menu->rau = $rows[5][$thu];
+            $menu->canh = $rows[6][$thu];
+            $menu->com = $rows[7][$thu];
+            $menu->chao = $rows[8][$thu];
+            $menu->chieu1 = $rows[9][$thu];
+            $menu->chieu2 = $rows[10][$thu];
+            $menu->nhe = $rows[11][$thu];
+            $menu->save();
         }
-    }
-    
-    private function getColumnName($index)
-    {
-        // Map index to column names
-        $columns = [
-            2 => 'sang1',
-            3 => 'sang2',
-            4 => 'chinh',
-            5 => 'rau',
-            6 => 'canh',
-            7 => 'com',
-            8 => 'chao',
-            9 => 'chieu1',
-            10 => 'chieu2',
-            11 => 'nhe'
-        ];
-
-        return $columns[$index] ?? null;
-    }
-    
+    }  
 }
