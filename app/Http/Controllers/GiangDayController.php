@@ -4,10 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\ThoiKhoaBieuModel;
 use App\Models\TKBNgayModel;
+use App\Models\TuanModel;
+use App\Models\PhanLopModel;
+
 use Illuminate\Http\Request;
 
 class GiangDayController extends Controller
 {
+    public function viewQuanLyTKB(Request $request){
+        $data = [];
+        // $data = ['tkbs'] = ThoiKhoaBieuModel::all();
+        $data['tuans'] = TuanModel::all();
+        $data['phan_lops'] = PhanLopModel::all();
+        return view("Quan_ly_tkb.quan_ly_tkb",$data);
+    }
+    public function viewThemTKB(Request $request){
+        $data = [];
+        // $data = ['tkbs'] = ThoiKhoaBieuModel::all();
+        $data['tuans'] = TuanModel::all();
+        $data['phan_lops'] = PhanLopModel::all();
+        return view("Quan_ly_tkb.them_tkb",$data);
+    }
     public function xlTKB(Request $request)
     {
         if($request->has("sua")){

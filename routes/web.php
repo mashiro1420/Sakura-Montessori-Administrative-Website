@@ -7,6 +7,7 @@ use App\Http\Controllers\PhanLopController;
 use App\Http\Controllers\QLHocSinhController;
 use App\Http\Controllers\QLNhanVienController;
 use App\Http\Controllers\TaiKhoanController;
+use App\Http\Controllers\GiangDayController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -139,6 +140,13 @@ Route::middleware(['session.check', 'quyen.check:bang_gia'])->group(function () 
     Route::get('sua_bg', [DichVuController::class, 'viewSuaBangGia'])->name('sua_bg');
     Route::post('xl_sua_bg', [DichVuController::class, 'xlSuaGia']);
     Route::post('xl_them_bg', [DichVuController::class, 'xlThemGia']);
+});
+Route::middleware(['session.check', 'quyen.check:giang_day'])->group(function () {
+    //Thoi khoa bieu
+    Route::get('ql_tkb', [GiangDayController::class, 'viewQuanLyTKB'])->name('ql_tkb');
+    Route::get('them_tkb', [GiangDayController::class, 'viewThemTKB'])->name('them_tkb');
+    Route::get('sua_tkb', [GiangDayController::class, 'viewSuaTKB'])->name('sua_tkb');
+
 });
 Route::middleware(['',''])->group(function () {
     
