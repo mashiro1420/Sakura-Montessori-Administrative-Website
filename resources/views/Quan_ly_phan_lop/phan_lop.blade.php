@@ -37,7 +37,7 @@
           <!-- Form to add new employee -->
           <div class="search-item">
               <label for="status-filter">Tải file danh sách học sinh</label>
-              <form action="{{ url('/import_nv') }}" method="post" enctype="multipart/form-data" id="import-form">
+              <form action="{{ route('import_lop') }}" method="post" enctype="multipart/form-data" id="import-form">
                 @csrf
                 <input type="file" name="file" id="file-input" class="d-none" required>
                 <button type="submit" name="import" class="btn btn-outline-secondary ms-2" id="import-button">Import Excel</button>

@@ -27,7 +27,7 @@
 
           <!-- Search and Filter Section -->
           <!-- < class="search-container"> -->
-          <form class="search-container" action="{{url('ql_nv')}}" method="get">
+          <form class="search-container" action="{{url('ql_phan_lop')}}" method="get">
             @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">

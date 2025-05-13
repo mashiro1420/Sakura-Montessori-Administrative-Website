@@ -121,8 +121,8 @@ Route::middleware(['session.check', 'quyen.check:phan_lop'])->group(function () 
     Route::post('xl_phan_lop',[PhanLopController::class, 'xlPhanLop']);
     Route::post('xl_sua_phan_lop',[PhanLopController::class, 'xlSuaPhanLop']);
     Route::post('xl_diem_danh',[PhanLopController::class, 'xlDiemDanh']);
-    Route::get('export_lop',[PhanLopController::class, 'export'])->name('export_lop');
-    // Route::post('import_hs',[PhanLopController::class, 'import'])->name('import_hs');
+    Route::get('export_lop',[PhanLopController::class, 'exportPhanLop'])->name('export_lop');
+    Route::post('import_lop',[PhanLopController::class, 'importPhanLop'])->name('import_lop');
 });
 Route::middleware(['session.check', 'quyen.check:monitor_bus'])->group(function () {
     //--------------------------------\

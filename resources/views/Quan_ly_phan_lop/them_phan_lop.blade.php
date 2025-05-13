@@ -49,39 +49,28 @@
           <div class="page-header">
             <h2><i class="fa-solid fa-chalkboard-user"></i> Thêm phân lớp</h2>
           </div>
- 
-          <!-- Import Excel -->
-          <div class="search-item">
-            <label for="status-filter">Thêm nhiều phân lớp</label>
-            <form action="{{ url('/import_nv') }}" method="post" enctype="multipart/form-data" id="import-form">
-              @csrf
-              <input type="file" name="file" id="file-input" class="d-none" required />
-              <button type="submit" name="import" class="btn btn-outline-secondary ms-2" id="import-button">
-                Import Excel
-              </button>
-            </form>
-          </div>
+
           <!-- Form Thêm Phân Lớp -->
-          <form class="search-container" action="" method="post">
+          <form class="search-container" action="{{ url('xl_tao_lop')}}" method="post">
             @csrf
             <div class="filter-row">
               @foreach([
-                ['id' => 'gv_cn', 'label' => 'Giáo viên chủ nhiệm', 'list' => $gv_cns, 'text' => 'ho_ten'],
-                ['id' => 'gv_viet', 'label' => 'Giáo viên Việt', 'list' => $gv_viets, 'text' => 'ho_ten'],
-                ['id' => 'gv_nuoc_ngoai', 'label' => 'Giáo viên nước ngoài', 'list' => $gv_nuoc_ngoais, 'text' => 'ho_ten'],
-                ['id' => 'lop', 'label' => 'Lớp', 'list' => $lops, 'text' => 'ten_lop'],
-                ['id' => 'khoi', 'label' => 'Khối', 'list' => $khois, 'text' => 'ten_khoi'],
-                ['id' => 'phong_hoc', 'label' => 'Phòng học', 'list' => $phong_hocs, 'text' => 'ten_phong_hoc'],
-                ['id' => 'he_dao_tao', 'label' => 'Hệ đào tạo', 'list' => $he_dao_taos, 'text' => 'ten_he_dao_tao'],
-                ['id' => 'khoa_hoc', 'label' => 'Khóa học', 'list' => $khoa_hocs, 'text' => 'ten_khoa_hoc'],
-                ['id' => 'ky', 'label' => 'Kỳ', 'list' => $kys, 'text' => 'ten_ky']
+                ['id' => 'gv_cn','name' => 'gv_cn', 'label' => 'Giáo viên chủ nhiệm', 'list' => $gv_cns, 'text' => 'ho_ten'],
+                ['id' => 'gv_viet','name' => 'gv_viet', 'label' => 'Giáo viên Việt', 'list' => $gv_viets, 'text' => 'ho_ten'],
+                ['id' => 'gv_nuoc_ngoai','name' => 'gv_nuoc_ngoai', 'label' => 'Giáo viên nước ngoài', 'list' => $gv_nuoc_ngoais, 'text' => 'ho_ten'],
+                ['id' => 'lop','name' => 'lop', 'label' => 'Lớp', 'list' => $lops, 'text' => 'ten_lop'],
+                ['id' => 'khoi','name' => 'khoi', 'label' => 'Khối', 'list' => $khois, 'text' => 'ten_khoi'],
+                ['id' => 'phong_hoc','name' => 'phong_hoc', 'label' => 'Phòng học', 'list' => $phong_hocs, 'text' => 'ten_phong_hoc'],
+                ['id' => 'he_dao_tao','name' => 'he_dao_tao', 'label' => 'Hệ đào tạo', 'list' => $he_dao_taos, 'text' => 'ten_he_dao_tao'],
+                ['id' => 'khoa_hoc','name' => 'khoa_hoc', 'label' => 'Khóa học', 'list' => $khoa_hocs, 'text' => 'ten_khoa_hoc'],
+                ['id' => 'ky','name' => 'ky', 'label' => 'Kỳ', 'list' => $kys, 'text' => 'ten_ky']
               ] as $field)
               <div class="search-item d-inline-block w-25">
                 <label for="{{ $field['id'] }}">{{ $field['label'] }}</label>
                 <select id="{{ $field['id'] }}" name="{{ $field['id'] }}" class="select2-elem form-select" required>
                   <option value="" disabled selected>Chọn hoặc tìm kiếm</option>
                   @foreach($field['list'] as $item)
-                  <option value="{{ $item->id }}">{{ $item->{$field['text']} }}</option>
+                  <option value="{{ $item->id_pick }}">{{ $item->{$field['text']} }}</option>
                   @endforeach
                 </select>
               </div>

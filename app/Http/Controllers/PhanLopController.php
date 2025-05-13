@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\LopExport;
+use App\Imports\PhanLopImport;
 use App\Models\DiemDanhModel;
 use App\Models\HeDaoTaoModel;
 use App\Models\HocSinhModel;
@@ -57,19 +58,20 @@ class PhanLopController extends Controller
 
     public function viewThemPhanLop(Request $request)
     {
-        $data['lops'] = LopModel::all();
-        $data['phong_hocs'] = PhongHocModel::where('trang_thai',1)->get();
-        $data['gv_nuoc_ngoais'] = NhanVienModel::leftJoin('dm_chucvu','dm_chucvu.id','=','ql_nhanvien.id_chuc_vu')
-            ->where('quoc_tich', '!=', 'Việt Nam')->whereNull('ngay_nghi_viec')->get();
-        $data['gv_cns'] = NhanVienModel::where('quoc_tich', 'Việt Nam')
+        $data['lops'] = LopModel::select('*','id as id_pick')->get();
+        $data['phong_hocs'] = PhongHocModel::select('*','id as id_pick')->where('trang_thai',1)->get();
+        $data['gv_nuoc_ngoais'] = NhanVienModel::select('*','ql_nhanvien.id as id_pick')->leftJoin('dm_chucvu','dm_chucvu.id','=','ql_nhanvien.id_chuc_vu')
+            ->where('bo_phan','=', 'Giáo viên nước ngoài')->whereNull('ngay_nghi_viec')->get();
+        $data['gv_cns'] = NhanVienModel::select('*','ql_nhanvien.id as id_pick')->leftJoin('dm_chucvu','dm_chucvu.id','=','ql_nhanvien.id_chuc_vu')
+            ->where('bo_phan','=', 'Giáo viên VN')
             ->whereNull('ngay_nghi_viec')
             ->get();
-        $data['gv_viets'] = NhanVienModel::leftJoin('dm_chucvu','dm_chucvu.id','=','ql_nhanvien.id_chuc_vu')
-            ->where('quoc_tich', 'Việt Nam')->whereNull('ngay_nghi_viec')->get();
-        $data['khois'] = KhoiModel::all();
-        $data['he_dao_taos'] = HeDaoTaoModel::all();
-        $data['khoa_hocs'] = KhoaHocModel::where('trang_thai',1)->get();
-        $data['kys'] = KyModel::where('nam_hoc','>=',date('Y'))->get();
+        $data['gv_viets'] = NhanVienModel::select('*','ql_nhanvien.id as id_pick')->leftJoin('dm_chucvu','dm_chucvu.id','=','ql_nhanvien.id_chuc_vu')
+            ->where('bo_phan','=', 'Giáo viên VN')->whereNull('ngay_nghi_viec')->get();
+        $data['khois'] = KhoiModel::select('*','id as id_pick')->get();
+        $data['he_dao_taos'] = HeDaoTaoModel::select('*','id as id_pick')->get();
+        $data['khoa_hocs'] = KhoaHocModel::select('*','id as id_pick')->where('trang_thai',1)->get();
+        $data['kys'] = KyModel::select('*','id as id_pick')->where('nam_hoc','>=',date('Y'))->get();
         return view('Quan_ly_phan_lop.them_phan_lop', $data);
     }
     public function viewPhanLop(Request $request)
@@ -99,7 +101,7 @@ class PhanLopController extends Controller
         $phan_lop->id_lop = $request->lop;
         $phan_lop->id_khoi = $request->khoi;
         $phan_lop->id_he_dao_tao = $request->he_dao_tao;
-        $phan_lop->khoa_hoc = $request->khoa_hoc;
+        $phan_lop->id_khoa_hoc = $request->khoa_hoc;
         $phan_lop->id_ky = $request->ky;
         $phan_lop->save();
         return redirect()->route('ql_phanlop')->with('bao_loi','Lưu thành công');
@@ -112,7 +114,7 @@ class PhanLopController extends Controller
             $hoc_sinh->id_phan_lop = $phan_lop->id;
             $hoc_sinh->save();
         }
-        return redirect()->route('ql_phanlop')->with('bao_loi','Lưu thành công');
+        return redirect()->route('ql_phan_lop')->with('bao_loi','Lưu thành công');
     }
     public function xlSuaPhanLop(Request $request)
     {
@@ -128,7 +130,7 @@ class PhanLopController extends Controller
         $phan_lop->save();
         return redirect()->route('ql_phanlop')->with('bao_loi','Lưu thành công');
     }
-    public function export_lop(Request $request){
+    public function exportPhanLop(Request $request){
         $query = HocSinhModel::query()->select ('*','ql_hocsinh.id as hoc_sinh_id')
         ->leftJoin('ql_phanlop','ql_phanlop.id','=','ql_hocsinh.id_phan_lop')
         ->where('id_phan_lop',$request->id);
@@ -151,5 +153,9 @@ class PhanLopController extends Controller
             $di_hoc->save();
         }
         return redirect()->route('ql_phanlop')->with('bao_loi','Lưu thành công');
+    }
+    public function importPhanLop(Request $request){
+        Excel::import(new PhanLopImport($request->id), $request->file('file'));
+        return redirect()->back()->with('bao_loi','Lưu thành công');
     }
 }
