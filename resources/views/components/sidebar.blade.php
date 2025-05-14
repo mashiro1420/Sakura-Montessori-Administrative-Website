@@ -113,11 +113,11 @@
   </ul>
   <div class="sidebar-footer">
     <a href="{{route('cai_dat_tk')}}" class="sidebar-link">
-      <i class="lni lni-gears-3"></i>
+      <i class="fa-solid fa-gear"></i>
       <span>Cài đặt tài khoản</span>
     </a>
     <a href="{{url('xl_dang_xuat')}}" class="sidebar-link">
-      <i class="lni lni-exit"></i>
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
       <span>Logout</span>
     </a>
   </div>
