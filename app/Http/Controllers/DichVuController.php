@@ -134,20 +134,33 @@ public function xlSuaGia(Request $request)
         $data['dky_bus_hss'] = HocSinhModel::all();
         return view('Quan_ly_dich_vu.Dang_ky_xe_bus.ql_dang_ky_xe_bus_hs', $data);
     }
-    public function viewDangKyBusHS()
+    public function viewDangKyBusHS(Request $request)
     {
         $data = [];
         $data['hoc_sinhs'] = HocSinhModel::all();
         return view('Quan_ly_dich_vu.Dang_ky_xe_bus.dang_ky_xe_bus', $data);
     }
-    public function viewSuaBusHS()
+    public function viewSuaBusHS(Request $request)
     {
         $data = [];
         $data['hoc_sinhs'] = HocSinhModel::all();
         return view('Quan_ly_dich_vu.Dang_ky_xe_bus.sua_dang_ky_bus', $data);
     }
-    // public function xlTinhHocPhi(Request $request)
-    // {
-    //     $hoc_sinhs = HocSinhModel::
-    // }
+    public function viewQuanLyThucDon(Request $request){
+        $data=[];
+        return view('Quan_ly_dich_vu.Quan_ly_thuc_don.quan_ly_thuc_don', $data);
+    }
+    public function viewThemThucDon(Request $request){
+        $data = [];
+        return view('Quan_ly_dich_vu.Quan_ly_thuc_don.them_thuc_don', $data);
+    }
+    public function viewSuaThucDon(Request $request){
+        $data = [];
+        return view('Quan_ly_dich_vu.Quan_ly_thuc_don.sua_thuc_don', $data);
+    }
+    public function viewPhuHuynhBangGia(Request $request)
+    {
+        $data = [];
+        return vierw('Phu_huynh_bang_gia.phu_huynh_bang_gia', $data);
+    }
 }

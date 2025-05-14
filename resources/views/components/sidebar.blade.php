@@ -54,12 +54,6 @@
       </ul>
     </li>
     <li class="sidebar-item">
-      <a href="#" class="sidebar-link">
-        <i class="fa-solid fa-school"></i>
-        <span class="text">Quản lý dịch vụ đào tạo</span>
-      </a>
-    </li>
-    <li class="sidebar-item">
       <a href="{{url('ql_nv')}}" class="sidebar-link">
         <i class="fa-solid fa-chalkboard-user"></i>
         <span class="text">Quản lý nhân viên</span>

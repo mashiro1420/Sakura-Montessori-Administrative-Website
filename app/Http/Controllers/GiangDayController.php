@@ -109,4 +109,10 @@ class GiangDayController extends Controller
             $tkb_ngay->save();
         }
     }
+    public function viewPhuHuynhTKB(Request $request)
+    {
+        $data = [];
+        $data['tuans'] = TuanModel::all();
+        return view("Phu_huynh_tkb.phu_huynh_tkb", $data);
+    }
 }

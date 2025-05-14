@@ -50,7 +50,7 @@ class PhanLopController extends Controller
         $data['phong_hocs'] = PhongHocModel::where('trang_thai', 1)->get();
         $data['khois'] = KhoiModel::all();
         $data['he_dao_taos'] = HeDaoTaoModel::all();
-        $data['khoa_hocs'] = KhoaHocModel::where('trang_thai', 1)->get();
+        $data['khoa_hocs'] = KhoaHocModel::all();
         $data['kys'] = KyModel::where('nam_hoc', '>=', date('Y'))->get();
 
         return view('Quan_ly_phan_lop.quan_ly_phan_lop', $data);
@@ -70,7 +70,7 @@ class PhanLopController extends Controller
             ->where('bo_phan','=', 'Giáo viên VN')->whereNull('ngay_nghi_viec')->get();
         $data['khois'] = KhoiModel::select('*','id as id_pick')->get();
         $data['he_dao_taos'] = HeDaoTaoModel::select('*','id as id_pick')->get();
-        $data['khoa_hocs'] = KhoaHocModel::select('*','id as id_pick')->where('trang_thai',1)->get();
+        $data['khoa_hocs'] = KhoaHocModel::select('*','id as id_pick')->get();
         $data['kys'] = KyModel::select('*','id as id_pick')->where('nam_hoc','>=',date('Y'))->get();
         return view('Quan_ly_phan_lop.them_phan_lop', $data);
     }

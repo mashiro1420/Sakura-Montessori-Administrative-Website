@@ -1,0 +1,29 @@
+body {
+    background-color: #fff5f8;
+}
+.navbar {
+    background-color: #f8d7da;
+}
+.navbar-brand, .nav-link, .dropdown-item {
+    color: #6f0423 !important;
+    font-weight: 500;
+}
+h2 {
+    margin-top: 20px;
+    color: #d63384;
+}
+table th, table td {
+    text-align: center;
+    vertical-align: middle;
+}
+.table thead {
+    background-color: #fcd3e1;
+}
+.btn-pink {
+    background-color: #f8bbd0;
+    color: #6f0423;
+}
+.btn-pink:hover {
+    background-color: #f48fb1;
+    color: white;
+}
