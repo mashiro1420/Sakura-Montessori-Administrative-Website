@@ -33,9 +33,9 @@
                 <label for="lai_xe">Tuần</label>
                 <select id="position-filter" name = "tuan" class="form-select">
                   <option value="" disable selected>Tất cả các tuần</option>
-                  @foreach($tuans as $tuan)
+                  {{-- @foreach($tuans as $tuan)
                     <option value="{{$tuan->id}}">Tuần thứ {{$tuan->tuan}} năm {{$tuan->nam}}</option>
-                  @endforeach
+                  @endforeach --}}
                 </select>
               </div>
             <div class="action-buttons">
@@ -70,9 +70,9 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Tuần</th>
-                  <th>Thứ</th>
+                  <th>Bữa</th>
+                  <th>Thứ 2</th>
+                  <th>Thứ 3</th>
                   <th>Bữa sáng 1</th>
                   <th>Bữa sáng 2</th>
                   <th>Món chính</th>
@@ -87,7 +87,6 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach($thuc_dons as $thuc_don)
                 <tr>
                   <td>{{$thuc_don->id}}</td>
                   <td>{{$thuc_don->tuyen_xe}}</td>

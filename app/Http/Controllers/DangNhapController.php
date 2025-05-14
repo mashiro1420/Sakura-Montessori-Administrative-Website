@@ -35,6 +35,7 @@ class DangNhapController extends Controller
                 $request->session()->put('tai_khoan', $tai_khoan);
                 if($nguoi_dung->la_khach == 1) {
 					$request->session()->put('la_khach', 'true');
+                    $request->session()->put('quyen', 'phu_huynh');
 				}
 				else {
                     $data =[];

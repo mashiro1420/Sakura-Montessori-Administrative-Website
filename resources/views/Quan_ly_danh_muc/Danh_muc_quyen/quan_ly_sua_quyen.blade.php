@@ -37,6 +37,10 @@
                 <input type="text" name="ten_quyen" class="form-control" value="{{$quyen->ten_quyen}}" required>
               </div>
             </div>
+            <div class="search-item d-inline-block w-25">
+              <label for="ma">Mã quyền</label>
+              <input type="text" name="ma" class="form-control" value="{{$quyen->ma}}" required>
+            </div>
             <div class="action-buttons">
               <div>
                 <button class="btn btn-primary" type="submit">
