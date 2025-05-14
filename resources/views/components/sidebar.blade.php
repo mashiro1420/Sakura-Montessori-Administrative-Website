@@ -77,6 +77,12 @@
         <span class="text">Quản lý thời khóa biểu</span>
       </a>
     </li>
+        <li class="sidebar-item">
+      <a href="{{url('ql_tlgd')}}" class="sidebar-link">
+        <i class="fa-solid fa-book"></i>
+        <span class="text">Quản lý tài liệu giảng dạy</span>
+      </a>
+    </li>
     <li class="sidebar-item">
       <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth2"
         aria-expanded="false" aria-controls="auth2">
