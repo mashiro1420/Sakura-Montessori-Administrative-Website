@@ -87,17 +87,17 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach($lo_trinh_xes as $lo_trinh_xe)
+                @foreach($thuc_dons as $thuc_don)
                 <tr>
-                  <td>{{$lo_trinh_xe->id}}</td>
-                  <td>{{$lo_trinh_xe->tuyen_xe}}</td>
-                  <td>{{$lo_trinh_xe->ngay}}</td>
-                  <td>{{$lo_trinh_xe->ho_ten}}</td>
-                  <td>{{$lo_trinh_xe->ho_ten}}</td>
-                  <td>{{$lo_trinh_xe->bien_so_xe}}</td>
-                  <td>{{$lo_trinh_xe->danh_sach}}</td>
+                  <td>{{$thuc_don->id}}</td>
+                  <td>{{$thuc_don->tuyen_xe}}</td>
+                  <td>{{$thuc_don->ngay}}</td>
+                  <td>{{$thuc_don->ho_ten}}</td>
+                  <td>{{$thuc_don->ho_ten}}</td>
+                  <td>{{$thuc_don->bien_so_xe}}</td>
+                  <td>{{$thuc_don->danh_sach}}</td>
                   <td class="action-column">
-                    <a class="action-button" title="Chỉnh sửa" href="{{route('sua_lt',['id' => $lo_trinh_xe->id])}}"><i class="fa-solid fa-edit"></i></a>
+                    <a class="action-button" title="Chỉnh sửa" href="{{route('sua_lt',['id' => $thuc_don->id])}}"><i class="fa-solid fa-edit"></i></a>
                   </td>
                 </tr>
                 @endforeach

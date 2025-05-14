@@ -32,38 +32,23 @@
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
                 <label for="tuyen_xe">Tuyến xe</label>
-                <input type="text" name="tuyen_xe" class="form-control" placeholder="Tìm kiếm bằng tuyến xe">
+                <input type="text" name="tuyen_xe" class="form-control" value="">
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="lai_xe">Lái xe</label>
-                <select name="lai_xe" class="form-select">
-                  <option value="">Tất cả lái xe</option>
-                  @foreach($lai_xes as $lai_xe)
-                    <option value="{{$lai_xe->id}}">{{$lai_xe->ho_ten}}</option>
-                  @endforeach
-                </select>
+                <input type="text" name="lai_xe" class="form-control" value="">
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ngay">Ngày</label>
-                <div class="d-flex">
-                  <span style="font-size: 16pt">Từ</span>
-                  <input type="date" name="ngay" class="form-control">
-                  <span style="font-size: 16pt">đến</span>
-                  <input type="date" name="ngay" class="form-control">
-                </div>
+                <input type="text">
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="monitor">Giám sát viên</label>
-                <select name="monitor" class="form-select">
-                  <option value="">Tất cả giám sát viên</option>
-                  @foreach($monitors as $monitor)
-                    <option value="{{$monitor->id}}">{{$monitor->ho_ten}}</option>
-                  @endforeach
-                </select>
+                <input type="date" monitor="ngay" class="form-control" value="" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="bien_so_xe">Biển số xe</label>
-                <input type="text" name="bien_so_xe" class="form-control" placeholder="Tìm kiếm theo biển số xe">
+                <input type="text" name="bien_so_xe" class="form-control" value="" readonly>
               </div>
             <div class="action-buttons">
               <div>
@@ -75,8 +60,8 @@
                 </button>
               </div>
               <div>
-                <a class="btn btn-primary" href="{{route('them_lt')}}">
-                  <i class="fa-solid fa-plus me-1"></i> Thêm lộ trình xe mới
+                <a class="btn btn-primary" href="{{route('ql_lt')}}">
+                  <i class="fa-solid fa-arrow-left me-1"></i> Quay lại
                 </a>
                 <button class="btn btn-outline-secondary ms-2">
                   <a href="{{route('export_hs',[
@@ -94,32 +79,24 @@
           </form>
           <!-- Table Section -->
           <div class="data-container">
+            <input type="text" hidden>
             <table class="table table-bordered">
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Tuyến xe</th>
-                  <th>Ngày</th>
-                  <th>Lái xe</th>
-                  <th>Monitor</th>
-                  <th>Biển số xe</th>
-                  <th>Danh sách</th>
+                  <th>Học sinh</th>
+                  <th>Lớp</th>
                   <th>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach($lo_trinh_xes as $lo_trinh_xe)
+                @foreach($hoc_sinhs as $hoc_sinh)
                 <tr>
-                  <td>{{$lo_trinh_xe->id}}</td>
-                  <td>{{$lo_trinh_xe->tuyen_xe}}</td>
-                  <td>{{$lo_trinh_xe->ngay}}</td>
-                  <td>{{$lo_trinh_xe->ho_ten}}</td>
-                  <td>{{$lo_trinh_xe->ho_ten}}</td>
-                  <td>{{$lo_trinh_xe->bien_so_xe}}</td>
-                  <td>{{$lo_trinh_xe->danh_sach}}</td>
+                  <td>{{$hoc_sinh->id}}</td>
+                  <td>{{$hoc_sinh->ho_ten}}</td>
+                  <td>{{$hoc_sinh->phan_lop}}</td>
                   <td class="action-column">
-                    <a class="action-button" title="Chỉnh sửa" href="{{route('sua_lt',['id' => $lo_trinh_xe->id])}}"><i class="fa-solid fa-edit"></i></a>
-                    <a class="action-button" title="Điểm danh xe bus" href="{{route('diem_danh_bus',['id' => $lo_trinh_xe->id])}}"><i class="fa-solid fa-user-check"></i></a>
+                    <input type="checkbox" class="form-control">
                   </td>
                 </tr>
                 @endforeach

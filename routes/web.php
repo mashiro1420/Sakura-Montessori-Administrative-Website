@@ -130,6 +130,7 @@ Route::middleware(['session.check', 'quyen.check:monitor_bus'])->group(function 
     Route::get('ql_lt', [DichVuController::class, 'viewQuanLyLoTrinh'])->name('ql_lt');
     Route::get('them_lt', [DichVuController::class, 'viewThemLoTrinh'])->name('them_lt');
     Route::get('sua_lt', [DichVuController::class, 'viewSuaLoTrinh'])->name('sua_lt');
+    Route::get('diem_danh_bus', [DichVuController::class, 'viewDiemDanhBus'])->name('diem_danh_bus');
     Route::post('xl_diem_danh_bus',[DichVuController::class, 'xlDiemDanhBus']);
     Route::post('xl_upload_diem_danh',[DichVuController::class, 'xlUploadDiemDanhBus']);
 });

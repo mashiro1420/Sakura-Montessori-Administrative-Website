@@ -124,6 +124,13 @@ public function xlSuaGia(Request $request)
         $data['lo_trinh_xe'] = LoTrinhXeModel::find($request->id);
         return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.sua_lo_trinh', $data);
     }
+    public function viewDiemDanhBus (Request $request)
+    {
+        $data = [];
+        $data['lai_xes'] = NhanVienModel::where('id_chuc_vu', 6)->get();
+        $data['monitors'] = NhanVienModel::where('id_chuc_vu', 7)->get();
+        return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.them_lo_trinh_xe', $data);
+    }
     public function importMenu(Request $request){
         Excel::import(new MenuImport, $request->file('file'));
         return redirect()->route('ql_menu');

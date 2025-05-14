@@ -89,7 +89,7 @@ class PhanLopController extends Controller
         ->where('id_phan_lop',$request->id)
         ->where('ngay',date('Y-m-d'));
         $data['hoc_sinhs'] = $query->get();
-        return view('', $data);
+        return view('Quan_ly_phan_lop.diem_danh_tren_lop', $data);
     }
     public function xlTaoLop(Request $request)
     {
