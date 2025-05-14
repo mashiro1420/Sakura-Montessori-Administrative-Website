@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản lý danh mục khóa học</title>
+  <title>Quản lý danh mục tuyến xe</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -22,25 +22,17 @@
         <div class="container-fluid">
           <!-- Page Header -->
           <div class="page-header">
-            <h2><i class="fa-solid fa-chalkboard-user"></i> Quản lý danh mục khóa học</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i> Quản lý danh mục tuyến xe</h2>
           </div>
 
           <!-- Search and Filter Section -->
           <!-- < class="search-container"> -->
-          <form class="search-container" action="{{url('ql_dm_khoa_hoc')}}" method="get">
+          <form class="search-container" action="{{url('ql_dm_tuyen_xe')}}" method="get">
             @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
-                <label for="ten_khoa_hoc_search">Tên khóa học</label>
-                <input type="text" id="ten_khoa_hoc_search" name = "tk_ten_khoa_hoc" {{!empty($tk_ten_khoa_hoc)?"value=$tk_ten_khoa_hoc":""}} class="form-control" placeholder="Tìm kiếm tên khóa học">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="status-filter">Trạng thái</label>
-                <select id="status-filter" name = "tk_trang_thai" class="form-select">
-                  <option value="">Tất cả trạng thái</option>
-                  <option value="1"{{!empty($tk_trang_thai)&&$tk_trang_thai=="booked"?"selected":""}}>Mở</option>
-                  <option value="0"{{!empty($tk_trang_thai)&&$tk_trang_thai=="empty"?"selected":""}}>Khóa</option>
-                </select>
+                <label for="ten_tuyen_xe_search">Tên tuyến xe</label>
+                <input type="text" id="ten_tuyen_xe_search" name = "tk_ten_tuyen_xe" {{!empty($tk_ten_tuyen_xe)?"value=$tk_ten_tuyen_xe":""}} class="form-control" placeholder="Tìm kiếm tên tuyến xe">
               </div>
             <div class="action-buttons">
               <div>
@@ -52,8 +44,8 @@
                 </button>
               </div>
               <div>
-                <a class="btn btn-primary" href="{{route('ql_them_khoa_hoc')}}">
-                  <i class="fa-solid fa-plus me-1"></i> Thêm khóa học mới
+                <a class="btn btn-primary" href="{{route('ql_them_tuyen_xe')}}">
+                  <i class="fa-solid fa-plus me-1"></i> Thêm tuyến xe mới
                 </a>
               </div>
             </div>
@@ -64,25 +56,17 @@
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Tên khóa học</th>
-                  <th>Trạng thái</th>
+                  <th>Tên tuyến xe</th>
                   <th>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach($khoa_hocs as $khoa_hoc)
+                @foreach($tuyen_xes as $tuyen_xe)
                 <tr>
-                  <td>{{$khoa_hoc->id}}</td>
-                  <td>{{$khoa_hoc->ten_khoa_hoc}}</td>
-                  <td>
-                    @if($khoa_hoc->trang_thai == 1)
-                      Mở
-                    @else
-                      Khóa
-                    @endif
-                  </td>
+                  <td>{{$tuyen_xe->id}}</td>
+                  <td>{{$tuyen_xe->ten_tuyen_xe}}</td>
                   <td class="action-column">
-                    <a class="action-button" title="Chỉnh sửa" href="{{route('ql_sua_khoa_hoc',['id' => $khoa_hoc->id])}}"><i class="fa-solid fa-edit"></i></a>
+                    <a class="action-button" title="Chỉnh sửa" href="{{route('ql_sua_tuyen_xe',['id' => $tuyen_xe->id])}}"><i class="fa-solid fa-edit"></i></a>
                   </td>
                 </tr>
                 @endforeach

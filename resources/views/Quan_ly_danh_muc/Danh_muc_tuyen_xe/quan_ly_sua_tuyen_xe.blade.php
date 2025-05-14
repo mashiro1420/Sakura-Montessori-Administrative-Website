@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cập nhật khóa học</title>
+  <title>Cập nhật tuyến xe</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -22,26 +22,19 @@
         <div class="container-fluid">
           <!-- Page Header -->
           <div class="page-header">
-            <h2><i class="fa-solid fa-chalkboard-user"></i>Cập nhật khóa học</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i>Cập nhật tuyến xe</h2>
           </div>
           <!-- Form to add new employee -->
-          <form class="search-container" action="{{url('xl_dm_khoa_hoc')}}" method="post">
+          <form class="search-container" action="{{url('xl_dm_tuyen_xe')}}" method="post">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
-                <label for="id">Mã khóa học</label>
-                <input type="text" name="id" class="form-control" value="{{$khoa_hoc->id}}" readonly>
+                <label for="id">Mã tuyến xe</label>
+                <input type="text" name="id" class="form-control" value="{{$tuyen_xe->id}}" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="ten_khoa_hoc">Tên khóa học</label>
-                <input type="text" name="ten_khoa_hoc" class="form-control" value="{{$khoa_hoc->ten_khoa_hoc}}" required>
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="trang_thai">Trạng thái</label>
-                <select name="trang_thai" class="form-select" required>
-                  <option value="1" {{$khoa_hoc->trang_thai=='1'?"selected":""}}>Mở</option>
-                  <option value="0" {{$khoa_hoc->trang_thai=='0'?"selected":""}}>Khóa</option>
-                </select>
+                <label for="ten_tuyen_xe">Tên tuyến xe</label>
+                <input type="text" name="ten_tuyen_xe" class="form-control" value="{{$tuyen_xe->ten_tuyen_xe}}" required>
               </div>
             </div>
             <div class="action-buttons">
@@ -52,7 +45,7 @@
               </div>
               <div>
                 <a class="btn btn-outline-secondary ms-2" href="{{url('ql_hs')}}">
-                  <i class="fa-solid fa-arrow-left me-1"></i> Quay lại danh mục khóa học
+                  <i class="fa-solid fa-arrow-left me-1"></i> Quay lại danh mục tuyến xe
                 </a>
               </div>
             </div>

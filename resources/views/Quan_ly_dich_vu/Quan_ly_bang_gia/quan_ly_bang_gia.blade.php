@@ -31,10 +31,10 @@
             <div class="filter-row">
               <div class="search-item d-inline-block w-50">
                 <label for="ten_gia_search">Tên dịch vụ</label>
-                <input type="text" id="ten_gia_search" name = "ten_gia_search" {{!empty($ten_gia_search)?"value=$ten_gia_search":""}} class="form-control" placeholder="Tìm kiếm theo tên giá">
+                <input type="text" id="ten_gia_search" name = "ten_gia_search" {{!empty($ten_gia_search)?"value=$ten_gia_search":""}} class="form-control" placeholder="Tìm kiếm theo tên dịch vụ">
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="search_dich_vu">Tên loại dịch vụ</label>
+                <label for="search_dich_vu">Loại dịch vụ</label>
                 <select id="search_dich_vu" name = "search_dich_vu" class="form-select">
                     <option value="">Tất cả</option>
                     @foreach ($dich_vus as $dich_vu)

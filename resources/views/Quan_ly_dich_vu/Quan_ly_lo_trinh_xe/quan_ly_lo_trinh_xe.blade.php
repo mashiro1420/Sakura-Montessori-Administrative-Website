@@ -32,7 +32,12 @@
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
                 <label for="tuyen_xe">Tuyến xe</label>
-                <input type="text" name="tuyen_xe" class="form-control" placeholder="Tìm kiếm bằng tuyến xe">
+                <select name="tuyen_xe" class="form-select">
+                  <option value="">Tất cả lái xe</option>
+                  @foreach($tuyen_xes as $tuyen_xe)
+                    <option value="{{$tuyen_xe->id}}">{{$tuyen_xe->ten_tuyen_xe}}</option>
+                  @endforeach
+                </select>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="lai_xe">Lái xe</label>
@@ -46,10 +51,10 @@
               <div class="search-item d-inline-block w-25">
                 <label for="ngay">Ngày</label>
                 <div class="d-flex">
-                  <span style="font-size: 16pt">Từ</span>
-                  <input type="date" name="ngay" class="form-control">
-                  <span style="font-size: 16pt">đến</span>
-                  <input type="date" name="ngay" class="form-control">
+                  <span style="font-size: 14pt">Từ</span>
+                  <input type="date" name="tu_ngay" class="form-control">
+                  <span style="font-size: 14pt">đến</span>
+                  <input type="date" name="den_ngay" class="form-control">
                 </div>
               </div>
               <div class="search-item d-inline-block w-25">
@@ -78,7 +83,7 @@
                 <a class="btn btn-primary" href="{{route('them_lt')}}">
                   <i class="fa-solid fa-plus me-1"></i> Thêm lộ trình xe mới
                 </a>
-                <button class="btn btn-outline-secondary ms-2">
+                {{-- <button class="btn btn-outline-secondary ms-2">
                   <a href="{{route('export_hs',[
                       'tk_ho_ten'=>!empty($tk_ho_ten)?$tk_ho_ten:"",
                       'tk_gioi_tinh'=>!empty($tk_gioi_tinh)?$tk_gioi_tinh:"",
@@ -88,7 +93,7 @@
                       'tk_trang_thai'=>!empty($tk_trang_thai)?$tk_trang_thai:""])}}">
                     <i class="fa-solid fa-file-export me-1"></i> Xuất Excel
                   </a>
-                </button>
+                </button> --}}
               </div>
             </div>
           </form>
@@ -111,10 +116,10 @@
                 @foreach($lo_trinh_xes as $lo_trinh_xe)
                 <tr>
                   <td>{{$lo_trinh_xe->id}}</td>
-                  <td>{{$lo_trinh_xe->tuyen_xe}}</td>
+                  <td>{{$lo_trinh_xe->ten_tuyen_xe}}</td>
                   <td>{{$lo_trinh_xe->ngay}}</td>
-                  <td>{{$lo_trinh_xe->ho_ten}}</td>
-                  <td>{{$lo_trinh_xe->ho_ten}}</td>
+                  <td>{{$lo_trinh_xe->ten_lai_xe}}</td>
+                  <td>{{$lo_trinh_xe->ten_monitor}}</td>
                   <td>{{$lo_trinh_xe->bien_so_xe}}</td>
                   <td>{{$lo_trinh_xe->danh_sach}}</td>
                   <td class="action-column">

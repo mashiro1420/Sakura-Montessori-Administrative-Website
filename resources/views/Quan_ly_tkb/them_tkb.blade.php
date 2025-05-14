@@ -138,7 +138,7 @@
           </div>
           
           <!-- Import Excel Section -->
-          <div class="import-section">
+          {{-- <div class="import-section">
             <h5><i class="fa-solid fa-file-import me-2"></i>Thêm nhiều thời khóa biểu</h5>
             <form action="{{ url('/import_nv') }}" method="post" enctype="multipart/form-data" id="import-form">
               @csrf
@@ -149,7 +149,7 @@
                 </button>
               </div>
             </form>
-          </div>
+          </div> --}}
           
           <!-- Timetable Form -->
           <form action="" method="post">

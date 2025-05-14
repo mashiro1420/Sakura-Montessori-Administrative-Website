@@ -38,7 +38,7 @@ Route::middleware(['session.check', 'quyen.check:danh_muc'])->group(function () 
     Route::get('ql_dm_chuyen_nganh',[DanhMucController::class, 'viewDMChuyenNganh'])->name('ql_dm_chuyen_nganh');
     Route::get('ql_dm_dich_vu',[DanhMucController::class, 'viewDMDichVu'])->name('ql_dm_dich_vu');
     Route::get('ql_dm_he_dao_tao',[DanhMucController::class, 'viewDMHeDaoTao'])->name('ql_dm_he_dao_tao');
-    Route::get('ql_dm_khoa_hoc',[DanhMucController::class, 'viewDMKhoaHoc'])->name('ql_dm_khoa_hoc');
+    Route::get('ql_dm_tuyen_xe',[DanhMucController::class, 'viewDMTuyenXe'])->name('ql_dm_tuyen_xe');
     Route::get('ql_dm_khoi',[DanhMucController::class, 'viewDMKhoi'])->name('ql_dm_khoi');
     Route::get('ql_dm_lop',[DanhMucController::class, 'viewDMLop'])->name('ql_dm_lop');
     Route::get('ql_dm_mon_hoc',[DanhMucController::class, 'viewDMMonHoc'])->name('ql_dm_mon_hoc');
@@ -49,7 +49,7 @@ Route::middleware(['session.check', 'quyen.check:danh_muc'])->group(function () 
     Route::get('ql_them_chuyen_nganh',[DanhMucController::class, 'viewThemChuyenNganh'])->name('ql_them_chuyen_nganh');
     Route::get('ql_them_dich_vu',[DanhMucController::class, 'viewThemDichVu'])->name('ql_them_dich_vu');
     Route::get('ql_them_he_dao_tao',[DanhMucController::class, 'viewThemHeDaoTao'])->name('ql_them_he_dao_tao');
-    Route::get('ql_them_khoa_hoc',[DanhMucController::class, 'viewThemKhoaHoc'])->name('ql_them_khoa_hoc');
+    Route::get('ql_them_tuyen_xe',[DanhMucController::class, 'viewThemTuyenXe'])->name('ql_them_tuyen_xe');
     Route::get('ql_them_khoi',[DanhMucController::class, 'viewThemKhoi'])->name('ql_them_khoi');
     Route::get('ql_them_lop',[DanhMucController::class, 'viewThemLop'])->name('ql_them_lop');
     Route::get('ql_them_mon_hoc',[DanhMucController::class, 'viewThemMonHoc'])->name('ql_them_mon_hoc');
@@ -60,7 +60,7 @@ Route::middleware(['session.check', 'quyen.check:danh_muc'])->group(function () 
     Route::get('ql_sua_chuyen_nganh',[DanhMucController::class, 'viewSuaChuyenNganh'])->name('ql_sua_chuyen_nganh');
     Route::get('ql_sua_dich_vu',[DanhMucController::class, 'viewSuaDichVu'])->name('ql_sua_dich_vu');
     Route::get('ql_sua_he_dao_tao',[DanhMucController::class, 'viewSuaHeDaoTao'])->name('ql_sua_he_dao_tao');
-    Route::get('ql_sua_khoa_hoc',[DanhMucController::class, 'viewSuaKhoaHoc'])->name('ql_sua_khoa_hoc');
+    Route::get('ql_sua_tuyen_xe',[DanhMucController::class, 'viewSuaTuyenXe'])->name('ql_sua_tuyen_xe');
     Route::get('ql_sua_khoi',[DanhMucController::class, 'viewSuaKhoi'])->name('ql_sua_khoi');
     Route::get('ql_sua_lop',[DanhMucController::class, 'viewSuaLop'])->name('ql_sua_lop');
     Route::get('ql_sua_mon_hoc',[DanhMucController::class, 'viewSuaMonHoc'])->name('ql_sua_mon_hoc');
@@ -71,7 +71,7 @@ Route::middleware(['session.check', 'quyen.check:danh_muc'])->group(function () 
     Route::post('xl_dm_chuyen_nganh',[DanhMucController::class, 'xlDMChuyenNganh']);
     Route::post('xl_dm_dich_vu',[DanhMucController::class, 'xlDMDichVu']);
     Route::post('xl_dm_he_dao_tao',[DanhMucController::class, 'xlDMHeDaoTao']);
-    Route::post('xl_dm_khoa_hoc',[DanhMucController::class, 'xlDMKhoaHoc']);
+    Route::post('xl_dm_tuyen_xe',[DanhMucController::class, 'xlDMTuyenXe']);
     Route::post('xl_dm_khoi',[DanhMucController::class, 'xlDMKhoi']);
     Route::post('xl_dm_lop',[DanhMucController::class, 'xlDMLop']);
     Route::post('xl_dm_mon_hoc',[DanhMucController::class, 'xlDMMonHoc']);
@@ -130,6 +130,7 @@ Route::middleware(['session.check', 'quyen.check:monitor_bus'])->group(function 
     Route::get('ql_lt', [DichVuController::class, 'viewQuanLyLoTrinh'])->name('ql_lt');
     Route::get('them_lt', [DichVuController::class, 'viewThemLoTrinh'])->name('them_lt');
     Route::get('sua_lt', [DichVuController::class, 'viewSuaLoTrinh'])->name('sua_lt');
+    Route::post('xl_them_lt',[DichVuController::class, 'xlThemLoTrinh']);
     Route::get('diem_danh_bus', [DichVuController::class, 'viewDiemDanhBus'])->name('diem_danh_bus');
     Route::post('xl_diem_danh_bus',[DichVuController::class, 'xlDiemDanhBus']);
     Route::post('xl_upload_diem_danh',[DichVuController::class, 'xlUploadDiemDanhBus']);
@@ -150,8 +151,7 @@ Route::middleware(['session.check', 'quyen.check:dang_ky_dv'])->group(function (
 Route::middleware(['session.check', 'quyen.check:thuc_don'])->group(function () {
     //Thong ke
     Route::get('ql_td', [DichVuController::class, 'viewQuanLyThucDon'])->name('ql_td');
-    Route::get('them_td', [DichVuController::class, 'viewThemThucDon'])->name('them_td');
-    Route::get('sua_td', [DichVuController::class, 'viewSuaThucDon'])->name('sua_td');
+    Route::post('import_menu',[DichVuController::class, 'importMenu'])->name('import_menu');
 });
 Route::middleware(['session.check', 'quyen.check:giang_day'])->group(function () {
     //Thoi khoa bieu
@@ -168,4 +168,3 @@ Route::middleware(['session.check', 'quyen.check:phu_huynh'])->group(function ()
     Route::get('ph_bg', [DichVuController::class, 'viewPhuHuynhBangGia'])->name('ph_bg');
     Route::get('ph_tx', [DichVuController::class, 'viewPhuHuynhTuyenXe'])->name('ph_tx');
 });
-Route::post('import_menu',[DichVuController::class, 'importMenu'])->name('import_menu');

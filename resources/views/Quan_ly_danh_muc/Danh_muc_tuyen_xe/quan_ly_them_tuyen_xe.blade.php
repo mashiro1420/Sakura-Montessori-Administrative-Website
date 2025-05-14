@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thêm khóa học</title>
+  <title>Thêm tuyến xe</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -22,15 +22,15 @@
         <div class="container-fluid">
           <!-- Page Header -->
           <div class="page-header">
-            <h2><i class="fa-solid fa-chalkboard-user"></i> Thêm khóa học</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i> Thêm tuyến xe</h2>
           </div>
           <!-- Form to add new employee -->
-          <form class="search-container" action="{{url('xl_dm_khoa_hoc')}}" method="post">
+          <form class="search-container" action="{{url('xl_dm_tuyen_xe')}}" method="post">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
-                <label for="ten_khoa_hoc">Tên khóa học</label>
-                <input type="text" name="ten_khoa_hoc" class="form-control" placeholder="Nhập tên khóa học" required>
+                <label for="ten_tuyen_xe">Tên tuyến xe</label>
+                <input type="text" name="ten_tuyen_xe" class="form-control" placeholder="Nhập tên tuyến xe" required>
               </div>
             </div>  
             <div class="action-buttons">
@@ -43,8 +43,8 @@
                 </button>
               </div>
               <div>
-                <a class="btn btn-outline-secondary ms-2" href="{{url('ql_dm_khoa_hoc')}}">
-                  <i class="fa-solid fa-arrow-left me-1"></i> Quay lại danh mục khóa học
+                <a class="btn btn-outline-secondary ms-2" href="{{url('ql_dm_tuyen_xe')}}">
+                  <i class="fa-solid fa-arrow-left me-1"></i> Quay lại danh mục tuyến xe
                 </a>
               </div>
             </div>

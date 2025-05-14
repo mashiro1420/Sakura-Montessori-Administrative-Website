@@ -22,28 +22,29 @@
         <div class="container-fluid">
           <!-- Page Header -->
           <div class="page-header">
-            <h2><i class="fa-solid fa-chalkboard-user"></i>Thêm lộ trình xe</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i>Sửa lộ trình xe</h2>
           </div>
           <form class="search-container" action="{{url('xl_them_lt')}}" method="post">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
+                <input type="text" name="id" value="{{ $lo_trinh_xe->id }}" class="form-control" hidden>
                 <label for="tuyen_xe">Tuyến xe</label>
                 <select name="tuyen_xe" class="form-select" required>
                   @foreach($tuyen_xes as $tuyen_xe)
-                    <option value="{{$tuyen_xe->id}}">{{$tuyen_xe->ten_tuyen_xe}}</option>
+                    <option value="{{$tuyen_xe->id}}" {{ $tuyen_xe->id==$lo_trinh_xe->id_tuyen_xe?"selected":"" }}>{{$tuyen_xe->ten_tuyen_xe}}</option>
                   @endforeach
                 </select>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ngay">Ngày</label>
-                <input type="date" name="ngay" class="form-control" required>
+                <input type="date" name="ngay" value="{{ $lo_trinh_xe->ngay }}" class="form-control" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="lai_xe">Lái xe</label>
                 <select name="lai_xe" class="form-select" required>
                   @foreach($lai_xes as $lai_xe)
-                    <option value="{{$lai_xe->id}}">{{$lai_xe->ho_ten}}</option>
+                    <option value="{{$lai_xe->id}}" {{ $lai_xe->id==$lo_trinh_xe->id_lai_xe?"selected":"" }}>{{$lai_xe->ho_ten}}</option>
                   @endforeach
                 </select>
               </div>
@@ -51,13 +52,13 @@
                 <label for="monitor">Monitor</label>
                 <select name="monitor" class="form-select" required>
                   @foreach($monitors as $monitor)
-                    <option value="{{$monitor->id}}">{{$monitor->ho_ten}}</option>
+                    <option value="{{$monitor->id}}" {{ $monitor->id==$lo_trinh_xe->id_monitor?"selected":"" }}>{{$monitor->ho_ten}}</option>
                   @endforeach
                 </select>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="bien_so_xe">Biển số xe</label>
-                <input type="text" name="bien_so_xe" class="form-control" placeholder="Nhập biển số xe" required>
+                <input type="text" name="bien_so_xe" value="{{ $lo_trinh_xe->bien_so_xe }}" class="form-control" required>
               </div>
               {{-- <div class="search-item d-inline-block w-25">
                 <label for="danh_sach">Danh sách</label>

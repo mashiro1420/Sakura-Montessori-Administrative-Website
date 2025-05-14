@@ -24,18 +24,17 @@
           <div class="page-header">
             <h2><i class="fa-solid fa-chalkboard-user"></i> Quản lý thực đơn</h2>
           </div>
-
+          
           <!-- Search and Filter Section -->
-          <form class="search-container" action="{{url('ql_lt')}}" method="get">
+          <form class="search-container" action="{{url('ql_td')}}" method="get">
             @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
-                <label for="lai_xe">Tuần</label>
-                <select id="position-filter" name = "tuan" class="form-select">
-                  <option value="" disable selected>Tất cả các tuần</option>
-                  {{-- @foreach($tuans as $tuan)
-                    <option value="{{$tuan->id}}">Tuần thứ {{$tuan->tuan}} năm {{$tuan->nam}}</option>
-                  @endforeach --}}
+                <label for="tuan_search">Tuần</label>
+                <select id="position-filter" name = "tuan_search" class="form-select">
+                  @foreach($tuans as $tuan)
+                    <option value="{{$tuan->id}}"{{ $tuan->id==$tuan_search?"selected":"" }}>Tuần thứ {{$tuan->tuan}} năm {{$tuan->nam}}</option>
+                  @endforeach
                 </select>
               </div>
             <div class="action-buttons">
@@ -48,79 +47,114 @@
                 </button>
               </div>
               <div>
-                <a class="btn btn-primary" href="{{route('them_td')}}">
-                  <i class="fa-solid fa-plus me-1"></i> Thêm thực đơn mới
-                </a>
-                <button class="btn btn-outline-secondary ms-2">
-                  <a href="{{route('export_hs',[
-                      'tk_ho_ten'=>!empty($tk_ho_ten)?$tk_ho_ten:"",
-                      'tk_gioi_tinh'=>!empty($tk_gioi_tinh)?$tk_gioi_tinh:"",
-                      'tk_quoc_tich'=>!empty($tk_quoc_tich)?$tk_quoc_tich:"",
-                      'tk_ngay_nhap_hoc'=>!empty($tk_ngay_nhap_hoc)?$tk_ngay_nhap_hoc:"",
-                      'tk_ngay_thoi_hoc'=>!empty($tk_ngay_thoi_hoc)?$tk_ngay_thoi_hoc:"",
-                      'tk_trang_thai'=>!empty($tk_trang_thai)?$tk_trang_thai:""])}}">
-                    <i class="fa-solid fa-file-export me-1"></i> Xuất Excel
-                  </a>
-                </button>
+              </form>
+                <form action="{{ url('import_menu') }}" method="post" enctype="multipart/form-data" id="import-form">
+                  @csrf
+                  <input type="file" name="file" id="file-input" class="d-none" required>
+                  <button type="submit" name="import" class="btn btn-outline-secondary ms-2" id="import-button"><i class="fa-solid fa-file-import me-1"></i>Import Excel</button>
+                </form>
               </div>
             </div>
-          </form>
           <!-- Table Section -->
           <div class="data-container">
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th>Bữa</th>
+                  <th>Buổi</th>
+                  <th>Tên bữa</th>
                   <th>Thứ 2</th>
                   <th>Thứ 3</th>
-                  <th>Bữa sáng 1</th>
-                  <th>Bữa sáng 2</th>
-                  <th>Món chính</th>
-                  <th>Rau</th>
-                  <th>Canh</th>
-                  <th>Cơm</th>
-                  <th>Cháo</th>
-                  <th>Bữa chiều 1</th>
-                  <th>Bữa chiều 2</th>
-                  <th>Bữa nhẹ</th>
-                  <th>Thao tác</th>
+                  <th>Thứ 4</th>
+                  <th>Thứ 5</th>
+                  <th>Thứ 6</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>{{$thuc_don->id}}</td>
-                  <td>{{$thuc_don->tuyen_xe}}</td>
-                  <td>{{$thuc_don->ngay}}</td>
-                  <td>{{$thuc_don->ho_ten}}</td>
-                  <td>{{$thuc_don->ho_ten}}</td>
-                  <td>{{$thuc_don->bien_so_xe}}</td>
-                  <td>{{$thuc_don->danh_sach}}</td>
-                  <td class="action-column">
-                    <a class="action-button" title="Chỉnh sửa" href="{{route('sua_lt',['id' => $thuc_don->id])}}"><i class="fa-solid fa-edit"></i></a>
-                  </td>
+                  <td rowspan="2">Sáng</td>
+                  <td>Bữa sáng 1</td>
+                  <td>{{$thuc_don[0]->sang1}}</td>
+                  <td>{{$thuc_don[1]->sang1}}</td>
+                  <td>{{$thuc_don[2]->sang1}}</td>
+                  <td>{{$thuc_don[3]->sang1}}</td>
+                  <td>{{$thuc_don[4]->sang1}}</td>
                 </tr>
-                @endforeach
+                <tr>
+                  <td>Bữa sáng 2</td>
+                  <td>{{$thuc_don[0]->sang2}}</td>
+                  <td>{{$thuc_don[1]->sang2}}</td>
+                  <td>{{$thuc_don[2]->sang2}}</td>
+                  <td>{{$thuc_don[3]->sang2}}</td>
+                  <td>{{$thuc_don[4]->sang2}}</td>
+                </tr>
+                <tr>
+                  <td rowspan="5">Trưa</td>
+                  <td>Món chính</td>
+                  <td>{{$thuc_don[0]->chinh}}</td>
+                  <td>{{$thuc_don[1]->chinh}}</td>
+                  <td>{{$thuc_don[2]->chinh}}</td>
+                  <td>{{$thuc_don[3]->chinh}}</td>
+                  <td>{{$thuc_don[4]->chinh}}</td>
+                </tr>
+                <tr>
+                  <td>Món rau</td>
+                  <td>{{$thuc_don[0]->rau}}</td>
+                  <td>{{$thuc_don[1]->rau}}</td>
+                  <td>{{$thuc_don[2]->rau}}</td>
+                  <td>{{$thuc_don[3]->rau}}</td>
+                  <td>{{$thuc_don[4]->rau}}</td>
+                </tr>
+                <tr>
+                  <td>Món canh</td>
+                  <td>{{$thuc_don[0]->canh}}</td>
+                  <td>{{$thuc_don[1]->canh}}</td>
+                  <td>{{$thuc_don[2]->canh}}</td>
+                  <td>{{$thuc_don[3]->canh}}</td>
+                  <td>{{$thuc_don[4]->canh}}</td>
+                </tr>
+                <tr>
+                  <td>Cơm trắng</td>
+                  <td>{{$thuc_don[0]->com}}</td>
+                  <td>{{$thuc_don[1]->com}}</td>
+                  <td>{{$thuc_don[2]->com}}</td>
+                  <td>{{$thuc_don[3]->com}}</td>
+                  <td>{{$thuc_don[4]->com}}</td>
+                </tr>
+                <tr>
+                  <td>Cháo</td>
+                  <td>{{$thuc_don[0]->chao}}</td>
+                  <td>{{$thuc_don[1]->chao}}</td>
+                  <td>{{$thuc_don[2]->chao}}</td>
+                  <td>{{$thuc_don[3]->chao}}</td>
+                  <td>{{$thuc_don[4]->chao}}</td>
+                </tr>
+                <tr>
+                  <td rowspan="2" colspan="2">Bữa ăn chiều</td>
+                  <td>{{$thuc_don[0]->chieu1}}</td>
+                  <td>{{$thuc_don[1]->chieu1}}</td>
+                  <td>{{$thuc_don[2]->chieu1}}</td>
+                  <td>{{$thuc_don[3]->chieu1}}</td>
+                  <td>{{$thuc_don[4]->chieu1}}</td>
+                </tr>
+                <tr>
+                  <td>{{$thuc_don[0]->chieu2}}</td>
+                  <td>{{$thuc_don[1]->chieu2}}</td>
+                  <td>{{$thuc_don[2]->chieu2}}</td>
+                  <td>{{$thuc_don[3]->chieu2}}</td>
+                  <td>{{$thuc_don[4]->chieu2}}</td>
+                </tr>
+                <tr>
+                  <td colspan="2">Ăn nhẹ</td>
+                  <td>{{$thuc_don[0]->nhe}}</td>
+                  <td>{{$thuc_don[1]->nhe}}</td>
+                  <td>{{$thuc_don[2]->nhe}}</td>
+                  <td>{{$thuc_don[3]->nhe}}</td>
+                  <td>{{$thuc_don[4]->nhe}}</td>
+                </tr>
               </tbody>
             </table>
           </div>
-          <!-- Pagination -->
-          <div class="pagination-container">
-            <nav>
-              <ul class="pagination mb-0">
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -145,89 +179,15 @@
     });
   });
    
-  const rows = document.querySelectorAll('.table tbody tr');  
-  const itemsPerPage = 5;  
-  const maxPageLinks = 5;  
-
-   
-  const totalItems = rows.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  const paginationContainer = document.querySelector('.pagination');
-
-   
-  function createPagination(currentPage) {
-    let pageItems = [];
-
-    if (totalPages <= maxPageLinks) {
-       
-      for (let i = 1; i <= totalPages; i++) {
-        pageItems.push(i);
-      }
-    } else {
-       
-      if (currentPage <= 3) {
-        pageItems = [1, 2, 3, 4, 5];
-      } else if (currentPage >= totalPages - 2) {
-        pageItems = [totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
-      } else {
-        pageItems = [currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
-      }
-    }
-
-    let paginationHTML = '';
-    if (currentPage > 1) {
-      paginationHTML += `<li class="page-item"><a class="page-link" href="#" aria-label="Previous" onclick="changePage(${currentPage - 1})">&laquo;</a></li>`;
-    }
-
-    if (pageItems[0] > 1) {
-      paginationHTML += `<li class="page-item disabled"><a class="page-link" href="#">...</a></li>`;
-    }
-
-    pageItems.forEach(page => {
-      paginationHTML += `<li class="page-item ${page === currentPage ? 'active' : ''}">
-                            <a class="page-link" href="#" onclick="changePage(${page})">${page}</a>
-                          </li>`;
+  </script>
+  <script>
+    document.getElementById('import-button').addEventListener('click', function() {
+      document.getElementById('file-input').click();  
     });
 
-    if (pageItems[pageItems.length - 1] < totalPages) {
-      paginationHTML += `<li class="page-item disabled"><a class="page-link" href="#">...</a></li>`;
-    }
-
-    if (currentPage < totalPages) {
-      paginationHTML += `<li class="page-item"><a class="page-link" href="#" aria-label="Next" onclick="changePage(${currentPage + 1})">&raquo;</a></li>`;
-    }
-
-    paginationContainer.innerHTML = paginationHTML;
-  }
-
- 
-  function changePage(pageNumber) {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      createPagination(pageNumber);
-      displayPageData(pageNumber);
-    }
-  }
-
- 
-  function displayPageData(currentPage) {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = currentPage * itemsPerPage;
-
- 
-    rows.forEach(row => {
-      row.style.display = 'none';
+    document.getElementById('file-input').addEventListener('change', function() {
+      document.getElementById('import-form').submit();  
     });
-
- 
-    for (let i = startIndex; i < endIndex && i < totalItems; i++) {
-      rows[i].style.display = '';
-    }
-  }
-
- 
-  createPagination(1);
-  displayPageData(1);
   </script>
 @include('components/bao_loi')
 </body>

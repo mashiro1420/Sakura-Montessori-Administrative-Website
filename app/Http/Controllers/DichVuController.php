@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Imports\MenuImport;
 use App\Models\BangGiaModel;
+use App\Models\ChucVuModel;
 use App\Models\DichVuModel;
 use App\Models\DiemDanhModel;
 use App\Models\HocSinhModel;
 use App\Models\LoTrinhXeModel;
 use App\Models\NhanVienModel;
+use App\Models\ThucDonModel;
+use App\Models\TTDiXeModel;
+use App\Models\TuanModel;
+use App\Models\TuyenXeModel;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -66,6 +71,7 @@ public function xlSuaGia(Request $request)
         $gia->save();
         return redirect()->route('ql_bg')->with('bao_loi','Lưu thành công');
     }
+    //Tuyen xe
     public function xlDKTuyen(Request $request)
     {
         $ds_diem_danh = explode(',', $request->ds_diem_danh);
@@ -100,41 +106,94 @@ public function xlSuaGia(Request $request)
     public function viewQuanLyLoTrinh(Request $request)
     {
         $data = [];
-        $data['lai_xes'] = NhanVienModel::where('id_chuc_vu', 6)->get();
-        $data['monitors'] = NhanVienModel::where('id_chuc_vu', 7)->get();
+        $monitor = ChucVuModel::where('ten_chuc_vu','Nhân viên Monitor')->first();
+        $lai_xe = ChucVuModel::where('ten_chuc_vu','Lái xe')->first();
+        $data['lai_xes'] = NhanVienModel::where('id_chuc_vu', $lai_xe->id )->get();
+        $data['monitors'] = NhanVienModel::where('id_chuc_vu', $monitor->id)->get();
+        $data['tuyen_xes'] = TuyenXeModel::all();
         $query = LoTrinhXeModel::query()
-            ->select('ql_lotrinhxe.*')
-            ->leftJoin('ql_nhanvien as ql_lai_xe', 'ql_lotrinhxe.id_lai_xe', '=', 'ql_lai_xe.id')
-            ->leftJoin('ql_nhanvien as ql_monitor', 'ql_lotrinhxe.id_monitor', '=', 'ql_monitor.id');
+        ->select('ql_lotrinhxe.*','ql_lai_xe.ho_ten as ten_lai_xe','ql_monitor.ho_ten as ten_monitor','dm_tuyenxe.ten_tuyen_xe')
+        ->leftJoin('dm_tuyenxe', 'ql_lotrinhxe.id_tuyen_xe', '=', 'dm_tuyenxe.id')
+        ->leftJoin('ql_nhanvien as ql_lai_xe', 'ql_lotrinhxe.id_lai_xe', '=', 'ql_lai_xe.id')
+        ->leftJoin('ql_nhanvien as ql_monitor', 'ql_lotrinhxe.id_monitor', '=', 'ql_monitor.id');
+        if ($request->filled('lai_xe')) {
+            $query->where('ql_lotrinhxe.id_lai_xe', $request->lai_xe);
+            $data['lai_xe'] = $request->lai_xe;
+        }
+        if ($request->filled('monitor')) {
+            $query->where('ql_lotrinhxe.id_monitor', $request->monitor);
+            $data['monitor'] = $request->monitor;
+        }
+        if ($request->filled('tuyen_xe')) {
+            $query->where('ql_lotrinhxe.id_tuyen_xe', $request->tuyen_xe);
+            $data['tuyen_xe'] = $request->tuyen_xe;
+        }
+        if ($request->filled('bien_so_xe')) {
+            $query->where('ql_lotrinhxe.bien_so_xe', 'like', '%' . $request->bien_so_xe . '%');
+            $data['bien_so_xe'] = $request->bien_so_xe;
+        }
+        if ($request->filled('tu_ngay')) {
+            $query->where('ql_lotrinhxe.ngay', '>=', $request->tu_ngay);
+            $data['tu_ngay'] = $request->tu_ngay;
+        }
+        if ($request->filled('den_ngay')) {
+            $query->where('ql_lotrinhxe.ngay', '<=', $request->den_ngay);
+            $data['den_ngay'] = $request->den_ngay;
+        }
         $data['lo_trinh_xes'] = $query->orderBy('ql_lotrinhxe.id')->get();
         return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.quan_ly_lo_trinh_xe', $data);
     }
     public function viewThemLoTrinh()
     {
         $data = [];
-        $data['lai_xes'] = NhanVienModel::where('id_chuc_vu', 6)->get();
-        $data['monitors'] = NhanVienModel::where('id_chuc_vu', 7)->get();
+        $monitor = ChucVuModel::where('ten_chuc_vu','Nhân viên Monitor')->first();
+        $lai_xe = ChucVuModel::where('ten_chuc_vu','Lái xe')->first();
+        $data['tuyen_xes'] = TuyenXeModel::all();
+        $data['lai_xes'] = NhanVienModel::where('id_chuc_vu', $lai_xe->id )->get();
+        $data['monitors'] = NhanVienModel::where('id_chuc_vu', $monitor->id)->get();
         return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.them_lo_trinh_xe', $data);
     }
     public function viewSuaLoTrinh(Request $request)
     {
         $data = [];
-        $data['lai_xes'] = NhanVienModel::where('id_chuc_vu', 6)->get();
-        $data['monitors'] = NhanVienModel::where('id_chuc_vu', 7)->get();
+        $monitor = ChucVuModel::where('ten_chuc_vu','Nhân viên Monitor')->first();
+        $lai_xe = ChucVuModel::where('ten_chuc_vu','Lái xe')->first();
+        $data['lai_xes'] = NhanVienModel::where('id_chuc_vu', $lai_xe->id )->get();
+        $data['monitors'] = NhanVienModel::where('id_chuc_vu', $monitor->id)->get();
+        $data['tuyen_xes'] = TuyenXeModel::all();
+        $data['tuyen_xes'] = NhanVienModel::where('id_chuc_vu', $monitor->id)->get();
         $data['lo_trinh_xe'] = LoTrinhXeModel::find($request->id);
-        return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.sua_lo_trinh', $data);
+        return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.sua_lo_trinh_xe', $data);
     }
     public function viewDiemDanhBus (Request $request)
     {
         $data = [];
-        $data['lai_xes'] = NhanVienModel::where('id_chuc_vu', 6)->get();
-        $data['monitors'] = NhanVienModel::where('id_chuc_vu', 7)->get();
-        return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.them_lo_trinh_xe', $data);
+        $monitor = ChucVuModel::where('ten_chuc_vu','Nhân viên Monitor')->first();
+        $lai_xe = ChucVuModel::where('ten_chuc_vu','Lái xe')->first();
+        $data['lai_xes'] = NhanVienModel::where('id_chuc_vu', $lai_xe->id )->get();
+        $data['monitors'] = NhanVienModel::where('id_chuc_vu', $monitor->id)->get();
+        $query = TTDiXeModel::query()->select('ql_hocsinh.*')
+            ->leftJoin('ql_hocsinh','tt_hsdixe.id_hoc_sinh','=','ql_hocsinh.id')
+            ->leftJoin('ql_lotrinhxe','ql_lotrinhxe.id_tuyen_xe','=','tt_hsdixe.id_tuyen_xe')
+            ->leftJoin('dm_tuyenxe','ql_lotrinhxe.id_tuyen_xe','=','dm_tuyenxe.id')
+            ->where('id_phan_lop', $request->id);
+        $data['hoc_sinhs'] = $query->orderBy('id_hoc_sinh','ASC')->get();
+        dd($data['hoc_sinhs']);
+        return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.diem_danh_xe_bus', $data);
     }
-    public function importMenu(Request $request){
-        Excel::import(new MenuImport, $request->file('file'));
-        return redirect()->route('ql_menu');
+    public function xlThemLoTrinh(Request $request)
+    {
+        if(empty($request->id)) $tuyen_xe = new LoTrinhXeModel();
+        else    $tuyen_xe = LoTrinhXeModel::find($request->id);
+        $tuyen_xe->id_lai_xe = $request->lai_xe;
+        $tuyen_xe->id_monitor = $request->monitor;
+        $tuyen_xe->id_tuyen_xe = $request->tuyen_xe;
+        $tuyen_xe->ngay = date('Y-m-d');
+        $tuyen_xe->bien_so_xe = $request->bien_so_xe;
+        $tuyen_xe->save();
+        return redirect()->route('ql_lt')->with('bao_loi','Lưu thành công');
     }
+    //DK bus
     public function viewQuanLyDangKyBusHS(Request $request)
     {
         $data = [];
@@ -157,20 +216,29 @@ public function xlSuaGia(Request $request)
     //Thuc don
     public function viewQuanLyThucDon(Request $request){
         $data=[];
+        $ngay = date('Y-m-d');
+        $tuan = TuanModel::where('tu_ngay','<=',$ngay)->where('den_ngay','>=',$ngay)->first();
+        if($request->filled('tuan_search')){
+            $tuan = TuanModel::find($request->tuan_search);
+        }
+        $thuc_don = ThucDonModel::where('id_tuan',$tuan->id)->orderBy('thu','asc')->get();
+        $menu = [];
+        foreach($thuc_don as $td){
+            $menu[] = $td;
+        }
+        $data['tuan_search'] = $tuan->id;
+        $data['tuans'] = TuanModel::where('nam',date('Y'))->get();
+        $data['thuc_don'] = $menu;
         return view('Quan_ly_dich_vu.Quan_ly_thuc_don.quan_ly_thuc_don', $data);
     }
-    public function viewThemThucDon(Request $request){
-        $data = [];
-        return view('Quan_ly_dich_vu.Quan_ly_thuc_don.them_thuc_don', $data);
-    }
-    public function viewSuaThucDon(Request $request){
-        $data = [];
-        return view('Quan_ly_dich_vu.Quan_ly_thuc_don.sua_thuc_don', $data);
+    public function importMenu(Request $request){
+        Excel::import(new MenuImport, $request->file('file'));
+        return redirect()->route('ql_td')->with('bao_loi','Lưu thành công');
     }
     //View Phu huynh
     public function viewPhuHuynhBangGia(Request $request)
     {
         $data = [];
-        return vierw('Phu_huynh_bang_gia.phu_huynh_bang_gia', $data);
+        return view('Phu_huynh_bang_gia.phu_huynh_bang_gia', $data);
     }
 }

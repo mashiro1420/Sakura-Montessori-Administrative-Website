@@ -39,11 +39,11 @@
                 <input type="text" name="lai_xe" class="form-control" value="">
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="ngay">Ngày</label>
-                <input type="text">
+                <label for="monitor">Giám sát viên</label>
+                <input type="text" name="monitor" class="form-control" value="">
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="monitor">Giám sát viên</label>
+                <label for="ngay">Ngày</label>
                 <input type="date" monitor="ngay" class="form-control" value="" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
@@ -63,7 +63,7 @@
                 <a class="btn btn-primary" href="{{route('ql_lt')}}">
                   <i class="fa-solid fa-arrow-left me-1"></i> Quay lại
                 </a>
-                <button class="btn btn-outline-secondary ms-2">
+                {{-- <button class="btn btn-outline-secondary ms-2">
                   <a href="{{route('export_hs',[
                       'tk_ho_ten'=>!empty($tk_ho_ten)?$tk_ho_ten:"",
                       'tk_gioi_tinh'=>!empty($tk_gioi_tinh)?$tk_gioi_tinh:"",
@@ -73,7 +73,7 @@
                       'tk_trang_thai'=>!empty($tk_trang_thai)?$tk_trang_thai:""])}}">
                     <i class="fa-solid fa-file-export me-1"></i> Xuất Excel
                   </a>
-                </button>
+                </button> --}}
               </div>
             </div>
           </form>

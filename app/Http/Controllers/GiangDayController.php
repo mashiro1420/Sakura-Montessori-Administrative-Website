@@ -13,7 +13,7 @@ class GiangDayController extends Controller
 {
     public function viewQuanLyTKB(Request $request){
         $data = [];
-        // $data = ['tkbs'] = ThoiKhoaBieuModel::all();
+        $data['tkbs'] = ThoiKhoaBieuModel::orderBy('tuan', 'desc')->get();
         $data['tuans'] = TuanModel::all();
         $data['phan_lops'] = PhanLopModel::all();
         return view("Quan_ly_tkb.quan_ly_tkb",$data);
