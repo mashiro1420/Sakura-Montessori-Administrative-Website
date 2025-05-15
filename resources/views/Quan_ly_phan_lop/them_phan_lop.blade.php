@@ -49,7 +49,7 @@
                 <button type="submit" name="import" class="btn btn-outline-secondary ms-2" id="import-button">Import Excel</button>
               </form>
             </div>
-          <form class="search-container" action="{{url('xlPhanLop')}}" method="post">
+          <form class="search-container" action="{{url('xl_tao_lop')}}" method="post">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">

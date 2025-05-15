@@ -31,7 +31,7 @@
               <h2>Thông tin cơ bản</h2>
               <div class="search-item d-inline-block w-25">
                 <label for="id">Mã học sinh</label>
-                <input type="text" name="id" class="form-control" value="{{$hoc_sinh->id}}" readonly>
+                <input type="text" name="id" class="form-control" value="{{$hoc_sinh->hs_id}}" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ho_ten">Họ và tên</label>
@@ -66,7 +66,11 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="thuong_tru">Thường trú</label>
-                <input type="text" name="thuong_tru" class="form-control" value="{{$hoc_sinh->thuong_tru}}" placeholder="Nhập thường trú" required>
+                <input type="text" name="thuong_tru" class="form-control" value="{{$hoc_sinh->thuong_tru}}" placeholder="Nhập thường trú">
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="dia_chi">Địa chỉ</label>
+                <input type="text" name="dia_chi" class="form-control" placeholder="Nhập địa chỉ" value="{{$hoc_sinh->dia_chi}}">
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="loai_hoc_phi">Loại học phí</label>
@@ -82,6 +86,15 @@
                   <option value="0" {{empty($hoc_sinh->nang_khieu)?"selected":""}}>Không đăng ký</option>
                   @foreach ($nang_khieu as $mon)
                   <option value="{{ $mon->id }}" {{$hoc_sinh->nang_khieu==$mon->id?"selected":""}}>{{$mon->ten_mon_hoc}}</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="tk_khoa_hoc">Khóa học</label>
+                <select id="tk_khoa_hoc" name="tk_khoa_hoc" class="select2-elem form-select" data-placeholder="Chọn hoặc tìm kiếm" required>
+                  <option value="" disabled selected>Chọn hoặc tìm kiếm</option>
+                  @foreach($khoa_hocs as $khoa_hoc)
+                    <option value="{{$khoa_hoc->id}}" {{ $hoc_sinh->id_khoa==$khoa_hoc->id?"selected":"" }}>{{$khoa_hoc->ten_khoa_hoc}}</option>
                   @endforeach
                 </select>
               </div>
@@ -164,28 +177,36 @@
                 <input type="text" name="quoc_tich_bo" class="form-control" value="{{$hoc_sinh->quoc_tich_bo}}">
               </div>
             </div>
-            <div class="filter-row">
-              <h2>Thông tin đưa đón</h2>
-              <div class="search-item d-inline-block w-25">
-                <label for="di_bus">Đi bus</label>
-                <select name="di_bus" class="form-select" required>
-                  <option value="0" {{$hoc_sinh->di_bus=='0'?"selected":""}}>Không</option>
-                  <option value="1" {{$hoc_sinh->di_bus=='1'?"selected":""}}>Có</option>
-                </select>
+            @if(!empty($hoc_sinh->id_tuyen_xe))
+              <div class="filter-row">
+                <h2>Thông tin đưa đón</h2>
+                <div class="search-item d-inline-block w-25">
+                  <label for="tuyen_xe">Tuyến xe</label>
+                  <select name="tuyen_xe" class="form-select" required>
+                    <option value="huy">Không đăng ký</option>
+                    @foreach ($tuyen_xes as $tuyen_xe)
+                    <option value="{{ $tuyen_xe->id }}" {{$hoc_sinh->id_tuyen_xe==$tuyen_xe->id?"selected":""}}>{{$tuyen_xe->ten_tuyen_xe}}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <div class="search-item d-inline-block w-25">
+                  <label for="diem_don">Điểm đón</label>
+                  <input type="text" name="diem_don" class="form-control"  placeholder="Nhập người đưa đón" value="{{$hoc_sinh->diem_don}}">
+                </div>
+                <div class="search-item d-inline-block w-25">
+                  <label for="so_km">Số KM</label>
+                  <input type="text" name="so_km" class="form-control"  placeholder="Nhập người đưa đón" value="{{$hoc_sinh->so_km}}">
+                </div>
+                <div class="search-item d-inline-block w-25">
+                  <label for="nguoi_dua_don">Người đưa đón</label>
+                  <input type="text" name="nguoi_dua_don" class="form-control"  placeholder="Nhập người đưa đón" value="{{$hoc_sinh->nguoi_dua_don}}">
+                </div>
+                <div class="search-item d-inline-block w-25">
+                  <label for="lien_he_khan">Liên hệ khẩn</label>
+                  <input type="text" name="lien_he_khan" class="form-control"  placeholder="Nhập liên hệ khẩn" value="{{$hoc_sinh->lien_he_khan}}">
+                </div>
               </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="dia_chi">Địa chỉ</label>
-                <input type="text" name="dia_chi" class="form-control" placeholder="Nhập địa chỉ" value="{{$hoc_sinh->dia_chi}}">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="nguoi_dua_don">Người đưa đón</label>
-                <input type="text" name="nguoi_dua_don" class="form-control" placeholder="Nhập người đưa đón" value="{{$hoc_sinh->nguoi_dua_don}}">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="lien_he_khan">Liên hệ khẩn</label>
-                <input type="text" name="lien_he_khan" class="form-control" placeholder="Nhập liên hệ khẩn" value="{{$hoc_sinh->lien_he_khan}}">
-              </div>
-            </div>
+            @endIf
             <div class="action-buttons">
               <div>
                 <button class="btn btn-primary" type="submit">

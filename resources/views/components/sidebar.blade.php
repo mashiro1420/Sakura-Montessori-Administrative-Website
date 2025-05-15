@@ -34,7 +34,7 @@
           <a href="ql_dm_he_dao_tao" class="sidebar-link">Danh mục hệ đào tạo</a>
         </li>
         <li class="sidebar-item">
-          <a href="ql_dm_tuyen_xe" class="sidebar-link">Danh mục tuyến xe</a>
+          <a href="ql_dm_khoa_hoc" class="sidebar-link">Danh mục khóa học</a>
         </li>
         <li class="sidebar-item">
           <a href="ql_dm_khoi" class="sidebar-link">Danh mục khối</a>
@@ -50,6 +50,9 @@
         </li>
         <li class="sidebar-item">
           <a href="ql_dm_quyen" class="sidebar-link">Danh mục quyền</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="ql_dm_tuyen_xe" class="sidebar-link">Danh mục tuyến xe</a>
         </li>
       </ul>
     </li>

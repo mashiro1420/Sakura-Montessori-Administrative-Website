@@ -22,40 +22,49 @@
           <div class="page-header">
             <h2><i class="fa-solid fa-chalkboard-user"></i> Đăng ký xe bus cho học sinh</h2>
           </div>
-          <form class="search-container" action="" method="post">
+          <form class="search-container" action="{{ url('xl_dk_bus') }}" method="post">
           @csrf
             <div class="filter-row">
-              <div class="search-item d-inline-block w-25">
+              <div class="search-item d-inline-block w-40">
                 <label for="hoc_sinh">Học sinh</label required>
-                <select id="hoc_sinh" name = "hoc_sinh" class="form-select">
+                <select id="hoc_sinh" name = "hoc_sinh" class="form-select" required>
                     @foreach ($hoc_sinhs as $hoc_sinh)
                         <option value="{{$hoc_sinh->id}}">
-                            {{$hoc_sinh->ho_ten}}
+                        {{$hoc_sinh->id}} - {{$hoc_sinh->ho_ten}}
                         </option>
                     @endforeach
                 </select>
               </div>
               <div class="search-item d-inline-block w-50">
                 <label for="tuyen_xe">Tuyến xe</label>
-                <input type="text" id="tuyen_xe" name = "tuyen_xe" class="form-control" placeholder="Nhập tuyến xe">
+                <select id="tuyen_xe" name = "tuyen_xe" class="form-select" required>
+                    @foreach ($tuyen_xes as $tuyen_xe)
+                        <option value="{{$tuyen_xe->id}}">
+                            {{$tuyen_xe->ten_tuyen_xe}}
+                        </option>
+                    @endforeach
+                </select>
               </div>
               <div class="search-item d-inline-block w-50">
                 <label for="diem_don">Điểm đón</label>
                 <input type="text" id="diem_don" name = "diem_don" class="form-control" placeholder="Nhập điểm đón">
               </div>
               <div class="search-item d-inline-block w-50">
-                <label for="sang">Giờ sáng</label>
-                <input type="time" id="sang" name = "sang" class="form-control" placeholder="Nhập giờ sáng">
-              </div>
-              <div class="search-item d-inline-block w-50">
-                <label for="toi">Giờ tối</label>
-                <input type="time" id="toi" name = "toi" class="form-control" placeholder="Nhập giờ tối">
-              </div>
-              <div class="search-item d-inline-block w-50">
-                <label for="so_km">Số km/label>
+                <label for="so_km">Số km</label>
                 <input type="number" id="so_km" name = "so_km" class="form-control" placeholder="Nhập số km">
               </div>
-
+              <div class="search-item d-inline-block w-50">
+                <label for="nguoi_dua_don">Người đưa đón</label>
+                <input type="text" id="nguoi_dua_don" name = "nguoi_dua_don" class="form-control" placeholder="Nhập họ tên người đưa đón">
+              </div>
+              <div class="search-item d-inline-block w-50">
+                <label for="lien_he_khan">Số liên hệ khẩn</label>
+                <input type="text" id="lien_he_khan" name = "lien_he_khan" class="form-control" placeholder="Nhập số liên hệ khẩn">
+              </div>
+              <div class="search-item d-inline-block w-50">
+                <label for="">File tài liệu</label>
+                <input type="file" name="file" class="form-control" id="file-input" required>
+              </div>
             <div class="action-buttons">
               <div>
                 <button class="btn btn-primary" type="submit">

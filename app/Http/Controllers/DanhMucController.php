@@ -7,6 +7,7 @@ use App\Models\ChucVuModel;
 use App\Models\ChuyenNganhModel;
 use App\Models\DichVuModel;
 use App\Models\HeDaoTaoModel;
+use App\Models\KhoaHocModel;
 use App\Models\TuyenXeModel;
 use App\Models\KhoiModel;
 use App\Models\LopModel;
@@ -76,7 +77,19 @@ class DanhMucController extends Controller
         }
         $data['tuyen_xes'] = $query->orderBy('id')->get();
         return view('Quan_ly_danh_muc.Danh_muc_tuyen_xe.quan_ly_dm_tuyen_xe', $data);
-    }public function viewDMKhoi(Request $request)
+    }
+    public function viewDMKhoaHoc(Request $request)
+    {
+        $data = [];
+        $query = KhoaHocModel::query()->select ('*');
+        if ($request->has('tk_ten_khoa_hoc') && !empty($request->tk_ten_khoa_hoc)){
+            $query->where('ten_khoa_hoc','like','%'.$request->tk_ten_khoa_hoc.'%');
+            $data['tk_ten_khoa_hoc'] = $request->tk_ten_khoa_hoc;
+        }
+        $data['khoa_hocs'] = $query->orderBy('id')->get();
+        return view('Quan_ly_danh_muc.Danh_muc_khoa_hoc.quan_ly_dm_khoa_hoc', $data);
+    }
+    public function viewDMKhoi(Request $request)
     {
         $data = [];
         $query = KhoiModel::query()->select ('*');
@@ -165,6 +178,10 @@ public function viewThemChucVu(Request $request)
     {
         $data = [];
         return view('Quan_ly_danh_muc.Danh_muc_tuyen_xe.quan_ly_them_tuyen_xe', $data);
+    }public function viewThemKhoaHoc(Request $request)
+    {
+        $data = [];
+        return view('Quan_ly_danh_muc.Danh_muc_khoa_hoc.quan_ly_them_khoa_hoc', $data);
     }public function viewThemKhoi(Request $request)
     {
         $data = [];
@@ -208,6 +225,11 @@ public function viewSuaChucVu(Request $request)
         $data = [];
         $data['he_dao_tao'] = HeDaoTaoModel::find($request->id); 
         return view('Quan_ly_danh_muc.Danh_muc_he_dao_tao.quan_ly_sua_he_dao_tao', $data);
+    }public function viewSuaKhoaHoc(Request $request)
+    {
+        $data = [];
+        $data['khoa_hoc'] = KhoaHocModel::find($request->id);
+        return view('Quan_ly_danh_muc.Danh_muc_khoa_hoc.quan_ly_sua_khoa_hoc', $data);
     }public function viewSuaTuyenXe(Request $request)
     {
         $data = [];
@@ -272,9 +294,7 @@ public function viewSuaChucVu(Request $request)
     public function xlDMTuyenXe(Request $request){
         $tuyen_xe = TuyenXeModel::firstOrNew(['id' => $request->id?$request->id : null]);
         $tuyen_xe->ten_tuyen_xe = $request->ten_tuyen_xe;
-        if(isset($request->trang_thai)){
-            $tuyen_xe->trang_thai = $request->trang_thai; 
-        }
+        $tuyen_xe->dinh_nghia = $request->dinh_nghia; 
         $tuyen_xe->save();
         return redirect()->route('ql_dm_tuyen_xe');
     }
@@ -289,6 +309,15 @@ public function viewSuaChucVu(Request $request)
         $lop->ten_lop = $request->ten_lop;
         $lop->save();
         return redirect()->route('ql_dm_lop');
+    }
+    public function xlDMKhoaHoc(Request $request){
+        $khoa_hoc = KhoaHocModel::firstOrNew(['id' => $request->id?$request->id : null]);
+        $khoa_hoc->ten_khoa_hoc = $request->ten_khoa_hoc;
+        if(isset($request->trang_thai)){
+            $khoa_hoc->trang_thai = $request->trang_thai; 
+        }
+        $khoa_hoc->save();
+        return redirect()->route('ql_dm_khoa_hoc');
     }
     public function xlDMMonHoc(Request $request){
         $mon_hoc = MonHocModel::firstOrNew(['id' => $request->id?$request->id : null]);

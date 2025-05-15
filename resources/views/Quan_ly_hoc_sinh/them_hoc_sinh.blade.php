@@ -89,6 +89,15 @@
                   @endforeach
                 </select>
               </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="khoa_hoc">Khóa học</label>
+                <select id="khoa_hoc" name="khoa_hoc" class="select2-elem form-select" data-placeholder="Chọn hoặc tìm kiếm" required>
+                  <option value="" disabled selected>Chọn hoặc tìm kiếm</option>
+                  @foreach($khoa_hocs as $khoa_hoc)
+                    <option value="{{$khoa_hoc->id}}">{{$khoa_hoc->ten_khoa_hoc}}</option>
+                  @endforeach
+                </select>
+              </div>
             </div>
             <div class="filter-row">
                 
@@ -170,28 +179,6 @@
                 <input type="text" name="quoc_tich_bo" class="form-control" placeholder="Nhập quốc tịch của bố">
               </div>
             </div>
-            <div class="filter-row">
-              <h2>Thông tin đưa đón</h2>
-              <div class="search-item d-inline-block w-25">
-                <label for="di_bus">Đi bus</label>
-                <select name="di_bus" class="form-select" required>
-                  <option value="0">Không</option>
-                  <option value="1">Có</option>
-                </select>
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="dia_chi">Địa chỉ</label>
-                <input type="text" name="dia_chi" class="form-control" placeholder="Nhập địa chỉ">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="nguoi_dua_don">Người đưa đón</label>
-                <input type="text" name="nguoi_dua_don" class="form-control" placeholder="Nhập người đưa đón">
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="lien_he_khan">Liên hệ khẩn</label>
-                <input type="text" name="lien_he_khan" class="form-control" placeholder="Nhập liên hệ khẩn">
-              </div>
-            </div>
             <div class="action-buttons">
               <div>
                 <button class="btn btn-primary" type="submit">
@@ -239,6 +226,17 @@
 
     document.getElementById('file-input').addEventListener('change', function() {
       document.getElementById('import-form').submit();  
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      // Khởi tạo Select2 cho tất cả các select
+      $('.select2-elem').select2({
+        allowClear: true,
+        width: '100%',
+        placeholder: "Chọn hoặc tìm kiếm",
+        dropdownCssClass: 'select2-dropdown'
+      });
     });
   </script>
 @include('components/bao_loi')

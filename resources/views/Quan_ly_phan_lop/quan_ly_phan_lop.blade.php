@@ -27,7 +27,7 @@
 
           <!-- Search and Filter Section -->
           <!-- < class="search-container"> -->
-          <form class="search-container" action="{{url('ql_phan_lop')}}" method="get">
+          <form class="search-container" action="{{route('ql_phan_lop')}}" method="get">
             @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
@@ -141,7 +141,7 @@
                 <a class="btn btn-primary" href="{{route('them_phan_lop')}}">
                   <i class="fa-solid fa-plus me-1"></i> Thêm phân lớp mới
                 </a>
-                <button class="btn btn-outline-secondary ms-2">
+                <!-- <button class="btn btn-outline-secondary ms-2">
                   <a href="{{route('export_nv',[
                       'gv_cn'=>!empty($gv_cn)?$gv_cn:"",
                       'tk_gioi_tinh'=>!empty($tk_gioi_tinh)?$tk_gioi_tinh:"",
@@ -150,7 +150,7 @@
                       'tk_trang_thai'=>!empty($tk_trang_thai)?$tk_trang_thai:""])}}">
                     <i class="fa-solid fa-file-export me-1"></i> Xuất Excel
                   </a>
-                </button>
+                </button> -->
               </div>
             </div>
           </form>
@@ -175,10 +175,10 @@
               <tbody>
                 @foreach($phan_lops as $phan_lop)
                 <tr>
-                  <td>{{$phan_lop->id}}</td>
-                  <td>{{$phan_lop->ho_ten}}</td>
-                  <td>{{$phan_lop->ho_ten}}</td>
-                  <td>{{$phan_lop->ho_ten}}</td>
+                  <td>{{$phan_lop->pl_id}}</td>
+                  <td>{{$phan_lop->ho_ten_cn}}</td>
+                  <td>{{$phan_lop->ho_ten_nn}}</td>
+                  <td>{{$phan_lop->ho_ten_vn}}</td>
                   <td>{{$phan_lop->ten_phong_hoc}}</td>
                   <td>{{$phan_lop->ten_lop}}</td>
                   <td>{{$phan_lop->ten_khoi}}</td>
@@ -186,9 +186,9 @@
                   <td>{{$phan_lop->ten_khoa_hoc}}</td>
                   <td>{{$phan_lop->ten_ky}}</td>
                   <td class="action-column">
-                    <a class="action-button" href="{{route('phan_lop',['id' => $phan_lop->id])}}" title="Phân lớp"><i class="fa-solid fa-person-circle-plus"></i></a>
-                    <a class="action-button" title="Chỉnh sửa" href="{{route('sua_nv',['id' => $phan_lop->id])}}"><i class="fa-solid fa-edit"></i></a>
-                    <a class="action-button" title="Điểm danh trên lớp" href="{{route('diem_danh',['id' => $phan_lop->id])}}"><i class="fa-solid fa-user-check"></i></a>
+                    <a class="action-button" href="{{route('phan_lop',['id' => $phan_lop->pl_id])}}" title="Phân lớp"><i class="fa-solid fa-person-circle-plus"></i></a>
+                    <a class="action-button" title="Chỉnh sửa" href="{{route('sua_nv',['id' => $phan_lop->pl_id])}}"><i class="fa-solid fa-edit"></i></a>
+                    <a class="action-button" title="Điểm danh trên lớp" href="{{route('diem_danh',['id' => $phan_lop->pl_id])}}"><i class="fa-solid fa-user-check"></i></a>
                   </td>
                 </tr>
                 @endforeach

@@ -91,6 +91,10 @@
               <input type="text" name="thuong_tru" class="form-control" readonly value="{{$hoc_sinh->thuong_tru}}" placeholder="Nhập thường trú" readonly>
             </div>
             <div class="search-item d-inline-block w-25">
+              <label for="dia_chi">Địa chỉ</label>
+              <input type="text" name="dia_chi" class="form-control" readonly placeholder="Nhập địa chỉ" value="{{$hoc_sinh->dia_chi}}">
+            </div>
+            <div class="search-item d-inline-block w-25">
               <label for="loai_hoc_phi">Loại học phí</label>
               <select name="loai_hoc_phi" class="form-select" readonly>
                 <option value="0" {{$hoc_sinh->loai_hoc_phi=='0'?"selected":""}}>Học phí kỳ</option>
@@ -106,6 +110,10 @@
                 <option value="{{ $mon->id }}" {{$hoc_sinh->nang_khieu==$mon->id?"selected":""}}>{{$mon->ten_mon_hoc}}</option>
                 @endforeach
               </select>
+            </div>
+            <div class="search-item d-inline-block w-25">
+              <label for="khoa_hoc">Khóa học</label>
+              <input type="text" name="khoa_hoc" class="form-control" readonly value="{{$hoc_sinh->ten_khoa_hoc}}" placeholder="Nhập thường trú" readonly>
             </div>
           </div>
           <div class="filter-row">
@@ -186,18 +194,20 @@
               <input type="text" name="quoc_tich_bo" class="form-control" readonly value="{{$hoc_sinh->quoc_tich_bo}}">
             </div>
           </div>
+        @if(!empty($hoc_sinh->tuyen_xe))
           <div class="filter-row">
             <h2>Thông tin đưa đón</h2>
             <div class="search-item d-inline-block w-25">
-              <label for="di_bus">Đi bus</label>
-              <select name="di_bus" class="form-select" readonly>
-                <option value="0" {{$hoc_sinh->di_bus=='0'?"selected":""}}>Không</option>
-                <option value="1" {{$hoc_sinh->di_bus=='1'?"selected":""}}>Có</option>
-              </select>
+              <label for="tuyen_xe">Tuyến xe</label>
+              <input type="text" name="tuyen_xe" class="form-control" readonly placeholder="Nhập người đưa đón" value="{{$hoc_sinh->ten_tuyen_xe}}">
             </div>
             <div class="search-item d-inline-block w-25">
-              <label for="dia_chi">Địa chỉ</label>
-              <input type="text" name="dia_chi" class="form-control" readonly placeholder="Nhập địa chỉ" value="{{$hoc_sinh->dia_chi}}">
+              <label for="diem_don">Điểm đón</label>
+              <input type="text" name="diem_don" class="form-control" readonly placeholder="Nhập người đưa đón" value="{{$hoc_sinh->diem_don}}">
+            </div>
+            <div class="search-item d-inline-block w-25">
+              <label for="so_km">Số KM</label>
+              <input type="text" name="so_km" class="form-control" readonly placeholder="Nhập người đưa đón" value="{{$hoc_sinh->so_km}}">
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="nguoi_dua_don">Người đưa đón</label>
@@ -208,7 +218,8 @@
               <input type="text" name="lien_he_khan" class="form-control" readonly placeholder="Nhập liên hệ khẩn" value="{{$hoc_sinh->lien_he_khan}}">
             </div>
           </div>
-          </div>
+        @endIf
+        </div>
         </div>
       </div>
     </div>

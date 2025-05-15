@@ -29,25 +29,18 @@
           <form class="search-container" action="" method="get">
             @csrf
             <div class="filter-row">
-              <div class="search-item d-inline-block w-50">
+              <div class="search-item d-inline-block w-25">
+                <label for="ho_ten_search">Họ và tên</label>
+                <input type="text" id="ho_ten_search" name = "ho_ten_search" {{!empty($ho_ten_search)?"value=$ho_ten_search":""}} class="form-control" placeholder="Tìm kiếm theo họ tên học sinh">
+              </div>
+              <div class="search-item d-inline-block w-25">
                 <label for="tuyen_xe_search">Tuyến xe</label>
-                <input type="text" id="tuyen_xe_search" name = "tuyen_xe_search" class="form-control" placeholder="Tìm kiếm theo tuyến xe">
-              </div>
-              <div class="search-item d-inline-block w-50">
-                <label for="diem_don_search">Điểm đón</label>
-                <input type="text" id="diem_don_search" name = "diem_don_search" class="form-control" placeholder="Tìm kiếm theo điểm đón">
-              </div>
-              <div class="search-item d-inline-block w-50">
-                <label for="sang_search">Giờ sáng</label>
-                <input type="time" id="sang_search" name = "sang_search" class="form-control" placeholder="Tìm kiếm theo giờ sáng">
-              </div>
-              <div class="search-item d-inline-block w-50">
-                <label for="toi_search">Giờ tối</label>
-                <input type="time" id="toi_search" name = "toi_search" class="form-control" placeholder="Tìm kiếm theo giờ tối">
-              </div>
-              <div class="search-item d-inline-block w-50">
-                <label for="so_km_search">Số km/label>
-                <input type="number" id="so_km_search" name = "so_km_search" class="form-control" placeholder="Tìm kiếm theo số km">
+                <select name="tuyen_xe_search" class="form-select">
+                  <option value="">Tất cả</option>
+                  @foreach ($tuyen_xes as $tuyen_xe)
+                  <option value="{{ $tuyen_xe->id }}" {{!empty($tuyen_xe_search)&&$tuyen_xe_search==$tuyen_xe->id?"selected":""}}>{{$tuyen_xe->ten_tuyen_xe}}</option>
+                  @endforeach
+                </select>
               </div>
             <div class="action-buttons">
               <div>
@@ -69,28 +62,26 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th>ID</th>
                   <th>Học sinh</th>
                   <th>Tuyến xe</th>
                   <th>Điểm đón</th>
-                  <th>Sáng</th>
-                  <th>Chiều</th>
                   <th>Số km</th>
+                  <th>Người đưa đón</th>
+                  <th>Số khẩn cấp</th>
                   <th>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($dky_bus_hss as $dky_bus_hs)
                 <tr>
-                  <td>{{$dky_bus_hs->id}}</td>
-                  <td>{{$dky_bus_hs->ho_ten}}</td>
-                  <td>{{$dky_bus_hs->tuyen_xe}}</td>
+                  <td>{{$dky_bus_hs->hs_id." - ".$dky_bus_hs->ho_ten}}</td>
+                  <td>{{$dky_bus_hs->ten_tuyen_xe}}</td>
                   <td>{{$dky_bus_hs->diem_don}}</td>
-                  <td>{{$dky_bus_hs->sang}}</td>
-                  <td>{{$dky_bus_hs->chieu}}</td>
                   <td>{{$dky_bus_hs->so_km}}</td>
+                  <td>{{$dky_bus_hs->nguoi_dua_don}}</td>
+                  <td>{{$dky_bus_hs->lien_he_khan}}</td>
                   <td class="action-column">
-                    <a class="action-button" title="Chỉnh sửa" href="{{ route('sua_bus_hs',['id'=>$dky_bus_hs->id]) }}"><i class="fa-solid fa-edit"></i></a>
+                    <a class="action-button" title="Chỉnh sửa" href="{{ route('sua_hs',['id'=>$dky_bus_hs->hs_id]) }}"><i class="fa-solid fa-edit"></i></a>
                   </td>
                 </tr>
                 @endforeach

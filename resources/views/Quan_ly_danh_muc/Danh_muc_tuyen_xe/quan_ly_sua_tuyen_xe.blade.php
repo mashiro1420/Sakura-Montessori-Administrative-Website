@@ -36,6 +36,10 @@
                 <label for="ten_tuyen_xe">Tên tuyến xe</label>
                 <input type="text" name="ten_tuyen_xe" class="form-control" value="{{$tuyen_xe->ten_tuyen_xe}}" required>
               </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="dinh_nghia">Định nghĩa</label>
+                <textarea type="text" name="dinh_nghia" class="form-control" required>{{$tuyen_xe->dinh_nghia}}</textarea>
+              </div>
             </div>
             <div class="action-buttons">
               <div>

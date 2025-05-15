@@ -36,7 +36,7 @@ class TaoTKB extends Command
         foreach($phan_lops as $phan_lop){
             $tkb = new ThoiKhoaBieuModel();
             $tkb->id_phan_lop = $phan_lop->id;
-            $tkb->id_tuan = $tuan->id;
+            $tkb->id_tuan = $tuan->id+1;
             $tkb->save();
         }
     }

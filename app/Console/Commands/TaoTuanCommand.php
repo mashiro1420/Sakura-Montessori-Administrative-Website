@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\KhoaHocModel;
 use App\Models\TuanModel;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -46,5 +47,8 @@ class TaoTuanCommand extends Command
 			$tu_ngay->addWeek();
 		}
 		TuanModel::insertOrIgnore($tuans);
+        $khoa_hoc = new KhoaHocModel();
+        $khoa_hoc->ten_khoa_hoc = $nam;
+        $khoa_hoc->save();
     }
 }

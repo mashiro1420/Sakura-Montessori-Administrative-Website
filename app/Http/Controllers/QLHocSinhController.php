@@ -7,9 +7,12 @@ use App\Imports\HocSinhImport;
 use App\Http\Controllers\Controller;
 use App\Models\GiayToModel;
 use App\Models\HocSinhModel;
+use App\Models\KhoaHocModel;
 use App\Models\MonHocModel;
 use App\Models\HocPhiModel;
 use App\Models\TaiKhoanModel;
+use App\Models\TTDiXeModel;
+use App\Models\TuyenXeModel;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -18,7 +21,8 @@ class QLHocSinhController extends Controller
     public function viewQuanLy(Request $request)
     {
         $data = [];
-        $query = HocSinhModel::query()->select ('*');
+        $query = HocSinhModel::query()->select ('ql_hocsinh.*','dm_khoahoc.ten_khoa_hoc')
+        ->leftJoin('dm_khoahoc','dm_khoahoc.id','=','ql_hocsinh.id_khoa_hoc');
         if ($request->has('tk_ho_ten') && !empty($request->tk_ho_ten)){
             $query->where('ho_ten','like','%'.$request->tk_ho_ten.'%');
             $data['tk_ho_ten'] = $request->tk_ho_ten;
@@ -44,27 +48,47 @@ class QLHocSinhController extends Controller
             $query->where('trang_thai',$request->tk_trang_thai);
             $data['tk_trang_thai'] = $request->tk_trang_thai==0?"active":"inactive";
         }
+        if ($request->has('tk_khoa_hoc') && $request->tk_khoa_hoc!=""&& $request->tk_khoa_hoc!="all"){
+            $query->where('id_khoa_hoc',$request->tk_khoa_hoc);
+            $data['tk_khoa_hoc'] = $request->tk_khoa_hoc;
+        }
+        elseif($request->has('tk_khoa_hoc') && $request->tk_khoa_hoc==""){
+            $khoa_hoc_hien_tai = KhoaHocModel::where('ten_khoa_hoc',date('Y'))->first();
+            $query->where('id_khoa_hoc',$khoa_hoc_hien_tai->id);
+        }
         $data['hoc_sinhs'] = $query->orderBy('id')->get();
+        $data['khoa_hocs'] = KhoaHocModel::all();
         return view('Quan_ly_hoc_sinh.quan_ly_hoc_sinh', $data);
     }
     public function viewChiTiet(Request $request)
     {
         $data = [];
         $data['nang_khieu'] = MonHocModel::where('nang_khieu',1)->get();
-        $data['hoc_sinh'] = HocSinhModel::find($request->id);
+        $data['hoc_sinh'] = HocSinhModel::select ('ql_hocsinh.*','dm_khoahoc.ten_khoa_hoc','tt_hsdixe.*','ql_hocsinh.id as hs_id')
+            ->leftJoin('dm_khoahoc','dm_khoahoc.id','=','ql_hocsinh.id_khoa_hoc')
+            ->leftJoin('tt_hsdixe','tt_hsdixe.id_hoc_sinh','=','ql_hocsinh.id')
+            ->leftJoin('dm_tuyenxe','dm_tuyenxe.id','=','tt_hsdixe.id_tuyen_xe')
+            ->find($request->id);
         return view('Quan_ly_hoc_sinh.xem_chi_tiet_hoc_sinh', $data);
     }
     public function viewThem(Request $request)
     {
         $data = [];
         $data['nang_khieu'] = MonHocModel::where('nang_khieu',1)->get();
+        $data['khoa_hocs'] = KhoaHocModel::all();
         return view('Quan_ly_hoc_sinh.them_hoc_sinh', $data);
     }
     public function viewSua(Request $request)
     {
         $data = [];
         $data['nang_khieu'] = MonHocModel::where('nang_khieu',1)->get();
-        $data['hoc_sinh'] = HocSinhModel::find($request->id);
+        $data['khoa_hocs'] = KhoaHocModel::all();
+        $data['hoc_sinh'] = HocSinhModel::select ('ql_hocsinh.*','dm_khoahoc.ten_khoa_hoc','tt_hsdixe.*','ql_hocsinh.id as hs_id')
+        ->leftJoin('dm_khoahoc','dm_khoahoc.id','=','ql_hocsinh.id_khoa_hoc')
+        ->leftJoin('tt_hsdixe','tt_hsdixe.id_hoc_sinh','=','ql_hocsinh.id')
+        ->leftJoin('dm_tuyenxe','dm_tuyenxe.id','=','tt_hsdixe.id_tuyen_xe')
+        ->find($request->id);
+        $data['tuyen_xes'] = TuyenXeModel::all();
         return view('Quan_ly_hoc_sinh.sua_hoc_sinh', $data);
     }
 //-------------------------------------------------
@@ -103,8 +127,6 @@ class QLHocSinhController extends Controller
         $hoc_sinh->quoc_tich_bo = $request->quoc_tich_bo;
         $hoc_sinh->thuong_tru = $request->thuong_tru;
         $hoc_sinh->dia_chi = $request->dia_chi;
-        $hoc_sinh->nguoi_dua_don = $request->nguoi_dua_don;
-        $hoc_sinh->lien_he_khan = $request->lien_he_khan;
         $hoc_sinh->loai_hoc_phi = $request->loai_hoc_phi;
         $tai_khoan = new TaiKhoanModel();
         $tai_khoan->tai_khoan = $ma_hs;
@@ -118,6 +140,7 @@ class QLHocSinhController extends Controller
     public function xlSua(Request $request)
     {
         $hoc_sinh = HocSinhModel::find($request->id);
+        $di_xe = TTDiXeModel::where('id_hoc_sinh',$request->id)->first();
         $hoc_sinh->ho_ten = $request->ho_ten;
         $hoc_sinh->ngay_nhap_hoc = $request->ngay_nhap_hoc;
         $hoc_sinh->ngay_thoi_hoc = $request->ngay_thoi_hoc;
@@ -146,9 +169,18 @@ class QLHocSinhController extends Controller
         $hoc_sinh->quoc_tich_bo = $request->quoc_tich_bo;
         $hoc_sinh->thuong_tru = $request->thuong_tru;
         $hoc_sinh->dia_chi = $request->dia_chi;
-        $hoc_sinh->nguoi_dua_don = $request->nguoi_dua_don;
-        $hoc_sinh->lien_he_khan = $request->lien_he_khan;
         $hoc_sinh->loai_hoc_phi = $request->loai_hoc_phi;
+        if(!empty($di_xe)){
+            if($request->tuyen_xe=='huy') $di_xe->delete();
+            else{
+                $di_xe->id_tuyen_xe = $request->tuyen_xe;
+                $di_xe->diem_don = $request->diem_don;
+                $di_xe->so_km = $request->so_km;
+                $di_xe->nguoi_dua_don = $request->nguoi_dua_don;
+                $di_xe->lien_he_khan = $request->lien_he_khan;
+                $di_xe->save();
+            }
+        }
         $hoc_sinh->save();
         return redirect()->route('ql_hs');
     }

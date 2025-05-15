@@ -24,49 +24,58 @@
           <div class="page-header">
             <h2><i class="fa-solid fa-chalkboard-user"></i> Quản lý phân lớp</h2>
           </div>
-          <form class="search-container" action="{{url('ql_hoc_sinh')}}" method="get">
-            @csrf
+          <div class="search-container">
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
-                <label for="gv_cn_search">Giáo viên chủ nhiệm</label>
-                <input type="text" class="form-control" name="gv_cn" value="" readonly>
-              </div>
-            </div>
-            <div class="filter-row">
-              <div class="search-item d-inline-block w-25">
-                <label for="lop_search">Lớp</label>
-                <input type="text" class="form-control" name="lop" value="" readonly>
+                <label for="gv_cn">Giáo viên chủ nhiệm</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ho_ten_cn }}" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="khoi_search">Khối</label>
-                <input type="text" class="form-control" name="khoi" value="" readonly>
+                <label for="gv_viet">Giáo viên Việt</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ho_ten_vn }}" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="phong_hoc_search">Phòng học </label>
-                <input type="text" class="form-control" name="phong_hoc" value="" readonly>
-              </div>
-            </div>
-            <div class="filter-row">
-              <div class="search-item d-inline-block w-25">
-                <label for="he_dao_tao_search">Hệ đào tạo </label>
-                <input type="text" class="form-control" name="he_dao_tao" value="" readonly>
+                <label for="gv_nuoc_ngoai">Giáo viên nước ngoài</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ho_ten_nn }}" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="khoa_hoc_search">Khóa học</label>
-                <input type="text" class="form-control" name="khoa_hoc" value="">
+                <label for="lop">Lớp</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ten_lop }}" readonly>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="khoi">Khối</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ten_khoi }}" readonly>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="phong_hoc">Phòng học</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ten_phong_hoc }}" readonly>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="he_dao_tao">Hệ đào tạo</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ten_he_dao_tao }}" readonly>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="khoa_hoc">Khóa học</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ten_khoa_hoc }}" readonly>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="ky">Kỳ</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ten_ky }}" readonly>
               </div>
             </div>
             <div class="action-buttons">
+              <form action="{{ url('xl_diem_danh') }}" method="post">
+                @csrf
               <div>
-                <button class="btn btn-primary">
-                  <i class="fa-solid fa-search me-1"></i> Tìm kiếm
+                <button class="btn btn-primary" type="submit">
+                  <i class="fa-solid fa-search me-1"></i> Nộp điểm danh
                 </button>
                 <button type="reset" id="reset-btn" class="btn btn-outline-secondary ms-2">
                   <i class="fa-solid fa-rotate me-1"></i> Làm mới
                 </button>
               </div>
               <div>
-                <a class="btn btn-primary" href="{{route('ql_hoc_sinh')}}">
+                <a class="btn btn-primary" href="#">
                   <i class="fa-solid fa-arrow-left me-1"></i> Quay lại
                 </a>
                 <button class="btn btn-outline-secondary ms-2">
@@ -81,31 +90,37 @@
                 </button>
               </div>
             </div>
-          </form>
+          </div>
           <!-- Table Section -->
           <div class="data-container">
             <input type="text" hidden>
+                  <!-- khi check box trên bảng thì cập nhật input hidden, cho id học sinh vào, cách nhau dấu ',' không cách
+                  vd: SB123,SB466,SB755 
+                  -->
             <table class="table table-bordered">
               <thead>
                 <tr>
                   <th>ID</th>
                   <th>Học sinh</th>
+                  <th>Trạng thái</th>
                   <th>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($hoc_sinhs as $hoc_sinh)
                 <tr>
-                  <td>{{$hoc_sinh->id}}</td>
+                  <td>{{$hoc_sinh->hoc_sinh_id}}</td>
                   <td>{{$hoc_sinh->ho_ten}}</td>
+                  <td>{{$hoc_sinh->trang_thai==1?"Có mặt":"Vắng mặt"}}</td>
                   <td class="action-column">
-                    <input type="checkbox" class="form-control">
+                    <input type="checkbox" class="" name="check">
                   </td>
                 </tr>
                 @endforeach
               </tbody>
             </table>
           </div>
+          </form>
           <!-- Pagination -->
           <div class="pagination-container">
             <nav>

@@ -7,6 +7,7 @@ use App\Models\BangGiaModel;
 use App\Models\ChucVuModel;
 use App\Models\DichVuModel;
 use App\Models\DiemDanhModel;
+use App\Models\GiayToModel;
 use App\Models\HocSinhModel;
 use App\Models\LoTrinhXeModel;
 use App\Models\NhanVienModel;
@@ -161,24 +162,24 @@ public function xlSuaGia(Request $request)
         $data['lai_xes'] = NhanVienModel::where('id_chuc_vu', $lai_xe->id )->get();
         $data['monitors'] = NhanVienModel::where('id_chuc_vu', $monitor->id)->get();
         $data['tuyen_xes'] = TuyenXeModel::all();
-        $data['tuyen_xes'] = NhanVienModel::where('id_chuc_vu', $monitor->id)->get();
         $data['lo_trinh_xe'] = LoTrinhXeModel::find($request->id);
         return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.sua_lo_trinh_xe', $data);
     }
     public function viewDiemDanhBus (Request $request)
     {
         $data = [];
-        $monitor = ChucVuModel::where('ten_chuc_vu','Nhân viên Monitor')->first();
-        $lai_xe = ChucVuModel::where('ten_chuc_vu','Lái xe')->first();
-        $data['lai_xes'] = NhanVienModel::where('id_chuc_vu', $lai_xe->id )->get();
-        $data['monitors'] = NhanVienModel::where('id_chuc_vu', $monitor->id)->get();
-        $query = TTDiXeModel::query()->select('ql_hocsinh.*')
+        $data['lo_trinh'] = LoTrinhXeModel::select('ql_lotrinhxe.*','dm_tuyenxe.ten_tuyen_xe','lai_xe.ho_ten as ho_ten_lai_xe','monitor.ho_ten as ho_ten_monitor')
+        ->leftjoin('ql_nhanvien as lai_xe','lai_xe.id','=','ql_lotrinhxe.id_lai_xe')
+        ->leftjoin('ql_nhanvien as monitor','monitor.id','=','ql_lotrinhxe.id_monitor')
+        ->leftJoin('dm_tuyenxe','dm_tuyenxe.id','=','ql_lotrinhxe.id_tuyen_xe')
+        ->find( $request->id);
+        $query = TTDiXeModel::query()->select('ql_hocsinh.*','dm_tuyenxe.ten_tuyen_xe')
             ->leftJoin('ql_hocsinh','tt_hsdixe.id_hoc_sinh','=','ql_hocsinh.id')
             ->leftJoin('ql_lotrinhxe','ql_lotrinhxe.id_tuyen_xe','=','tt_hsdixe.id_tuyen_xe')
             ->leftJoin('dm_tuyenxe','ql_lotrinhxe.id_tuyen_xe','=','dm_tuyenxe.id')
-            ->where('id_phan_lop', $request->id);
+            ->where('ql_lotrinhxe.id', $request->id);
         $data['hoc_sinhs'] = $query->orderBy('id_hoc_sinh','ASC')->get();
-        dd($data['hoc_sinhs']);
+        // dd($data['hoc_sinhs'] );
         return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.diem_danh_xe_bus', $data);
     }
     public function xlThemLoTrinh(Request $request)
@@ -197,22 +198,52 @@ public function xlSuaGia(Request $request)
     public function viewQuanLyDangKyBusHS(Request $request)
     {
         $data = [];
-        $data['dky_bus_hss'] = HocSinhModel::all();
+        $query = TTDiXeModel::select('tt_hsdixe.*','ql_hocsinh.id as hs_id','ql_hocsinh.ho_ten','dm_tuyenxe.ten_tuyen_xe')
+        ->leftJoin('ql_hocsinh','ql_hocsinh.id','=','tt_hsdixe.id_hoc_sinh')
+        ->leftJoin('dm_tuyenxe','dm_tuyenxe.id','=','tt_hsdixe.id_tuyen_xe');
+        if($request->filled('ho_ten_search')){
+            $query->where('ho_ten','like','%'.$request->ho_ten_search.'%')
+            ->orWhere('ql_hocsinh.id','like','%'.$request->ho_ten_search.'%');
+            $data['ho_ten_search'] = $request->ho_ten_search;
+        }
+        if($request->filled('tuyen_xe_search')){
+            $query->where('id_tuyen_xe',$request->tuyen_xe_search);
+            $data['tuyen_xe_search'] = $request->tuyen_xe_search;
+        }
+        $data['dky_bus_hss'] = $query->orderBy('id_tuyen_xe','asc')->get();
+        $data['tuyen_xes'] = TuyenXeModel::all();
         return view('Quan_ly_dich_vu.Dang_ky_xe_bus.ql_dang_ky_xe_bus_hs', $data);
     }
     public function viewDangKyBusHS(Request $request)
     {
         $data = [];
         $data['hoc_sinhs'] = HocSinhModel::all();
+        $data['tuyen_xes'] = TuyenXeModel::all();
         return view('Quan_ly_dich_vu.Dang_ky_xe_bus.dang_ky_xe_bus', $data);
     }
-    public function viewSuaBusHS(Request $request)
+    public function xlDKBusHS(Request $request)
     {
-        $data = [];
-        $data['hoc_sinhs'] = HocSinhModel::all();
-        return view('Quan_ly_dich_vu.Dang_ky_xe_bus.sua_dang_ky_bus', $data);
+        $di_xe = new TTDiXeModel();
+        $giay_to = new GiayToModel();
+        $giay_to->id_hoc_sinh = $request->hoc_sinh;
+        $giay_to->ten_giay_to = 'Đăng ký: Dịch vụ xe bus - '.date('Y-m-d');
+        $di_xe->id_hoc_sinh = $request->hoc_sinh;
+        $di_xe->id_tuyen_xe = $request->tuyen_xe;
+        $di_xe->diem_don = $request->diem_don;
+        $di_xe->so_km = $request->so_km."KM";
+        $di_xe->nguoi_dua_don = $request->nguoi_dua_don;
+        $di_xe->lien_he_khan = $request->lien_he_khan;
+        $di_xe->save();
+        if ($request->hasFile('file')) {
+            $file = $request->file;
+            $filename = md5(time().rand(1,100) . $request->file->getClientOriginalName()) . '.' . $request->file->getClientOriginalExtension();
+            $file->move('Giay_to/'.$request->id.'', $filename);
+            $giay_to->link_giay_to = $filename;
+        }
+        $giay_to->save();
+        return redirect()->route('ql_dk_bus_hs')->with('bao_loi','Lưu thành công');
     }
-
+    
     //Thuc don
     public function viewQuanLyThucDon(Request $request){
         $data=[];

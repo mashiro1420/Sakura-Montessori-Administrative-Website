@@ -44,14 +44,15 @@
               </form>
             </div>
 
-          <form class="search-container" action="" method="post">
+          <form class="search-container" action="{{ url('xl_phan_lop') }}" method="post">
           @csrf
             <div class="filter-row">
-              <div class="search-item d-inline-block w-25">
-                    <select name="hoc_sinh[]" class="form-select choices-multiple" multiple>
+              <input type="text" name="id" value="{{ $phan_lop->id }}" hidden>
+              <div class="search-item d-inline-block w-50">
+                    <select name="hoc_sinhs[]" class="form-select choices-multiple" multiple>
                         @foreach($hoc_sinhs as $hs)
                             <option value="{{ $hs->id }}">
-                                {{ $hs->ho_ten }}
+                            {{ $hs->id }} - {{ $hs->ho_ten }}
                             </option>
                         @endforeach
                     </select>

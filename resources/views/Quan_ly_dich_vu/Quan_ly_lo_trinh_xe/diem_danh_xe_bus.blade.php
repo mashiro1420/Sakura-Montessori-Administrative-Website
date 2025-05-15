@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản lý lộ trình xe</title>
+  <title>Điểm danh xe bus</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -22,43 +22,35 @@
         <div class="container-fluid">
           <!-- Page Header -->
           <div class="page-header">
-            <h2><i class="fa-solid fa-chalkboard-user"></i> Quản lý lộ trình xe</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i> Điểm danh xe bus</h2>
           </div>
 
           <!-- Search and Filter Section -->
           <!-- < class="search-container"> -->
-          <form class="search-container" action="{{url('ql_lt')}}" method="get">
+          <form class="search-container" action="" method="get">
             @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
                 <label for="tuyen_xe">Tuyến xe</label>
-                <input type="text" name="tuyen_xe" class="form-control" value="">
+                <input type="text" name="tuyen_xe" class="form-control" value="{{ $lo_trinh->ten_tuyen_xe }}" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="lai_xe">Lái xe</label>
-                <input type="text" name="lai_xe" class="form-control" value="">
+                <input type="text" name="lai_xe" class="form-control" value="{{ $lo_trinh->ho_ten_lai_xe }}" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="monitor">Giám sát viên</label>
-                <input type="text" name="monitor" class="form-control" value="">
+                <input type="text" name="monitor" class="form-control" value="{{ $lo_trinh->ho_ten_monitor }}" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ngay">Ngày</label>
-                <input type="date" monitor="ngay" class="form-control" value="" readonly>
+                <input type="date" name="ngay" class="form-control" value="{{ $lo_trinh->ngay }}" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="bien_so_xe">Biển số xe</label>
-                <input type="text" name="bien_so_xe" class="form-control" value="" readonly>
+                <input type="text" name="bien_so_xe" class="form-control" value="{{ $lo_trinh->bien_so_xe }}" readonly>
               </div>
             <div class="action-buttons">
-              <div>
-                <button class="btn btn-primary">
-                  <i class="fa-solid fa-search me-1"></i> Tìm kiếm
-                </button>
-                <button type="reset" id="reset-btn" class="btn btn-outline-secondary ms-2">
-                  <i class="fa-solid fa-rotate me-1"></i> Làm mới
-                </button>
-              </div>
               <div>
                 <a class="btn btn-primary" href="{{route('ql_lt')}}">
                   <i class="fa-solid fa-arrow-left me-1"></i> Quay lại
@@ -83,18 +75,22 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th>ID</th>
                   <th>Học sinh</th>
-                  <th>Lớp</th>
-                  <th>Thao tác</th>
+                  <th>Điểm đón</th>
+                  <th>Số KM</th>
+                  <th>Người đưa đón</th>
+                  <th>Số liên hệ khẩn</th>
+                  <th>Điểm danh</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($hoc_sinhs as $hoc_sinh)
                 <tr>
-                  <td>{{$hoc_sinh->id}}</td>
-                  <td>{{$hoc_sinh->ho_ten}}</td>
-                  <td>{{$hoc_sinh->phan_lop}}</td>
+                  <td>{{$hoc_sinh->id.' - '.$hoc_sinh->ho_ten}}</td>
+                  <td>{{$hoc_sinh->diem_don}}</td>
+                  <td>{{$hoc_sinh->so_km}}</td>
+                  <td>{{$hoc_sinh->nguoi_dua_don}}</td>
+                  <td>{{$hoc_sinh->lien_he_khan}}</td>
                   <td class="action-column">
                     <input type="checkbox" class="form-control">
                   </td>

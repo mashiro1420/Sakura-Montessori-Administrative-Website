@@ -57,6 +57,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Tên tuyến xe</th>
+                  <th>Định nghĩa</th>
                   <th>Thao tác</th>
                 </tr>
               </thead>
@@ -65,6 +66,7 @@
                 <tr>
                   <td>{{$tuyen_xe->id}}</td>
                   <td>{{$tuyen_xe->ten_tuyen_xe}}</td>
+                  <td>{{$tuyen_xe->dinh_nghia}}</td>
                   <td class="action-column">
                     <a class="action-button" title="Chỉnh sửa" href="{{route('ql_sua_tuyen_xe',['id' => $tuyen_xe->id])}}"><i class="fa-solid fa-edit"></i></a>
                   </td>
