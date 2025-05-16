@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bảng giá dịch vụ</title>
+  <title>Điểm danh xe bus</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -17,12 +17,12 @@
 <div class="container content-container">
   <!-- Page Header -->
   <div class="page-header">
-    <h2 class="page-title">Bảng giá dịch vụ</h2>
-    <p class="text-muted mt-2">Danh sách các dịch vụ và mức giá áp dụng tại trường</p>
+    <h2 class="page-title">Điểm danh xe bus</h2>
+    <p class="text-muted mt-2">Danh sách học sinh trên chuyến xe bus</p>
   </div>
   
   <!-- Search Panel -->
-  <div class="search-panel">
+  {{-- <div class="search-panel">
     <div class="row g-3">
       <div class="col-md-4">
         <label for="search_dich_vu" class="form-label small text-muted">Loại dịch vụ</label>
@@ -55,29 +55,38 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
   
   <!-- Table -->
   <div class="table-container">
+    <input type="hidden" name="ds_id_hoc_sinh" id="ds_id_hoc_sinh">
     <div class="table-responsive">
       <table class="table">
         <thead>
           <tr>
-            <th width="5%">ID</th>
-            <th width="20%">Tên loại dịch vụ</th>
-            <th width="25%">Tên dịch vụ</th>
-            <th width="15%">Giá</th>
-            <th width="25%">Định nghĩa</th>
+            <th>ID</th>
+            <th>Học sinh</th>
+            <th>Điểm đón</th>
+            <th>Số KM</th>
+            <th>Người đưa đón</th>
+            <th>Số liên hệ khẩn</th>
+            <th>Điểm danh</th>
           </tr>
         </thead>
         <tbody class="service-table-body">
+          @foreach($hoc_sinhs as $hoc_sinh)
           <tr>
-            <td>1</td>
-            <td>Năng khiếu</td>
-            <td>Học năng khiếu</td>
-            <td>132,412 VNĐ</td>
-            <td>Lớp học phát triển kỹ năng đặc biệt</td>
+            <td>{{$hoc_sinh->id}}</td>
+            <td>{{$hoc_sinh->ho_ten}}</td>
+            <td>{{$hoc_sinh->diem_don}}</td>
+            <td>{{$hoc_sinh->so_km}}</td>
+            <td>{{$hoc_sinh->nguoi_dua_don}}</td>
+            <td>{{$hoc_sinh->lien_he_khan}}</td>
+            <td class="action-column">
+              <input type="checkbox" class="hoc-sinh-checkbox" data-id="{{ $hoc_sinh->id }}" readonly>
+            </td>
           </tr>
+          @endforeach
         </tbody>
       </table>
     </div>
@@ -161,5 +170,25 @@
     createPagination(1);
     displayPageData(1);
   </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkboxes = document.querySelectorAll('.hoc-sinh-checkbox');
+        const hiddenInput = document.getElementById('ds_id_hoc_sinh');
+        let selectedIds = [];
 
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const id = this.getAttribute('data-id');
+                if (this.checked) {
+                    if (!selectedIds.includes(id)) {
+                        selectedIds.push(id);
+                    }
+                } else {
+                    selectedIds = selectedIds.filter(item => item !== id);
+                }
+                hiddenInput.value = selectedIds.join(',');
+            });
+        });
+    });
+  </script>
 </html>

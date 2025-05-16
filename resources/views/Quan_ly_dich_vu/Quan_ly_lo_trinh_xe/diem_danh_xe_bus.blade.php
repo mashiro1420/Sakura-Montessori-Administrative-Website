@@ -84,7 +84,6 @@
                   <td>{{$hoc_sinh->lien_he_khan}}</td>
                   <td class="action-column">
                     <input type="checkbox" class="hoc-sinh-checkbox" data-id="{{ $hoc_sinh->id }}">
-
                   </td>
                 </tr>
                 @endforeach

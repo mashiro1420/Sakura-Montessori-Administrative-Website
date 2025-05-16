@@ -180,4 +180,6 @@ Route::middleware(['session.check', 'quyen.check:phu_huynh'])->group(function ()
     Route::get('ph_bg', [DichVuController::class, 'viewPhuHuynhBangGia'])->name('ph_bg');
     Route::get('ph_tx', [DichVuController::class, 'viewPhuHuynhTuyenXe'])->name('ph_tx');
     Route::get('ph_td', [DichVuController::class, 'viewPhuHuynhThucDon'])->name('ph_td');
+    Route::get('ph_diem_danh_xe_bus', [DichVuController::class, 'viewPhuHuynhDiemDanhXeBus'])->name('ph_ph_diem_danh_xe_bus');
+    Route::get('ph_diem_danh_tren_lop', [PhanLopController::class, 'viewPhuHuynhDiemDanhTrenLop'])->name('ph_diem_danh_tren_lop');
 });

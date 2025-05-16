@@ -320,4 +320,21 @@ public function xlSuaGia(Request $request)
         $data['thuc_don'] = $menu;
         return view('Phu_huynh_thuc_don.phu_huynh_thuc_don', $data);
     }
+    public function viewPhuHuynhDiemDanhXeBus(Request $request)
+    {
+        $data = [];
+        $data = [];
+        $data['lo_trinh'] = LoTrinhXeModel::select('ql_lotrinhxe.*', 'dm_tuyenxe.ten_tuyen_xe', 'lai_xe.ho_ten as ho_ten_lai_xe', 'monitor.ho_ten as ho_ten_monitor')
+            ->leftjoin('ql_nhanvien as lai_xe', 'lai_xe.id', '=', 'ql_lotrinhxe.id_lai_xe')
+            ->leftjoin('ql_nhanvien as monitor', 'monitor.id', '=', 'ql_lotrinhxe.id_monitor')
+            ->leftJoin('dm_tuyenxe', 'dm_tuyenxe.id', '=', 'ql_lotrinhxe.id_tuyen_xe')
+            ->find($request->id);
+        $query = TTDiXeModel::query()->select('ql_hocsinh.*', 'dm_tuyenxe.ten_tuyen_xe')
+            ->leftJoin('ql_hocsinh', 'tt_hsdixe.id_hoc_sinh', '=', 'ql_hocsinh.id')
+            ->leftJoin('ql_lotrinhxe', 'ql_lotrinhxe.id_tuyen_xe', '=', 'tt_hsdixe.id_tuyen_xe')
+            ->leftJoin('dm_tuyenxe', 'ql_lotrinhxe.id_tuyen_xe', '=', 'dm_tuyenxe.id')
+            ->where('ql_lotrinhxe.id', $request->id);
+        $data['hoc_sinhs'] = $query->orderBy('id_hoc_sinh', 'ASC')->get();
+        return view('Phu_huynh_diem_danh.diem_danh_xe_bus', $data);
+    }
 }

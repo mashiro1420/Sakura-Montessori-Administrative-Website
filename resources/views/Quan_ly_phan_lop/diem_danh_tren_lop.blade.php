@@ -93,10 +93,7 @@
           </div>
           <!-- Table Section -->
           <div class="data-container">
-            <input type="text" hidden>
-                  <!-- khi check box trên bảng thì cập nhật input hidden, cho id học sinh vào, cách nhau dấu ',' không cách
-                  vd: SB123,SB466,SB755 
-                  -->
+            <input type="text" name="ds_id_hoc_sinh" id="ds_id_hoc_sinh">
             <table class="table table-bordered">
               <thead>
                 <tr>
@@ -113,7 +110,7 @@
                   <td>{{$hoc_sinh->ho_ten}}</td>
                   <td>{{$hoc_sinh->trang_thai==1?"Có mặt":"Vắng mặt"}}</td>
                   <td class="action-column">
-                    <input type="checkbox" class="" name="check">
+                    <input type="checkbox" class="hoc-sinh-checkbox" data-id="{{ $hoc_sinh->id }}">
                   </td>
                 </tr>
                 @endforeach
@@ -256,6 +253,27 @@
       document.getElementById('import-form').submit();  
     });
   </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          const checkboxes = document.querySelectorAll('.hoc-sinh-checkbox');
+          const hiddenInput = document.getElementById('ds_id_hoc_sinh');
+          let selectedIds = [];
+  
+          checkboxes.forEach(checkbox => {
+              checkbox.addEventListener('change', function () {
+                  const id = this.getAttribute('data-id');
+                  if (this.checked) {
+                      if (!selectedIds.includes(id)) {
+                          selectedIds.push(id);
+                      }
+                  } else {
+                      selectedIds = selectedIds.filter(item => item !== id);
+                  }
+                  hiddenInput.value = selectedIds.join(',');
+              });
+          });
+      });
+    </script>
 @include('components/bao_loi')
 </body>
 </html>
