@@ -14,17 +14,27 @@ class GiangDayController extends Controller
 {
     public function viewQuanLyTKB(Request $request){
         $data = [];
-        $data['tkbs'] = ThoiKhoaBieuModel::orderBy('id_tuan', 'desc')->get();
+        $data['tkbs'] = ThoiKhoaBieuModel::select('*','ql_thoikhoabieu.id as id')
+        ->leftJoin('tt_tuan', 'ql_thoikhoabieu.id_tuan', '=', 'tt_tuan.id')
+        ->leftJoin('ql_phanlop', 'ql_thoikhoabieu.id_phan_lop', '=', 'ql_phanlop.id')
+        ->leftJoin('tt_ky','ql_phanlop.id_ky','=','tt_ky.id')
+        ->leftJoin('dm_lop','ql_phanlop.id_lop','=','dm_lop.id')
+        ->orderBy('id_tuan', 'desc')->orderBy('id_lop')->get();
+        // dd($data['tkbs']);
         $data['tuans'] = TuanModel::all();
         $data['phan_lops'] = PhanLopModel::all();
         return view("Quan_ly_tkb.quan_ly_tkb",$data);
     }
-    public function viewThemTKB(Request $request){
+    public function viewChinhTKB(Request $request){
         $data = [];
-        // $data = ['tkbs'] = ThoiKhoaBieuModel::all();
-        $data['tuans'] = TuanModel::all();
+        $data['tkb'] = ThoiKhoaBieuModel::select('*','ql_thoikhoabieu.id as id','tt_tuan.tu_ngay as tkb_tu_ngay')
+        ->leftJoin('ql_phanlop', 'ql_thoikhoabieu.id_phan_lop', '=', 'ql_phanlop.id')
+        ->leftJoin('tt_tuan', 'ql_thoikhoabieu.id_tuan', '=', 'tt_tuan.id')
+        ->leftJoin('dm_lop', 'ql_phanlop.id_lop', '=', 'dm_lop.id')
+        ->leftJoin('tt_ky','ql_phanlop.id_ky','=','tt_ky.id')
+        ->find($request->id);
+        $data['tkb_ngays'] = TKBNgayModel::where('id_thoi_khoa_bieu',$request->id)->get();
         $data['mon_hocs'] = MonHocModel::all();
-        $data['phan_lops'] = PhanLopModel::all();
         return view("Quan_ly_tkb.them_tkb",$data);
     }
     public function viewXemTKB(Request $request){
@@ -46,11 +56,9 @@ class GiangDayController extends Controller
     }
     public function xlTKB(Request $request)
     {
-        if($request->has("sua")){
-            $tkb_cu = TKBNgayModel::where('id_thoi_khoa_bieu',$request->id)->get();
-            foreach($tkb_cu as $tkb){
-                $tkb->delete();
-            }
+        $tkb_cus = TKBNgayModel::where('id_thoi_khoa_bieu',$request->id)->get();
+        foreach($tkb_cus as $tkb_cu){
+            $tkb_cu->delete();
         }
         for ($i = 2; $i <= 6;$i++){
             $tkb_ngay = new TKBNgayModel();
@@ -127,6 +135,7 @@ class GiangDayController extends Controller
             }
             $tkb_ngay->save();
         }
+         return redirect()->route('ql_tkb')->with('bao_loi','Lưu thành công');
     }
     public function viewPhuHuynhTKB(Request $request)
     {

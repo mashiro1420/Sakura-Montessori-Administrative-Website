@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thêm thời khóa biểu</title>
+  <title>Chỉnh thời khóa biểu</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -50,6 +50,10 @@
     
     .timetable th.day-header {
       background-color: #3b7ddd;
+      color: white;
+    }
+    .timetable th.date-header {
+      background-color: #5277ad;
       color: white;
     }
     
@@ -141,7 +145,7 @@
         <div class="container-fluid">
           <!-- Page Header -->
           <div class="page-header">
-            <h2><i class="fa-solid fa-chalkboard-user"></i> Thêm thời khóa biểu</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i> Chỉnh thời khóa biểu</h2>
           </div>
           
           <!-- Import Excel Section -->
@@ -159,33 +163,35 @@
           </div> --}}
           
           <!-- Timetable Form -->
-          <form action="" method="post">
+          <form action="{{url('xl_tao_tkb')}}" method="post">
             @csrf
             
             <!-- Form Header with Class and Week Selection -->
             <div class="form-header">
-              <div class="col-md-4">
-                <label for="phan_lop" class="form-label fw-bold">Lớp:</label>
-                <select id="phan_lop" name="phan_lop" class="form-select" required>
-                  <option value="" disabled selected>Chọn lớp</option>
-                  @foreach($phan_lops as $phan_lop)
-                    <option value="{{$phan_lop->id}}">{{$phan_lop->id}}</option>
-                  @endforeach
-                </select>
+              <div class="col-md-3">
+                <input type="text" class="form-control" id="id" name="id" value="{{ $tkb->id }}" hidden>
+                <label for="lop" class="form-label fw-bold">Lớp:</label>
+                <input type="text" class="form-control" id="lop" name="lop" value="{{ $tkb->ten_lop }}" readonly>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-1">
                 <label for="tuan" class="form-label fw-bold">Tuần:</label>
-                <select id="tuan" name="tuan" class="form-select" required>
-                  <option value="" disabled selected>Chọn tuần</option>
-                  @foreach($tuans as $tuan)
-                    <option value="{{$tuan->id}}">{{$tuan->ten_tuan}}</option>
-                  @endforeach
-                </select>
+                <input type="text" class="form-control" id="tuan" name="tuan" value="{{ $tkb->tuan }}" readonly>
+              </div>
+              <div class="col-md-2">
+                <label for="ky" class="form-label fw-bold">Kỳ:</label>
+                <input type="text" class="form-control" id="ky" name="ky" value="{{ $tkb->ten_ky }}" readonly>
               </div>
             </div>
             
             <!-- Timetable -->
             <div class="timetable-container">
+              @php
+                use Carbon\Carbon;
+                $ngay_hoc = [];
+                for ($i = 0; $i <= 5; $i++) {
+                  $ngay_hoc[] = Carbon::parse($tkb->tkb_tu_ngay)->addDays($i)->toDateString();
+                }
+              @endphp
               <table class="timetable">
                 <thead>
                   <tr>
@@ -196,48 +202,56 @@
                     <th class="day-header">Thứ 5</th>
                     <th class="day-header">Thứ 6</th>
                   </tr>
+                  <tr>
+                    <th style="width: 80px;">Ngày</th>
+                    <th class="date-header">{{$ngay_hoc[0]}}</th>
+                    <th class="date-header">{{$ngay_hoc[1]}}</th>
+                    <th class="date-header">{{$ngay_hoc[2]}}</th>
+                    <th class="date-header">{{$ngay_hoc[3]}}</th>
+                    <th class="date-header">{{$ngay_hoc[4]}}</th>
+                  </tr>
                 </thead>
                 <tbody>
                   @for ($i = 1; $i <= 11; $i++)
                     <tr>
                       <td class="period-label">Tiết {{$i}}</td>
                       <td>
-                        <select name="tiet{{$i}}" id="t2{{$i}}" class="lesson-input form-control select2">
+                        <select name="tiet{{$i}}t2" id="t2{{$i}}" class="lesson-input form-control select2">
                           <option value=""></option>
                           @foreach($mon_hocs as $mon_hoc)
-                            <option value="{{$mon_hoc->id}}">{{$mon_hoc->ten_mon_hoc}}</option>
+                            <option value="{{$mon_hoc->id}}" {{ $tkb_ngays[0]['tiet'.$i]==$mon_hoc->id?"selected":"" }}>{{$mon_hoc->ten_mon_hoc}}</option>
                           @endforeach
                         </select>
                       </td>
                       <td>
-                        <select name="tiet{{$i}}" id="t3{{$i}}" class="lesson-input form-control select2">
+                        <select name="tiet{{$i}}t3" id="t3{{$i}}" class="lesson-input form-control select2">
                           <option value=""></option>
                           @foreach($mon_hocs as $mon_hoc)
-                            <option value="{{$mon_hoc->id}}">{{$mon_hoc->ten_mon_hoc}}</option>
+                            <option value="{{$mon_hoc->id}}" {{ $tkb_ngays[1]['tiet'.$i]==$mon_hoc->id?"selected":"" }}>{{$mon_hoc->ten_mon_hoc}}</option>
                           @endforeach
                         </select>
                       </td>
                       <td>
-                        <select name="tiet{{$i}}" id="t4{{$i}}" class="lesson-input form-control select2">
+                        <select name="tiet{{$i}}t4" id="t4{{$i}}" class="lesson-input form-control select2">
                           <option value=""></option>
                           @foreach($mon_hocs as $mon_hoc)
-                            <option value="{{$mon_hoc->id}}">{{$mon_hoc->ten_mon_hoc}}</option>
+                            <option value="{{$mon_hoc->id}}" {{ $tkb_ngays[2]['tiet'.$i]==$mon_hoc->id?"selected":"" }}>{{$mon_hoc->ten_mon_hoc}}</option>
                           @endforeach
                         </select>
                       </td>
                       <td>
-                        <select name="tiet{{$i}}" id="t5{{$i}}" class="lesson-input form-control select2">
+                        <select name="tiet{{$i}}t5" id="t5{{$i}}" class="lesson-input form-control select2">
                           <option value=""></option>
                           @foreach($mon_hocs as $mon_hoc)
-                            <option value="{{$mon_hoc->id}}">{{$mon_hoc->ten_mon_hoc}}</option>
+                            <option value="{{$mon_hoc->id}}" {{ $tkb_ngays[3]['tiet'.$i]==$mon_hoc->id?"selected":"" }}>{{$mon_hoc->ten_mon_hoc}}</option>
                           @endforeach
                         </select>
                       </td>
                       <td>
-                        <select name="tiet{{$i}}" id="t6{{$i}}" class="lesson-input form-control select2">
+                        <select name="tiet{{$i}}t6" id="t6{{$i}}" class="lesson-input form-control select2">
                           <option value=""></option>
                           @foreach($mon_hocs as $mon_hoc)
-                            <option value="{{$mon_hoc->id}}">{{$mon_hoc->ten_mon_hoc}}</option>
+                            <option value="{{$mon_hoc->id}}" {{ $tkb_ngays[4]['tiet'.$i]==$mon_hoc->id?"selected":"" }}>{{$mon_hoc->ten_mon_hoc}}</option>
                           @endforeach
                         </select>
                       </td>
