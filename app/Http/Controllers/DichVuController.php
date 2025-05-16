@@ -119,29 +119,29 @@ public function xlSuaGia(Request $request)
         ->leftJoin('dm_tuyenxe', 'ql_lotrinhxe.id_tuyen_xe', '=', 'dm_tuyenxe.id')
         ->leftJoin('ql_nhanvien as ql_lai_xe', 'ql_lotrinhxe.id_lai_xe', '=', 'ql_lai_xe.id')
         ->leftJoin('ql_nhanvien as ql_monitor', 'ql_lotrinhxe.id_monitor', '=', 'ql_monitor.id');
-        if ($request->filled('lai_xe')) {
-            $query->where('ql_lotrinhxe.id_lai_xe', $request->lai_xe);
-            $data['lai_xe'] = $request->lai_xe;
+        if ($request->filled('lai_xe_search')) {
+            $query->where('ql_lotrinhxe.id_lai_xe', $request->lai_xe_search);
+            $data['lai_xe_search'] = $request->lai_xe_search;
         }
-        if ($request->filled('monitor')) {
-            $query->where('ql_lotrinhxe.id_monitor', $request->monitor);
-            $data['monitor'] = $request->monitor;
+        if ($request->filled('monitor_search')) {
+            $query->where('ql_lotrinhxe.id_monitor', $request->monitor_search);
+            $data['monitor_search'] = $request->monitor_search;
         }
-        if ($request->filled('tuyen_xe')) {
-            $query->where('ql_lotrinhxe.id_tuyen_xe', $request->tuyen_xe);
-            $data['tuyen_xe'] = $request->tuyen_xe;
+        if ($request->filled('tuyen_xe_search')) {
+            $query->where('ql_lotrinhxe.id_tuyen_xe', $request->tuyen_xe_search);
+            $data['tuyen_xe_search'] = $request->tuyen_xe_search;
         }
-        if ($request->filled('bien_so_xe')) {
-            $query->where('ql_lotrinhxe.bien_so_xe', 'like', '%' . $request->bien_so_xe . '%');
-            $data['bien_so_xe'] = $request->bien_so_xe;
+        if ($request->filled('bien_so_xe_search')) {
+            $query->where('ql_lotrinhxe.bien_so_xe', 'like', '%' . $request->bien_so_xe_search . '%');
+            $data['bien_so_xe_search'] = $request->bien_so_xe_search;
         }
-        if ($request->filled('tu_ngay')) {
-            $query->where('ql_lotrinhxe.ngay', '>=', $request->tu_ngay);
-            $data['tu_ngay'] = $request->tu_ngay;
+        if ($request->filled('tu_ngay_search')) {
+            $query->where('ql_lotrinhxe.ngay', '>=', $request->tu_ngay_search);
+            $data['tu_ngay_search'] = $request->tu_ngay_search;
         }
-        if ($request->filled('den_ngay')) {
-            $query->where('ql_lotrinhxe.ngay', '<=', $request->den_ngay);
-            $data['den_ngay'] = $request->den_ngay;
+        if ($request->filled('den_ngay_search')) {
+            $query->where('ql_lotrinhxe.ngay', '<=', $request->den_ngay_search);
+            $data['den_ngay_search'] = $request->den_ngay_search;
         }
         $data['lo_trinh_xes'] = $query->orderBy('ql_lotrinhxe.id')->get();
         return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.quan_ly_lo_trinh_xe', $data);

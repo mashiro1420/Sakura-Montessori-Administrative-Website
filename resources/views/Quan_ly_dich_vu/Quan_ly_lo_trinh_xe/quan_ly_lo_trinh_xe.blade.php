@@ -31,20 +31,20 @@
             @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
-                <label for="tuyen_xe">Tuyến xe</label>
-                <select name="tuyen_xe" class="form-select">
-                  <option value="">Tất cả lái xe</option>
+                <label for="tuyen_xe_search">Tuyến xe</label>
+                <select name="tuyen_xe_search" class="form-select">
+                  <option value="">Tất cả tuyến xe</option>
                   @foreach($tuyen_xes as $tuyen_xe)
-                    <option value="{{$tuyen_xe->id}}">{{$tuyen_xe->ten_tuyen_xe}}</option>
+                    <option value="{{$tuyen_xe->id}}"{{ !empty($tuyen_xe_search)&&$tuyen_xe_search == $tuyen_xe->id?"selected":""}}>{{$tuyen_xe->ten_tuyen_xe}}</option>
                   @endforeach
                 </select>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="lai_xe">Lái xe</label>
-                <select name="lai_xe" class="form-select">
+                <label for="lai_xe_search">Lái xe</label>
+                <select name="lai_xe_search" class="form-select">
                   <option value="">Tất cả lái xe</option>
                   @foreach($lai_xes as $lai_xe)
-                    <option value="{{$lai_xe->id}}">{{$lai_xe->ho_ten}}</option>
+                    <option value="{{$lai_xe->id}}" {{ !empty($lai_xe_search)&&$lai_xe_search == $lai_xe->id?"selected":""}}>{{$lai_xe->ho_ten}}</option>
                   @endforeach
                 </select>
               </div>
@@ -52,23 +52,23 @@
                 <label for="ngay">Ngày</label>
                 <div class="d-flex">
                   <span style="font-size: 14pt">Từ</span>
-                  <input type="date" name="tu_ngay" class="form-control">
+                  <input type="date" name="tu_ngay_search" class="form-control" value="{{!empty($tu_ngay_search)?$tu_ngay_search:''}}">
                   <span style="font-size: 14pt">đến</span>
-                  <input type="date" name="den_ngay" class="form-control">
+                  <input type="date" name="den_ngay_search" class="form-control" value="{{!empty($den_ngay_search)?$den_ngay_search:''}}">
                 </div>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="monitor">Giám sát viên</label>
-                <select name="monitor" class="form-select">
+                <label for="monitor_search">Giám sát viên</label>
+                <select name="monitor_search" class="form-select">
                   <option value="">Tất cả giám sát viên</option>
                   @foreach($monitors as $monitor)
-                    <option value="{{$monitor->id}}">{{$monitor->ho_ten}}</option>
+                    <option value="{{$monitor->id}}" {{ !empty($monitor_search)&&$monitor_search == $monitor->id?"selected":""}}>{{$monitor->ho_ten}}</option>
                   @endforeach
                 </select>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="bien_so_xe">Biển số xe</label>
-                <input type="text" name="bien_so_xe" class="form-control" placeholder="Tìm kiếm theo biển số xe">
+                <label for="bien_so_xe_search">Biển số xe</label>
+                <input type="text" name="bien_so_xe_search" class="form-control" placeholder="Tìm kiếm theo biển số xe" value="{{!empty($bien_so_xe_search)?$bien_so_xe_search:''}}">
               </div>
             <div class="action-buttons">
               <div>

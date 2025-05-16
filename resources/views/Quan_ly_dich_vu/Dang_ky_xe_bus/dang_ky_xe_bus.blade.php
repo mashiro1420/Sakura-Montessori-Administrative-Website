@@ -25,7 +25,7 @@
           <form class="search-container" action="{{ url('xl_dk_bus') }}" method="post" enctype="multipart/form-data">
           @csrf
             <div class="filter-row">
-              <div class="search-item d-inline-block w-40">
+              <div class="search-item d-inline-block w-50">
                 <label for="hoc_sinh">Học sinh</label required>
                 <select id="hoc_sinh" name = "hoc_sinh" class="form-select" required>
                     @foreach ($hoc_sinhs as $hoc_sinh)
