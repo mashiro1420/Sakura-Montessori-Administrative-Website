@@ -13,61 +13,152 @@
 <body>
 @include('components/navbar')
   <!-- Title & Filter -->
-  <div class="container mt-4">
-    <h2 class="text-center">Bảng giá dịch vụ</h2>
-    <div class="row my-3">
-      <div class="row my-3">
+<!-- Main Content -->
+<div class="container content-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h2 class="page-title">Bảng giá dịch vụ</h2>
+    <p class="text-muted mt-2">Danh sách các dịch vụ và mức giá áp dụng tại trường</p>
+  </div>
+  
+  <!-- Search Panel -->
+  <div class="search-panel">
+    <div class="row g-3">
       <div class="col-md-4">
-        <select id="search_dich_vu" name = "search_dich_vu" class="form-select">
-            <option value="">Tất cả</option>
-            @foreach ($dich_vus as $dich_vu)
-                <option value="{{$dich_vu->id}}" {{ !empty($search_dich_vu)&&$search_dich_vu==$dich_vu->id?"selected":"" }}>
-                    {{$dich_vu->ten_dich_vu}}
-                </option>
-            @endforeach
+        <label for="search_dich_vu" class="form-label small text-muted">Loại dịch vụ</label>
+        <select id="search_dich_vu" name="search_dich_vu" class="form-select">
+          <option value="">Tất cả dịch vụ</option>
+          @foreach ($dich_vus as $dich_vu)
+            <option value="{{$dich_vu->id}}" {{ !empty($search_dich_vu)&&$search_dich_vu==$dich_vu->id?"selected":"" }}>
+              {{$dich_vu->ten_dich_vu}}
+            </option>
+          @endforeach
         </select>
       </div>
       <div class="col-md-5">
-        <input type="text" class="form-control" placeholder="Nhập tên dịch vụ">
+        <label for="search_name" class="form-label small text-muted">Tên dịch vụ</label>
+        <div class="input-group">
+          <span class="input-group-text bg-white border-end-0">
+            <i class="fas fa-search text-muted"></i>
+          </span>
+          <input type="text" id="search_name" class="form-control border-start-0" placeholder="Nhập tên dịch vụ cần tìm">
+        </div>
       </div>
-      <div class="col-md-3 text-end">
-        <button class="btn btn-pink me-2"><i class="fas fa-search"></i> Tìm kiếm</button>
-        <button class="btn btn-secondary"><i class="fas fa-sync-alt"></i> Làm mới</button>
+      <div class="col-md-3 d-flex align-items-end">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end w-100">
+          <button class="btn btn-pink">
+            <i class="fas fa-search me-1"></i> Tìm kiếm
+          </button>
+          <button class="btn btn-secondary">
+            <i class="fas fa-sync-alt me-1"></i> Làm mới
+          </button>
+        </div>
       </div>
     </div>
+  </div>
+  
+  <!-- Table -->
+  <div class="table-container">
     <div class="table-responsive">
-      <table class="table table-bordered">
+      <table class="table">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Tên loại dịch vụ</th>
-            <th>Tên dịch vụ</th>
-            <th>Giá</th>
-            <th>Định nghĩa</th>
-            <th>Thao tác</th>
+            <th width="5%">ID</th>
+            <th width="20%">Tên loại dịch vụ</th>
+            <th width="25%">Tên dịch vụ</th>
+            <th width="15%">Giá</th>
+            <th width="25%">Định nghĩa</th>
+            <th width="10%">Thao tác</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="service-table-body">
           <tr>
             <td>1</td>
             <td>Năng khiếu</td>
-            <td>học năng khiếu</td>
-            <td>132412VNĐ</td>
-            <td>a</td>
+            <td>Học năng khiếu</td>
+            <td>132,412 VNĐ</td>
+            <td>Lớp học phát triển kỹ năng đặc biệt</td>
             <td>
-              <a href="#" class="text-primary me-2"><i class="fas fa-edit"></i></a>
-              <a href="#" class="text-danger"><i class="fas fa-trash-alt"></i></a>
+              <a href="#" class="action-btn edit-btn" title="Chỉnh sửa">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="action-btn delete-btn" title="Xóa">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Năng khiếu</td>
+            <td>Học vẽ</td>
+            <td>100,000 VNĐ</td>
+            <td>Lớp học phát triển kỹ năng hội họa</td>
+            <td>
+              <a href="#" class="action-btn edit-btn" title="Chỉnh sửa">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="action-btn delete-btn" title="Xóa">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Năng khiếu</td>
+            <td>Học múa</td>
+            <td>120,000 VNĐ</td>
+            <td>Lớp học phát triển kỹ năng múa</td>
+            <td>
+              <a href="#" class="action-btn edit-btn" title="Chỉnh sửa">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="action-btn delete-btn" title="Xóa">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Ngoại ngữ</td>
+            <td>Tiếng Anh</td>
+            <td>150,000 VNĐ</td>
+            <td>Lớp học tiếng Anh cho trẻ em</td>
+            <td>
+              <a href="#" class="action-btn edit-btn" title="Chỉnh sửa">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="action-btn delete-btn" title="Xóa">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Dinh dưỡng</td>
+            <td>Bữa phụ</td>
+            <td>25,000 VNĐ</td>
+            <td>Bữa ăn nhẹ bổ sung</td>
+            <td>
+              <a href="#" class="action-btn edit-btn" title="Chỉnh sửa">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" class="action-btn delete-btn" title="Xóa">
+                <i class="fas fa-trash-alt"></i>
+              </a>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="d-flex justify-content-end align-items-center mt-3">
-      <nav>
-        <ul class="pagination mb-0"></ul>
+    
+    <!-- Pagination -->
+    <div class="pagination-container">
+      <nav aria-label="Page navigation">
+        <ul class="pagination"></ul>
       </nav>
     </div>
   </div>
+</div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

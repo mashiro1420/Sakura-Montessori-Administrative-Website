@@ -12,50 +12,107 @@
 </head>
 <body>
 @include('components/navbar')
-  <!-- Title & Filter -->
-  <div class="container mt-4">
-    <h2 class="text-center">Thời khóa biểu</h2>
-    <div class="row my-3">
-      <div class="col-md-4"> 
-        <select id="position-filter" name = "tuan" class="form-select">
-            <option value="" disable selected>Tất cả các tuần</option>
-            @foreach($tuans as $tuan)
-            <option value="{{$tuan->id}}">Tuần thứ {{$tuan->tuan}} năm {{$tuan->nam}}</option>
-            @endforeach
+<div class="container content-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h2 class="page-title">Thời khóa biểu</h2>
+    <p class="text-muted mt-2">Danh sách thời khóa biểu tại trường của con</p>
+  </div>
+  
+  <!-- Search Panel -->
+  <div class="search-panel">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label for="search_tuan" class="form-label small text-muted">Tuần</label>
+        <select id="search_tuan" name="search_tuan" class="form-select">
+          <option value="" disabled selected>Tìm kiếm theo tuần</option>
+          @foreach ($tuans as $tuan)
+            <option value="{{$tuan->id}}" {{ !empty($search_tuan)&&$search_tuan==$tuan->id?"selected":"" }}>
+             Tuần {{$tuan->id}} năm {{$tuan->nam}}
+            </option>
+          @endforeach
         </select>
       </div>
-      <div class="col-md-8 text-end">
-        <button class="btn btn-pink me-2"><i class="fas fa-search"></i> Tìm kiếm</button>
+      <div class="col-md-5">
+        <label for="search_name" class="form-label small text-muted">Tên dịch vụ</label>
+        <div class="input-group">
+          <span class="input-group-text bg-white border-end-0">
+            <i class="fas fa-search text-muted"></i>
+          </span>
+          <input type="text" id="search_name" class="form-control border-start-0" placeholder="Nhập tên dịch vụ cần tìm">
+        </div>
+      </div>
+      <div class="col-md-3 d-flex align-items-end">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end w-100">
+          <button class="btn btn-pink">
+            <i class="fas fa-search me-1"></i> Tìm kiếm
+          </button>
+          <button class="btn btn-secondary">
+            <i class="fas fa-sync-alt me-1"></i> Làm mới
+          </button>
+        </div>
       </div>
     </div>
+  </div>
+  
+  <!-- Table -->
+  <div class="table-container">
     <div class="table-responsive">
-      <table class="table table-bordered">
+      <table class="table">
         <thead>
           <tr>
-            <th>Tiết / Thứ</th>
-            <th>Thứ 2</th>
-            <th>Thứ 3</th>
-            <th>Thứ 4</th>
-            <th>Thứ 5</th>
-            <th>Thứ 6</th>
+            <th style="width: 80px;">Tiết</th>
+            <th class="day-header">Thứ 2</th>
+            <th class="day-header">Thứ 3</th>
+            <th class="day-header">Thứ 4</th>
+            <th class="day-header">Thứ 5</th>
+            <th class="day-header">Thứ 6</th>
           </tr>
         </thead>
-        <tbody>
-          <% for (let i = 1; i <= 11; i++) { %>
+        <tbody class="service-table-body">
           <tr>
-            <td>Tiết <%= i %></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td style="font-weight: bold">Tiết 1</td>
+            <td>Văn</td>
+            <td>Toán</td>
+            <td>Văn</td>
+            <td>Toán</td>
+            <td>Văn</td>
           </tr>
-          <% } %>
+          <tr>
+            <td style="font-weight: bold">Tiết 2</td>
+            <td>Toán</td>
+            <td>Văn</td>
+            <td>Toán</td>
+            <td>Văn</td>
+            <td>Toán</td>
         </tbody>
+        {{-- <tbody class="service-table-body">
+          @for ($i = 1; $i <= 11; $i++)
+            <tr>
+              <td style="font-weight: bold">Tiết {{ $i }}</td>
+              @foreach($tkbs as $tkb)
+                <td>{{$tkb->"tiet$i"}}</td>
+              @endforeach
+            </tr>
+          @endfor
+        </tbody> --}}
       </table>
     </div>
-  </div>
-
+</div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const btnReset = document.querySelector('.btn-secondary');
+  
+      btnReset.addEventListener('click', function () {
+        // Xóa giá trị trong ô input tìm kiếm
+        document.getElementById('search_name').value = '';
+  
+        // Đặt lại giá trị của dropdown tuần
+        document.getElementById('search_tuan').selectedIndex = 0;
+      });
+    });
+  </script>
+  
 </body>
 </html>

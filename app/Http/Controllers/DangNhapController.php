@@ -48,7 +48,7 @@ class DangNhapController extends Controller
         }
         if (session('bao_loi') == '') {
 			if(session('la_khach') == 'true') {
-				return redirect()->route('ph_tkb');
+				return redirect()->route('ph_bg');
 			}
 			else{
 				return redirect()->route('ql_hs');

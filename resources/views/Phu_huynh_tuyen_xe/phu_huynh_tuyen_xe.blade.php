@@ -13,64 +13,50 @@
 <body>
 @include('components/navbar')
   <!-- Title & Filter -->
-  <div class="container mt-4">
-    <h2 class="text-center">Tuyến xe</h2>
-    <!-- <div class="row my-3">
-      <div class="row my-3">
-      <div class="col-md-4">
-        <select id="search_dich_vu" name = "search_dich_vu" class="form-select">
-            <option value="">Tất cả</option>
-            @foreach ($dich_vus as $dich_vu)
-                <option value="{{$dich_vu->id}}" {{ !empty($search_dich_vu)&&$search_dich_vu==$dich_vu->id?"selected":"" }}>
-                    {{$dich_vu->ten_dich_vu}}
-                </option>
-            @endforeach
-        </select>
-      </div>
-      <div class="col-md-5">
-        <input type="text" class="form-control" placeholder="Nhập tên dịch vụ">
-      </div>
-      <div class="col-md-3 text-end">
-        <button class="btn btn-pink me-2"><i class="fas fa-search"></i> Tìm kiếm</button>
-        <button class="btn btn-secondary"><i class="fas fa-sync-alt"></i> Làm mới</button>
-      </div>
-    </div> -->
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Tuyến xe</th>
-            <th>Ngày</th>
-            <th>Lái xe</th>
-            <th>Monitor</th>
-            <th>Biển số xe</th>
-            <th>Danh sách</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="container content-container">
+    <div class="page-header">
+      <h2 class="page-title">Tuyến xe</h2>
+      <p class="text-muted mt-2">Thông tin tuyến xe hôm nay của con</p>
     </div>
-    <div class="d-flex justify-content-end align-items-center mt-3">
-      <nav>
-        <ul class="pagination mb-0"></ul>
-      </nav>
+    <div class="table-container">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th width="5%">ID</th>
+              <th width="20%">Tuyến xe</th>
+              <th width="5%">Ngày</th>
+              <th width="25%">Lái xe</th>
+              <th width="10%">Monitor</th>
+              <th width="25%">Biển số xe</th>
+              <th width="10%">Danh sách</th>
+            </tr>
+          </thead>
+          <tbody class="service-table-body">
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      {{-- <div class="pagination-container">
+        <nav aria-label="Page navigation">
+          <ul class="pagination"></ul>
+        </nav>
+      </div> --}}
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-<script>
+{{-- <script>
     const rows = document.querySelectorAll('.service-table-body tr');  
     const itemsPerPage = 5;  
     const maxPageLinks = 5;  
@@ -137,6 +123,6 @@
 
     createPagination(1);
     displayPageData(1);
-  </script>
+</script> --}}
 
 </html>

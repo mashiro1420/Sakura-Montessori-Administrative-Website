@@ -293,6 +293,31 @@ public function xlSuaGia(Request $request)
     public function viewPhuHuynhBangGia(Request $request)
     {
         $data = [];
+        $data['dich_vus'] = DichVuModel::all();
         return view('Phu_huynh_bang_gia.phu_huynh_bang_gia', $data);
+    }
+    public function viewPhuHuynhTuyenXe(Request $request)
+    {
+        $data = [];
+        $data['tuyen_xes'] = TuyenXeModel::all();
+        return view('Phu_huynh_tuyen_xe.phu_huynh_tuyen_xe', $data);
+    }
+    public function viewPhuHuynhThucDon(Request $request)
+    {
+        $data = [];
+        $ngay = date('Y-m-d');
+        $tuan = TuanModel::where('tu_ngay', '<=', $ngay)->where('den_ngay', '>=', $ngay)->first();
+        if ($request->filled('tuan_search')) {
+            $tuan = TuanModel::find($request->tuan_search);
+        }
+        $thuc_don = ThucDonModel::where('id_tuan', $tuan->id)->orderBy('thu', 'asc')->get();
+        $menu = [];
+        foreach ($thuc_don as $td) {
+            $menu[] = $td;
+        }
+        $data['tuan_search'] = $tuan->id;
+        $data['tuans'] = TuanModel::where('nam', date('Y'))->get();
+        $data['thuc_don'] = $menu;
+        return view('Phu_huynh_thuc_don.phu_huynh_thuc_don', $data);
     }
 }
