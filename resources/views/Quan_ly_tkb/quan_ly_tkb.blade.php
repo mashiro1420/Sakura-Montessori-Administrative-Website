@@ -12,6 +12,9 @@
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <link rel="icon" type="image/png" href="{{ asset('/imgs/favicon-skr.png') }}">
   <link rel="stylesheet" href="{{ asset('css/main/main.css') }}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 </head>
 <body>
   <div class="wrapper">
@@ -29,7 +32,7 @@
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
                 <label for="tuan_search">Tuần</label>
-                <select id="position-filter" name = "tuan_search" class="form-select">
+                <select id="position-filter" name = "tuan_search" class="form-select select2">
                   <option value="" disable selected>Tất cả các tuần</option>
                   @foreach($tuans as $tuan)
                     <option value="{{$tuan->id}}" {{ !empty($tuan_search)&&$tuan_search == $tuan->id?"selected":""}}>Tuần thứ {{$tuan->tuan}} từ {{$tuan->tu_ngay}} đến {{$tuan->den_ngay}}</option>
@@ -229,6 +232,14 @@
       document.getElementById('import-form').submit();  
     });
   </script>
+    <script>
+      $(document).ready(function () {
+        $('.select2').select2({
+          placeholder: "Tất cả các tuần", 
+          allowClear: true
+        });
+      });
+    </script>
 @include('components/bao_loi')
 </body>
 </html>
