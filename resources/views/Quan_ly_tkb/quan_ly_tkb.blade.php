@@ -127,8 +127,9 @@
                         <td>{{ $row["tiet$i"] }}</td>
                     @endfor
                     <td class="action-column">
-                        <a class="action-button" href="#"><i class="fa-solid fa-edit"></i></a>
-                    </td>
+                      <a class="action-button" href="{{route('xem_tkb',['id' => $tkb->tkb_id])}}" title="Xem chi tiết"></a>
+                      <a class="action-button" title="Chỉnh sửa" href="{{route('sua_tkb',['id' => $tkb->tkb_id])}}"><i class="fa-solid fa-edit"></i></a>
+                      </td>
                     </tr>
                 @endforeach
                 </tbody>

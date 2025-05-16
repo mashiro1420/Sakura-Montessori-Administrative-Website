@@ -27,6 +27,23 @@ class GiangDayController extends Controller
         $data['phan_lops'] = PhanLopModel::all();
         return view("Quan_ly_tkb.them_tkb",$data);
     }
+    public function viewXemTKB(Request $request){
+        $data = [];
+        $tkb_data = [
+            1 => ['t2' => 'Toán', 't3' => 'Văn', 't4' => 'Anh', 't5' => 'Lý', 't6' => 'Hóa'],
+            2 => ['t2' => 'Sử', 't3' => 'Văn', 't4' => 'Anh', 't5' => 'Lý', 't6' => 'Hóa'],
+        ];
+        return view("Quan_ly_tkb.xem_tkb", $tkb_data);
+    }
+    public function viewSuaTKB(Request $request)
+    {
+        $data = [];
+        $data['tkb'] = ThoiKhoaBieuModel::find($request->id);
+        $data['tuans'] = TuanModel::all();
+        $data['mon_hocs'] = MonHocModel::all();
+        $data['phan_lops'] = PhanLopModel::all();
+        return view("Quan_ly_tkb.sua_tkb",$data);
+    }
     public function xlTKB(Request $request)
     {
         if($request->has("sua")){
