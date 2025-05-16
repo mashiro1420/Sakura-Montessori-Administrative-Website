@@ -12,6 +12,9 @@
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <link rel="icon" type="image/png" href="{{ asset('/imgs/favicon-skr.png') }}">
   <link rel="stylesheet" href="{{ asset('css/main/main.css') }}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body>
   <div class="wrapper">
@@ -32,7 +35,7 @@
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
                 <label for="gv_cn_search">Giáo viên chủ nhiệm</label>
-                <select id="position-filter" name = "gv_cn" class="form-select">
+                <select id="gv_cn" name="gv_cn" class="form-control select2">
                   <option value="">Tất cả giáo viên</option>
                   @foreach($gv_cns as $gv_cn)
                     <option value="{{$gv_cn->id}}" {{!empty($gv_cn)&&$gv_cn==$gv_cn->id?"selected":""}}>{{$gv_cn->ho_ten}}</option>
@@ -41,7 +44,7 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="gv_viet_search">Giáo viên Việt</label>
-                <select id="position-filter" name = "gv_viet" class="form-select">
+                <select id="gv_viet" name = "gv_viet" class="form-control select2">
                   <option value="">Tất cả giáo viên</option>
                   @foreach($gv_viets as $gv_viet)
                     <option value="{{$gv_viet->id}}" {{!empty($gv_viet)&&$gv_viet==$gv_viet->id?"selected":""}}>{{$gv_viet->ho_ten}}</option>
@@ -50,7 +53,7 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="gv_nuoc_ngoai_search">Giáo viên nước ngoài</label>
-                <select id="position-filter" name = "gv_nuoc_ngoai" class="form-select">
+                <select id="gv_nuoc_ngoai" name = "gv_nuoc_ngoai" class="form-control select2">
                   <option value="">Tất cả giáo viên</option>
                   @foreach($gv_nuoc_ngoais as $gv_nuoc_ngoai)
                     <option value="{{$gv_nuoc_ngoai->id}}" {{!empty($gv_nuoc_ngoai)&&$gv_nuoc_ngoai==$gv_nuoc_ngoai->id?"selected":""}}>{{$gv_nuoc_ngoai->ho_ten}}</option>
@@ -61,7 +64,7 @@
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
                 <label for="lop_search">Lớp</label>
-                <select id="position-filter" name = "lop" class="form-select">
+                <select id="lop" name = "lop" class="form-control select2">
                   <option value="">Tất cả các lớp</option>
                   @foreach($lops as $lop)
                     <option value="{{$lop->id}}" {{!empty($lop)&&$lop==$gv_cn->id?"selected":""}}>{{$lop->ten_lop}}</option>
@@ -70,7 +73,7 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="khoi_search">Khối</label>
-                <select id="position-filter" name="khoi" class="form-select">
+                <select id="khoi" name="khoi" class="form-control select2">
                   <option value="">Tất cả các khối</option>
                   @foreach($khois as $khoi)
                       <option value="{{ $khoi->id }}" {{ isset($pl_khoi) && $pl_khoi == $khoi->id ? "selected" : "" }}>
@@ -81,7 +84,7 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="phong_hoc_search">Phòng học </label>
-                <select id="position-filter" name="phong_hoc" class="form-select">
+                <select id="phong_hoc" name="phong_hoc" class="form-control select2">
                   <option value="">Tất cả các phòng học</option>
                   @foreach($phong_hocs as $phong_hoc)
                       <option value="{{ $phong_hoc->id }}" {{ isset($pl_phong_hoc) && $pl_phong_hoc == $phong_hoc->id ? "selected" : "" }}>
@@ -94,7 +97,7 @@
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
                 <label for="he_dao_tao_search">Hệ đào tạo </label>
-                <select id="position-filter" name = "he_dao_tao" class="form-select">
+                <select id="he_dao_tao" name = "he_dao_tao" class="form-control select2">
                   <option value="">Tất cả các hệ đào tạo</option>
                   @foreach($he_dao_taos as $he_dao_tao)
                     <option value="{{$he_dao_tao->id}}" {{!empty($pl_he_dao_tao)&&$pl_he_dao_tao==$pl_he_dao_tao->id?"selected":""}}>{{$he_dao_tao->ten_he_dao_tao}}</option>
@@ -103,7 +106,7 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="khoa_hoc_search">Khóa học</label>
-                <select id="position-filter" name = "khoa_hoc" class="form-select">
+                <select id="khoa_hoc" name = "khoa_hoc" class="form-control select2">
                   <option value="">Tất cả các khóa học</option>
                   @foreach($khoa_hocs as $khoa_hoc)
                     <option value="{{$khoa_hoc->id}}" {{!empty($pl_khoa_hoc)&&$pl_khoa_hoc==$pl_khoa_hoc->id?"selected":""}}>{{$khoa_hoc->ten_khoa_hoc}}</option>
@@ -112,7 +115,7 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ky_search">Kỳ</label>
-                <select id="position-filter" name = "ky" class="form-select">
+                <select id="ky" name = "ky" class="form-control select2">
                   <option value="">Tất cả các kỳ học</option>
                   @foreach($kys as $ky)
                     <option value="{{$ky->id}}" {{!empty($pl_ky)&&$pl_ky==$pl_ky->id?"selected":""}}>{{$ky->ten_ky}}</option>
@@ -187,7 +190,7 @@
                   <td>{{$phan_lop->ten_ky}}</td>
                   <td class="action-column">
                     <a class="action-button" href="{{route('phan_lop',['id' => $phan_lop->pl_id])}}" title="Phân lớp"><i class="fa-solid fa-person-circle-plus"></i></a>
-                    <a class="action-button" title="Chỉnh sửa" href="{{route('sua_nv',['id' => $phan_lop->pl_id])}}"><i class="fa-solid fa-edit"></i></a>
+                    <a class="action-button" title="Chỉnh sửa" href="{{route('sua_phan_lop',['id' => $phan_lop->pl_id])}}"><i class="fa-solid fa-edit"></i></a>
                     <a class="action-button" title="Điểm danh trên lớp" href="{{route('diem_danh',['id' => $phan_lop->pl_id])}}"><i class="fa-solid fa-user-check"></i></a>
                   </td>
                 </tr>
@@ -331,5 +334,15 @@
     });
   </script>
 @include('components/bao_loi')
+
+<script>
+  $(document).ready(function () {
+    $('.select2').select2({
+      placeholder: "Chọn tùy chọn",
+      allowClear: true
+    });
+  });
+</script>
 </body>
+
 </html>

@@ -108,6 +108,25 @@ class PhanLopController extends Controller
         $data['kys'] = KyModel::select('*')->where('nam_hoc','>=',date('Y'))->get();
         return view('Quan_ly_phan_lop.them_phan_lop', $data);
     }
+    public function viewSuaPhanLop(Request $request)
+    {
+        $data['lops'] = LopModel::select('*')->get();
+        $data['phong_hocs'] = PhongHocModel::select('*')->where('trang_thai',1)->get();
+        $data['gv_nuoc_ngoais'] = NhanVienModel::select('ql_nhanvien.*')->leftJoin('dm_chucvu','dm_chucvu.id','=','ql_nhanvien.id_chuc_vu')
+            ->where('bo_phan','=', 'Giáo viên nước ngoài')->whereNull('ngay_nghi_viec')->get();
+        $data['gv_cns'] = NhanVienModel::select('ql_nhanvien.*')->leftJoin('dm_chucvu','dm_chucvu.id','=','ql_nhanvien.id_chuc_vu')
+            ->where('bo_phan','=', 'Giáo viên VN')
+            ->whereNull('ngay_nghi_viec')
+            ->get();
+        $data['gv_viets'] = NhanVienModel::select('ql_nhanvien.*')->leftJoin('dm_chucvu','dm_chucvu.id','=','ql_nhanvien.id_chuc_vu')
+            ->where('bo_phan','=', 'Giáo viên VN')->whereNull('ngay_nghi_viec')->get();
+        $data['khois'] = KhoiModel::select('*')->get();
+        $data['he_dao_taos'] = HeDaoTaoModel::select('*')->get();
+        $data['khoa_hocs'] = KhoaHocModel::all();
+        $data['kys'] = KyModel::select('*')->where('nam_hoc','>=',date('Y'))->get();
+        $data['phan_lop'] = PhanLopModel::find($request->id);
+        return view('Quan_ly_phan_lop.sua_phan_lop', $data);
+    }
     public function viewPhanLop(Request $request)
     {
         $data = [];
