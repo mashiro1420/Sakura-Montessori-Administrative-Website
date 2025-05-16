@@ -80,10 +80,13 @@
                     <td>{{ $tkb->ten_ky }}</td>
                     <td>{{ $tkb->tuan }}</td>
                     <td>{{ $tkb->ten_lop }}</td>
-                    <td>a</td>
+                    <td>{{ $tkb->trang_thai==0?"Trống":($tkb->trang_thai==1?"Đang hoạt động":"Đã qua") }}</td>
                     <td class="action-column">
-                      <a class="action-button" href="{{route('xem_tkb',['id' => $tkb->id])}}" title="Xem chi tiết"></a>                      </td>
-                        <a class="action-button" href="{{ route('them_tkb',['id' =>$tkb->id]) }}"><i class="fa-solid fa-edit"></i></a>
+                      @if($tkb->trang_thai==2)
+                      <a class="action-button" href="{{route('xem_tkb',['id' => $tkb->id])}}" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a>                      
+                      @else
+                      <a class="action-button" href="{{ route('them_tkb',['id' =>$tkb->id]) }}"><i class="fa-solid fa-edit"></i></a>
+                      @endIf
                     </td>
                     </tr>
                 @endforeach

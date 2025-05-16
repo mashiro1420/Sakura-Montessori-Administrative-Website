@@ -37,7 +37,16 @@ class TaoTKB extends Command
             $tkb = new ThoiKhoaBieuModel();
             $tkb->id_phan_lop = $phan_lop->id;
             $tkb->id_tuan = $tuan->id+1;
-            $tkb->save();
+            try{
+                $tkb->saveOrFail();
+            }catch(\Exception $e){
+                continue;
+            }
+        }
+        $tkb_cus = ThoiKhoaBieuModel::where('id_tuan','<=',$tuan->id)->get();
+        foreach($tkb_cus as $tkb_cu){
+            $tkb_cu->trang_thai = 2;
+            $tkb_cu->save();
         }
     }
 }

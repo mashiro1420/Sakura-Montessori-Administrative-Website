@@ -161,7 +161,13 @@
           <!-- Timetable Form -->
           <form action="" method="post">
             @csrf
-          
+              @php
+                use Carbon\Carbon;
+                $ngay_hoc = [];
+                for ($i = 0; $i <= 5; $i++) {
+                  $ngay_hoc[] = Carbon::parse($tkb->tkb_tu_ngay)->addDays($i)->toDateString();
+                }
+              @endphp
             <!-- Timetable -->
             <div class="timetable-container">
               <table class="timetable">
@@ -174,16 +180,44 @@
                     <th class="day-header">Thứ 5</th>
                     <th class="day-header">Thứ 6</th>
                   </tr>
+                  <tr>
+                    <th style="width: 80px;">Ngày</th>
+                    <th class="date-header">{{$ngay_hoc[0]}}</th>
+                    <th class="date-header">{{$ngay_hoc[1]}}</th>
+                    <th class="date-header">{{$ngay_hoc[2]}}</th>
+                    <th class="date-header">{{$ngay_hoc[3]}}</th>
+                    <th class="date-header">{{$ngay_hoc[4]}}</th>
+                  </tr>
                 </thead>
                 <tbody>
                   @for ($i = 1; $i <= 11; $i++)
                     <tr>
                       <td class="period-label">Tiết {{$i}}</td>
-                      <td>{{ $tkb_data[$i]['t2'] ?? '' }}</td>
-                      <td>{{ $tkb_data[$i]['t3'] ?? '' }}</td>
-                      <td>{{ $tkb_data[$i]['t4'] ?? '' }}</td>
-                      <td>{{ $tkb_data[$i]['t5'] ?? '' }}</td>
-                      <td>{{ $tkb_data[$i]['t6'] ?? '' }}</td>
+                      <td>@php
+                        foreach($mon_hocs as $mon_hoc){
+                          echo $mon_hoc->id == $tkb_ngays[0]['tiet'.$i] ? $mon_hoc->ten_mon_hoc : "";
+                        }
+                      @endphp </td>
+                      <td>@php
+                        foreach($mon_hocs as $mon_hoc){
+                          echo $mon_hoc->id == $tkb_ngays[1]['tiet'.$i] ? $mon_hoc->ten_mon_hoc : "";
+                        }
+                      @endphp </td>
+                      <td>@php
+                        foreach($mon_hocs as $mon_hoc){
+                          echo $mon_hoc->id == $tkb_ngays[2]['tiet'.$i] ? $mon_hoc->ten_mon_hoc : "";
+                        }
+                      @endphp </td>
+                      <td>@php
+                        foreach($mon_hocs as $mon_hoc){
+                          echo $mon_hoc->id == $tkb_ngays[3]['tiet'.$i] ? $mon_hoc->ten_mon_hoc : "";
+                        }
+                      @endphp </td>
+                      <td>@php
+                        foreach($mon_hocs as $mon_hoc){
+                          echo $mon_hoc->id == $tkb_ngays[4]['tiet'.$i] ? $mon_hoc->ten_mon_hoc : "";
+                        }
+                      @endphp </td>
                     </tr>
                   @endfor
                 </tbody>
@@ -194,12 +228,7 @@
             <!-- Action Buttons -->
             <div class="action-buttons d-flex justify-content-between">
               <div>
-                <button class="btn btn-primary" type="submit">
-                  <i class="fa-solid fa-save me-1"></i> Lưu thời khóa biểu
-                </button>
-                <button type="reset" id="reset-btn" class="btn btn-outline-secondary ms-2">
-                  <i class="fa-solid fa-rotate me-1"></i> Làm mới
-                </button>
+
               </div>
               <div>
                 <a class="btn btn-outline-secondary" href="{{url('ql_tkb')}}">

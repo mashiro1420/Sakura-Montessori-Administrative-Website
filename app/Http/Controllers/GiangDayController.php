@@ -39,24 +39,26 @@ class GiangDayController extends Controller
     }
     public function viewXemTKB(Request $request){
         $data = [];
+        $data['tkb'] = ThoiKhoaBieuModel::select('*','ql_thoikhoabieu.id as id','tt_tuan.tu_ngay as tkb_tu_ngay')
+        ->leftJoin('ql_phanlop', 'ql_thoikhoabieu.id_phan_lop', '=', 'ql_phanlop.id')
+        ->leftJoin('tt_tuan', 'ql_thoikhoabieu.id_tuan', '=', 'tt_tuan.id')
+        ->leftJoin('dm_lop', 'ql_phanlop.id_lop', '=', 'dm_lop.id')
+        ->leftJoin('tt_ky','ql_phanlop.id_ky','=','tt_ky.id')
+        ->find($request->id);
+        $data['tkb_ngays'] = TKBNgayModel::where('id_thoi_khoa_bieu',$request->id)->get();
+        $data['mon_hocs'] = MonHocModel::all();
         $tkb_data = [
             1 => ['t2' => 'Toán', 't3' => 'Văn', 't4' => 'Anh', 't5' => 'Lý', 't6' => 'Hóa'],
             2 => ['t2' => 'Sử', 't3' => 'Văn', 't4' => 'Anh', 't5' => 'Lý', 't6' => 'Hóa'],
         ];
-        return view("Quan_ly_tkb.xem_tkb", $tkb_data);
-    }
-    public function viewSuaTKB(Request $request)
-    {
-        $data = [];
-        $data['tkb'] = ThoiKhoaBieuModel::find($request->id);
-        $data['tuans'] = TuanModel::all();
-        $data['mon_hocs'] = MonHocModel::all();
-        $data['phan_lops'] = PhanLopModel::all();
-        return view("Quan_ly_tkb.sua_tkb",$data);
+        return view("Quan_ly_tkb.xem_tkb_qua_khu", $tkb_data,$data);
     }
     public function xlTKB(Request $request)
     {
         $tkb_cus = TKBNgayModel::where('id_thoi_khoa_bieu',$request->id)->get();
+        $tkb = ThoiKhoaBieuModel::find($request->id);
+        $tkb->trang_thai = 1;
+        $tkb->save();
         foreach($tkb_cus as $tkb_cu){
             $tkb_cu->delete();
         }

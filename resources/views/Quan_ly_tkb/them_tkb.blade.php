@@ -219,7 +219,7 @@
                         <select name="tiet{{$i}}t2" id="t2{{$i}}" class="lesson-input form-control select2">
                           <option value=""></option>
                           @foreach($mon_hocs as $mon_hoc)
-                            <option value="{{$mon_hoc->id}}" {{ $tkb_ngays[0]['tiet'.$i]==$mon_hoc->id?"selected":"" }}>{{$mon_hoc->ten_mon_hoc}}</option>
+                            <option value="{{$mon_hoc->id}}" {{ !empty($tkb_ngays[0]['tiet'.$i])&&$tkb_ngays[0]['tiet'.$i]==$mon_hoc->id?"selected":"" }}>{{$mon_hoc->ten_mon_hoc}}</option>
                           @endforeach
                         </select>
                       </td>
@@ -227,7 +227,7 @@
                         <select name="tiet{{$i}}t3" id="t3{{$i}}" class="lesson-input form-control select2">
                           <option value=""></option>
                           @foreach($mon_hocs as $mon_hoc)
-                            <option value="{{$mon_hoc->id}}" {{ $tkb_ngays[1]['tiet'.$i]==$mon_hoc->id?"selected":"" }}>{{$mon_hoc->ten_mon_hoc}}</option>
+                            <option value="{{$mon_hoc->id}}" {{ !empty($tkb_ngays[1]['tiet'.$i])&&$tkb_ngays[1]['tiet'.$i]==$mon_hoc->id?"selected":"" }}>{{$mon_hoc->ten_mon_hoc}}</option>
                           @endforeach
                         </select>
                       </td>
@@ -235,7 +235,7 @@
                         <select name="tiet{{$i}}t4" id="t4{{$i}}" class="lesson-input form-control select2">
                           <option value=""></option>
                           @foreach($mon_hocs as $mon_hoc)
-                            <option value="{{$mon_hoc->id}}" {{ $tkb_ngays[2]['tiet'.$i]==$mon_hoc->id?"selected":"" }}>{{$mon_hoc->ten_mon_hoc}}</option>
+                            <option value="{{$mon_hoc->id}}" {{ !empty($tkb_ngays[2]['tiet'.$i])&&$tkb_ngays[2]['tiet'.$i]==$mon_hoc->id?"selected":"" }}>{{$mon_hoc->ten_mon_hoc}}</option>
                           @endforeach
                         </select>
                       </td>
@@ -243,7 +243,7 @@
                         <select name="tiet{{$i}}t5" id="t5{{$i}}" class="lesson-input form-control select2">
                           <option value=""></option>
                           @foreach($mon_hocs as $mon_hoc)
-                            <option value="{{$mon_hoc->id}}" {{ $tkb_ngays[3]['tiet'.$i]==$mon_hoc->id?"selected":"" }}>{{$mon_hoc->ten_mon_hoc}}</option>
+                            <option value="{{$mon_hoc->id}}" {{ !empty($tkb_ngays[3]['tiet'.$i])&&$tkb_ngays[3]['tiet'.$i]==$mon_hoc->id?"selected":"" }}>{{$mon_hoc->ten_mon_hoc}}</option>
                           @endforeach
                         </select>
                       </td>
@@ -251,7 +251,7 @@
                         <select name="tiet{{$i}}t6" id="t6{{$i}}" class="lesson-input form-control select2">
                           <option value=""></option>
                           @foreach($mon_hocs as $mon_hoc)
-                            <option value="{{$mon_hoc->id}}" {{ $tkb_ngays[4]['tiet'.$i]==$mon_hoc->id?"selected":"" }}>{{$mon_hoc->ten_mon_hoc}}</option>
+                            <option value="{{$mon_hoc->id}}" {{ !empty($tkb_ngays[4]['tiet'.$i])&&$tkb_ngays[4]['tiet'.$i]==$mon_hoc->id?"selected":"" }}>{{$mon_hoc->ten_mon_hoc}}</option>
                           @endforeach
                         </select>
                       </td>
@@ -322,7 +322,7 @@
   <script>
     $(document).ready(function () {
       $('.select2').select2({
-        placeholder: "Chọn tùy chọn",
+        placeholder: "",
         allowClear: true
       });
     });
