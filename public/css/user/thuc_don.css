@@ -12,7 +12,6 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Navbar styling */
 .navbar {
   background-color: var(--card-bg);
   box-shadow: 0 2px 10px rgba(214, 51, 132, 0.1);
@@ -57,7 +56,6 @@ body {
   background-color: var(--primary-light);
 }
 
-/* Page content */
 .content-container {
   margin-top: 2rem;
   margin-bottom: 3rem;
@@ -88,7 +86,6 @@ body {
   border-radius: 2px;
 }
 
-/* Search panel */
 .search-panel {
   background-color: var(--card-bg);
   border-radius: 12px;
@@ -151,7 +148,6 @@ body {
   color: white;
 }
 
-/* Table styling */
 .table-container {
   background-color: var(--card-bg);
   border-radius: 12px;
@@ -170,21 +166,11 @@ body {
   background-color: #fff8fb !important;
 }
 
-/* .table tbody tr td[colspan="2"].buoi_style {
-  border: 2px solid black !important;
-}
-.table tbody tr td[rowspan="5"].buoi_style {
-  border: 2px solid black !important;
-}
-.table tbody tr td[rowspan="2"].buoi_style {
-  border: 2px solid black !important;
-} */
 .table td:first-child,
 .table td:nth-child(2),
 .table th:first-child,
 .table th:nth-child(2) {
   font-weight: 600 !important;
-  /* background-color: #fef0f5 !important; */
 }
 
 .table th.day-header {
@@ -195,16 +181,6 @@ body {
 .table-responsive {
   overflow-x: auto !important;
 }
-
-/* .table th:first-child,
-.table td:first-child {
-  border-left: 1px solid black !important;
-}
-
-.table th:last-child,
-.table td:last-child {
-  border-right: 1px solid black !important;
-} */
 
 .action-btn {
   display: inline-flex;
@@ -237,7 +213,6 @@ body {
   color: white;
 }
 
-/* Pagination */
 .pagination-container {
   margin-top: 1.5rem;
   display: flex;
@@ -274,7 +249,6 @@ body {
   background-color: #f8f9fa;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .search-panel {
     padding: 1rem;
@@ -293,7 +267,7 @@ body {
     height: 32px;
   }
 }
-/* Làm nổi rõ khối tiêu đề "Buổi" và "Tên bữa" */
+
 .table td.buoi_style,
 .table td[colspan="2"].buoi_style,
 .table th.buoi_style {
@@ -304,7 +278,6 @@ body {
   border: 1px solid black !important;
 }
 
-/* Xử lý nền các hàng rõ ràng hơn */
 .table tbody tr:nth-child(odd) {
   background-color: #fff5f8 !important;
 }
@@ -313,14 +286,11 @@ body {
   background-color: #ffffff !important;
 }
 
-/* Làm rõ đường viền toàn bảng */
 .table-bordered th,
 .table-bordered td {
   border: 1px solid black !important;
 }
 
-
-/* Padding đẹp hơn */
 .table th,
 .table td {
   padding: 0.9rem 0.75rem;
@@ -330,12 +300,10 @@ body {
   line-height: 1.4;
 }
 
-/* Cố định chiều cao tối thiểu giúp canh đều */
 .table td {
   min-height: 60px;
 }
 
-/* Responsive tối ưu */
 @media (max-width: 768px) {
   .table-container {
     overflow-x: auto;
