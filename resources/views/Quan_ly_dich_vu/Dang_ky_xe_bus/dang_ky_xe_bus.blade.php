@@ -22,7 +22,7 @@
           <div class="page-header">
             <h2><i class="fa-solid fa-chalkboard-user"></i> Đăng ký xe bus cho học sinh</h2>
           </div>
-          <form class="search-container" action="{{ url('xl_dk_bus') }}" method="post">
+          <form class="search-container" action="{{ url('xl_dk_bus') }}" method="post" enctype="multipart/form-data">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-40">

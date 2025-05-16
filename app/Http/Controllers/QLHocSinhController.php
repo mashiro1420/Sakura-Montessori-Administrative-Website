@@ -44,9 +44,10 @@ class QLHocSinhController extends Controller
             $data['tk_ngay_thoi_hoc'] = $request->tk_ngay_thoi_hoc;
         }
         if ($request->has('tk_trang_thai') && $request->tk_trang_thai!=""){
-            dump($request->trang_thai);
             $query->where('trang_thai',$request->tk_trang_thai);
-            $data['tk_trang_thai'] = $request->tk_trang_thai==0?"active":"inactive";
+            if($request->tk_trang_thai==0) $data['tk_trang_thai']="inactive";
+            elseif($request->tk_trang_thai==1) $data['tk_trang_thai']="active";
+            else $data['tk_trang_thai']="preserveds";
         }
         if ($request->has('tk_khoa_hoc') && $request->tk_khoa_hoc!=""&& $request->tk_khoa_hoc!="all"){
             $query->where('id_khoa_hoc',$request->tk_khoa_hoc);
@@ -173,6 +174,7 @@ class QLHocSinhController extends Controller
         if(!empty($di_xe)){
             if($request->tuyen_xe=='huy') $di_xe->delete();
             else{
+                $hoc_sinh->di_bus = 0;
                 $di_xe->id_tuyen_xe = $request->tuyen_xe;
                 $di_xe->diem_don = $request->diem_don;
                 $di_xe->so_km = $request->so_km;
@@ -186,6 +188,7 @@ class QLHocSinhController extends Controller
     }
     public function xlThoiHoc(Request $request)
     {
+        // dd($request);
         $hoc_sinh = HocSinhModel::find($request->id);
         $giay_to = new GiayToModel();
         $giay_to->id_hoc_sinh = $request->id;
@@ -198,12 +201,12 @@ class QLHocSinhController extends Controller
         }
         $hoc_sinh->trang_thai = 0;
         $hoc_sinh->id_phan_lop = null;
-        $hoc_sinh->ngay_thoi_hoc = $request->ngay_thoi_hoc;
+        $hoc_sinh->ngay_thoi_hoc = $request->ngay_thoi_hoc_update;
         $hoc_sinh->save();
         $giay_to->save();
         return redirect()->back()->with('bao_loi','Lưu thành công');
     }
-    public function xlQuayLai(Request $request)
+    public function xlNhapHocLai(Request $request)
     {
         $hoc_sinh = HocSinhModel::find($request->id);
         $giay_to = new GiayToModel();
@@ -217,8 +220,33 @@ class QLHocSinhController extends Controller
         }
         $hoc_sinh->trang_thai = 1;
         $hoc_sinh->ngay_thoi_hoc = null;
+        $hoc_sinh->ngay_nhap_hoc = $request->ngay_nhap_hoc_update;
         $hoc_sinh->save();
         $giay_to->save();
+        return redirect()->back()->with('bao_loi','Lưu thành công');
+    }
+    public function xlBaoLuu(Request $request)
+    {
+        $hoc_sinh = HocSinhModel::find($request->id);
+        $giay_to = new GiayToModel();
+        $giay_to->id_hoc_sinh = $request->id;
+        $giay_to->ten_giay_to = 'Bảo lưu: '.$request->ten_giay_to;
+        if ($request->hasFile('file')) {
+            $file = $request->file;
+            $filename = md5(time().rand(1,100) . $request->file->getClientOriginalName()) . '.' . $request->file->getClientOriginalExtension();
+            $file->move('Giay_to/'.$request->id.'', $filename);
+            $giay_to->link_giay_to = $filename;
+        }
+        $hoc_sinh->trang_thai = 2;
+        $hoc_sinh->save();
+        $giay_to->save();
+        return redirect()->back()->with('bao_loi','Lưu thành công');
+    }
+    public function xlQuayLai(Request $request)
+    {
+        $hoc_sinh = HocSinhModel::find($request->id);
+        $hoc_sinh->trang_thai = 1;
+        $hoc_sinh->save();
         return redirect()->back()->with('bao_loi','Lưu thành công');
     }
     public function xlChuyenLop(Request $request)

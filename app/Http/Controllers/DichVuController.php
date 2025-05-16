@@ -102,6 +102,8 @@ public function xlSuaGia(Request $request)
             $file->move('Diem_danh/'.$tuyen_xe->ngay.$tuyen_xe->tuyen_xe.'', $filename);
             $tuyen_xe->danh_sach = $filename;
         }
+        $tuyen_xe->save();
+        return redirect()->route('ql_lt')->with('bao_loi','Lưu thành công');
     }
     //Lich trinh xe
     public function viewQuanLyLoTrinh(Request $request)
@@ -217,7 +219,7 @@ public function xlSuaGia(Request $request)
     public function viewDangKyBusHS(Request $request)
     {
         $data = [];
-        $data['hoc_sinhs'] = HocSinhModel::all();
+        $data['hoc_sinhs'] = HocSinhModel::where('di_bus',0)->get();
         $data['tuyen_xes'] = TuyenXeModel::all();
         return view('Quan_ly_dich_vu.Dang_ky_xe_bus.dang_ky_xe_bus', $data);
     }
@@ -225,6 +227,8 @@ public function xlSuaGia(Request $request)
     {
         $di_xe = new TTDiXeModel();
         $giay_to = new GiayToModel();
+        $hoc_sinh = HocSinhModel::find($request->hoc_sinh);
+        $hoc_sinh->di_bus = 1;
         $giay_to->id_hoc_sinh = $request->hoc_sinh;
         $giay_to->ten_giay_to = 'Đăng ký: Dịch vụ xe bus - '.date('Y-m-d');
         $di_xe->id_hoc_sinh = $request->hoc_sinh;
@@ -237,10 +241,29 @@ public function xlSuaGia(Request $request)
         if ($request->hasFile('file')) {
             $file = $request->file;
             $filename = md5(time().rand(1,100) . $request->file->getClientOriginalName()) . '.' . $request->file->getClientOriginalExtension();
-            $file->move('Giay_to/'.$request->id.'', $filename);
+            $file->move('Giay_to/'.$request->hoc_sinh.'', $filename);
             $giay_to->link_giay_to = $filename;
         }
         $giay_to->save();
+        $hoc_sinh->save();
+        return redirect()->route('ql_dk_bus_hs')->with('bao_loi','Lưu thành công');
+    }
+
+    public function xlDKAnHS(Request $request)
+    {
+        $giay_to = new GiayToModel();
+        $hoc_sinh = HocSinhModel::find($request->hoc_sinh);
+        $hoc_sinh->an_com = 1;
+        $giay_to->id_hoc_sinh = $request->hoc_sinh;
+        $giay_to->ten_giay_to = 'Đăng ký: Dịch vụ xe bus - '.date('Y-m-d');
+        if ($request->hasFile('file')) {
+            $file = $request->file;
+            $filename = md5(time().rand(1,100) . $request->file->getClientOriginalName()) . '.' . $request->file->getClientOriginalExtension();
+            $file->move('Giay_to/'.$request->hoc_sinh.'', $filename);
+            $giay_to->link_giay_to = $filename;
+        }
+        $giay_to->save();
+        $hoc_sinh->save();
         return redirect()->route('ql_dk_bus_hs')->with('bao_loi','Lưu thành công');
     }
     

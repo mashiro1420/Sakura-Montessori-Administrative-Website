@@ -41,14 +41,14 @@
           <div class="page-header">
             <h2><i class="fa-solid fa-chalkboard-user"></i> Thêm phân lớp</h2>
           </div>
-          <div class="search-item">
+          <!-- <div class="search-item">
               <label for="status-filter">Thêm nhiều phân lớp</label>
               <form action="{{ url('/import_nv') }}" method="post" enctype="multipart/form-data" id="import-form">
                 @csrf
                 <input type="file" name="file" id="file-input" class="d-none" required>
                 <button type="submit" name="import" class="btn btn-outline-secondary ms-2" id="import-button">Import Excel</button>
               </form>
-            </div>
+            </div> -->
           <form class="search-container" action="{{url('xl_tao_lop')}}" method="post">
           @csrf
             <div class="filter-row">

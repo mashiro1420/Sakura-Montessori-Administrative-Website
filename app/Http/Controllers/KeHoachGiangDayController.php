@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class KeHoachGiangDayController extends Controller
 {
-    public function viewKeHoach(){
+    public function viewQuanLyTaiLieuGiangDay(){
         $date = date("Y-m-d");
         $data['ky'] = KyModel::whereBetweenColumns($date, ['start_date', 'end_date']);
-        return view("",$data);
+        return view("Quan_ly_tai_lieu_giang_day/quan_ly_tai_lieu_giang_day",$data);
     }
 
     public function viewThem(Request $request){

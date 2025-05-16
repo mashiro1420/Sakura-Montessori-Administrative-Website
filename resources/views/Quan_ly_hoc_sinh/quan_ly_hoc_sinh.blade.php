@@ -59,8 +59,9 @@
                 <label for="status-filter">Trạng thái</label>
                 <select id="status-filter" name = "tk_trang_thai" class="form-select">
                   <option value="">Tất cả trạng thái</option>
-                  <option value="0" {{!empty($tk_trang_thai)&&$tk_trang_thai=="active"?"selected":""}}>Đã thôi học</option>
-                  <option value="1" {{!empty($tk_trang_thai)&&$tk_trang_thai=="inactive"?"selected":""}}>Đang học</option>
+                  <option value="0" {{!empty($tk_trang_thai)&&$tk_trang_thai=="inactive"?"selected":""}}>Đã thôi học</option>
+                  <option value="1" {{!empty($tk_trang_thai)&&$tk_trang_thai=="active"?"selected":""}}>Đang học</option>
+                  <option value="2" {{!empty($tk_trang_thai)&&$tk_trang_thai=="preserved"?"selected":""}}>Bảo lưu</option>
                 </select>
               </div>
               <div class="search-item d-inline-block w-25">

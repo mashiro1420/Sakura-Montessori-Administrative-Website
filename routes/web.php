@@ -3,6 +3,7 @@
 use App\Http\Controllers\DangNhapController;
 use App\Http\Controllers\DanhMucController;
 use App\Http\Controllers\DichVuController;
+use App\Http\Controllers\KeHoachGiangDayController;
 use App\Http\Controllers\PhanLopController;
 use App\Http\Controllers\QLHocSinhController;
 use App\Http\Controllers\QLNhanVienController;
@@ -112,6 +113,10 @@ Route::middleware(['session.check', 'quyen.check:hoc_sinh'])->group(function () 
     //--------------------------------
     Route::post('xl_them_hs',[QLHocSinhController::class, 'xlThem']);
     Route::post('xl_sua_hs',[QLHocSinhController::class, 'xlSua']);
+    Route::post('xl_thoi_hoc',[QLHocSinhController::class, 'xlThoiHoc']);
+    Route::post('xl_nhap_hoc_lai',[QLHocSinhController::class, 'xlNhapHocLai']);
+    Route::post('xl_quay_lai',[QLHocSinhController::class, 'xlQuayLai']);
+    Route::post('xl_bao_luu',[QLHocSinhController::class, 'xlBaoLuu']);
     Route::get('export_hs',[QLHocSinhController::class, 'export'])->name('export_hs');
     Route::post('import_hs',[QLHocSinhController::class, 'import'])->name('import_hs');
 });
@@ -152,6 +157,7 @@ Route::middleware(['session.check', 'quyen.check:dang_ky_dv'])->group(function (
     Route::get('dk_bus_hs', [DichVuController::class, 'viewDangKyBusHS'])->name('dk_bus_hs');
     //----------------------------------------//
     Route::post('xl_dk_bus',[DichVuController::class, 'xlDKBusHS']);
+    Route::post('xl_dk_an',[DichVuController::class, 'xlDKAnHS']);
 });
 Route::middleware(['session.check', 'quyen.check:thuc_don'])->group(function () {
     //Thong ke
@@ -164,9 +170,9 @@ Route::middleware(['session.check', 'quyen.check:giang_day'])->group(function ()
     Route::get('them_tkb', [GiangDayController::class, 'viewThemTKB'])->name('them_tkb');
     Route::get('sua_tkb', [GiangDayController::class, 'viewSuaTKB'])->name('sua_tkb');
     //Giang day
-    Route::get('ql_tlgd', [GiangDayController::class, 'viewQuanLyTaiLieuGiangDay'])->name('ql_tlgd');
-    Route::get('them_tlgd', [GiangDayController::class, 'viewThemTaiLieuGiangDay'])->name('them_tlgd');
-    Route::get('sua_tlgd', [GiangDayController::class, 'viewSuaTaiLieuGiangDay'])->name('sua_tlgd');
+    Route::get('ql_tlgd', [KeHoachGiangDayController::class, 'viewQuanLyTaiLieuGiangDay'])->name('ql_tlgd');
+    Route::get('them_tlgd', [KeHoachGiangDayController::class, 'viewThemTaiLieuGiangDay'])->name('them_tlgd');
+    Route::get('sua_tlgd', [KeHoachGiangDayController::class, 'viewSuaTaiLieuGiangDay'])->name('sua_tlgd');
 });
 Route::middleware(['session.check', 'quyen.check:phu_huynh'])->group(function () {
     Route::get('ph_tkb', [GiangDayController::class, 'viewPhuHuynhTKB'])->name('ph_tkb');

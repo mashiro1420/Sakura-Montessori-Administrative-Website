@@ -177,7 +177,7 @@
                 <input type="text" name="quoc_tich_bo" class="form-control" value="{{$hoc_sinh->quoc_tich_bo}}">
               </div>
             </div>
-            @if(!empty($hoc_sinh->id_tuyen_xe))
+            @if(!empty($hoc_sinh->di_bus))
               <div class="filter-row">
                 <h2>Thông tin đưa đón</h2>
                 <div class="search-item d-inline-block w-25">

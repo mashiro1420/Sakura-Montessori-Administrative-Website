@@ -55,10 +55,6 @@
                 <label for="bien_so_xe">Biển số xe</label>
                 <input type="text" name="bien_so_xe" class="form-control" placeholder="Nhập biển số xe" required>
               </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="danh_sach">Danh sách</label>
-                <input type="file" name="danh_sach" class="form-control" required>
-              </div>
             </div>
             <div class="action-buttons">
               <div>
