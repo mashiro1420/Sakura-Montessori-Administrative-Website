@@ -123,14 +123,6 @@
                 </select>
               </div>
             </div>
-            <!-- <div class="search-item">
-              <label for="status-filter">Thêm nhiều phân lớp</label>
-              <form action="{{ url('/import_nv') }}" method="post" enctype="multipart/form-data">
-                @csrf
-                <input type="file" name="file" class="btn btn-outline-secondary ms-2">
-                <button type="submit">Import Excel</button>
-              </form>
-            </div>  -->
             <div class="action-buttons">
               <div>
                 <button class="btn btn-primary">
@@ -144,16 +136,6 @@
                 <a class="btn btn-primary" href="{{route('them_phan_lop')}}">
                   <i class="fa-solid fa-plus me-1"></i> Thêm phân lớp mới
                 </a>
-                <!-- <button class="btn btn-outline-secondary ms-2">
-                  <a href="{{route('export_nv',[
-                      'gv_cn'=>!empty($gv_cn)?$gv_cn:"",
-                      'tk_gioi_tinh'=>!empty($tk_gioi_tinh)?$tk_gioi_tinh:"",
-                      'tk_noi_sinh'=>!empty($tk_noi_sinh)?$tk_noi_sinh:"",
-                      'tk_gv_cn'=>!empty($tk_gv_cn)?$tk_gv_cn:"",
-                      'tk_trang_thai'=>!empty($tk_trang_thai)?$tk_trang_thai:""])}}">
-                    <i class="fa-solid fa-file-export me-1"></i> Xuất Excel
-                  </a>
-                </button> -->
               </div>
             </div>
           </form>

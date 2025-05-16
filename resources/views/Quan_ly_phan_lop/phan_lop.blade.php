@@ -36,14 +36,15 @@
           </div>
           <!-- Form to add new employee -->
           <div class="search-item">
-              <label for="status-filter">Tải file danh sách học sinh</label>
-              <form action="{{ route('import_lop') }}" method="post" enctype="multipart/form-data" id="import-form">
-                @csrf
-                <input type="file" name="file" id="file-input" class="d-none" required>
-                <button type="submit" name="import" class="btn btn-outline-secondary ms-2" id="import-button">Import Excel</button>
-              </form>
-            </div>
-
+            <label for="status-filter">Tải file danh sách học sinh</label>
+            <form action="{{ route('import_lop') }}" method="post" enctype="multipart/form-data" id="import-form">
+              @csrf
+              <input type="file" name="file" id="file-input" class="d-none" required>
+              <button type="submit" name="import" class="btn btn-outline-secondary ms-2" id="import-button">Import Excel</button>
+            </form>
+          </div>
+          <div class="search-item">
+          </div>
           <form class="search-container" action="{{ url('xl_phan_lop') }}" method="post">
           @csrf
             <div class="filter-row">
@@ -66,6 +67,11 @@
                 <button type="reset" id="reset-btn" class="btn btn-outline-secondary ms-2">
                   <i class="fa-solid fa-rotate me-1"></i> Làm mới
                 </button>
+                <button class="btn btn-outline-secondary ms-2">
+                  <a href="{{route('export_lop',[])}}">
+                    <i class="fa-solid fa-file-export me-1"></i> Xuất Excel
+                  </a>
+                </button>
               </div>
               <div>
                 <a class="btn btn-outline-secondary ms-2" href="{{url('ql_phan_lop')}}">
@@ -74,6 +80,64 @@
               </div>
             </div>
           </form>
+          <!-- Table Section -->
+          <div class="data-container">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Họ tên</th>
+                  <th>Ngày nhập học</th>
+                  <th>Trạng thái</th>
+                  <th>Ngày thôi học</th>
+                  <th>Nick name</th>
+                  <th>Giới tính</th>
+                  <th>Ngày sinh</th>
+                  <th>Quốc tịch</th>
+                  <th>Khóa học</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($hoc_sinhs as $hoc_sinh)
+                <tr>
+                  <td>{{$hoc_sinh->id}}</td>
+                  <td>{{$hoc_sinh->ho_ten}}</td>
+                  <td>{{$hoc_sinh->ngay_nhap_hoc}}</td>
+                  <td>{{$hoc_sinh->trang_thai==1?"Đang học":"Đã thôi học"}}</td>
+                  <td>{{$hoc_sinh->ngay_thoi_hoc}}</td>
+                  <td>{{$hoc_sinh->nickname}}</td>
+                  <td>{{$hoc_sinh->gioi_tinh==1?"Nam":"Nữ"}}</td>
+                  <td>{{$hoc_sinh->ngay_sinh}}</td>
+                  <td>{{$hoc_sinh->quoc_tich}}</td>
+                  <td>{{$hoc_sinh->ten_khoa_hoc}}</td>
+                  <td class="action-column">
+                    <a class="action-button" href="{{route('chi_tiet_hs',['id' => $hoc_sinh->id])}}" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a>
+                    <a class="action-button" title="Chỉnh sửa" href="{{route('sua_hs',['id' => $hoc_sinh->id])}}"><i class="fa-solid fa-edit"></i></a>
+                  </td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+          <!-- Pagination -->
+          <div class="pagination-container">
+            <nav>
+              <ul class="pagination mb-0">
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
       </div>
     </div>
