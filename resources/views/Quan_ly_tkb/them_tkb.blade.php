@@ -12,6 +12,13 @@
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <link rel="icon" type="image/png" href="{{ asset('/imgs/favicon-skr.png') }}">
   <link rel="stylesheet" href="{{ asset('css/main/main.css') }}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
   <style>
     .timetable-container {
       background-color: #fff;
@@ -194,11 +201,46 @@
                   @for ($i = 1; $i <= 11; $i++)
                     <tr>
                       <td class="period-label">Tiết {{$i}}</td>
-                      <td><input type="text" name="tiet{{$i}}t2" class="lesson-input form-control" placeholder=""></td>
-                      <td><input type="text" name="tiet{{$i}}t3" class="lesson-input form-control" placeholder=""></td>
-                      <td><input type="text" name="tiet{{$i}}t4" class="lesson-input form-control" placeholder=""></td>
-                      <td><input type="text" name="tiet{{$i}}t5" class="lesson-input form-control" placeholder=""></td>
-                      <td><input type="text" name="tiet{{$i}}t6" class="lesson-input form-control" placeholder=""></td>
+                      <td>
+                        <select name="tiet{{$i}}" id="t2{{$i}}" class="lesson-input form-control select2">
+                          <option value=""></option>
+                          @foreach($mon_hocs as $mon_hoc)
+                            <option value="{{$mon_hoc->id}}">{{$mon_hoc->ten_mon_hoc}}</option>
+                          @endforeach
+                        </select>
+                      </td>
+                      <td>
+                        <select name="tiet{{$i}}" id="t3{{$i}}" class="lesson-input form-control select2">
+                          <option value=""></option>
+                          @foreach($mon_hocs as $mon_hoc)
+                            <option value="{{$mon_hoc->id}}">{{$mon_hoc->ten_mon_hoc}}</option>
+                          @endforeach
+                        </select>
+                      </td>
+                      <td>
+                        <select name="tiet{{$i}}" id="t4{{$i}}" class="lesson-input form-control select2">
+                          <option value=""></option>
+                          @foreach($mon_hocs as $mon_hoc)
+                            <option value="{{$mon_hoc->id}}">{{$mon_hoc->ten_mon_hoc}}</option>
+                          @endforeach
+                        </select>
+                      </td>
+                      <td>
+                        <select name="tiet{{$i}}" id="t5{{$i}}" class="lesson-input form-control select2">
+                          <option value=""></option>
+                          @foreach($mon_hocs as $mon_hoc)
+                            <option value="{{$mon_hoc->id}}">{{$mon_hoc->ten_mon_hoc}}</option>
+                          @endforeach
+                        </select>
+                      </td>
+                      <td>
+                        <select name="tiet{{$i}}" id="t6{{$i}}" class="lesson-input form-control select2">
+                          <option value=""></option>
+                          @foreach($mon_hocs as $mon_hoc)
+                            <option value="{{$mon_hoc->id}}">{{$mon_hoc->ten_mon_hoc}}</option>
+                          @endforeach
+                        </select>
+                      </td>
                     </tr>
                   @endfor
                 </tbody>
@@ -237,25 +279,37 @@
     
     // Reset button
     document.getElementById('reset-btn').addEventListener('click', function () {
-      const inputs = document.querySelectorAll('input[type="text"], select');
-      inputs.forEach(input => {
-        if (input.tagName === 'SELECT') {
-          input.selectedIndex = 0;
-        } else {
-          input.value = '';
-        }
+      // Reset tất cả các input và select trong form
+      const form = this.closest('form');
+      form.reset();
+
+      // Bắt buộc cập nhật lại giao diện cho các select (nếu cần)
+      const selects = form.querySelectorAll('select');
+      selects.forEach(select => {
+        select.selectedIndex = [...select.options].findIndex(opt => opt.defaultSelected);
       });
     });
+
     
-    // Enhance UX with focus highlighting for table cells
-    const lessonInputs = document.querySelectorAll('.lesson-input');
-    lessonInputs.forEach(input => {
-      input.addEventListener('focus', function() {
-        this.parentElement.style.backgroundColor = 'rgba(59, 125, 221, 0.1)';
+    document.getElementById('reset-btn').addEventListener('click', function (e) {
+      e.preventDefault(); // Ngăn chặn hành vi reset mặc định
+
+      const form = this.closest('form');
+      form.reset();
+
+      // Reset các thẻ select về option rỗng (phục vụ cho select2 hiển thị placeholder)
+      const selects = form.querySelectorAll('select.select2');
+      selects.forEach(select => {
+        // Gán giá trị rỗng
+        $(select).val(null).trigger('change');
       });
-      
-      input.addEventListener('blur', function() {
-        this.parentElement.style.backgroundColor = '';
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $('.select2').select2({
+        placeholder: "Chọn tùy chọn",
+        allowClear: true
       });
     });
   </script>

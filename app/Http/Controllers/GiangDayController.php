@@ -6,6 +6,7 @@ use App\Models\ThoiKhoaBieuModel;
 use App\Models\TKBNgayModel;
 use App\Models\TuanModel;
 use App\Models\PhanLopModel;
+use App\Models\MonHocModel;
 
 use Illuminate\Http\Request;
 
@@ -22,6 +23,7 @@ class GiangDayController extends Controller
         $data = [];
         // $data = ['tkbs'] = ThoiKhoaBieuModel::all();
         $data['tuans'] = TuanModel::all();
+        $data['mon_hocs'] = MonHocModel::all();
         $data['phan_lops'] = PhanLopModel::all();
         return view("Quan_ly_tkb.them_tkb",$data);
     }
