@@ -29,19 +29,19 @@
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
                 <label for="tuan_search">Tuần</label>
-                <select id="position-filter" name = "tuan" class="form-select">
+                <select id="position-filter" name = "tuan_search" class="form-select">
                   <option value="" disable selected>Tất cả các tuần</option>
                   @foreach($tuans as $tuan)
-                    <option value="{{$tuan->id}}">Tuần thứ {{$tuan->tuan}} năm {{$tuan->nam}}</option>
+                    <option value="{{$tuan->id}}" {{ !empty($tuan_search)&&$tuan_search == $tuan->id?"selected":""}}>Tuần thứ {{$tuan->tuan}} từ {{$tuan->tu_ngay}} đến {{$tuan->den_ngay}}</option>
                   @endforeach
                 </select>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="phan_lop_search">Lớp</label>
-                <select id="position-filter" name = "phan_lop" class="form-select">
+                <select id="position-filter" name = "phan_lop_search" class="form-select">
                   <option value="" disable selected>Tất cả các lớp</option>
                   @foreach($phan_lops as $phan_lop)
-                    <option value="{{$phan_lop->id}}" >{{$phan_lop->id}}</option>
+                    <option value="{{$phan_lop->id}}" {{ !empty($phan_lop_search)&&$phan_lop_search == $phan_lop->id?"selected":""}}>{{$phan_lop->ten_lop.' - '.$phan_lop->ten_ky}}</option>
                   @endforeach
                 </select>
               </div>

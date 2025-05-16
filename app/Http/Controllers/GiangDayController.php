@@ -14,15 +14,25 @@ class GiangDayController extends Controller
 {
     public function viewQuanLyTKB(Request $request){
         $data = [];
-        $data['tkbs'] = ThoiKhoaBieuModel::select('*','ql_thoikhoabieu.id as id')
+        $query = ThoiKhoaBieuModel::query()->select('*','ql_thoikhoabieu.id as id')
         ->leftJoin('tt_tuan', 'ql_thoikhoabieu.id_tuan', '=', 'tt_tuan.id')
         ->leftJoin('ql_phanlop', 'ql_thoikhoabieu.id_phan_lop', '=', 'ql_phanlop.id')
         ->leftJoin('tt_ky','ql_phanlop.id_ky','=','tt_ky.id')
-        ->leftJoin('dm_lop','ql_phanlop.id_lop','=','dm_lop.id')
-        ->orderBy('id_tuan', 'desc')->orderBy('id_lop')->get();
+        ->leftJoin('dm_lop','ql_phanlop.id_lop','=','dm_lop.id');
+        if($request->filled('phan_lop_search')){
+            $query->where('ql_thoikhoabieu.id_phan_lop',$request->phan_lop_search);
+            $data['phan_lop_search'] = $request->phan_lop_search;
+        }
+        if($request->filled('tuan_search')){
+            $query->where('ql_thoikhoabieu.id_tuan',$request->tuan_search);
+            $data['tuan_search'] = $request->tuan_search;
+        }
+        $data['tkbs']=$query->orderBy('id_tuan', 'desc')->orderBy('id_lop')->get();
         // dd($data['tkbs']);
         $data['tuans'] = TuanModel::all();
-        $data['phan_lops'] = PhanLopModel::all();
+        $data['phan_lops'] = PhanLopModel::select('*','ql_phanlop.id as id')
+        ->leftJoin('dm_lop', 'ql_phanlop.id_lop', '=', 'dm_lop.id')
+        ->leftJoin('tt_ky','ql_phanlop.id_ky','=','tt_ky.id')->get();
         return view("Quan_ly_tkb.quan_ly_tkb",$data);
     }
     public function viewChinhTKB(Request $request){
@@ -47,11 +57,7 @@ class GiangDayController extends Controller
         ->find($request->id);
         $data['tkb_ngays'] = TKBNgayModel::where('id_thoi_khoa_bieu',$request->id)->get();
         $data['mon_hocs'] = MonHocModel::all();
-        $tkb_data = [
-            1 => ['t2' => 'Toán', 't3' => 'Văn', 't4' => 'Anh', 't5' => 'Lý', 't6' => 'Hóa'],
-            2 => ['t2' => 'Sử', 't3' => 'Văn', 't4' => 'Anh', 't5' => 'Lý', 't6' => 'Hóa'],
-        ];
-        return view("Quan_ly_tkb.xem_tkb_qua_khu", $tkb_data,$data);
+        return view("Quan_ly_tkb.xem_tkb_qua_khu",$data);
     }
     public function xlTKB(Request $request)
     {
