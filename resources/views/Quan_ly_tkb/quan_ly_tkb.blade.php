@@ -55,11 +55,11 @@
                   <i class="fa-solid fa-rotate me-1"></i> Làm mới
                 </button>
               </div>
-                <div>
+                {{-- <div>
                     <a class="btn btn-primary" href="{{route('them_tkb')}}">
                     <i class="fa-solid fa-plus me-1"></i> Thêm thời khóa biểu mới
                     </a>
-                </div>
+                </div> --}}
             </div>
           </form>
           <!-- Table Section -->
@@ -67,69 +67,24 @@
             <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Lớp</th>
+                    <th>Kỳ</th>
                     <th>Tuần</th>
-                    <th>Năm</th>
-                    <th>Thứ</th>
-                    @for($i = 1; $i <= 11; $i++)
-                    <th>Tiết {{ $i }}</th>
-                    @endfor
+                    <th>Lớp</th>
+                    <th>Trạng thái</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
-                @php
-                    $tkbs = [
-                    [
-                        'id_phan_lop' => 1,
-                        'tuan' => 12,
-                        'nam' => 2025,
-                        'thu' => 2,
-                        'tiet1' => 'Toán',
-                        'tiet2' => 'Văn',
-                        'tiet3' => 'Anh',
-                        'tiet4' => '',
-                        'tiet5' => 'Sử',
-                        'tiet6' => '',
-                        'tiet7' => 'Nhạc',
-                        'tiet8' => '',
-                        'tiet9' => '',
-                        'tiet10' => '',
-                        'tiet11' => ''
-                    ],
-                    [
-                        'id_phan_lop' => 1,
-                        'tuan' => 12,
-                        'nam' => 2025,
-                        'thu' => 3,
-                        'tiet1' => 'Thể dục',
-                        'tiet2' => 'Địa',
-                        'tiet3' => '',
-                        'tiet4' => '',
-                        'tiet5' => '',
-                        'tiet6' => '',
-                        'tiet7' => '',
-                        'tiet8' => '',
-                        'tiet9' => '',
-                        'tiet10' => '',
-                        'tiet11' => ''
-                    ],
-                    ];
-                @endphp
-
-                @foreach($tkbs as $row)
+                @foreach($tkbs as $tkb)
                     <tr>
-                    <td>{{ $row['id_phan_lop'] }}</td>
-                    <td>{{ $row['tuan'] }}</td>
-                    <td>{{ $row['nam'] }}</td>
-                    <td>Thứ {{ $row['thu'] }}</td>
-                    @for($i = 1; $i <= 11; $i++)
-                        <td>{{ $row["tiet$i"] }}</td>
-                    @endfor
+                    <td>{{ $tkb->ten_ky }}</td>
+                    <td>{{ $tkb->tuan }}</td>
+                    <td>{{ $tkb->ten_lop }}</td>
+                    <td>a</td>
                     <td class="action-column">
-                      <a class="action-button" href="{{route('xem_tkb',['id' => $tkb->tkb_id])}}" title="Xem chi tiết"></a>
-                      <a class="action-button" title="Chỉnh sửa" href="{{route('sua_tkb',['id' => $tkb->tkb_id])}}"><i class="fa-solid fa-edit"></i></a>
-                      </td>
+                      <a class="action-button" href="{{route('xem_tkb',['id' => $tkb->id])}}" title="Xem chi tiết"></a>                      </td>
+                        <a class="action-button" href="{{ route('them_tkb',['id' =>$tkb->id]) }}"><i class="fa-solid fa-edit"></i></a>
+                    </td>
                     </tr>
                 @endforeach
                 </tbody>
