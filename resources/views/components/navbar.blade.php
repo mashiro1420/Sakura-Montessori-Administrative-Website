@@ -21,7 +21,7 @@
             <li><a class="dropdown-item" href="{{url('ph_diem_danh_tren_lop')}}"><i class="fas fa-chalkboard-teacher me-2"></i>Điểm danh trên lớp</a></li>
           </ul>
         </li>
-        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-money-bill-wave me-1"></i>Học phí</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{url('ph_thanh_toan')}}"><i class="fas fa-money-bill-wave me-1"></i>Học phí</a></li>
       </ul>
     </div>
     <div class="d-flex ms-3">

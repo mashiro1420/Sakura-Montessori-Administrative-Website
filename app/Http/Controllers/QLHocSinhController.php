@@ -311,4 +311,10 @@ class QLHocSinhController extends Controller
         $data['thanh_toan'] = $query->orderBy('ql_hocphi.id', 'desc')->first();
         return view('Quan_ly_hoc_sinh.hien_thi_thanh_toan', $data);
     }
+    // Phu huynh
+    public function viewPhuHuynhThanhToan(Request $request)
+    {
+        $data = [];
+        return view('Phu_huynh_thanh_toan.phu_huynh_thanh_toan', $data);
+    }
 }

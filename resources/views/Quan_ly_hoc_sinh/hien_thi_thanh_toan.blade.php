@@ -41,19 +41,19 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="tong_dich_vu">Tổng dịch vụ</label>
-                <input type="int" name="tong_dich_vu" class="form-control" value="{{$thanh_toan->tong_dich_vu}}">
+                <input type="int" name="tong_dich_vu" class="form-control" value="{{number_format($thanh_toan->tong_dich_vu)}}">
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="tong_hoc_phi">Tổng học phí</label>
-                <input type="int" name="tong_hoc_phi" class="form-control" value="{{$thanh_toan->tong_hoc_phi}}">
+                <input type="int" name="tong_hoc_phi" class="form-control" value="{{number_format($thanh_toan->tong_hoc_phi)}}">
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="phat_trien">Phát triển</label>
-                <input type="int" name="phat_trien" class="form-control" value="{{$thanh_toan->phat_trien}}">
+                <input type="int" name="phat_trien" class="form-control" value="{{number_format($thanh_toan->phat_trien)}}">
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="tong_tien">Tổng tiền</label>
-                <input type="int" name="tong_tien" class="form-control" value="{{$thanh_toan->tong_so_tien}}">
+                <input type="int" name="tong_tien" class="form-control" value="{{number_format($thanh_toan->tong_so_tien)}}">
               </div>
             <div class="action-buttons">
               <div>

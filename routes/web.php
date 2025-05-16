@@ -183,4 +183,5 @@ Route::middleware(['session.check', 'quyen.check:phu_huynh'])->group(function ()
     Route::get('ph_td', [DichVuController::class, 'viewPhuHuynhThucDon'])->name('ph_td');
     Route::get('ph_diem_danh_xe_bus', [DichVuController::class, 'viewPhuHuynhDiemDanhXeBus'])->name('ph_ph_diem_danh_xe_bus');
     Route::get('ph_diem_danh_tren_lop', [PhanLopController::class, 'viewPhuHuynhDiemDanhTrenLop'])->name('ph_diem_danh_tren_lop');
+    Route::get('ph_thanh_toan', [QLHocSinhController::class, 'viewPhuHuynhThanhToan'])->name('ph_thanh_toan');
 });
