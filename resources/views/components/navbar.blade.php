@@ -20,5 +20,8 @@
           <li class="nav-item"><a class="nav-link" href="#">Học phí</a></li>
         </ul>
       </div>
+      <div class="d-flex">
+        <a href="{{ url('xl_dang_xuat') }}" class="btn btn-outline-danger">Đăng xuất</a>
+      </div>
     </div>
   </nav>
