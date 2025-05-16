@@ -240,7 +240,7 @@
         </div>
         <div class="modal-body">
           <label for="ngay_thoi_hoc_update">Ngày thôi học</label>
-          <input type="date" class="form-control" name="ngay_thoi_hoc_update" id="ngay_thoi_hoc_update" required>
+          <input type="date" class="form-control" name="ngay_thoi_hoc_update" id="ngay_thoi_hoc_update" required min="{{$hoc_sinh->ngay_nhap_hoc}}">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -265,7 +265,7 @@
         </div>
         <div class="modal-body">
           <label for="ngay_nhap_hoc_update">Ngày nhập học lại</label>
-          <input type="date"  class="form-control" name="ngay_nhap_hoc_update" id="ngay_nhap_hoc_update" required>
+          <input type="date"  class="form-control" name="ngay_nhap_hoc_update" id="ngay_nhap_hoc_update" required min="{{ $hoc_sinh->ngay_thoi_hoc }}">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
