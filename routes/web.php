@@ -33,6 +33,7 @@ Route::middleware(['session.check', 'quyen.check:tai_khoan'])->group(function ()
     Route::post('xl_doi_mk',[TaiKhoanController::class, 'xlDoiMK']);
     Route::post('xl_quyen', [TaiKhoanController::class, 'xlPhanQuyen'])->name('xl_quyen');
     Route::get('export_tk',[TaiKhoanController::class, 'export'])->name('export_tk');
+    Route::get('bao_cao_tk',[TaiKhoanController::class, 'viewBaoCao'])->name('bao_cao_tk');
 });
 Route::middleware(['session.check', 'quyen.check:danh_muc'])->group(function () {
     Route::get('ql_dm_chuc_vu',[DanhMucController::class, 'viewDMChucVu'])->name('ql_dm_chuc_vu');

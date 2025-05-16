@@ -108,7 +108,7 @@
       </ul>
     </li>
     <li class="sidebar-item">
-      <a href="#" class="sidebar-link">
+      <a href="{{url('bao_cao_tk')}}" class="sidebar-link">
         <i class="fa-solid fa-chart-pie"></i>
         <span class="text">Thống kê báo cáo</span>
       </a>

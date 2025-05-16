@@ -93,4 +93,8 @@ class TaiKhoanController extends Controller
         $query = $query->get();
         return Excel::download(new TaiKhoanExport($query), 'export_tk.xlsx');
     }
+    public function viewBaoCao(Request $request){
+        $data=[];
+        return view('Thong_ke_bao_cao.thong_ke_bao_cao', $data);
+    }
 }
