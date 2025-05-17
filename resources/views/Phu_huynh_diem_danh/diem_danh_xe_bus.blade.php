@@ -82,9 +82,6 @@
             <td>{{$hoc_sinh->so_km}}</td>
             <td>{{$hoc_sinh->nguoi_dua_don}}</td>
             <td>{{$hoc_sinh->lien_he_khan}}</td>
-            <td class="action-column">
-              <input type="checkbox" class="hoc-sinh-checkbox" data-id="{{ $hoc_sinh->id }}" readonly>
-            </td>
           </tr>
           @endforeach
         </tbody>

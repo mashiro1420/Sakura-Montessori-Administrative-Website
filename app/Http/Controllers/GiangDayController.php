@@ -8,23 +8,24 @@ use App\Models\TuanModel;
 use App\Models\PhanLopModel;
 use App\Models\MonHocModel;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class GiangDayController extends Controller
 {
     public function viewQuanLyTKB(Request $request){
         $data = [];
-        $query = ThoiKhoaBieuModel::query()->select('*','ql_thoikhoabieu.id as id')
-        ->leftJoin('tt_tuan', 'ql_thoikhoabieu.id_tuan', '=', 'tt_tuan.id')
-        ->leftJoin('ql_phanlop', 'ql_thoikhoabieu.id_phan_lop', '=', 'ql_phanlop.id')
+        $query = ThoiKhoaBieuModel::query()->select('*','tt_tkbngay.id as id')
+        ->leftJoin('tt_tuan', 'tt_tkbngay.id_tuan', '=', 'tt_tuan.id')
+        ->leftJoin('ql_phanlop', 'tt_tkbngay.id_phan_lop', '=', 'ql_phanlop.id')
         ->leftJoin('tt_ky','ql_phanlop.id_ky','=','tt_ky.id')
         ->leftJoin('dm_lop','ql_phanlop.id_lop','=','dm_lop.id');
         if($request->filled('phan_lop_search')){
-            $query->where('ql_thoikhoabieu.id_phan_lop',$request->phan_lop_search);
+            $query->where('tt_tkbngay.id_phan_lop',$request->phan_lop_search);
             $data['phan_lop_search'] = $request->phan_lop_search;
         }
         if($request->filled('tuan_search')){
-            $query->where('ql_thoikhoabieu.id_tuan',$request->tuan_search);
+            $query->where('tt_tkbngay.id_tuan',$request->tuan_search);
             $data['tuan_search'] = $request->tuan_search;
         }
         $data['tkbs']=$query->orderBy('id_tuan', 'desc')->orderBy('id_lop')->get();
@@ -37,9 +38,9 @@ class GiangDayController extends Controller
     }
     public function viewChinhTKB(Request $request){
         $data = [];
-        $data['tkb'] = ThoiKhoaBieuModel::select('*','ql_thoikhoabieu.id as id','tt_tuan.tu_ngay as tkb_tu_ngay')
-        ->leftJoin('ql_phanlop', 'ql_thoikhoabieu.id_phan_lop', '=', 'ql_phanlop.id')
-        ->leftJoin('tt_tuan', 'ql_thoikhoabieu.id_tuan', '=', 'tt_tuan.id')
+        $data['tkb'] = ThoiKhoaBieuModel::select('*','tt_tkbngay.id as id','tt_tuan.tu_ngay as tkb_tu_ngay')
+        ->leftJoin('ql_phanlop', 'tt_tkbngay.id_phan_lop', '=', 'ql_phanlop.id')
+        ->leftJoin('tt_tuan', 'tt_tkbngay.id_tuan', '=', 'tt_tuan.id')
         ->leftJoin('dm_lop', 'ql_phanlop.id_lop', '=', 'dm_lop.id')
         ->leftJoin('tt_ky','ql_phanlop.id_ky','=','tt_ky.id')
         ->find($request->id);
@@ -49,9 +50,9 @@ class GiangDayController extends Controller
     }
     public function viewXemTKB(Request $request){
         $data = [];
-        $data['tkb'] = ThoiKhoaBieuModel::select('*','ql_thoikhoabieu.id as id','tt_tuan.tu_ngay as tkb_tu_ngay')
-        ->leftJoin('ql_phanlop', 'ql_thoikhoabieu.id_phan_lop', '=', 'ql_phanlop.id')
-        ->leftJoin('tt_tuan', 'ql_thoikhoabieu.id_tuan', '=', 'tt_tuan.id')
+        $data['tkb'] = ThoiKhoaBieuModel::select('*','tt_tkbngay.id as id','tt_tuan.tu_ngay as tkb_tu_ngay')
+        ->leftJoin('ql_phanlop', 'tt_tkbngay.id_phan_lop', '=', 'ql_phanlop.id')
+        ->leftJoin('tt_tuan', 'tt_tkbngay.id_tuan', '=', 'tt_tuan.id')
         ->leftJoin('dm_lop', 'ql_phanlop.id_lop', '=', 'dm_lop.id')
         ->leftJoin('tt_ky','ql_phanlop.id_ky','=','tt_ky.id')
         ->find($request->id);
@@ -143,12 +144,36 @@ class GiangDayController extends Controller
             }
             $tkb_ngay->save();
         }
-         return redirect()->route('ql_tkb')->with('bao_loi','Lưu thành công');
+        return redirect()->route('ql_tkb')->with('bao_loi','Lưu thành công');
     }
     public function viewPhuHuynhTKB(Request $request)
     {
-        $data = [];
-        $data['tuans'] = TuanModel::all();
-        return view("Phu_huynh_tkb.phu_huynh_tkb", $data);
+        $id_hoc_sinh = session('id_hoc_sinh');
+        $tuans = TuanModel::all();
+        // Lấy id_phan_lop từ bảng hoc_sinh
+        $hocSinh = DB::table('ql_hocsinh')->where('id', $id_hoc_sinh)->first();
+        if (!$hocSinh) {
+            return back()->with('error', 'Không tìm thấy học sinh.');
+        }
+
+        $id_phan_lop = $hocSinh->id_phan_lop;
+
+        // Truy vấn bảng ql_thoikhoabieu có cùng id_phan_lop
+        $thoiKhoaBieu = DB::table('ql_thoikhoabieu')
+            ->where('id_phan_lop', $id_phan_lop)
+            ->get();
+
+        $tkb_ids = $thoiKhoaBieu->pluck('id')->toArray();
+
+        // Lấy dữ liệu bảng tt_tkbngay có id_thoi_khoa_bieu nằm trong danh sách trên
+        $tkbNgay = DB::table('tt_tkbngay')
+            ->whereIn('id_thoi_khoa_bieu', $tkb_ids)
+            ->get();
+
+        return view('Phu_huynh_tkb.phu_huynh_tkb', [
+            'thoiKhoaBieu' => $thoiKhoaBieu,
+            'tkbNgay' => $tkbNgay,
+            'tuans' => $tuans,
+        ]);
     }
 }

@@ -68,7 +68,6 @@
               <th>ID</th>
               <th>Học sinh</th>
               <th>Trạng thái</th>
-              <th>Thao tác</th>
             </tr>
           </tr>
         </thead>
@@ -78,9 +77,6 @@
             <td>{{$hoc_sinh->hoc_sinh_id}}</td>
             <td>{{$hoc_sinh->ho_ten}}</td>
             <td>{{$hoc_sinh->trang_thai==1?"Có mặt":"Vắng mặt"}}</td>
-            <td class="action-column">
-              <input type="checkbox" class="hoc-sinh-checkbox" data-id="{{ $hoc_sinh->id }}" readonly>
-            </td>
           </tr>
           @endforeach
         </tbody>

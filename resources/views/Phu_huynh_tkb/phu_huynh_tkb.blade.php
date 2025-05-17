@@ -70,32 +70,15 @@
           </tr>
         </thead>
         <tbody class="service-table-body">
-          <tr>
-            <td style="font-weight: bold">Tiết 1</td>
-            <td>Văn</td>
-            <td>Toán</td>
-            <td>Văn</td>
-            <td>Toán</td>
-            <td>Văn</td>
-          </tr>
-          <tr>
-            <td style="font-weight: bold">Tiết 2</td>
-            <td>Toán</td>
-            <td>Văn</td>
-            <td>Toán</td>
-            <td>Văn</td>
-            <td>Toán</td>
-        </tbody>
-        {{-- <tbody class="service-table-body">
           @for ($i = 1; $i <= 11; $i++)
             <tr>
               <td style="font-weight: bold">Tiết {{ $i }}</td>
-              @foreach($tkbs as $tkb)
-                <td>{{$tkb->"tiet$i"}}</td>
+              @foreach($tkbNgay as $tkb)
+              <td>{{ $tkb->{'tiet'.$i} }}</td>
               @endforeach
             </tr>
           @endfor
-        </tbody> --}}
+        </tbody>
       </table>
     </div>
 </div>

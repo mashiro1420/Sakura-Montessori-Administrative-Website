@@ -23,14 +23,14 @@
   
   <!-- Search Panel -->
   <div class="search-panel">
-    <div class="row g-3">
+    <form class="row g-3" action="{{url('ph_bg')}}" method="get">
       <div class="col-md-4">
         <label for="search_dich_vu" class="form-label small text-muted">Loại dịch vụ</label>
         <select id="search_dich_vu" name="search_dich_vu" class="form-select">
           <option value="">Tất cả dịch vụ</option>
-          @foreach ($dich_vus as $dich_vu)
-            <option value="{{$dich_vu->id}}" {{ !empty($search_dich_vu)&&$search_dich_vu==$dich_vu->id?"selected":"" }}>
-              {{$dich_vu->ten_dich_vu}}
+          @foreach ($loai_dich_vus as $loai_dich_vu)
+            <option value="{{$loai_dich_vu->id}}" {{ !empty($search_dich_vu)&&$search_dich_vu==$loai_dich_vu->id?"selected":"" }}>
+              {{$loai_dich_vu->ten_dich_vu}}
             </option>
           @endforeach
         </select>
@@ -41,7 +41,7 @@
           <span class="input-group-text bg-white border-end-0">
             <i class="fas fa-search text-muted"></i>
           </span>
-          <input type="text" id="search_name" class="form-control border-start-0" placeholder="Nhập tên dịch vụ cần tìm">
+          <input type="text" id="search_name" name="search_name" class="form-control border-start-0" placeholder="Nhập tên dịch vụ cần tìm">
         </div>
       </div>
       <div class="col-md-3 d-flex align-items-end">
@@ -54,7 +54,7 @@
           </button>
         </div>
       </div>
-    </div>
+    </form>
   </div>
   
   <!-- Table -->
@@ -63,7 +63,7 @@
       <table class="table">
         <thead>
           <tr>
-            <th width="5%">ID</th>
+            <th width="5%">STT</th>
             <th width="20%">Tên loại dịch vụ</th>
             <th width="25%">Tên dịch vụ</th>
             <th width="15%">Giá</th>
@@ -71,13 +71,18 @@
           </tr>
         </thead>
         <tbody class="service-table-body">
+          @php
+          $count = 0;
+        @endphp
+          @foreach ($dich_vus as $dich_vu)
           <tr>
-            <td>1</td>
-            <td>Năng khiếu</td>
-            <td>Học năng khiếu</td>
-            <td>132,412 VNĐ</td>
-            <td>Lớp học phát triển kỹ năng đặc biệt</td>
+            <td>{{$count+=1}}</td>
+            <td>{{$dich_vu->ten_dich_vu}}</td>
+            <td>{{$dich_vu->ten_gia}}</td>
+            <td>{{$dich_vu->gia}}</td>
+            <td>{{$dich_vu->dinh_nghia}}</td>
           </tr>
+          @endforeach
         </tbody>
       </table>
     </div>

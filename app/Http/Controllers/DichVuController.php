@@ -320,7 +320,21 @@ public function xlSuaGia(Request $request)
     public function viewPhuHuynhBangGia(Request $request)
     {
         $data = [];
-        $data['dich_vus'] = DichVuModel::all();
+        $query = DichVuModel::query()->select('dm_dichvu.*', 'ql_banggia.gia', 'ql_banggia.ten_gia', 'ql_banggia.dinh_nghia')
+            ->leftJoin('ql_banggia', 'ql_banggia.id_dich_vu', '=', 'dm_dichvu.id');
+
+        if ($request->filled('search_dich_vu')) {
+            $query->where('ten_dich_vu', 'like', '%' . $request->search_dich_vu . '%')
+                ->orWhere('dm_dichvu.id', 'like', '%' . $request->search_dich_vu . '%');
+            $data['search_dich_vu'] = $request->search_dich_vu;
+        }
+        if ($request->filled('search_name')) {
+            $query->where('ten_gia', 'like', '%' . $request->search_name . '%')
+                ->orWhere('ql_banggia.id', 'like', '%' . $request->search_name . '%');
+            $data['search_name'] = $request->search_name;
+        }
+        $data['dich_vus'] = $query->get();
+        $data['loai_dich_vus'] =DichVuModel::all();
         return view('Phu_huynh_bang_gia.phu_huynh_bang_gia', $data);
     }
     public function viewPhuHuynhTuyenXe(Request $request)
