@@ -288,7 +288,7 @@
     <!-- Model bảo lưu -->
     <div class="modal fade" id="uploadBaoLuuModal" tabindex="-1" aria-labelledby="uploadBaoLuu" aria-hidden="true">
       <div class="modal-dialog">
-        <form id="import-form" action="" method="POST" enctype="multipart/form-data" class="modal-content">
+        <form id="import-form" action="{{url('xl_bao_luu')}}" method="POST" enctype="multipart/form-data" class="modal-content">
           @csrf
           <div class="modal-header">
             <h5 class="modal-title" id="uploadBaoLuu">Khai báo bảo lưu</h5>
@@ -298,10 +298,6 @@
             <input type="text" name="id" class="form-control" value="{{ $hoc_sinh->hs_id }}" hidden>
             <label for="file">File tài liệu</label>
             <input type="file" name="file" class="form-control" id="file-input" required>
-          </div>
-          <div class="modal-body">
-            <label for="ngay_bao_luu_update">Ngày bảo lưu</label>
-            <input type="date" class="form-control" name="ngay_bao_luu_update" id="ngay_bao_luu_update" required min="{{ $hoc_sinh->ngay_thoi_hoc }}">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
