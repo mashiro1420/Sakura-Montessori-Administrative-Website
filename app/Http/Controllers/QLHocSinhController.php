@@ -10,7 +10,9 @@ use App\Models\HocSinhModel;
 use App\Models\KhoaHocModel;
 use App\Models\MonHocModel;
 use App\Models\HocPhiModel;
+use App\Models\KyModel;
 use App\Models\LopModel;
+use App\Models\PhanLopModel;
 use App\Models\TaiKhoanModel;
 use App\Models\TTDiXeModel;
 use App\Models\TuyenXeModel;
@@ -65,13 +67,22 @@ class QLHocSinhController extends Controller
     public function viewChiTiet(Request $request)
     {
         $data = [];
+        $date = date("Y-m-d");
         $data['lops']= LopModel::all();
+        $ky_hien_tai = KyModel::where('tu_ngay','<=',$date)->where('den_ngay','>=',$date)->first();
         $data['nang_khieu'] = MonHocModel::where('nang_khieu',1)->get();
-        $data['hoc_sinh'] = HocSinhModel::select ('ql_hocsinh.*','dm_khoahoc.ten_khoa_hoc','tt_hsdixe.*','ql_hocsinh.id as hs_id')
+        $data['hoc_sinh'] = HocSinhModel::select ('ql_hocsinh.*','dm_khoahoc.ten_khoa_hoc','tt_hsdixe.*','ql_hocsinh.id as hs_id', 'dm_lop.ten_lop','tt_ky.ten_ky')
             ->leftJoin('dm_khoahoc','dm_khoahoc.id','=','ql_hocsinh.id_khoa_hoc')
             ->leftJoin('tt_hsdixe','tt_hsdixe.id_hoc_sinh','=','ql_hocsinh.id')
             ->leftJoin('dm_tuyenxe','dm_tuyenxe.id','=','tt_hsdixe.id_tuyen_xe')
+            ->leftJoin('ql_phanlop','ql_phanlop.id','=','ql_hocsinh.id_phan_lop')
+            ->leftJoin('dm_lop','dm_lop.id','=','ql_phanlop.id_lop')
+            ->leftJoin('tt_ky','tt_ky.id','=','ql_phanlop.id_ky')
             ->find($request->id);
+        $data['phan_lops'] = PhanLopModel::select('ql_phanlop.*','dm_lop.ten_lop')->leftJoin('dm_lop','dm_lop.id','=','ql_phanlop.id_lop')
+            ->leftJoin('tt_ky','tt_ky.id','=','ql_phanlop.id_ky')
+            ->where('id_ky',$ky_hien_tai->id)
+            ->get();
         return view('Quan_ly_hoc_sinh.xem_chi_tiet_hoc_sinh', $data);
     }
     public function viewThem(Request $request)
@@ -270,7 +281,7 @@ class QLHocSinhController extends Controller
             $file->move('Giay_to/'.$request->id.'', $filename);
             $giay_to->link_giay_to = $filename;
         }
-        $hoc_sinh->id_phan_lop = $request->phan_lop;
+        $hoc_sinh->id_phan_lop = $request->lop_update;
         $hoc_sinh->save();
         $giay_to->save();
         return redirect()->back()->with('bao_loi','Lưu thành công');
