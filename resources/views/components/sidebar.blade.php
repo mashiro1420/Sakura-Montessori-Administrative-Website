@@ -105,6 +105,9 @@
         <li class="sidebar-item">
           <a href="ql_dk_bus_hs" class="sidebar-link">Quản lý đăng ký xe bus</a>
         </li>
+        <li class="sidebar-item">
+          <a href="ql_dk_an_hs" class="sidebar-link">Quản lý đăng ký ăn</a>
+        </li>
       </ul>
     </li>
     <li class="sidebar-item">

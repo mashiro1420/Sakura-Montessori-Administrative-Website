@@ -330,6 +330,13 @@ public function xlSuaGia(Request $request)
         $data['thuc_don'] = $menu;
         return view('Phu_huynh_thuc_don.phu_huynh_thuc_don', $data);
     }
+    public function viewQuanLyDangKyAnHS(Request $request)
+    {
+        $data = [];
+        $data['hoc_sinhs'] = HocSinhModel::all();
+        return view('Quan_ly_dich_vu.Dang_ky_an.ql_dang_ky_an', $data);
+    }
+    //Phu huynh
     public function viewPhuHuynhDiemDanhXeBus(Request $request)
     {
         $data = [];

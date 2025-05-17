@@ -5,13 +5,16 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản lý bảng giá</title>
+  <title>Quản lý đăng ký ăn của học sinh</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <link rel="icon" type="image/png" href="{{ asset('/imgs/favicon-skr.png') }}">
   <link rel="stylesheet" href="{{ asset('css/main/main.css') }}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 </head>
 <body>
   <div class="wrapper">
@@ -22,26 +25,23 @@
         <div class="container-fluid">
           <!-- Page Header -->
           <div class="page-header">
-            <h2><i class="fa-solid fa-chalkboard-user"></i> Quản lý bảng giá</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i>Quản lý đăng ký ăn của học sinh  </h2>
           </div>
 
           <!-- Search and Filter Section -->
-          <form class="search-container" action="{{route('ql_bg')}}" method="get">
+          <form class="search-container" action="" method="get">
             @csrf
             <div class="filter-row">
-              <div class="search-item d-inline-block w-50">
-                <label for="ten_gia_search">Tên dịch vụ</label>
-                <input type="text" id="ten_gia_search" name = "ten_gia_search" {{!empty($ten_gia_search)?"value=$ten_gia_search":""}} class="form-control" placeholder="Tìm kiếm theo tên dịch vụ">
+              <div class="search-item d-inline-block w-25">
+                <label for="ho_ten_search">Họ và tên</label>
+                <input type="text" id="ho_ten_search" name = "ho_ten_search" {{!empty($ho_ten_search)?"value=$ho_ten_search":""}} class="form-control" placeholder="Tìm kiếm theo họ tên học sinh">
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="search_dich_vu">Loại dịch vụ</label>
-                <select id="search_dich_vu" name = "search_dich_vu" class="form-select">
-                    <option value="">Tất cả</option>
-                    @foreach ($dich_vus as $dich_vu)
-                        <option value="{{$dich_vu->id}}" {{ !empty($search_dich_vu)&&$search_dich_vu==$dich_vu->id?"selected":"" }}>
-                            {{$dich_vu->ten_dich_vu}}
-                        </option>
-                    @endforeach
+                <label for="trang_thai_search">Trạng thái</label>
+                <select name="trang_thai_search" class="form-select">
+                  <option value="">-- Chọn trạng thái --</option>
+                  <option value="1" {{!empty($trang_thai_search) && $trang_thai_search == 1?"selected":""}}>Đã đăng ký</option>
+                  <option value="0" {{!empty($trang_thai_search) && $trang_thai_search == 0?"selected":""}}>Chưa đăng ký</option>
                 </select>
               </div>
             <div class="action-buttons">
@@ -54,46 +54,41 @@
                 </button>
               </div>
               <div>
-                <a class="btn btn-primary" href="{{route('them_bg')}}">
-                  <i class="fa-solid fa-plus me-1"></i> Thêm mới
+                <form action="{{ url('import_menu') }}" method="post" enctype="multipart/form-data" id="import-form">
+                  @csrf
+                  <input type="file" name="file" id="file-input" class="d-none" required>
+                  <button type="submit" name="import" class="btn btn-outline-secondary ms-2" id="import-button"><i class="fa-solid fa-file-import me-1"></i>Import Excel</button>
+                </form>
+                <a class="btn btn-primary" href="" data-bs-toggle="modal" data-bs-target="#dangKyModal">
+                  <i class="fa-solid fa-plus me-1"></i> Đăng ký
                 </a>
-                <!-- <button class="btn btn-outline-secondary ms-2">
-                  <a href="{{route('export_hs',[
-                      'tk_ho_ten'=>!empty($tk_ho_ten)?$tk_ho_ten:"",
-                      'tk_gioi_tinh'=>!empty($tk_gioi_tinh)?$tk_gioi_tinh:"",
-                      'tk_quoc_tich'=>!empty($tk_quoc_tich)?$tk_quoc_tich:"",
-                      'tk_ngay_nhap_hoc'=>!empty($tk_ngay_nhap_hoc)?$tk_ngay_nhap_hoc:"",
-                      'tk_ngay_thoi_hoc'=>!empty($tk_ngay_thoi_hoc)?$tk_ngay_thoi_hoc:"",
-                      'tk_trang_thai'=>!empty($tk_trang_thai)?$tk_trang_thai:""])}}">
-                    <i class="fa-solid fa-file-export me-1"></i> Xuất Excel
-                  </a>
-                </button> -->
               </div>
             </div>
           </form>
-          <!-- Table Section -->
           <div class="data-container">
             <table class="table table-bordered">
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Tên loại dịch vụ</th>
-                  <th>Tên dịch vụ</th>
-                  <th>Giá</th>
-                  <th>Định nghĩa</th>
+                  <th>Tên học sinh</th>
+                  <th>Trạng thái</th>
                   <th>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach($bang_gias as $bang_gia)
+                @foreach($hoc_sinhs as $hoc_sinh)
                 <tr>
-                  <td>{{$bang_gia->id}}</td>
-                  <td>{{$bang_gia->ten_dich_vu}}</td>
-                  <td>{{$bang_gia->ten_gia}}</td>
-                  <td>{{$bang_gia->gia}}VNĐ</td>
-                  <td>{{$bang_gia->dinh_nghia}}</td>
+                  <td>{{$hoc_sinh->id}}</td>
+                  <td>{{$hoc_sinh->ho_ten}}</td>
+                  <td>
+                    @if($hoc_sinh->trang_thai == 1)
+                      <span class="badge bg-success">Đã đăng ký</span>
+                    @else
+                      <span class="badge bg-danger">Chưa đăng ký</span>
+                    @endif
+                  </td>
                   <td class="action-column">
-                    <a class="action-button" title="Chỉnh sửa" href="{{ route('sua_bg',['id'=>$bang_gia->id]) }}"><i class="fa-solid fa-edit"></i></a>
+                    <a class="action-button" title="Xóa" href=""><i class="fa-solid fa-trash"></i></a>
                   </td>
                 </tr>
                 @endforeach
@@ -122,6 +117,40 @@
       </div>
     </div>
   </div>
+  <!-- Modal -->
+  <div class="modal fade" id="dangKyModal" tabindex="-1" aria-labelledby="dangKyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form action="" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="dangKyModalLabel">Đăng ký học sinh</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="hoc_sinh_select" class="form-label">Chọn học sinh</label>
+              <select class="lesson-input form-select select2" id="hoc_sinh_select" name="hoc_sinh_id" required>
+                <option value=""></option>
+                @foreach ($hoc_sinhs as $hoc_sinh)
+                  <option value="{{ $hoc_sinh->id }}">{{ $hoc_sinh->id }}-{{ $hoc_sinh->ho_ten }}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="fileUpload" class="form-label">Tải lên file</label>
+              <input type="file" class="form-control" id="fileUpload" name="file" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button type="submit" class="btn btn-primary">Gửi đăng ký</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
    
@@ -225,6 +254,15 @@
  
   createPagination(1);
   displayPageData(1);
+  </script>
+  <script>
+    $(document).ready(function () {
+      $('.select2').select2({
+        placeholder: "Chọn học sinh",
+        allowClear: true,
+        dropdownParent: $('#dangKyModal')
+      });
+    });
   </script>
 @include('components/bao_loi')
 </body>
