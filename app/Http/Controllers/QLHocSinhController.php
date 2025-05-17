@@ -10,6 +10,7 @@ use App\Models\HocSinhModel;
 use App\Models\KhoaHocModel;
 use App\Models\MonHocModel;
 use App\Models\HocPhiModel;
+use App\Models\LopModel;
 use App\Models\TaiKhoanModel;
 use App\Models\TTDiXeModel;
 use App\Models\TuyenXeModel;
@@ -64,6 +65,7 @@ class QLHocSinhController extends Controller
     public function viewChiTiet(Request $request)
     {
         $data = [];
+        $data['lops']= LopModel::all();
         $data['nang_khieu'] = MonHocModel::where('nang_khieu',1)->get();
         $data['hoc_sinh'] = HocSinhModel::select ('ql_hocsinh.*','dm_khoahoc.ten_khoa_hoc','tt_hsdixe.*','ql_hocsinh.id as hs_id')
             ->leftJoin('dm_khoahoc','dm_khoahoc.id','=','ql_hocsinh.id_khoa_hoc')

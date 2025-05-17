@@ -38,15 +38,18 @@
               <div id="button_container">
                 <a id="hien_thi_thanh_toan_btn" href="{{route('hien_thi_thanh_toan',['id' => $hoc_sinh->id])}}" class="btn btn-primary">
                   Hiển thị thanh toán
-                </a>  
+                </a> 
+                <button id="chuyen_lop_btn" class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#uploadChuyenLopModal" {{ $hoc_sinh->trang_thai == 0?"hidden":"" }}>
+                  Chuyển lớp
+                </button> 
                 <button id="nhap_hoc_lai_btn" class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#uploadNhapHocLaiModal" {{ $hoc_sinh->trang_thai == 1?"hidden":"" }}>
                   Nhập học lại
                 </button>
-                <button id="thoi_hoc_btn" class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#uploadThoiHocModal" {{ $hoc_sinh->trang_thai == 0?"hidden":"" }}>
-                  Thôi học
-                </button>
                 <button id="bao_luu_btn" class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#uploadBaoLuuModal" {{ $hoc_sinh->trang_thai == 0?"hidden":"" }}>
                   Bảo lưu
+                </button>
+                <button id="thoi_hoc_btn" class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#uploadThoiHocModal" {{ $hoc_sinh->trang_thai == 0?"hidden":"" }}>
+                  Thôi học
                 </button>
               </div>
             </div>
@@ -95,7 +98,11 @@
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="dia_chi">Địa chỉ</label>
-              <input type="text" name="dia_chi" class="form-control" readonly placeholder="Nhập địa chỉ" value="{{$hoc_sinh->dia_chi}}">
+              <input type="text" name="dia_chi" class="form-control" readonly value="{{$hoc_sinh->dia_chi}}">
+            </div>
+            <div class="search-item d-inline-block w-25">
+              <label for="ten_lop">Lớp</label>
+              <input type="text" name="ten_lop" class="form-control" readonly value="{{$hoc_sinh->id_phan_lop}}" placeholder="Nhập lớp" readonly>
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="loai_hoc_phi">Loại học phí</label>
@@ -295,6 +302,34 @@
           <div class="modal-body">
             <label for="ngay_bao_luu_update">Ngày bảo lưu</label>
             <input type="date" class="form-control" name="ngay_bao_luu_update" id="ngay_bao_luu_update" required min="{{ $hoc_sinh->ngay_thoi_hoc }}">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button type="submit" class="btn btn-primary">Tải lên</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal fade" id="uploadChuyenLopModal" tabindex="-1" aria-labelledby="uploadChuyenLop" aria-hidden="true">
+      <div class="modal-dialog">
+        <form id="import-form" action="" method="POST" enctype="multipart/form-data" class="modal-content">
+          @csrf
+          <div class="modal-header">
+            <h5 class="modal-title" id="uploadChuyenLop">Khai báo chuyển lớp</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+          </div>
+          <div class="modal-body">
+            <label for="lop_update">Lớp</label>
+            <select name="lop_update" class="form-select" id="lop_update">
+              @foreach($lops as $lop)
+                <option value="{{$lop->id}}" {{ $hoc_sinh->id_phan_lop == $lop->id?"selected":"" }}>{{$lop->ten_lop}}</option>
+              @endforeach
+            </select>
+          </div>
+          <div class="modal-body">
+            <input type="text" name="id" class="form-control" value="{{ $hoc_sinh->hs_id }}" hidden>
+            <label for="file">File tài liệu</label>
+            <input type="file" name="file" class="form-control" id="file-input" required>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
