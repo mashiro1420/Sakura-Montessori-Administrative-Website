@@ -84,10 +84,7 @@
                       <td>{{ date('Y-m-d', strtotime($item->ngay_upload)) }}</td>
                       <td>
                         @if(!empty($item->link_giay_to))
-                          <a href="{{ asset('uploads/documents/'.$item->link_giay_to) }}" target="_blank" class="btn btn-sm btn-info">
-                            <i class="fa-solid fa-eye"></i> Xem
-                          </a>
-                          <a href="{{ asset('uploads/documents/'.$item->link_giay_to) }}" download class="btn btn-sm btn-success">
+                          <a href="{{ asset('Giay_to/'.$item->id_hoc_sinh.'/'.$item->link_giay_to) }}" download class="btn btn-sm btn-success">
                             <i class="fa-solid fa-download"></i> Tải xuống
                           </a>
                         @else

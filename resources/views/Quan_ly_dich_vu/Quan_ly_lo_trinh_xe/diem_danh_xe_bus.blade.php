@@ -230,7 +230,19 @@
         const checkboxes = document.querySelectorAll('.hoc-sinh-checkbox');
         const hiddenInput = document.getElementById('ds_diem_danh');
         let selectedIds = [];
-
+  
+        // Lặp qua checkbox để kiểm tra checkbox đã được check sẵn
+        checkboxes.forEach(checkbox => {
+            const id = checkbox.getAttribute('data-id');
+            if (checkbox.checked) {
+                selectedIds.push(id);
+            }
+        });
+  
+        // Cập nhật giá trị ban đầu vào input ẩn
+        hiddenInput.value = selectedIds.join(',');
+  
+        // Lắng nghe sự kiện khi checkbox thay đổi trạng thái
         checkboxes.forEach(checkbox => {
             checkbox.addEventListener('change', function () {
                 const id = this.getAttribute('data-id');
@@ -246,6 +258,7 @@
         });
     });
   </script>
+  
 
   </script>
 @include('components/bao_loi')

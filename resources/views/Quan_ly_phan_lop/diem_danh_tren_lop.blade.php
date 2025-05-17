@@ -253,27 +253,39 @@
       document.getElementById('import-form').submit();  
     });
   </script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-          const checkboxes = document.querySelectorAll('.hoc-sinh-checkbox');
-          const hiddenInput = document.getElementById('ds_diem_danh');
-          let selectedIds = [];
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkboxes = document.querySelectorAll('.hoc-sinh-checkbox');
+        const hiddenInput = document.getElementById('ds_diem_danh');
+        let selectedIds = [];
   
-          checkboxes.forEach(checkbox => {
-              checkbox.addEventListener('change', function () {
-                  const id = this.getAttribute('data-id');
-                  if (this.checked) {
-                      if (!selectedIds.includes(id)) {
-                          selectedIds.push(id);
-                      }
-                  } else {
-                      selectedIds = selectedIds.filter(item => item !== id);
-                  }
-                  hiddenInput.value = selectedIds.join(',');
-              });
-          });
-      });
-    </script>
+        // Lặp qua checkbox để kiểm tra checkbox đã được check sẵn
+        checkboxes.forEach(checkbox => {
+            const id = checkbox.getAttribute('data-id');
+            if (checkbox.checked) {
+                selectedIds.push(id);
+            }
+        });
+  
+        // Cập nhật giá trị ban đầu vào input ẩn
+        hiddenInput.value = selectedIds.join(',');
+  
+        // Lắng nghe sự kiện khi checkbox thay đổi trạng thái
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const id = this.getAttribute('data-id');
+                if (this.checked) {
+                    if (!selectedIds.includes(id)) {
+                        selectedIds.push(id);
+                    }
+                } else {
+                    selectedIds = selectedIds.filter(item => item !== id);
+                }
+                hiddenInput.value = selectedIds.join(',');
+            });
+        });
+    });
+  </script>
 @include('components/bao_loi')
 </body>
 </html>
