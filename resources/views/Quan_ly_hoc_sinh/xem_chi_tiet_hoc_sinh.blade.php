@@ -96,20 +96,21 @@
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="loai_hoc_phi">Loại học phí</label>
-              <select name="loai_hoc_phi" class="form-select" readonly>
-                <option value="0" {{$hoc_sinh->loai_hoc_phi=='0'?"selected":""}}>Học phí kỳ</option>
-                <option value="1" {{$hoc_sinh->loai_hoc_phi=='1'?"selected":""}}>Học phí năm</option>
-                <option value="2" {{$hoc_sinh->loai_hoc_phi=='2'?"selected":""}}>Học phí tháng</option>
-              </select>
+              <input type="text" name="loai_hoc_phi" class="form-control" readonly placeholder="Nhập địa chỉ" value="{{$hoc_sinh->loai_hoc_phi=='0'?"Học phí kỳ":($hoc_sinh->loai_hoc_phi=='1'?"Học phí năm":"Học phí tháng")}}">
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="nang_khieu">Môn năng khiếu</label>
-              <select name="loai_hoc_phi" class="form-select" readonly>
-                <option value="0" {{empty($hoc_sinh->nang_khieu)?"selected":""}}>Không đăng ký</option>
-                @foreach ($nang_khieu as $mon)
-                <option value="{{ $mon->id }}" {{$hoc_sinh->nang_khieu==$mon->id?"selected":""}}>{{$mon->ten_mon_hoc}}</option>
-                @endforeach
-              </select>
+              <input type="text" name="nang_khieu" class="form-control" readonly placeholder="Nhập địa chỉ" value="@php
+              if(!empty($hoc_sinh->nang_khieu)){
+                foreach ($nang_khieu as $mon) {
+                  if ($mon->id == $hoc_sinh->nang_khieu) {
+                    echo $mon->ten_mon_hoc;
+                  }
+                }
+              } else {
+                echo "Không đăng ký";
+              }
+              @endphp">
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="khoa_hoc">Khóa học</label>

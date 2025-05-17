@@ -130,8 +130,20 @@ class PhanLopController extends Controller
     public function viewPhanLop(Request $request)
     {
         $data = [];
-        $data['phan_lop'] = PhanLopModel::find($request->id);
-        $data['hoc_sinhs'] = HocSinhModel::where('id_khoa_hoc',$data['phan_lop']->id_khoa_hoc)->get();
+        $data['phan_lop'] = PhanLopModel::query()
+        ->select('*', 'ql_phanlop.id as pl_id','ql_gv_cn.ho_ten as ho_ten_cn','ql_gv_nn.ho_ten as ho_ten_nn','ql_gv_vn.ho_ten as ho_ten_vn')
+        ->leftJoin('ql_nhanvien as ql_gv_cn', 'ql_phanlop.id_gv_cn', '=', 'ql_gv_cn.id')
+        ->leftJoin('ql_nhanvien as ql_gv_nn', 'ql_phanlop.id_gv_nuoc_ngoai', '=', 'ql_gv_nn.id')
+        ->leftJoin('ql_nhanvien as ql_gv_vn', 'ql_phanlop.id_gv_viet', '=', 'ql_gv_vn.id')
+        ->leftJoin('dm_phonghoc', 'ql_phanlop.id_phong_hoc', '=', 'dm_phonghoc.id')
+        ->leftJoin('dm_lop', 'ql_phanlop.id_lop', '=', 'dm_lop.id')
+        ->leftJoin('dm_khoi', 'ql_phanlop.id_khoi', '=', 'dm_khoi.id')
+        ->leftJoin('dm_hedaotao', 'ql_phanlop.id_he_dao_tao', '=', 'dm_hedaotao.id')
+        ->leftJoin('dm_khoahoc', 'ql_phanlop.id_khoa_hoc', '=', 'dm_khoahoc.id')
+        ->leftJoin('tt_ky', 'ql_phanlop.id_ky', '=', 'tt_ky.id')
+        ->find($request->id);
+        $data['hoc_sinh_mois'] = HocSinhModel::where('id_khoa_hoc',$data['phan_lop']->id_khoa_hoc)->whereNull('id_phan_lop')->where('trang_thai',1)->get();
+        $data['hoc_sinhs'] = HocSinhModel::where('id_phan_lop',$request->id)->get();
         return view('Quan_ly_phan_lop.phan_lop', $data);
     }
 
@@ -182,7 +194,7 @@ class PhanLopController extends Controller
             $hoc_sinh->id_phan_lop = $phan_lop->id;
             $hoc_sinh->save();
         }
-        return redirect()->route('ql_phan_lop')->with('bao_loi','Lưu thành công');
+        return redirect()->back()->with('bao_loi','Lưu thành công');
     }
     public function xlSuaPhanLop(Request $request)
     {
@@ -194,9 +206,16 @@ class PhanLopController extends Controller
         $phan_lop->id_lop = $request->lop;
         $phan_lop->id_khoi = $request->khoi;
         $phan_lop->id_he_dao_tao = $request->he_dao_tao;
-        $phan_lop->khoa_hoc = $request->khoa_hoc;
+        $phan_lop->id_khoa_hoc = $request->khoa_hoc;
         $phan_lop->save();
-        return redirect()->route('ql_phanlop')->with('bao_loi','Lưu thành công');
+        return redirect()->route('ql_phan_lop')->with('bao_loi','Lưu thành công');
+    }
+    public function xlDuoi(Request $request)
+    {
+        $hoc_sinh = HocSinhModel::find($request->id);
+        $hoc_sinh->id_phan_lop = null;
+        $hoc_sinh->save();
+        return redirect()->back()->with('bao_loi','Lưu thành công');
     }
     public function exportPhanLop(Request $request){
         $query = HocSinhModel::query()->select ('*','ql_hocsinh.id as hoc_sinh_id')
@@ -214,14 +233,23 @@ class PhanLopController extends Controller
     }
     public function xlDiemDanh(Request $request)
     {
-        dd($request);
         $ds_diem_danh = explode(',', $request->ds_diem_danh);
+        $ds_lop = HocSinhModel::where('id_phan_lop',$request->id)->get();
+        foreach($ds_lop as $hoc_sinh){
+            if(!in_array($hoc_sinh->id, $ds_diem_danh)){
+                $diem_danh = DiemDanhModel::where('id_hoc_sinh', $hoc_sinh->id)->where('ngay',date('Y-m-d'))->where('loai_diem_danh',1)->first();
+                if($diem_danh){
+                    $diem_danh->trang_thai = 0;
+                    $diem_danh->save();
+                }
+            }
+        }
         foreach($ds_diem_danh as $diem_danh){
             $di_hoc = DiemDanhModel::where('id_hoc_sinh', $diem_danh)->where('ngay',date('Y-m-d'))->where('loai_diem_danh',1)->first();
             $di_hoc->trang_thai = 1;
             $di_hoc->save();
         }
-        return redirect()->route('ql_phanlop')->with('bao_loi','Lưu thành công');
+        return redirect()->back()->with('bao_loi','Lưu thành công');
     }
     public function importPhanLop(Request $request){
         Excel::import(new PhanLopImport($request->id), $request->file('file'));

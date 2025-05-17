@@ -45,13 +45,54 @@
           </div>
           <div class="search-item">
           </div>
+          <div class="search-container">
+            <h3> Thông tin lớp</h3>
+            <div class="filter-row">
+              <div class="search-item d-inline-block w-25">
+                <label for="gv_cn">Giáo viên chủ nhiệm</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ho_ten_cn }}" readonly>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="gv_viet">Giáo viên Việt</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ho_ten_vn }}" readonly>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="gv_nuoc_ngoai">Giáo viên nước ngoài</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ho_ten_nn }}" readonly>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="lop">Lớp</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ten_lop }}" readonly>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="khoi">Khối</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ten_khoi }}" readonly>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="phong_hoc">Phòng học</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ten_phong_hoc }}" readonly>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="he_dao_tao">Hệ đào tạo</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ten_he_dao_tao }}" readonly>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="khoa_hoc">Khóa học</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ten_khoa_hoc }}" readonly>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="ky">Kỳ</label>
+                <input type="text" class="form-control" value="{{ $phan_lop->ten_ky }}" readonly>
+              </div>
+            </div>
+          </div>
           <form class="search-container" action="{{ url('xl_phan_lop') }}" method="post">
           @csrf
             <div class="filter-row">
-              <input type="text" name="id" value="{{ $phan_lop->id }}" hidden>
+              <input type="text" name="id" value="{{ $phan_lop->pl_id }}" hidden>
               <div class="search-item d-inline-block w-50">
                     <select name="hoc_sinhs[]" class="form-select choices-multiple" multiple>
-                        @foreach($hoc_sinhs as $hs)
+                        @foreach($hoc_sinh_mois as $hs)
                             <option value="{{ $hs->id }}">
                             {{ $hs->id }} - {{ $hs->ho_ten }}
                             </option>
@@ -88,8 +129,6 @@
                   <th>ID</th>
                   <th>Họ tên</th>
                   <th>Ngày nhập học</th>
-                  <th>Trạng thái</th>
-                  <th>Ngày thôi học</th>
                   <th>Nick name</th>
                   <th>Giới tính</th>
                   <th>Ngày sinh</th>
@@ -104,8 +143,6 @@
                   <td>{{$hoc_sinh->id}}</td>
                   <td>{{$hoc_sinh->ho_ten}}</td>
                   <td>{{$hoc_sinh->ngay_nhap_hoc}}</td>
-                  <td>{{$hoc_sinh->trang_thai==1?"Đang học":"Đã thôi học"}}</td>
-                  <td>{{$hoc_sinh->ngay_thoi_hoc}}</td>
                   <td>{{$hoc_sinh->nickname}}</td>
                   <td>{{$hoc_sinh->gioi_tinh==1?"Nam":"Nữ"}}</td>
                   <td>{{$hoc_sinh->ngay_sinh}}</td>
@@ -113,7 +150,7 @@
                   <td>{{$hoc_sinh->ten_khoa_hoc}}</td>
                   <td class="action-column">
                     <a class="action-button" href="{{route('chi_tiet_hs',['id' => $hoc_sinh->id])}}" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a>
-                    <a class="action-button" title="Chỉnh sửa" href="{{route('sua_hs',['id' => $hoc_sinh->id])}}"><i class="fa-solid fa-edit"></i></a>
+                    <a class="action-button" href="{{route('xl_duoi',['id' => $hoc_sinh->id])}}" title="Đuổi khỏi lớp"><i class="fa-solid fa-user-minus"></i></a>
                   </td>
                 </tr>
                 @endforeach

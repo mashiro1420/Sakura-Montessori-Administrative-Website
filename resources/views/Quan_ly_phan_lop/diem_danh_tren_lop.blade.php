@@ -22,7 +22,7 @@
         <div class="container-fluid">
           <!-- Page Header -->
           <div class="page-header">
-            <h2><i class="fa-solid fa-chalkboard-user"></i> Quản lý phân lớp</h2>
+            <h2><i class="fa-solid fa-chalkboard-user"></i> Điểm danh</h2>
           </div>
           <div class="search-container">
             <div class="filter-row">
@@ -63,9 +63,9 @@
                 <input type="text" class="form-control" value="{{ $phan_lop->ten_ky }}" readonly>
               </div>
             </div>
+            <form action="{{ url('xl_diem_danh') }}" method="post">
+              @csrf
             <div class="action-buttons">
-              <form action="{{ url('xl_diem_danh') }}" method="post">
-                @csrf
               <div>
                 <button class="btn btn-primary" type="submit">
                   <i class="fa-solid fa-search me-1"></i> Nộp điểm danh
@@ -78,7 +78,7 @@
                 <a class="btn btn-primary" href="#">
                   <i class="fa-solid fa-arrow-left me-1"></i> Quay lại
                 </a>
-                <button class="btn btn-outline-secondary ms-2">
+                {{-- <button class="btn btn-outline-secondary ms-2">
                   <a href="{{route('export_nv',[
                       'gv_cn'=>!empty($gv_cn)?$gv_cn:"",
                       'tk_gioi_tinh'=>!empty($tk_gioi_tinh)?$tk_gioi_tinh:"",
@@ -87,13 +87,13 @@
                       'tk_trang_thai'=>!empty($tk_trang_thai)?$tk_trang_thai:""])}}">
                     <i class="fa-solid fa-file-export me-1"></i> Xuất Excel
                   </a>
-                </button>
+                </button> --}}
               </div>
             </div>
           </div>
           <!-- Table Section -->
           <div class="data-container">
-            <input type="text" name="ds_id_hoc_sinh" id="ds_id_hoc_sinh">
+            <input type="text" name="ds_diem_danh" id="ds_diem_danh" hidden>
             <table class="table table-bordered">
               <thead>
                 <tr>
@@ -110,7 +110,7 @@
                   <td>{{$hoc_sinh->ho_ten}}</td>
                   <td>{{$hoc_sinh->trang_thai==1?"Có mặt":"Vắng mặt"}}</td>
                   <td class="action-column">
-                    <input type="checkbox" class="hoc-sinh-checkbox" data-id="{{ $hoc_sinh->id }}">
+                    <input type="checkbox" class="hoc-sinh-checkbox" data-id="{{ $hoc_sinh->hoc_sinh_id }}" {{ $hoc_sinh->trang_thai==1?"checked":"" }}>
                   </td>
                 </tr>
                 @endforeach
@@ -256,7 +256,7 @@
     <script>
       document.addEventListener('DOMContentLoaded', function () {
           const checkboxes = document.querySelectorAll('.hoc-sinh-checkbox');
-          const hiddenInput = document.getElementById('ds_id_hoc_sinh');
+          const hiddenInput = document.getElementById('ds_diem_danh');
           let selectedIds = [];
   
           checkboxes.forEach(checkbox => {

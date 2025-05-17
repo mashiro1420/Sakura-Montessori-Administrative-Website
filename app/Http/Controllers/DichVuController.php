@@ -86,6 +86,16 @@ public function xlSuaGia(Request $request)
     public function xlDiemDanh(Request $request)
     {
         $ds_diem_danh = explode(',', $request->ds_diem_danh);
+        $ds_di_bus = HocSinhModel::where('id_phan_lop',$request->id)->get();
+        foreach($ds_di_bus as $hoc_sinh){
+            if(!in_array($hoc_sinh->id, $ds_diem_danh)){
+                $diem_danh = DiemDanhModel::where('id_hoc_sinh', $hoc_sinh->id)->where('ngay',date('Y-m-d'))->where('loai_diem_danh',2)->first();
+                if($diem_danh){
+                    $diem_danh->trang_thai = 0;
+                    $diem_danh->save();
+                }
+            }
+        }
         foreach($ds_diem_danh as $diem_danh){
             $di_hoc = DiemDanhModel::where('id_hoc_sinh', $diem_danh)->where('ngay',date('Y-m-d'))->where('loai_diem_danh',2)->first();
             $di_hoc->trang_thai = 1;
@@ -175,13 +185,13 @@ public function xlSuaGia(Request $request)
         ->leftjoin('ql_nhanvien as monitor','monitor.id','=','ql_lotrinhxe.id_monitor')
         ->leftJoin('dm_tuyenxe','dm_tuyenxe.id','=','ql_lotrinhxe.id_tuyen_xe')
         ->find( $request->id);
-        $query = TTDiXeModel::query()->select('ql_hocsinh.*','dm_tuyenxe.ten_tuyen_xe')
-            ->leftJoin('ql_hocsinh','tt_hsdixe.id_hoc_sinh','=','ql_hocsinh.id')
-            ->leftJoin('ql_lotrinhxe','ql_lotrinhxe.id_tuyen_xe','=','tt_hsdixe.id_tuyen_xe')
-            ->leftJoin('dm_tuyenxe','ql_lotrinhxe.id_tuyen_xe','=','dm_tuyenxe.id')
-            ->where('ql_lotrinhxe.id', $request->id);
-        $data['hoc_sinhs'] = $query->orderBy('id_hoc_sinh','ASC')->get();
-        // dd($data['hoc_sinhs'] );
+        $data['hoc_sinhs'] = HocSinhModel::query()->select ('tt_hsdixe.*','ql_hocsinh.ho_ten','ql_hocsinh.id as hs_id','ql_diemdanh.trang_thai')
+        ->leftJoin('tt_hsdixe','tt_hsdixe.id_hoc_sinh','=','ql_hocsinh.id')
+        ->leftJoin('ql_lotrinhxe','ql_lotrinhxe.id_tuyen_xe','=','tt_hsdixe.id_tuyen_xe')
+        ->leftJoin('ql_diemdanh','ql_diemdanh.id_hoc_sinh','=','ql_hocsinh.id')
+        ->where('loai_diem_danh',2)
+        ->where('ql_diemdanh.ngay',date('Y-m-d'))
+        ->get();
         return view('Quan_ly_dich_vu.Quan_ly_lo_trinh_xe.diem_danh_xe_bus', $data);
     }
     public function xlThemLoTrinh(Request $request)

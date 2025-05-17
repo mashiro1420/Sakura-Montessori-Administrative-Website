@@ -24,72 +24,81 @@
           <div class="page-header">
             <h2><i class="fa-solid fa-chalkboard-user"></i> Điểm danh xe bus</h2>
           </div>
-
+        <div class="search-container">
           <!-- Search and Filter Section -->
           <!-- < class="search-container"> -->
-          <form class="search-container" action="" method="get">
-            @csrf
-            <div class="filter-row">
-              <div class="search-item d-inline-block w-25">
-                <label for="tuyen_xe">Tuyến xe</label>
-                <input type="text" name="tuyen_xe" class="form-control" value="{{ $lo_trinh->ten_tuyen_xe }}" readonly>
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="lai_xe">Lái xe</label>
-                <input type="text" name="lai_xe" class="form-control" value="{{ $lo_trinh->ho_ten_lai_xe }}" readonly>
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="monitor">Giám sát viên</label>
-                <input type="text" name="monitor" class="form-control" value="{{ $lo_trinh->ho_ten_monitor }}" readonly>
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="ngay">Ngày</label>
-                <input type="date" name="ngay" class="form-control" value="{{ $lo_trinh->ngay }}" readonly>
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="bien_so_xe">Biển số xe</label>
-                <input type="text" name="bien_so_xe" class="form-control" value="{{ $lo_trinh->bien_so_xe }}" readonly>
-              </div>
+          <div class="filter-row">
+            <div class="search-item d-inline-block w-25">
+              <label for="tuyen_xe">Tuyến xe</label>
+              <input type="text" name="tuyen_xe" class="form-control" value="{{ $lo_trinh->ten_tuyen_xe }}" readonly>
+            </div>
+            <div class="search-item d-inline-block w-25">
+              <label for="lai_xe">Lái xe</label>
+              <input type="text" name="lai_xe" class="form-control" value="{{ $lo_trinh->ho_ten_lai_xe }}" readonly>
+            </div>
+            <div class="search-item d-inline-block w-25">
+              <label for="monitor">Giám sát viên</label>
+              <input type="text" name="monitor" class="form-control" value="{{ $lo_trinh->ho_ten_monitor }}" readonly>
+            </div>
+            <div class="search-item d-inline-block w-25">
+              <label for="ngay">Ngày</label>
+              <input type="date" name="ngay" class="form-control" value="{{ $lo_trinh->ngay }}" readonly>
+            </div>
+            <div class="search-item d-inline-block w-25">
+              <label for="bien_so_xe">Biển số xe</label>
+              <input type="text" name="bien_so_xe" class="form-control" value="{{ $lo_trinh->bien_so_xe }}" readonly>
+            </div>
+          </div>
+          <form  action="{{ url('xl_diem_danh_bus') }}" method="post">
+              @csrf
             <div class="action-buttons">
+              <div>
+                <button class="btn btn-primary" type="submit">
+                  <i class="fa-solid fa-search me-1"></i> Nộp điểm danh
+                </button>
+                <button type="reset" id="reset-btn" class="btn btn-outline-secondary ms-2">
+                  <i class="fa-solid fa-rotate me-1"></i> Làm mới
+                </button>
+              </div>
               <div>
                 <a class="btn btn-primary" href="{{route('ql_lt')}}">
                   <i class="fa-solid fa-arrow-left me-1"></i> Quay lại
                 </a>
               </div>
             </div>
-          </form>
-          <!-- Table Section -->
-          <div class="data-container">
-            <input type="text" name="ds_id_hoc_sinh" id="ds_id_hoc_sinh">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Học sinh</th>
-                  <th>Điểm đón</th>
-                  <th>Số KM</th>
-                  <th>Người đưa đón</th>
-                  <th>Số liên hệ khẩn</th>
-                  <th>Điểm danh</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach($hoc_sinhs as $hoc_sinh)
-                <tr>
-                  <td>{{$hoc_sinh->id}}</td>
-                  <td>{{$hoc_sinh->ho_ten}}</td>
-                  <td>{{$hoc_sinh->diem_don}}</td>
-                  <td>{{$hoc_sinh->so_km}}</td>
-                  <td>{{$hoc_sinh->nguoi_dua_don}}</td>
-                  <td>{{$hoc_sinh->lien_he_khan}}</td>
-                  <td class="action-column">
-                    <input type="checkbox" class="hoc-sinh-checkbox" data-id="{{ $hoc_sinh->id }}">
+          </div>
+            <!-- Table Section -->
+            <div class="data-container">
+              <input type="text" name="ds_diem_danh" id="ds_diem_danh" hidden>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Học sinh</th>
+                    <th>Điểm đón</th>
+                    <th>Người đưa đón</th>
+                    <th>Số liên hệ khẩn</th>
+                    <th>Trạng thái</th>
+                    <th>Điểm danh</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($hoc_sinhs as $hoc_sinh)
+                  <tr>
+                    <td>{{$hoc_sinh->hs_id}}</td>
+                    <td>{{$hoc_sinh->ho_ten}}</td>
+                    <td>{{$hoc_sinh->diem_don}}</td>
+                    <td>{{$hoc_sinh->nguoi_dua_don}}</td>
+                    <td>{{$hoc_sinh->lien_he_khan}}</td>
+                    <td>{{$hoc_sinh->trang_thai==1?"Có mặt":"Vắng mặt"}}</td>
+                    <td class="action-column">
+                    <input type="checkbox" class="hoc-sinh-checkbox" data-id="{{ $hoc_sinh->hs_id }}" {{ $hoc_sinh->trang_thai==1?"checked":"" }}>
                   </td>
                 </tr>
                 @endforeach
               </tbody>
             </table>
-          </div>
+          </form>
           <!-- Pagination -->
           <div class="pagination-container">
             <nav>
@@ -219,7 +228,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
         const checkboxes = document.querySelectorAll('.hoc-sinh-checkbox');
-        const hiddenInput = document.getElementById('ds_id_hoc_sinh');
+        const hiddenInput = document.getElementById('ds_diem_danh');
         let selectedIds = [];
 
         checkboxes.forEach(checkbox => {

@@ -132,6 +132,7 @@ Route::middleware(['session.check', 'quyen.check:phan_lop'])->group(function () 
     Route::post('xl_phan_lop',[PhanLopController::class, 'xlPhanLop']);
     Route::post('xl_sua_phan_lop',[PhanLopController::class, 'xlSuaPhanLop']);
     Route::post('xl_diem_danh',[PhanLopController::class, 'xlDiemDanh']);
+    Route::get('xl_duoi',[PhanLopController::class, 'xlDuoi'])->name('xl_duoi');
     Route::get('export_lop',[PhanLopController::class, 'exportPhanLop'])->name('export_lop');
     Route::post('import_lop',[PhanLopController::class, 'importPhanLop'])->name('import_lop');
 });
@@ -142,7 +143,7 @@ Route::middleware(['session.check', 'quyen.check:monitor_bus'])->group(function 
     Route::get('sua_lt', [DichVuController::class, 'viewSuaLoTrinh'])->name('sua_lt');
     Route::post('xl_them_lt',[DichVuController::class, 'xlThemLoTrinh']);
     Route::get('diem_danh_bus', [DichVuController::class, 'viewDiemDanhBus'])->name('diem_danh_bus');
-    Route::post('xl_diem_danh_bus',[DichVuController::class, 'xlDiemDanhBus']);
+    Route::post('xl_diem_danh_bus',[DichVuController::class, 'xlDiemDanh']);
     Route::post('xl_upload_diem_danh',[DichVuController::class, 'xlUploadDiemDanhBus']);
 });
 Route::middleware(['session.check', 'quyen.check:bang_gia'])->group(function () {
@@ -176,6 +177,7 @@ Route::middleware(['session.check', 'quyen.check:giang_day'])->group(function ()
     Route::get('ql_tlgd', [KeHoachGiangDayController::class, 'viewQuanLyTaiLieuGiangDay'])->name('ql_tlgd');
     Route::get('them_tlgd', [KeHoachGiangDayController::class, 'viewThemTaiLieuGiangDay'])->name('them_tlgd');
     Route::get('sua_tlgd', [KeHoachGiangDayController::class, 'viewSuaTaiLieuGiangDay'])->name('sua_tlgd');
+    Route::post('xl_them_tlgd',[KeHoachGiangDayController::class, 'xlThemTaiLieuGiangDay']);
 });
 Route::middleware(['session.check', 'quyen.check:phu_huynh'])->group(function () {
     Route::get('ph_tkb', [GiangDayController::class, 'viewPhuHuynhTKB'])->name('ph_tkb');

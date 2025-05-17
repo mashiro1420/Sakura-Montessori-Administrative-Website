@@ -23,7 +23,7 @@
           <div class="page-header">
             <h2><i class="fa-solid fa-chalkboard-user"></i> Thêm tài liệu giảng dạy</h2>
           </div>
-          <form class="search-container" action="" method="post">
+          <form class="search-container" action="{{url('xl_them_tlgd')}}" method="post" enctype="multipart/form-data">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
@@ -36,31 +36,21 @@
                 </select>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="ky">Kỳ</label>
-                <select id="position-filter" name="ky" class="form-select" required> 
-                  <option value="" disable selected>Chọn kỳ</option>
-                  @foreach($kys as $ky)
-                    <option value="{{$ky->id}}">{{$ky->ten_ky}}</option>
-                  @endforeach
-                </select>
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="ky">Lớp</label>
-                <select id="position-filter" name="ky" class="form-select" required> 
+                <label for="lop">Lớp</label>
+                <select id="position-filter" name="lop" class="form-select" required> 
                   <option value="" disable selected>Chọn lớp</option>
                   @foreach($lops as $lop)
-                    <option value="{{$lop->id}}">{{$lop->ten_lop}}</option>
+                    <option value="{{$lop->id}}">{{$lop->ten_lop}} - {{$lop->ten_ky}}</option>
                   @endforeach
                 </select>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="link_giao_an">Link giáo án</label>
-                <input type="link" name="link_giao_an" class="form-control" >
+                <label for="file">File tài liệu</label>
+                <input type="file" name="file" class="form-control" id="file-input" required>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="mo_ta">Mô tả</label>
-                <textarea name="mo_ta" id="" class="form-control" col="30" row="10">
-                </textarea>
+                <textarea name="mo_ta" id="" class="form-control" col="30" row="10"></textarea>
               </div>
             </div>
             </div>

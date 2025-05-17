@@ -35,18 +35,18 @@
                     <option value="">Tất cả</option>
                     @foreach ($tuans as $tuan)
                         <option value="{{$tuan->id}}" {{ !empty($tuan_search)&&$tuan_search==$tuan->id?"selected":"" }}>
-                            Tuần thứ {{$tuan->tuan}} năm {{$tuan->nam}}
+                            Tuần thứ {{$tuan->tuan}} từ {{$tuan->tu_ngay}} đến {{$tuan->den_ngay}}
                         </option>
                     @endforeach
                 </select>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="search_ky">Kỳ</label>
-                <select id="search_ky" name = "search_ky" class="form-select">
-                    <option value="">Tất cả</option>
+                <label for="ky_search">Kỳ</label>
+                <select id="ky_search" name = "ky_search" class="form-select">
+                    <option value="">Tất cả</option>  
                     @foreach ($kys as $ky)
-                        <option value="{{$tuan->id}}" {{ !empty($search_ky)&&$search_ky==$tuan->id?"selected":"" }}>
-                            {{$ky->id}}
+                        <option value="{{$ky->id}}" {{ !empty($ky_search)&&$ky_search==$tuan->id?"selected":"" }}>
+                            {{$ky->ten_ky}}
                         </option>
                     @endforeach
                 </select>
@@ -75,17 +75,6 @@
                 <a class="btn btn-primary" href="{{route('them_tlgd')}}">
                   <i class="fa-solid fa-plus me-1"></i> Thêm mới
                 </a>
-                <!-- <button class="btn btn-outline-secondary ms-2">
-                  <a href="{{route('export_hs',[
-                      'tk_ho_ten'=>!empty($tk_ho_ten)?$tk_ho_ten:"",
-                      'tk_gioi_tinh'=>!empty($tk_gioi_tinh)?$tk_gioi_tinh:"",
-                      'tk_quoc_tich'=>!empty($tk_quoc_tich)?$tk_quoc_tich:"",
-                      'tk_ngay_nhap_hoc'=>!empty($tk_ngay_nhap_hoc)?$tk_ngay_nhap_hoc:"",
-                      'tk_ngay_thoi_hoc'=>!empty($tk_ngay_thoi_hoc)?$tk_ngay_thoi_hoc:"",
-                      'tk_trang_thai'=>!empty($tk_trang_thai)?$tk_trang_thai:""])}}">
-                    <i class="fa-solid fa-file-export me-1"></i> Xuất Excel
-                  </a>
-                </button> -->
               </div>
             </div>
           </form>
@@ -94,22 +83,20 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Tuần</th>
                   <th>Kỳ</th>
                   <th>Lớp</th>
+                  <th>Tuần</th>
                   <th>Mô tả</th>
-                  <th>Link giáo án</th>
+                  <th>Tài liệu</th>
                   <th>Thao tác</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($tl_giang_days as $tl_giang_day)
                 <tr>
-                  <td>{{$tl_giang_day->id}}</td>
-                  <td>{{$tl_giang_day->ten_tuan}}</td>
                   <td>{{$tl_giang_day->ten_ky}}</td>
                   <td>{{$tl_giang_day->ten_lop}}</td>
+                  <td>{{$tl_giang_day->tuan}}</td>
                   <td>{{$tl_giang_day->mo_ta}}</td>
                   <td>{{$tl_giang_day->link_giao_an}}</td>
                   <td class="action-column">
