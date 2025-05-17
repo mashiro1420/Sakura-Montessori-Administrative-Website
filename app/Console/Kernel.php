@@ -18,6 +18,10 @@ class Kernel extends ConsoleKernel
         $schedule->command("app:tao-diem-danh-command")->dailyAt('1:00');
         $schedule->command("app:tao-menu")->weeklyOn(0,'1:00');
         $schedule->command("app:tao-tkb")->weeklyOn(4,'1:00');
+        $schedule->command("app:tinh-hoc-phi-nam")->yearlyOn(8,1,'0:0');
+        $schedule->command("app:tinh-hoc-phi-ky")->yearlyOn(8,1,'0:0');
+        $schedule->command("app:tinh-hoc-phi-ky")->yearlyOn(2,1,'0:0');
+        $schedule->command("app:tinh-hoc-phi-thang")->monthly();
     }
 
     /**

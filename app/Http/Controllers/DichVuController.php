@@ -12,6 +12,7 @@ use App\Models\HocSinhModel;
 use App\Models\LoTrinhXeModel;
 use App\Models\NhanVienModel;
 use App\Models\ThucDonModel;
+use App\Models\TTDichVuHocSinhModel;
 use App\Models\TTDiXeModel;
 use App\Models\TuanModel;
 use App\Models\TuyenXeModel;
@@ -237,6 +238,12 @@ public function xlSuaGia(Request $request)
     {
         $di_xe = new TTDiXeModel();
         $giay_to = new GiayToModel();
+        $dich_vu = new TTDichVuHocSinhModel();
+        $dich_vu->id_hoc_sinh = $request->hoc_sinh;
+        if($request->so_km<=5) $dich_vu->id_dich_vu = BangGiaModel::where('ten_gia', 'Quãng 0-5KM')->first()->id;
+        elseif($request->so_km>=6&&$request->so_km<=12) $dich_vu->id_dich_vu = BangGiaModel::where('ten_gia', 'Quãng 6-12KM')->first()->id;
+        else $dich_vu->id_dich_vu = BangGiaModel::where('ten_gia', 'Quãng 13-20KM')->first()->id;
+        $dich_vu->save();
         $hoc_sinh = HocSinhModel::find($request->hoc_sinh);
         $hoc_sinh->di_bus = 1;
         $giay_to->id_hoc_sinh = $request->hoc_sinh;
@@ -244,7 +251,7 @@ public function xlSuaGia(Request $request)
         $di_xe->id_hoc_sinh = $request->hoc_sinh;
         $di_xe->id_tuyen_xe = $request->tuyen_xe;
         $di_xe->diem_don = $request->diem_don;
-        $di_xe->so_km = $request->so_km."KM";
+        $di_xe->so_km = $request->so_km;
         $di_xe->nguoi_dua_don = $request->nguoi_dua_don;
         $di_xe->lien_he_khan = $request->lien_he_khan;
         $di_xe->save();
@@ -263,7 +270,12 @@ public function xlSuaGia(Request $request)
     {
         $giay_to = new GiayToModel();
         $hoc_sinh = HocSinhModel::find($request->hoc_sinh);
-        $hoc_sinh->an_com = 1;
+        $hoc_sinh->an_com = $request->an_com;
+        $dich_vu = new TTDichVuHocSinhModel();
+        $dich_vu->id_hoc_sinh = $request->hoc_sinh;
+        if($request->an_com == 1) $dich_vu->id_dich_vu = BangGiaModel::where('ten_gia', 'Ăn đủ bữa')->first()->id;
+        elseif($request->an_com == 2) $dich_vu->id_dich_vu = BangGiaModel::where('ten_gia', 'Ăn bán trú không ăn bữa phụ')->first()->id;
+        $dich_vu->save();
         $giay_to->id_hoc_sinh = $request->hoc_sinh;
         $giay_to->ten_giay_to = 'Đăng ký: Dịch vụ ăn tại trường - '.date('Y-m-d');
         if ($request->hasFile('file')) {
@@ -280,16 +292,11 @@ public function xlSuaGia(Request $request)
     {
         // $giay_to = new GiayToModel();
         $hoc_sinh = HocSinhModel::find($request->id);
+        if($hoc_sinh->an_com == 1) $bang_gia = BangGiaModel::where('ten_gia', 'Ăn đủ bữa')->first()->id;
+        elseif($hoc_sinh->an_com == 2) $bang_gia = BangGiaModel::where('ten_gia', 'Ăn bán trú không ăn bữa phụ')->first()->id;
+        $dich_vu = TTDichVuHocSinhModel::where('id_hoc_sinh',$request->id)->where('id_dich_vu',$bang_gia->id)->first();
+        $dich_vu->delete();
         $hoc_sinh->an_com = 0;
-        // $giay_to->id_hoc_sinh = $request->hoc_sinh;
-        // $giay_to->ten_giay_to = 'Đăng ký: Hủy dịch vụ ăn tại trường - '.date('Y-m-d');
-        // if ($request->hasFile('file')) {
-        //     $file = $request->file;
-        //     $filename = md5(time().rand(1,100) . $request->file->getClientOriginalName()) . '.' . $request->file->getClientOriginalExtension();
-        //     $file->move('Giay_to/'.$request->hoc_sinh.'', $filename);
-        //     $giay_to->link_giay_to = $filename;
-        // }
-        // $giay_to->save();
         $hoc_sinh->save();
         return redirect()->route('ql_dk_an_hs')->with('bao_loi','Lưu thành công');
     }

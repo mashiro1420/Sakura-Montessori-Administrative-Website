@@ -137,6 +137,13 @@
               </select>
             </div>
             <div class="mb-3">
+              <label for="an_com" class="form-label">Chọn học sinh</label>
+              <select class="form-select" id="an_com" name="an_com" required>
+                  <option value="1">Ăn đủ bữa</option>
+                  <option value="2">Ăn bỏ bữa phụ</option>
+              </select>
+            </div>
+            <div class="mb-3">
               <label for="fileUpload" class="form-label">Tải lên file</label>
               <input type="file" class="form-control" id="fileUpload" name="file" required>
             </div>

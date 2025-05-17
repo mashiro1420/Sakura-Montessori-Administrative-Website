@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\HocSinhExport;
 use App\Imports\HocSinhImport;
 use App\Http\Controllers\Controller;
+use App\Models\BangGiaModel;
 use App\Models\GiayToModel;
 use App\Models\HocSinhModel;
 use App\Models\KhoaHocModel;
@@ -14,6 +15,7 @@ use App\Models\KyModel;
 use App\Models\LopModel;
 use App\Models\PhanLopModel;
 use App\Models\TaiKhoanModel;
+use App\Models\TTDichVuHocSinhModel;
 use App\Models\TTDiXeModel;
 use App\Models\TuyenXeModel;
 use Illuminate\Http\Request;
@@ -191,9 +193,20 @@ class QLHocSinhController extends Controller
         $hoc_sinh->thuong_tru = $request->thuong_tru;
         $hoc_sinh->dia_chi = $request->dia_chi;
         $hoc_sinh->loai_hoc_phi = $request->loai_hoc_phi;
-        if(!empty($di_xe)){
-            if($request->tuyen_xe=='huy') $di_xe->delete();
+        if($hoc_sinh->di_bus == 1){
+            $bang_gias = BangGiaModel::where('id_dich_vu',1)->get();
+            foreach($bang_gias as $bang_gia){
+                $dich_vu = TTDichVuHocSinhModel::where('id_hoc_sinh',$hoc_sinh->id)->where('id_dich_vu',$bang_gia->id)->first();
+            }
+            if($request->tuyen_xe=='huy'){
+                $di_xe->delete();
+                $dich_vu->delete();
+            } 
             else{
+                if($request->so_km<=5) $dich_vu->id_dich_vu = BangGiaModel::where('ten_gia', 'Quãng 0-5KM')->first()->id;
+                elseif($request->so_km>=6&&$request->so_km<=12) $dich_vu->id_dich_vu = BangGiaModel::where('ten_gia', 'Quãng 6-12KM')->first()->id;
+                else $dich_vu->id_dich_vu = BangGiaModel::where('ten_gia', 'Quãng 13-20KM')->first()->id;
+                $dich_vu->save();
                 $hoc_sinh->di_bus = 0;
                 $di_xe->id_tuyen_xe = $request->tuyen_xe;
                 $di_xe->diem_don = $request->diem_don;
@@ -327,9 +340,26 @@ class QLHocSinhController extends Controller
             ->select('ql_hocphi.*', 'ql_hocsinh.ho_ten')
             ->leftJoin('ql_hocsinh', 'ql_hocphi.id_hoc_sinh', '=', 'ql_hocsinh.id')
             ->where('ql_hocphi.id_hoc_sinh', $request->id);
-
         $data['thanh_toan'] = $query->orderBy('ql_hocphi.id', 'desc')->first();
+        // dd($data['thanh_toan']);
         return view('Quan_ly_hoc_sinh.hien_thi_thanh_toan', $data);
+    }
+    public function xlThanhToan(Request $request){
+        $hoc_phi = HocPhiModel::find($request->id);
+        $hoc_phi->ngay_thanh_toan = date('Y-m-d');
+        $giay_to = new GiayToModel();
+        $giay_to->id_hoc_sinh = $hoc_phi->id_hoc_sinh;
+        $loai_hoc_phi = $hoc_phi->loai_hoc_phi==0?'Học phí kỳ':($hoc_phi->loai_hoc_phi==1?'Học phí năm':'Học phí tháng');
+        $giay_to->ten_giay_to = ''.$loai_hoc_phi.': '.date('Y-m-d');
+        if ($request->hasFile('file')) {
+            $file = $request->file;
+            $filename = md5(time().rand(1,100) . $request->file->getClientOriginalName()) . '.' . $request->file->getClientOriginalExtension();
+            $file->move('Giay_to/'.$hoc_phi->id_hoc_sinh.'', $filename);
+            $giay_to->link_giay_to = $filename;
+        }
+        $giay_to->save();
+        $hoc_phi->save();
+        return redirect()->back()->with('bao_loi','Lưu thành công');
     }
     // Phu huynh
     public function viewPhuHuynhThanhToan(Request $request)

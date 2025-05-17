@@ -119,6 +119,7 @@ Route::middleware(['session.check', 'quyen.check:hoc_sinh'])->group(function () 
     Route::post('xl_nhap_hoc_lai',[QLHocSinhController::class, 'xlNhapHocLai']);
     Route::post('xl_quay_lai',[QLHocSinhController::class, 'xlQuayLai']);
     Route::post('xl_bao_luu',[QLHocSinhController::class, 'xlBaoLuu']);
+    Route::post('xl_thanh_toan',[QLHocSinhController::class, 'xlThanhToan']);
     Route::get('export_hs',[QLHocSinhController::class, 'export'])->name('export_hs');
     Route::post('import_hs',[QLHocSinhController::class, 'import'])->name('import_hs');
 });

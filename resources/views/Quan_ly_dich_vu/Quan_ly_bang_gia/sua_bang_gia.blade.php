@@ -28,6 +28,7 @@
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
+                <input type="text" name="id" class="form-control" value="{{$bang_gia->id}}" hidden>
                 <label for="dich_vu">Tên loại dịch vụ</label required>
                 <select id="dich_vu" name = "dich_vu" class="form-select">
                     @foreach ($dich_vus as $dich_vu)

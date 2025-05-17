@@ -24,40 +24,48 @@
           <div class="page-header">
             <h2><i class="fa-solid fa-chalkboard-user"></i> Hiển thị thanh toán</h2>
           </div>
-          <form class="search-container" action="{{url('xl_sua_bg')}}" method="post">
+          <form class="search-container" action="{{url('xl_thanh_toan')}}" method="post">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
+                <input type="text" name="id" class="form-control" value="{{ $thanh_toan->id}}" hidden>
                 <label for="ho_ten">Tên học sinh</label>
-                <input type="text" name="ho_ten" class="form-control" value="{{ $thanh_toan->ho_ten ?? '' }}">
+                <input type="text" name="ho_ten" class="form-control" value="{{ $thanh_toan->id_hoc_sinh.' - '.$thanh_toan->ho_ten}}" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ngay_tao">Ngày tạo</label>
-                <input type="date" name="ngay_tao" class="form-control" value="{{$thanh_toan->ngay_tao}}">
+                <input type="date" name="ngay_tao" class="form-control" value="{{$thanh_toan->ngay_tao}}" readonly>
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ngay_thanh_toan">Ngày thanh toán</label>
-                <input type="date" name="ngay_thanh_toan" class="form-control" value="{{$thanh_toan->ngay_thanh_toan}}">
+                <input type="date" name="ngay_thanh_toan" class="form-control" value="{{$thanh_toan->ngay_thanh_toan}}" readonly>
               </div>
-              <div class="search-item d-inline-block w-25">
+            </div>
+            <div class="filter-row">
+              <div class="search-item d-inline-block w-20">
                 <label for="tong_dich_vu">Tổng dịch vụ</label>
-                <input type="int" name="tong_dich_vu" class="form-control" value="{{number_format($thanh_toan->tong_dich_vu)}}">
+                <input type="int" name="tong_dich_vu" class="form-control" value="{{number_format($thanh_toan->tong_dich_vu)}} VNĐ">
               </div>
-              <div class="search-item d-inline-block w-25">
+              <div class="search-item d-inline-block w-20">
                 <label for="tong_hoc_phi">Tổng học phí</label>
-                <input type="int" name="tong_hoc_phi" class="form-control" value="{{number_format($thanh_toan->tong_hoc_phi)}}">
+                <input type="int" name="tong_hoc_phi" class="form-control" value="{{number_format($thanh_toan->tong_hoc_phi)}} VNĐ">
               </div>
-              <div class="search-item d-inline-block w-25">
+              <div class="search-item d-inline-block w-20">
                 <label for="phat_trien">Phát triển</label>
-                <input type="int" name="phat_trien" class="form-control" value="{{number_format($thanh_toan->phat_trien)}}">
+                <input type="int" name="phat_trien" class="form-control" value="{{number_format($thanh_toan->phat_trien)}} VNĐ">
               </div>
+              <div class="search-item d-inline-block w-20">
+                <label for="nang_khieu">Tiền năng khiếu</label>
+                <input type="int" name="nang_khieu" class="form-control" value="{{number_format($thanh_toan->tien_nang_khieu)}} VNĐ">
+              </div>
+            </div>
               <div class="search-item d-inline-block w-25">
                 <label for="tong_tien">Tổng tiền</label>
-                <input type="int" name="tong_tien" class="form-control" value="{{number_format($thanh_toan->tong_so_tien)}}">
+                <input type="int" name="tong_tien" class="form-control" value="{{number_format($thanh_toan->tong_so_tien)}} VNĐ">
               </div>
             <div class="action-buttons">
               <div>
-                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#uploadModal" {{!empty($thanh_toan->ngay_thanh_toan)?'hidden':''}}>
                   Thanh toán
                 </button>
               </div>
