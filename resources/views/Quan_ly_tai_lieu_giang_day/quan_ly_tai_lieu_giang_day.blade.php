@@ -26,7 +26,7 @@
           </div>
 
           <!-- Search and Filter Section -->
-          <form class="search-container" action="{{route('ql_bg')}}" method="get">
+          <form class="search-container" action="{{route('ql_tlgd')}}" method="get">
             @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-50">
@@ -45,7 +45,7 @@
                 <select id="ky_search" name = "ky_search" class="form-select">
                     <option value="">Tất cả</option>  
                     @foreach ($kys as $ky)
-                        <option value="{{$ky->id}}" {{ !empty($ky_search)&&$ky_search==$tuan->id?"selected":"" }}>
+                        <option value="{{$ky->id}}" {{ !empty($ky_search)&&$ky_search==$ky->id?"selected":"" }}>
                             {{$ky->ten_ky}}
                         </option>
                     @endforeach
@@ -56,7 +56,7 @@
                 <select id="lop_search" name = "lop_search" class="form-select">
                     <option value="">Tất cả</option>
                     @foreach ($lops as $lop)
-                        <option value="{{$lop->id}}" {{ !empty($lop_search)&&$lop_search==$tuan->id?"selected":"" }}>
+                        <option value="{{$lop->id}}" {{ !empty($lop_search)&&$lop_search==$lop->id?"selected":"" }}>
                             {{$lop->ten_lop}}
                         </option>
                     @endforeach
@@ -101,7 +101,8 @@
                   <td>{{$tl_giang_day->link_giao_an}}</td>
                   <td class="action-column">
                     <a class="action-button" title="Chỉnh sửa" href="{{ route('sua_tlgd',['id'=>$tl_giang_day->id]) }}"><i class="fa-solid fa-edit"></i></a>
-                  </td>
+                    <a class="action-button" title="Xóa" href="{{ route('xl_xoa_tlgd',['id'=>$tl_giang_day->id]) }}"><i class="fa-solid fa-trash"></i></a>
+                  </td> 
                 </tr>
                 @endforeach
               </tbody>
