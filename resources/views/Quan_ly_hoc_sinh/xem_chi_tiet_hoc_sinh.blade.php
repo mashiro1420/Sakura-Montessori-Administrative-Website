@@ -45,6 +45,9 @@
                 <button id="thoi_hoc_btn" class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#uploadThoiHocModal" {{ $hoc_sinh->trang_thai == 0?"hidden":"" }}>
                   Thôi học
                 </button>
+                <button id="bao_luu_btn" class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#uploadBaoLuuModal" {{ $hoc_sinh->trang_thai == 0?"hidden":"" }}>
+                  Bảo lưu
+                </button>
               </div>
             </div>
             <div class="search-item d-inline-block w-25">
@@ -225,56 +228,82 @@
       </div>
     </div>
   </div>
-  <!-- Model thôi học -->
-  <div class="modal fade" id="uploadThoiHocModal" tabindex="-1" aria-labelledby="uploadThoiHoc" aria-hidden="true">
-    <div class="modal-dialog">
-      <form id="import-form" action="{{ url('xl_thoi_hoc') }}" method="POST" enctype="multipart/form-data" class="modal-content">
-        @csrf
-        <div class="modal-header">
-          <h5 class="modal-title" id="uploadThoiHoc">Khai báo thôi học</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-        </div>
-        <div class="modal-body">
+    <!-- Model thôi học -->
+    <div class="modal fade" id="uploadThoiHocModal" tabindex="-1" aria-labelledby="uploadThoiHoc" aria-hidden="true">
+      <div class="modal-dialog">
+        <form id="import-form" action="{{ url('xl_thoi_hoc') }}" method="POST" enctype="multipart/form-data" class="modal-content">
+          @csrf
+          <div class="modal-header">
+            <h5 class="modal-title" id="uploadThoiHoc">Khai báo thôi học</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+          </div>
+          <div class="modal-body">
+            <input type="text" name="id" class="form-control" value="{{ $hoc_sinh->hs_id }}" hidden>
+            <label for="">File tài liệu</label>
+            <input type="file" name="file" class="form-control" id="file-input" required>
+          </div>
+          <div class="modal-body">
+            <label for="ngay_thoi_hoc_update">Ngày thôi học</label>
+            <input type="date" class="form-control" name="ngay_thoi_hoc_update" id="ngay_thoi_hoc_update" required min="{{$hoc_sinh->ngay_nhap_hoc}}">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button type="submit" class="btn btn-primary">Tải lên</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Model nhập học lại -->
+    <div class="modal fade" id="uploadNhapHocLaiModal" tabindex="-1" aria-labelledby="uploadNhapHocLai" aria-hidden="true">
+      <div class="modal-dialog">
+        <form id="import-form" action="{{ url('xl_nhap_hoc_lai') }}" method="POST" enctype="multipart/form-data" class="modal-content">
+          @csrf
+          <div class="modal-header">
+            <h5 class="modal-title" id="uploadNhapHocLai">Khai báo nhập học lại</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+          </div>
+          <div class="modal-body">
           <input type="text" name="id" class="form-control" value="{{ $hoc_sinh->hs_id }}" hidden>
-          <label for="">File tài liệu</label>
-          <input type="file" name="file" class="form-control" id="file-input" required>
-        </div>
-        <div class="modal-body">
-          <label for="ngay_thoi_hoc_update">Ngày thôi học</label>
-          <input type="date" class="form-control" name="ngay_thoi_hoc_update" id="ngay_thoi_hoc_update" required min="{{$hoc_sinh->ngay_nhap_hoc}}">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-          <button type="submit" class="btn btn-primary">Tải lên</button>
-        </div>
-      </form>
+            <label for="">File tài liệu</label>
+            <input type="file" name="file" class="form-control" id="file-input" required>
+          </div>
+          <div class="modal-body">
+            <label for="ngay_nhap_hoc_update">Ngày nhập học lại</label>
+            <input type="date"  class="form-control" name="ngay_nhap_hoc_update" id="ngay_nhap_hoc_update" required min="{{ $hoc_sinh->ngay_thoi_hoc }}">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button type="submit" class="btn btn-primary">Tải lên</button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
-  <!-- Model nhập học lại -->
-  <div class="modal fade" id="uploadNhapHocLaiModal" tabindex="-1" aria-labelledby="uploadNhapHocLai" aria-hidden="true">
-    <div class="modal-dialog">
-      <form id="import-form" action="{{ url('xl_nhap_hoc_lai') }}" method="POST" enctype="multipart/form-data" class="modal-content">
-        @csrf
-        <div class="modal-header">
-          <h5 class="modal-title" id="uploadNhapHocLai">Khai báo nhập học lại</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-        </div>
-        <div class="modal-body">
-        <input type="text" name="id" class="form-control" value="{{ $hoc_sinh->hs_id }}" hidden>
-          <label for="">File tài liệu</label>
-          <input type="file" name="file" class="form-control" id="file-input" required>
-        </div>
-        <div class="modal-body">
-          <label for="ngay_nhap_hoc_update">Ngày nhập học lại</label>
-          <input type="date"  class="form-control" name="ngay_nhap_hoc_update" id="ngay_nhap_hoc_update" required min="{{ $hoc_sinh->ngay_thoi_hoc }}">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-          <button type="submit" class="btn btn-primary">Tải lên</button>
-        </div>
-      </form>
+    <!-- Model bảo lưu -->
+    <div class="modal fade" id="uploadBaoLuuModal" tabindex="-1" aria-labelledby="uploadBaoLuu" aria-hidden="true">
+      <div class="modal-dialog">
+        <form id="import-form" action="" method="POST" enctype="multipart/form-data" class="modal-content">
+          @csrf
+          <div class="modal-header">
+            <h5 class="modal-title" id="uploadBaoLuu">Khai báo bảo lưu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+          </div>
+          <div class="modal-body">
+            <input type="text" name="id" class="form-control" value="{{ $hoc_sinh->hs_id }}" hidden>
+            <label for="file">File tài liệu</label>
+            <input type="file" name="file" class="form-control" id="file-input" required>
+          </div>
+          <div class="modal-body">
+            <label for="ngay_bao_luu_update">Ngày bảo lưu</label>
+            <input type="date" class="form-control" name="ngay_bao_luu_update" id="ngay_bao_luu_update" required min="{{ $hoc_sinh->ngay_thoi_hoc }}">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            <button type="submit" class="btn btn-primary">Tải lên</button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const hamBurger = document.querySelector(".toggle-btn");
@@ -282,29 +311,6 @@
       document.querySelector("#sidebar").classList.toggle("expand");
     });
   </script>
-  <!-- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const ngayThoiHocInput = document.getElementById('ngay_thoi_hoc');
-      const nhapHocLaiLink = document.getElementById('nhap_hoc_lai_btn');
-      const thoiHocLink = document.getElementById('thoi_hoc_btn');
-
-      function toggleLinks() {
-          if (ngayThoiHocInput.value.trim() === '') {
-              nhapHocLaiLink.classList.add('disabled');
-              thoiHocLink.classList.remove('disabled');
-          } else {
-              nhapHocLaiLink.classList.remove('disabled');
-              thoiHocLink.classList.add('disabled');
-          }
-      }
-
-      // Gọi hàm toggleLinks khi trang được tải
-      toggleLinks();
-
-      // Gọi hàm toggleLinks khi giá trị của input thay đổi
-      ngayThoiHocInput.addEventListener('input', toggleLinks);
-    });
-  </script> -->
 @include('components/bao_loi')
 </body>
 </html>
