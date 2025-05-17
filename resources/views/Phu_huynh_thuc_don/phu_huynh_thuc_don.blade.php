@@ -21,14 +21,14 @@
   
   <!-- Search Panel -->
   <div class="search-panel">
-    <div class="row g-3">
+    <form class="row g-3" action="{{route('ph_td')}}" method="get">
       <div class="col-md-4">
-        <label for="search_tuan" class="form-label small text-muted">Tuần</label>
-        <select id="search_tuan" name="search_tuan" class="form-select">
+        <label for="tuan_search" class="form-label small text-muted">Tuần</label>
+        <select id="tuan_search" name="tuan_search" class="form-select">
           <option value="" disabled selected>Tìm kiếm theo tuần</option>
           @foreach ($tuans as $tuan)
             <option value="{{$tuan->id}}" {{ !empty($search_tuan)&&$search_tuan==$tuan->id?"selected":"" }}>
-              {{$tuan->ten_tuan}}
+              Tuần {{$tuan->tuan}} từ {{$tuan->tu_ngay}} đến {{$tuan->den_ngay}}
             </option>
           @endforeach
         </select>
@@ -43,7 +43,7 @@
           </button>
         </div>
       </div>
-    </div>
+    </form>
   </div>
   <div class="table-container">
     <div class="table-responsive">
