@@ -135,6 +135,7 @@
                   <td class="action-column">
                     <a class="action-button" href="{{route('chi_tiet_hs',['id' => $hoc_sinh->id])}}" title="Xem chi tiết"><i class="fa-solid fa-eye"></i></a>
                     <a class="action-button" title="Chỉnh sửa" href="{{route('sua_hs',['id' => $hoc_sinh->id])}}"><i class="fa-solid fa-edit"></i></a>
+                    <a class="action-button" title="Giấy tờ" href="{{route('hien_thi_ho_so',['id' => $hoc_sinh->id])}}"><i class="fa-solid fa-paperclip"></i></a>
                   </td>
                 </tr>
                 @endforeach

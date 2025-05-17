@@ -94,6 +94,13 @@ class QLHocSinhController extends Controller
         $data['tuyen_xes'] = TuyenXeModel::all();
         return view('Quan_ly_hoc_sinh.sua_hoc_sinh', $data);
     }
+    public function viewHienThiHoSo(Request $request)
+    {
+        $data = [];
+        $data['giay_to'] = GiayToModel::where('id_hoc_sinh',$request->id)->get();
+        $data['hoc_sinh'] = HocSinhModel::find($request->id);
+        return view('Quan_ly_hoc_sinh.hien_thi_ho_so', $data);
+    }
 //-------------------------------------------------
     public function xlThem(Request $request)
     { 
