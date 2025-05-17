@@ -36,14 +36,14 @@
                 <label for="ho_ten_search">Họ và tên</label>
                 <input type="text" id="ho_ten_search" name = "ho_ten_search" {{!empty($ho_ten_search)?"value=$ho_ten_search":""}} class="form-control" placeholder="Tìm kiếm theo họ tên học sinh">
               </div>
-              <div class="search-item d-inline-block w-25">
+              {{-- <div class="search-item d-inline-block w-25">
                 <label for="trang_thai_search">Trạng thái</label>
                 <select name="trang_thai_search" class="form-select">
                   <option value="">-- Chọn trạng thái --</option>
                   <option value="1" {{!empty($trang_thai_search) && $trang_thai_search == 1?"selected":""}}>Đã đăng ký</option>
                   <option value="0" {{!empty($trang_thai_search) && $trang_thai_search == 0?"selected":""}}>Chưa đăng ký</option>
                 </select>
-              </div>
+              </div> --}}
             <div class="action-buttons">
               <div>
                 <button class="btn btn-primary">
@@ -54,11 +54,11 @@
                 </button>
               </div>
               <div>
-                <form action="{{ url('import_menu') }}" method="post" enctype="multipart/form-data" id="import-form">
+                {{-- <form action="{{ url('import_menu') }}" method="post" enctype="multipart/form-data" id="import-form">
                   @csrf
                   <input type="file" name="file" id="file-input" class="d-none" required>
                   <button type="submit" name="import" class="btn btn-outline-secondary ms-2" id="import-button"><i class="fa-solid fa-file-import me-1"></i>Import Excel</button>
-                </form>
+                </form> --}}
                 <a class="btn btn-primary" href="" data-bs-toggle="modal" data-bs-target="#dangKyModal">
                   <i class="fa-solid fa-plus me-1"></i> Đăng ký
                 </a>
@@ -88,7 +88,7 @@
                     @endif
                   </td>
                   <td class="action-column">
-                    <a class="action-button" title="Xóa" href=""><i class="fa-solid fa-trash"></i></a>
+                    <a class="action-button" title="Xóa" href="{{route('xl_huy_an',['id'=>$hoc_sinh->id])}}"><i class="fa-solid fa-trash"></i></a>
                   </td>
                 </tr>
                 @endforeach
@@ -120,7 +120,7 @@
   <!-- Modal -->
   <div class="modal fade" id="dangKyModal" tabindex="-1" aria-labelledby="dangKyModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <form action="" method="POST" enctype="multipart/form-data">
+      <form action="{{url('xl_dk_an')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="modal-content">
           <div class="modal-header">
@@ -130,9 +130,8 @@
           <div class="modal-body">
             <div class="mb-3">
               <label for="hoc_sinh_select" class="form-label">Chọn học sinh</label>
-              <select class="lesson-input form-select select2" id="hoc_sinh_select" name="hoc_sinh_id" required>
-                <option value=""></option>
-                @foreach ($hoc_sinhs as $hoc_sinh)
+              <select class="lesson-input form-select select2" id="hoc_sinh_select" name="hoc_sinh" required>
+                @foreach ($hoc_sinh_mois as $hoc_sinh)
                   <option value="{{ $hoc_sinh->id }}">{{ $hoc_sinh->id }}-{{ $hoc_sinh->ho_ten }}</option>
                 @endforeach
               </select>

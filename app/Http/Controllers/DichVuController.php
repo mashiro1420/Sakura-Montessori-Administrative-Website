@@ -265,7 +265,7 @@ public function xlSuaGia(Request $request)
         $hoc_sinh = HocSinhModel::find($request->hoc_sinh);
         $hoc_sinh->an_com = 1;
         $giay_to->id_hoc_sinh = $request->hoc_sinh;
-        $giay_to->ten_giay_to = 'Đăng ký: Dịch vụ xe bus - '.date('Y-m-d');
+        $giay_to->ten_giay_to = 'Đăng ký: Dịch vụ ăn tại trường - '.date('Y-m-d');
         if ($request->hasFile('file')) {
             $file = $request->file;
             $filename = md5(time().rand(1,100) . $request->file->getClientOriginalName()) . '.' . $request->file->getClientOriginalExtension();
@@ -274,7 +274,24 @@ public function xlSuaGia(Request $request)
         }
         $giay_to->save();
         $hoc_sinh->save();
-        return redirect()->route('ql_dk_bus_hs')->with('bao_loi','Lưu thành công');
+        return redirect()->route('ql_dk_an_hs')->with('bao_loi','Lưu thành công');
+    }
+    public function xlHuyDKAnHS(Request $request)
+    {
+        // $giay_to = new GiayToModel();
+        $hoc_sinh = HocSinhModel::find($request->id);
+        $hoc_sinh->an_com = 0;
+        // $giay_to->id_hoc_sinh = $request->hoc_sinh;
+        // $giay_to->ten_giay_to = 'Đăng ký: Hủy dịch vụ ăn tại trường - '.date('Y-m-d');
+        // if ($request->hasFile('file')) {
+        //     $file = $request->file;
+        //     $filename = md5(time().rand(1,100) . $request->file->getClientOriginalName()) . '.' . $request->file->getClientOriginalExtension();
+        //     $file->move('Giay_to/'.$request->hoc_sinh.'', $filename);
+        //     $giay_to->link_giay_to = $filename;
+        // }
+        // $giay_to->save();
+        $hoc_sinh->save();
+        return redirect()->route('ql_dk_an_hs')->with('bao_loi','Lưu thành công');
     }
     
     //Thuc don
@@ -333,9 +350,18 @@ public function xlSuaGia(Request $request)
     public function viewQuanLyDangKyAnHS(Request $request)
     {
         $data = [];
-        $data['hoc_sinhs'] = HocSinhModel::all();
+        $query = HocSinhModel::query()->where('an_com',1)->where('trang_thai',1);
+        if ($request->filled('ho_ten_search')) {
+            $query->where('ho_ten', 'like', '%' . $request->ho_ten_search . '%')
+                ->orWhere('id', 'like', '%' . $request->ho_ten_search . '%')->where('an_com',1)->where('trang_thai',1);
+            $data['ho_ten_search'] = $request->ho_ten_search;
+        }
+        $data['hoc_sinhs'] = $query->get();
+        // dd($data['hoc_sinhs']);
+        $data['hoc_sinh_mois'] = HocSinhModel::where('an_com',0)->where('trang_thai',1)->get();
         return view('Quan_ly_dich_vu.Dang_ky_an.ql_dang_ky_an', $data);
     }
+
     //Phu huynh
     public function viewPhuHuynhDiemDanhXeBus(Request $request)
     {

@@ -157,11 +157,11 @@ Route::middleware(['session.check', 'quyen.check:bang_gia'])->group(function () 
 Route::middleware(['session.check', 'quyen.check:dang_ky_dv'])->group(function () {
     Route::get('ql_dk_bus_hs', [DichVuController::class, 'viewQuanLyDangKyBusHS'])->name('ql_dk_bus_hs');
     Route::get('dk_bus_hs', [DichVuController::class, 'viewDangKyBusHS'])->name('dk_bus_hs');
-    Route::get('dk_an_hs', [DichVuController::class, 'viewDangKyAnHS'])->name('dk_an_hs');
     Route::get('ql_dk_an_hs', [DichVuController::class, 'viewQuanLyDangKyAnHS'])->name('ql_dk_an_hs');
     //----------------------------------------//
     Route::post('xl_dk_bus',[DichVuController::class, 'xlDKBusHS']);
     Route::post('xl_dk_an',[DichVuController::class, 'xlDKAnHS']);
+    Route::get('xl_huy_an', [DichVuController::class, 'xlHuyDKAnHS'])->name('xl_huy_an');
 });
 Route::middleware(['session.check', 'quyen.check:thuc_don'])->group(function () {
     //Thong ke
