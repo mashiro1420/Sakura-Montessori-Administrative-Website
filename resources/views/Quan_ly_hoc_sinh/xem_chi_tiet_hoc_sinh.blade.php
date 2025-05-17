@@ -102,7 +102,7 @@
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="ten_lop">Lớp</label>
-              <input type="text" name="ten_lop" class="form-control" readonly value="{{$hoc_sinh->id_phan_lop}}" placeholder="Nhập lớp" readonly>
+              <input type="text" name="ten_lop" class="form-control" readonly value="{{$hoc_sinh->ten_lop." - ".$hoc_sinh->ten_ky}}" placeholder="Nhập lớp" readonly>
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="loai_hoc_phi">Loại học phí</label>
@@ -317,7 +317,7 @@
           <div class="modal-body">
             <label for="lop_update">Lớp</label>
             <select name="lop_update" class="form-select" id="lop_update">
-              @foreach($lops as $lop)
+              @foreach($phan_lops as $lop)
                 <option value="{{$lop->id}}" {{ $hoc_sinh->id_phan_lop == $lop->id?"selected":"" }}>{{$lop->ten_lop}}</option>
               @endforeach
             </select>
