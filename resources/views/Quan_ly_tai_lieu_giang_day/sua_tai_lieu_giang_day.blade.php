@@ -24,53 +24,25 @@
             <h2><i class="fa-solid fa-chalkboard-user"></i> Cập nhật tài liệu giảng dạy</h2>
           </div>
           <!-- Form to add new employee -->
-          <div class="search-item">
-              <label for="status-filter">Cập nhật nhiều tài liệu giảng dạy</label>
-              <form action="{{ url('/import_nv') }}" method="post" enctype="multipart/form-data" id="import-form">
-                @csrf
-                <input type="file" name="file" id="file-input" class="d-none" required>
-                <button type="submit" name="import" class="btn btn-outline-secondary ms-2" id="import-button">Import Excel</button>
-              </form>
-            </div>
-          <form class="search-container" action="" method="post">
+          <form class="search-container" action="{{url('xl_sua_tlgd')}}" method="post">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
+                <input type="text" value="{{$tl_giang_day->id}}" hidden class="form-control" id="id" name="id">
                 <label for="tuan">Tuần</label>
-                <select id="position-filter" name = "tuan" class="form-select" readonly> 
-                  <option value="" disable selected>Chọn tuần</option>
-                  @foreach($tuans as $tuan)
-                    <option value="{{$tuan->id}}">Tuần thứ {{$tuan->tuan}} năm {{$tuan->nam}}</option>
-                  @endforeach
-                </select>
+                <input type="text" value="Tuần thứ {{$tuan->tuan}} năm {{$tuan->nam}}" readonly class="form-control" id="tuan" name="tuan">
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="ky">Kỳ</label>
-                <select id="position-filter" name="ky" class="form-select" readonly> 
-                  <option value="" disable selected>Chọn kỳ</option>
-                  @foreach($kys as $ky)
-                    <option value="{{$ky->id}}">{{$ky->ten_ky}}</option>
-                  @endforeach
-                </select>
+                <label for="lop">Lớp</label>
+                <input type="text" value="{{$lop->ten_lop}} - {{$lop->ten_ky}}" readonly class="form-control" id="lop" name="lop">
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="ky">Lớp</label>
-                <select id="position-filter" name="ky" class="form-select" readonly> 
-                  <option value="" disable selected>Chọn lớp</option>
-                  @foreach($lops as $lop)
-                    <option value="{{$lop->id}}">{{$lop->ten_lop}}</option>
-                  @endforeach
-                </select>
-              </div>
-              <div class="search-item d-inline-block w-25">
-                <label for="link_giao_an">Link giáo án</label>
-                <input type="link" name="link_giao_an" value="{{$tl_giang_day->link_giao_an}}" class="form-control" >
+                <label for="file">File tài liệu</label>
+                <input type="file" name="file" class="form-control" id="file-input">
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="mo_ta">Mô tả</label>
-                <textarea name="mo_ta" id="" col="30" row="10" class="form-control">
-                    {{$tl_giang_day->mo_ta}}
-                </textarea>
+                <textarea name="mo_ta" id="" class="form-control" col="30" row="10">{{$tl_giang_day->mo_ta}}</textarea>
               </div>
             </div>
             </div>

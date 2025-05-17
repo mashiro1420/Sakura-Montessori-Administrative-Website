@@ -9,19 +9,31 @@ use App\Models\LopModel;
 use App\Models\PhanLopModel;
 use App\Models\TTGiangDayModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class KeHoachGiangDayController extends Controller
 {
-    public function viewQuanLyTaiLieuGiangDay(){
+    public function viewQuanLyTaiLieuGiangDay(Request $request){
         $date = date("Y-m-d");
-        $query = TTGiangDayModel::query()->select('*')
+        $query = TTGiangDayModel::query()->select('*','tt_giangday.id as id')
         ->leftJoin('ql_giangday','ql_giangday.id','=','tt_giangday.id_giang_day')
         ->leftJoin('tt_tuan','tt_tuan.id','=','ql_giangday.id_tuan')
         ->leftJoin('ql_phanlop','ql_phanlop.id','=','ql_giangday.id_phan_lop')
         ->leftJoin('tt_ky','tt_ky.id','=','ql_phanlop.id_ky')
         ->leftJoin('dm_lop','dm_lop.id','=','ql_phanlop.id_lop');
+        if($request->filled('lop_search')){
+            $query->where('ql_phanlop.id_lop',$request->lop_search);
+            $data['lop_search'] = $request->lop_search;
+        }
+        if($request->filled('tuan_search')){
+            $query->where('ql_giangday.id_tuan',$request->tuan_search);
+            $data['tuan_search'] = $request->tuan_search;
+        }
+        if($request->filled('ky_search')){
+            $query->where('ql_phanlop.id_ky',$request->ky_search);
+            $data['ky_search'] = $request->ky_search;
+        }
         $data['tl_giang_days'] = $query->orderBy('ql_giangday.id')->get();
-        // dd($data['tl_giang_days'] );
         $data['ky_hien_tai'] = KyModel::where('tu_ngay','<=',$date)->where('den_ngay','>=',$date)->first();
         $data['kys']= KyModel::all();
         $data['tuans'] = TuanModel::all();
@@ -39,9 +51,13 @@ class KeHoachGiangDayController extends Controller
         return view("Quan_ly_tai_lieu_giang_day.them_tai_lieu_giang_day",$data);
     }
     public function viewSuaTaiLieuGiangDay(Request $request){
-        $data['kys']= KyModel::all();
-        $data['tuans'] = TuanModel::all();
-        $data['lops'] = LopModel::all();
+        $date = date("Y-m-d");
+        $data['tl_giang_day'] = TTGiangDayModel::find($request->id);
+        $giang_day = GiangDayModel::find($data['tl_giang_day']->id_giang_day);
+        $data['tuan'] = TuanModel::find($giang_day->id_tuan);
+        $data['lop'] = PhanLopModel::leftJoin('tt_ky','tt_ky.id','=','ql_phanlop.id_ky')
+        ->leftJoin('dm_lop','dm_lop.id','=','ql_phanlop.id_lop')
+        ->find($giang_day->id_phan_lop);
         return view("Quan_ly_tai_lieu_giang_day.sua_tai_lieu_giang_day",$data);
     }
     public function xlThemTaiLieuGiangDay(Request $request){ 
@@ -63,6 +79,29 @@ class KeHoachGiangDayController extends Controller
             $tai_lieu->link_giao_an = $filename;
         }
         $tai_lieu->save();
+        return redirect()->route('ql_tlgd')->with('success', 'Thêm tài liệu thành công');
+    }   
+    public function xlSuaTaiLieuGiangDay(Request $request){ 
+        $tai_lieu = TTGiangDayModel::find($request->id);
+        $tai_lieu->mo_ta = $request->mo_ta;
+        if ($request->hasFile('file')) {
+            if(File::exists('Giao_an/' . $tai_lieu->link_giao_an)){
+                File::delete('Giao_an/' . $tai_lieu->link_giao_an);
+            }
+            $file = $request->file;
+            $filename = md5(time().rand(1,100) . $request->file->getClientOriginalName()) . '.' . $request->file->getClientOriginalExtension();
+            $file->move('Giao_an', $filename);
+            $tai_lieu->link_giao_an = $filename;
+        }
+        $tai_lieu->save();
+        return redirect()->route('ql_tlgd')->with('success', 'Thêm tài liệu thành công');
+    }   
+    public function xlXoaTaiLieuGiangDay(Request $request){ 
+        $tai_lieu = TTGiangDayModel::find($request->id);
+        if(File::exists('Giao_an/' . $tai_lieu->link_giao_an)){
+            File::delete('Giao_an/' . $tai_lieu->link_giao_an);
+        }
+        $tai_lieu->delete();
         return redirect()->route('ql_tlgd')->with('success', 'Thêm tài liệu thành công');
     }   
 }

@@ -146,18 +146,6 @@
           </div>
           
           <!-- Import Excel Section -->
-          {{-- <div class="import-section">
-            <h5><i class="fa-solid fa-file-import me-2"></i>Thêm nhiều thời khóa biểu</h5>
-            <form action="{{ url('/import_nv') }}" method="post" enctype="multipart/form-data" id="import-form">
-              @csrf
-              <div class="d-flex align-items-center">
-                <input type="file" name="file" id="file-input" class="form-control" required style="max-width: 400px;">
-                <button type="submit" name="import" class="btn btn-primary ms-3">
-                  <i class="fa-solid fa-file-excel me-1"></i> Import Excel
-                </button>
-              </div>
-            </form>
-          </div> --}}
           
           <!-- Timetable Form -->
           <form action="{{url('xl_tao_tkb')}}" method="post">
