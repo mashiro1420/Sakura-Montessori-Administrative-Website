@@ -152,9 +152,22 @@ class GiangDayController extends Controller
         $hoc_sinh = HocSinhModel::find(session('id_hoc_sinh'));
         $lop = PhanLopModel::find($hoc_sinh->id_phan_lop);
         if(empty($lop)) return redirect()->route('ph_td')->with('bao_loi','Học sinh chưa được phân lớp');
-        $data['tuans'] = ThoiKhoaBieuModel::select('*','ql_thoikhoabieu.id as id', 'tt_tuan.tu_ngay as tkb_tu_ngay')
+        $data['tuans'] = ThoiKhoaBieuModel::select('*','tt_tuan.id as id', 'tt_tuan.tu_ngay as tkb_tu_ngay')
         ->leftJoin('ql_phanlop', 'ql_thoikhoabieu.id_phan_lop', '=', 'ql_phanlop.id')
-        ->leftJoin('tt_tuan', 'ql_thoikhoabieu.id_tuan', '=', 'tt_tuan.id');
+        ->leftJoin('tt_tuan', 'ql_thoikhoabieu.id_tuan', '=', 'tt_tuan.id')
+        ->get();
+        $query = ThoiKhoaBieuModel::select('*')
+        ->where('id_phan_lop',$hoc_sinh->id_phan_lop);
+        if($request->filled('tuan_search')){
+            $query = $query->where('ql_thoikhoabieu.id_tuan',$request->tuan_search);
+            $data['tuan_search'] = $request->tuan_search;
+        }
+        else{
+            $query=$query->where('ql_thoikhoabieu.trang_thai',1);
+        }
+        $data['tkb'] = $query->first();
+        $data['tkb_ngays'] = TKBNgayModel::where('id_thoi_khoa_bieu',$data['tkb']->id)->get();
+        $data['mon_hocs'] = MonHocModel::all();
 
         return view('Phu_huynh_tkb.phu_huynh_tkb', $data);
     }

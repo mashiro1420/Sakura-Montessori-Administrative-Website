@@ -23,8 +23,8 @@
   <div class="search-panel">
     <div class="row g-3">
       <div class="col-md-4">
-        <label for="search_tuan" class="form-label small text-muted">Tuần</label>
-        <select id="search_tuan" name="search_tuan" class="form-select">
+        <label for="tuan_search" class="form-label small text-muted">Tuần</label>
+        <select id="tuan_search" name="tuan_search" class="form-select">
           <option value="" disabled selected>Tìm kiếm theo tuần</option>
           @foreach ($tuans as $tuan)
             <option value="{{$tuan->id}}" {{ !empty($search_tuan)&&$search_tuan==$tuan->id?"selected":"" }}>
@@ -32,15 +32,6 @@
             </option>
           @endforeach
         </select>
-      </div>
-      <div class="col-md-5">
-        <label for="search_name" class="form-label small text-muted">Tên dịch vụ</label>
-        <div class="input-group">
-          <span class="input-group-text bg-white border-end-0">
-            <i class="fas fa-search text-muted"></i>
-          </span>
-          <input type="text" id="search_name" class="form-control border-start-0" placeholder="Nhập tên dịch vụ cần tìm">
-        </div>
       </div>
       <div class="col-md-3 d-flex align-items-end">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end w-100">
@@ -58,6 +49,13 @@
   <!-- Table -->
   <div class="table-container">
     <div class="table-responsive">
+      @php
+        use Carbon\Carbon;
+        $ngay_hoc = [];
+        for ($i = 0; $i <= 5; $i++) {
+          $ngay_hoc[] = Carbon::parse($tkb->tkb_tu_ngay)->addDays($i)->toDateString();
+        }
+      @endphp
       <table class="table">
         <thead>
           <tr>
@@ -68,14 +66,44 @@
             <th class="day-header">Thứ 5</th>
             <th class="day-header">Thứ 6</th>
           </tr>
+          <tr>
+            <th style="width: 80px;">Ngày</th>
+            <th class="date-header">{{$ngay_hoc[0]}}</th>
+            <th class="date-header">{{$ngay_hoc[1]}}</th>
+            <th class="date-header">{{$ngay_hoc[2]}}</th>
+            <th class="date-header">{{$ngay_hoc[3]}}</th>
+            <th class="date-header">{{$ngay_hoc[4]}}</th>
+          </tr>
         </thead>
         <tbody class="service-table-body">
           @for ($i = 1; $i <= 11; $i++)
             <tr>
-              <td style="font-weight: bold">Tiết {{ $i }}</td>
-              @foreach($tkbNgay as $tkb)
-              <td>{{ $tkb->{'tiet'.$i} }}</td>
-              @endforeach
+              <td class="period-label">Tiết {{$i}}</td>
+              <td>@php
+                foreach($mon_hocs as $mon_hoc){
+                  echo $mon_hoc->id == $tkb_ngays[0]['tiet'.$i] ? $mon_hoc->ten_mon_hoc : "";
+                }
+              @endphp </td>
+              <td>@php
+                foreach($mon_hocs as $mon_hoc){
+                  echo $mon_hoc->id == $tkb_ngays[1]['tiet'.$i] ? $mon_hoc->ten_mon_hoc : "";
+                }
+              @endphp </td>
+              <td>@php
+                foreach($mon_hocs as $mon_hoc){
+                  echo $mon_hoc->id == $tkb_ngays[2]['tiet'.$i] ? $mon_hoc->ten_mon_hoc : "";
+                }
+              @endphp </td>
+              <td>@php
+                foreach($mon_hocs as $mon_hoc){
+                  echo $mon_hoc->id == $tkb_ngays[3]['tiet'.$i] ? $mon_hoc->ten_mon_hoc : "";
+                }
+              @endphp </td>
+              <td>@php
+                foreach($mon_hocs as $mon_hoc){
+                  echo $mon_hoc->id == $tkb_ngays[4]['tiet'.$i] ? $mon_hoc->ten_mon_hoc : "";
+                }
+              @endphp </td>
             </tr>
           @endfor
         </tbody>
