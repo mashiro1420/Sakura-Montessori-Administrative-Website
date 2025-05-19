@@ -144,8 +144,8 @@ class QLNhanVienController extends Controller
         $hop_dong = new TTHopDongModel(['id_nhan_vien'=>$ma_nv]);
         $phan_quyen = new PhanQuyenModel((['id_tai_khoan'=>$ma_nv,'id_quyen'=>7]));
         $nhan_vien->save();
-        $phan_quyen->save();
         $tai_khoan->save();
+        $phan_quyen->save();
         $hon_nhan->save();
         $dan_su->save();
         $lien_he->save();
