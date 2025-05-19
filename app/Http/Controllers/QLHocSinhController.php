@@ -150,6 +150,7 @@ class QLHocSinhController extends Controller
         $hoc_sinh->quoc_tich_bo = $request->quoc_tich_bo;
         $hoc_sinh->thuong_tru = $request->thuong_tru;
         $hoc_sinh->dia_chi = $request->dia_chi;
+        $hoc_sinh->id_khoa_hoc = $request->khoa_hoc;
         $hoc_sinh->loai_hoc_phi = $request->loai_hoc_phi;
         $tai_khoan = new TaiKhoanModel();
         $tai_khoan->tai_khoan = $ma_hs;
@@ -193,21 +194,32 @@ class QLHocSinhController extends Controller
         $hoc_sinh->thuong_tru = $request->thuong_tru;
         $hoc_sinh->dia_chi = $request->dia_chi;
         $hoc_sinh->loai_hoc_phi = $request->loai_hoc_phi;
+        $hoc_sinh->id_khoa_hoc = $request->khoa_hoc;
         if($hoc_sinh->di_bus == 1){
             $bang_gias = BangGiaModel::where('id_dich_vu',1)->get();
             foreach($bang_gias as $bang_gia){
-                $dich_vu = TTDichVuHocSinhModel::where('id_hoc_sinh',$hoc_sinh->id)->where('id_dich_vu',$bang_gia->id)->first();
+                $dich_vu = TTDichVuHocSinhModel::where('id_hoc_sinh',$hoc_sinh->id)->where('id_bang_gia',$bang_gia->id)->first();
+                if(!empty($dich_vu)){
+                    break;
+                }
             }
+            if(empty($dich_vu)){
+                $dich_vu = new TTDichVuHocSinhModel();
+                $dich_vu->id_hoc_sinh = $hoc_sinh->id;
+            } 
             if($request->tuyen_xe=='huy'){
                 $di_xe->delete();
                 $dich_vu->delete();
+                $hoc_sinh->di_bus = 0;
             } 
             else{
-                if($request->so_km<=5) $dich_vu->id_dich_vu = BangGiaModel::where('ten_gia', 'Quãng 0-5KM')->first()->id;
-                elseif($request->so_km>=6&&$request->so_km<=12) $dich_vu->id_dich_vu = BangGiaModel::where('ten_gia', 'Quãng 6-12KM')->first()->id;
-                else $dich_vu->id_dich_vu = BangGiaModel::where('ten_gia', 'Quãng 13-20KM')->first()->id;
+                $gia_5 = BangGiaModel::where('ten_gia', 'Quãng 0-5KM')->first();
+                $gia_12 = BangGiaModel::where('ten_gia', 'Quãng 6-12KM')->first();
+                $gia_20 = BangGiaModel::where('ten_gia', 'Quãng 13-20KM')->first();
+                if($request->so_km<=5) $dich_vu->id_bang_gia = $gia_5->id;
+                elseif($request->so_km>=6&&$request->so_km<=12) $dich_vu->id_bang_gia = $gia_12->id;
+                else $dich_vu->id_bang_gia = $gia_20->id;
                 $dich_vu->save();
-                $hoc_sinh->di_bus = 0;
                 $di_xe->id_tuyen_xe = $request->tuyen_xe;
                 $di_xe->diem_don = $request->diem_don;
                 $di_xe->so_km = $request->so_km;

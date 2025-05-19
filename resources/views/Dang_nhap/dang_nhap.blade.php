@@ -40,9 +40,9 @@
 					</div>
 					
 					<div class="text-right p-t-8 p-b-31">
-						<a href="#">
+						{{-- <a href="#">
 							Forgot password?
-						</a>
+						</a> --}}
 					</div>
 					
 					<div class="container-login100-form-btn">

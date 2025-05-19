@@ -36,22 +36,22 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h2>Thông tin cơ bản</h2>
               <div id="button_container">
-                <a id="hien_thi_thanh_toan_btn" href="{{route('hien_thi_thanh_toan',['id' => $hoc_sinh->hs_id])}}" class="btn btn-primary">
+                <a id="hien_thi_thanh_toan_btn" href="{{route('hien_thi_thanh_toan',['id' => $hoc_sinh->hs_id])}}" class="btn btn-primary" {{ $hoc_sinh->trang_thai != 1?"hidden":"" }}>
                   Hiển thị thanh toán
                 </a> 
-                <button id="chuyen_lop_btn" class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#uploadChuyenLopModal" {{ $hoc_sinh->trang_thai == 0?"hidden":"" }}>
+                <button id="chuyen_lop_btn" class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#uploadChuyenLopModal" {{ !empty($hoc_sinh->id_phan_lop)?"":"hidden" }}>
                   Chuyển lớp
                 </button> 
-                <button id="nhap_hoc_lai_btn" class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#uploadNhapHocLaiModal" {{ $hoc_sinh->trang_thai == 1?"hidden":"" }}>
+                <button id="nhap_hoc_lai_btn" class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#uploadNhapHocLaiModal" {{ $hoc_sinh->trang_thai == 0?"":"hidden" }}>
                   Nhập học lại
                 </button>
-                <button id="bao_luu_btn" class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#uploadBaoLuuModal" {{ $hoc_sinh->trang_thai == 0?"hidden":"" }}>
+                <button id="bao_luu_btn" class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#uploadBaoLuuModal" {{ $hoc_sinh->trang_thai == 1?"":"hidden" }}>
                   Bảo lưu
                 </button>
-                <button id="ket_thuc_bao_luu_btn" class="btn btn-light" style="border: 1px solid black;" type="button" data-bs-toggle="modal" data-bs-target="#uploadBaoLuuModal" {{ $hoc_sinh->trang_thai == 0?"hidden":"" }}>
+                <a id="ket_thuc_bao_luu_btn" href="{{route('xl_quay_lai',['id'=>$hoc_sinh->hs_id])}}" class="btn btn-light" style="border: 1px solid black;" type="button"  {{ $hoc_sinh->trang_thai == 2?"":"hidden" }}>
                   Kết thúc bảo lưu
-                </button>
-                <button id="thoi_hoc_btn" class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#uploadThoiHocModal" {{ $hoc_sinh->trang_thai == 0?"hidden":"" }}>
+                </a>
+                <button id="thoi_hoc_btn" class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#uploadThoiHocModal" {{ $hoc_sinh->trang_thai != 0?"":"hidden" }}>
                   Thôi học
                 </button>
               </div>

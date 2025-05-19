@@ -125,7 +125,7 @@
                   <td>{{$hoc_sinh->id}}</td>
                   <td>{{$hoc_sinh->ho_ten}}</td>
                   <td>{{$hoc_sinh->ngay_nhap_hoc}}</td>
-                  <td>{{$hoc_sinh->trang_thai==1?"Đang học":"Đã thôi học"}}</td>
+                  <td>{{$hoc_sinh->trang_thai==1?"Đang học":($hoc_sinh->trang_thai==0?"Đã thôi học":"Đang bảo lưu")}}</td>
                   <td>{{$hoc_sinh->ngay_thoi_hoc}}</td>
                   <td>{{$hoc_sinh->nickname}}</td>
                   <td>{{$hoc_sinh->gioi_tinh==1?"Nam":"Nữ"}}</td>

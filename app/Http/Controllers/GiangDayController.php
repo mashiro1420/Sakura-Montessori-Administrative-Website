@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HocSinhModel;
 use App\Models\ThoiKhoaBieuModel;
 use App\Models\TKBNgayModel;
 use App\Models\TuanModel;
@@ -148,32 +149,13 @@ class GiangDayController extends Controller
     }
     public function viewPhuHuynhTKB(Request $request)
     {
-        $id_hoc_sinh = session('id_hoc_sinh');
-        $tuans = TuanModel::all();
-        // Lấy id_phan_lop từ bảng hoc_sinh
-        $hocSinh = DB::table('ql_hocsinh')->where('id', $id_hoc_sinh)->first();
-        if (!$hocSinh) {
-            return back()->with('error', 'Không tìm thấy học sinh.');
-        }
+        $hoc_sinh = HocSinhModel::find(session('id_hoc_sinh'));
+        $lop = PhanLopModel::find($hoc_sinh->id_phan_lop);
+        if(empty($lop)) return redirect()->route('ph_td')->with('bao_loi','Học sinh chưa được phân lớp');
+        $data['tuans'] = ThoiKhoaBieuModel::select('*','ql_thoikhoabieu.id as id', 'tt_tuan.tu_ngay as tkb_tu_ngay')
+        ->leftJoin('ql_phanlop', 'ql_thoikhoabieu.id_phan_lop', '=', 'ql_phanlop.id')
+        ->leftJoin('tt_tuan', 'ql_thoikhoabieu.id_tuan', '=', 'tt_tuan.id');
 
-        $id_phan_lop = $hocSinh->id_phan_lop;
-
-        // Truy vấn bảng ql_thoikhoabieu có cùng id_phan_lop
-        $thoiKhoaBieu = DB::table('ql_thoikhoabieu')
-            ->where('id_phan_lop', $id_phan_lop)
-            ->get();
-
-        $tkb_ids = $thoiKhoaBieu->pluck('id')->toArray();
-
-        // Lấy dữ liệu bảng tt_tkbngay có id_thoi_khoa_bieu nằm trong danh sách trên
-        $tkbNgay = DB::table('tt_tkbngay')
-            ->whereIn('id_thoi_khoa_bieu', $tkb_ids)
-            ->get();
-
-        return view('Phu_huynh_tkb.phu_huynh_tkb', [
-            'thoiKhoaBieu' => $thoiKhoaBieu,
-            'tkbNgay' => $tkbNgay,
-            'tuans' => $tuans,
-        ]);
+        return view('Phu_huynh_tkb.phu_huynh_tkb', $data);
     }
 }

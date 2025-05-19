@@ -90,8 +90,8 @@
                 </select>
               </div>
               <div class="search-item d-inline-block w-25">
-                <label for="tk_khoa_hoc">Khóa học</label>
-                <select id="tk_khoa_hoc" name="tk_khoa_hoc" class="select2-elem form-select" data-placeholder="Chọn hoặc tìm kiếm" required>
+                <label for="khoa_hoc">Khóa học</label>
+                <select id="khoa_hoc" name="khoa_hoc" class="select2-elem form-select" data-placeholder="Chọn hoặc tìm kiếm" required>
                   <option value="" disabled selected>Chọn hoặc tìm kiếm</option>
                   @foreach($khoa_hocs as $khoa_hoc)
                     <option value="{{$khoa_hoc->id}}" {{ $hoc_sinh->id_khoa==$khoa_hoc->id?"selected":"" }}>{{$khoa_hoc->ten_khoa_hoc}}</option>
