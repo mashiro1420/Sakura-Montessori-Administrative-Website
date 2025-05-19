@@ -48,6 +48,9 @@
                 <button id="bao_luu_btn" class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#uploadBaoLuuModal" {{ $hoc_sinh->trang_thai == 0?"hidden":"" }}>
                   Bảo lưu
                 </button>
+                <button id="ket_thuc_bao_luu_btn" class="btn btn-light" style="border: 1px solid black;" type="button" data-bs-toggle="modal" data-bs-target="#uploadBaoLuuModal" {{ $hoc_sinh->trang_thai == 0?"hidden":"" }}>
+                  Kết thúc bảo lưu
+                </button>
                 <button id="thoi_hoc_btn" class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#uploadThoiHocModal" {{ $hoc_sinh->trang_thai == 0?"hidden":"" }}>
                   Thôi học
                 </button>
