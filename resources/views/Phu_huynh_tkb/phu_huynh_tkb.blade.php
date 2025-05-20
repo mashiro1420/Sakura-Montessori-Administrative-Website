@@ -129,4 +129,5 @@
   </script>
   
 </body>
+@include('components/bao_loi')
 </html>

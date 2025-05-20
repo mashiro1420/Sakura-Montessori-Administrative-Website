@@ -157,5 +157,5 @@
       document.getElementById('search_ngay_thanh_toan').value = '';
     });
   </script>
-  
+  @include('components/bao_loi')
 </html>
