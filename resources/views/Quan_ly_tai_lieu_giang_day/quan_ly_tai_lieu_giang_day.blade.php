@@ -98,7 +98,15 @@
                   <td>{{$tl_giang_day->ten_lop}}</td>
                   <td>{{$tl_giang_day->tuan}}</td>
                   <td>{{$tl_giang_day->mo_ta}}</td>
-                  <td>{{$tl_giang_day->link_giao_an}}</td>
+                  <td>
+                    @if(!empty($tl_giang_day->link_giao_an))
+                      <a href="{{ asset('Giao_an/'.'/'.$tl_giang_day->link_giao_an) }}" download class="btn btn-sm btn-success">
+                        <i class="fa-solid fa-download"></i> Tải xuống
+                      </a>
+                    @else
+                      <span class="text-muted">Không có file</span>
+                    @endif
+                  </td>
                   <td class="action-column">
                     <a class="action-button" title="Chỉnh sửa" href="{{ route('sua_tlgd',['id'=>$tl_giang_day->id]) }}"><i class="fa-solid fa-edit"></i></a>
                     <a class="action-button" title="Xóa" href="{{ route('xl_xoa_tlgd',['id'=>$tl_giang_day->id]) }}"><i class="fa-solid fa-trash"></i></a>
