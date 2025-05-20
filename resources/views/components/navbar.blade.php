@@ -24,10 +24,22 @@
         <li class="nav-item"><a class="nav-link" href="{{url('ph_thanh_toan')}}"><i class="fas fa-money-bill-wave me-1"></i>Học phí</a></li>
       </ul>
     </div>
-    <div class="d-flex ms-3">
-      <a href="{{ url('xl_dang_xuat') }}" class="btn btn-outline-danger">
-        <i class="fas fa-sign-out-alt me-1"></i>Đăng xuất
+    <div class="dropdown ms-3">
+      <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color: var(--primary-dark) !important;">
+        <i class="fas fa-user-circle fa-2x text-primary" style="color: var(--primary-dark) !important;"></i>
       </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+        <li>
+          <a class="dropdown-item" href="{{ url('ph_tai_khoan') }}">
+            <i class="fas fa-id-badge me-2"></i>Chi tiết tài khoản
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="{{ url('xl_dang_xuat') }}">
+            <i class="fas fa-sign-out-alt me-2"></i>Đăng xuất
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>

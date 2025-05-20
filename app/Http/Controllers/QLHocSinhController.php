@@ -379,4 +379,18 @@ class QLHocSinhController extends Controller
         $data = [];
         return view('Phu_huynh_thanh_toan.phu_huynh_thanh_toan', $data);
     }
+    public function viewPhuHuynhTaiKhoan(Request $request)
+    {
+        $data = [];
+        $data['hoc_sinh']=HocSinhModel::find(session('id_hoc_sinh'));
+        return view('Phu_huynh_tai_khoan.phu_huynh_tai_khoan', $data);
+    }
+    public function viewPhuHuynhSuaTaiKhoan(Request $request)
+    {
+        $data = [];
+        $data['hoc_sinh']=HocSinhModel::find(session('id_hoc_sinh'));
+                $data['nang_khieu'] = MonHocModel::where('nang_khieu',1)->get();
+        $data['khoa_hocs'] = KhoaHocModel::all();
+        return view('Phu_huynh_tai_khoan.phu_huynh_sua_tai_khoan', $data);
+    }
 }
