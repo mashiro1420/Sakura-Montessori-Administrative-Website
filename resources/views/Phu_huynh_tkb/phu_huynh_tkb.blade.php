@@ -21,13 +21,16 @@
   
   <!-- Search Panel -->
   <div class="search-panel">
-    <div class="row g-3">
+    <form class="row g-3" action="{{ route('ph_tkb') }}" method="get">
+      @csrf
       <div class="col-md-4">
         <label for="tuan_search" class="form-label small text-muted">Tuần</label>
         <select id="tuan_search" name="tuan_search" class="form-select">
-          <option value="" disabled selected>Tìm kiếm theo tuần</option>
+          @php
+          if(empty($tuan_search)) $tuan_search = $tuan_hien_tai->id;
+          @endphp
           @foreach ($tuans as $tuan)
-            <option value="{{$tuan->id}}" {{ !empty($search_tuan)&&$search_tuan==$tuan->id?"selected":"" }}>
+            <option value="{{$tuan->id}}" {{ (!empty($tuan_search)&&$tuan_search==$tuan->id)?"selected":"" }}>
              Tuần {{$tuan->id}} năm {{$tuan->nam}}
             </option>
           @endforeach
@@ -43,7 +46,7 @@
           </button>
         </div>
       </div>
-    </div>
+    </form>
   </div>
   
   <!-- Table -->
@@ -53,7 +56,7 @@
         use Carbon\Carbon;
         $ngay_hoc = [];
         for ($i = 0; $i <= 5; $i++) {
-          $ngay_hoc[] = Carbon::parse($tkb->tkb_tu_ngay)->addDays($i)->toDateString();
+          $ngay_hoc[] = Carbon::parse($tkb->tu_ngay)->addDays($i)->toDateString();
         }
       @endphp
       <table class="table">

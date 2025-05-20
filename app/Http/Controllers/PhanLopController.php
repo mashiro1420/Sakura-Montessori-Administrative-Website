@@ -258,25 +258,28 @@ class PhanLopController extends Controller
     //Phu huynh
     public function viewPhuHuynhDiemDanhTrenLop(Request $request)
     {
-        $data['hoc_sinhs'] = HocSinhModel::query()->select('*', 'ql_hocsinh.id as hoc_sinh_id')
-            ->leftJoin('ql_phanlop', 'ql_phanlop.id', '=', 'ql_hocsinh.id_phan_lop')
-            ->leftJoin('ql_diemdanh', 'ql_diemdanh.id_hoc_sinh', '=', 'ql_hocsinh.id')
-            ->where('id_phan_lop', $request->id)
-            ->where('loai_diem_danh', 1)
-            ->where('ngay', date('Y-m-d'))
-            ->get();
-        $data['phan_lop'] = PhanLopModel::query()
-            ->select('*', 'ql_phanlop.id as pl_id', 'ql_gv_cn.ho_ten as ho_ten_cn', 'ql_gv_nn.ho_ten as ho_ten_nn', 'ql_gv_vn.ho_ten as ho_ten_vn')
-            ->leftJoin('ql_nhanvien as ql_gv_cn', 'ql_phanlop.id_gv_cn', '=', 'ql_gv_cn.id')
-            ->leftJoin('ql_nhanvien as ql_gv_nn', 'ql_phanlop.id_gv_nuoc_ngoai', '=', 'ql_gv_nn.id')
-            ->leftJoin('ql_nhanvien as ql_gv_vn', 'ql_phanlop.id_gv_viet', '=', 'ql_gv_vn.id')
-            ->leftJoin('dm_phonghoc', 'ql_phanlop.id_phong_hoc', '=', 'dm_phonghoc.id')
-            ->leftJoin('dm_lop', 'ql_phanlop.id_lop', '=', 'dm_lop.id')
-            ->leftJoin('dm_khoi', 'ql_phanlop.id_khoi', '=', 'dm_khoi.id')
-            ->leftJoin('dm_hedaotao', 'ql_phanlop.id_he_dao_tao', '=', 'dm_hedaotao.id')
-            ->leftJoin('dm_khoahoc', 'ql_phanlop.id_khoa_hoc', '=', 'dm_khoahoc.id')
-            ->leftJoin('tt_ky', 'ql_phanlop.id_ky', '=', 'tt_ky.id')
-            ->find($request->id);
+        $data['hoc_sinh'] = HocSinhModel::find(session('id_hoc_sinh'));
+        $diem_danhs = DiemDanhModel::query()->select('ql_diemdanh.*','ql_hocsinh.ho_ten','dm_lop.ten_lop')
+        ->leftJoin('ql_hocsinh','ql_hocsinh.id','=','ql_diemdanh.id_hoc_sinh')
+        ->leftJoin('ql_phanlop','ql_phanlop.id','=','ql_hocsinh.id_phan_lop')
+        ->leftJoin('dm_lop','dm_lop.id','=','ql_phanlop.id_lop')
+        ->where('loai_diem_danh',1)
+        ->where('id_hoc_sinh',session('id_hoc_sinh'));
+        if($request->filled('search_from')){
+            $diem_danhs->where('ngay','>=',$request->search_from );
+            $data['search_from'] = $request->search_from;
+        }
+        if($request->filled('search_to')){
+            $diem_danhs->where('ngay','<=',$request->search_to );
+            $data['search_to'] = $request->search_to;
+        }
+        if($request->filled('search_status')){
+            if($request->search_status==1) $data['search_status'] = 'present';
+            else $data['search_status'] = 'missing';
+            $diem_danhs->where('ql_diemdanh.trang_thai',$request->search_status );
+        }
+        $data['diem_danhs'] = $diem_danhs->orderBy('ngay','desc')->get();
+        // dd( $data['diem_danhs']);
         return view('Phu_huynh_diem_danh.diem_danh_tren_lop', $data);
     }
 }

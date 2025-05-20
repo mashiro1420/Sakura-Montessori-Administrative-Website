@@ -156,7 +156,10 @@ class GiangDayController extends Controller
         ->leftJoin('ql_phanlop', 'ql_thoikhoabieu.id_phan_lop', '=', 'ql_phanlop.id')
         ->leftJoin('tt_tuan', 'ql_thoikhoabieu.id_tuan', '=', 'tt_tuan.id')
         ->get();
-        $query = ThoiKhoaBieuModel::select('*')
+        $data['tuan_hien_tai'] = TuanModel::where('tu_ngay','<=',date('Y-m-d'))->where('den_ngay','>=',date('Y-m-d'))->first();
+        // dd($data['tuan_hien_tai']);
+        $query = ThoiKhoaBieuModel::select('*','ql_thoikhoabieu.id as id')
+        ->leftJoin('tt_tuan','tt_tuan.id','=','ql_thoikhoabieu.id_tuan')
         ->where('id_phan_lop',$hoc_sinh->id_phan_lop);
         if($request->filled('tuan_search')){
             $query = $query->where('ql_thoikhoabieu.id_tuan',$request->tuan_search);

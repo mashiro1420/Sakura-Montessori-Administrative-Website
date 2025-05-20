@@ -22,27 +22,24 @@
   </div>
   
   <!-- Search Panel -->
-  {{-- <div class="search-panel">
-    <div class="row g-3">
-      <div class="col-md-4">
-        <label for="search_dich_vu" class="form-label small text-muted">Loại dịch vụ</label>
-        <select id="search_dich_vu" name="search_dich_vu" class="form-select">
-          <option value="">Tất cả dịch vụ</option>
-          @foreach ($dich_vus as $dich_vu)
-            <option value="{{$dich_vu->id}}" {{ !empty($search_dich_vu)&&$search_dich_vu==$dich_vu->id?"selected":"" }}>
-              {{$dich_vu->ten_dich_vu}}
-            </option>
-          @endforeach
-        </select>
+  <div class="search-panel">
+    <form class="row g-3" action="{{ route('ph_diem_danh_tren_lop') }}" method="get">
+      @csrf
+      <div class="col-md-3">
+        <label for="search_from" class="form-label small text-muted">Từ ngày</label>
+        <input type="date" name="search_from" class="form-control border-start-0" value="{{ !empty($search_from)?$search_from:'' }}">
       </div>
-      <div class="col-md-5">
-        <label for="search_name" class="form-label small text-muted">Tên dịch vụ</label>
-        <div class="input-group">
-          <span class="input-group-text bg-white border-end-0">
-            <i class="fas fa-search text-muted"></i>
-          </span>
-          <input type="text" id="search_name" class="form-control border-start-0" placeholder="Nhập tên dịch vụ cần tìm">
-        </div>
+      <div class="col-md-3">
+        <label for="search_to" class="form-label small text-muted">Đến ngày</label>
+        <input type="date" name="search_to" class="form-control border-start-0" value="{{ !empty($search_to)?$search_to:'' }}">
+      </div>
+      <div class="col-md-3">
+        <label for="search_status" class="form-label small text-muted">Trạng thái</label>
+        <select id="search_status" name = "search_status" class="form-select">
+          <option value="">Tất cả trạng thái</option>
+          <option value="0" {{!empty($search_status)&&$search_status=="missing"?"selected":""}}>Vắng mặt</option>
+          <option value="1" {{!empty($search_status)&&$search_status=="present"?"selected":""}}>Có mặt</option>
+        </select>
       </div>
       <div class="col-md-3 d-flex align-items-end">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end w-100">
@@ -54,8 +51,8 @@
           </button>
         </div>
       </div>
-    </div>
-  </div> --}}
+    </form>
+  </div>
   
   <!-- Table -->
   <div class="table-container">
@@ -65,18 +62,20 @@
         <thead>
           <tr>
             <tr>
-              <th>ID</th>
               <th>Học sinh</th>
+              <th>Lớp</th>
+              <th>Ngày</th>
               <th>Trạng thái</th>
             </tr>
           </tr>
         </thead>
         <tbody>
-          @foreach($hoc_sinhs as $hoc_sinh)
+          @foreach($diem_danhs as $diem_danh)
           <tr>
-            <td>{{$hoc_sinh->hoc_sinh_id}}</td>
-            <td>{{$hoc_sinh->ho_ten}}</td>
-            <td>{{$hoc_sinh->trang_thai==1?"Có mặt":"Vắng mặt"}}</td>
+            <td>{{$diem_danh->ho_ten}}</td>
+            <td>{{$diem_danh->ten_lop}}</td>
+            <td>{{$diem_danh->ngay}}</td>
+            <td>{{$diem_danh->trang_thai==1?"Có mặt":"Vắng mặt"}}</td>
           </tr>
           @endforeach
         </tbody>

@@ -24,6 +24,7 @@
   <!-- Search Panel -->
   <div class="search-panel">
     <form class="row g-3" action="{{url('ph_bg')}}" method="get">
+      @csrf
       <div class="col-md-4">
         <label for="search_dich_vu" class="form-label small text-muted">Loại dịch vụ</label>
         <select id="search_dich_vu" name="search_dich_vu" class="form-select">
@@ -41,7 +42,7 @@
           <span class="input-group-text bg-white border-end-0">
             <i class="fas fa-search text-muted"></i>
           </span>
-          <input type="text" id="search_name" name="search_name" class="form-control border-start-0" placeholder="Nhập tên dịch vụ cần tìm">
+          <input type="text" id="search_name" name="search_name" class="form-control border-start-0" placeholder="Nhập tên dịch vụ cần tìm" value="{{ !empty($search_name)?$search_name:"" }}">
         </div>
       </div>
       <div class="col-md-3 d-flex align-items-end">
