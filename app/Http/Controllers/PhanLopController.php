@@ -259,6 +259,7 @@ class PhanLopController extends Controller
     public function viewPhuHuynhDiemDanhTrenLop(Request $request)
     {
         $data['hoc_sinh'] = HocSinhModel::find(session('id_hoc_sinh'));
+        if(empty($data['hoc_sinh']->id_phan_lop)) return redirect()->route('ph_td')->with('bao_loi','Học sinh chưa được phân lớp');
         $diem_danhs = DiemDanhModel::query()->select('ql_diemdanh.*','ql_hocsinh.ho_ten','dm_lop.ten_lop')
         ->leftJoin('ql_hocsinh','ql_hocsinh.id','=','ql_diemdanh.id_hoc_sinh')
         ->leftJoin('ql_phanlop','ql_phanlop.id','=','ql_hocsinh.id_phan_lop')

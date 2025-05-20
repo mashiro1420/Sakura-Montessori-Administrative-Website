@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\BangGiaModel;
 use App\Models\HocPhiModel;
 use App\Models\HocSinhModel;
+use App\Models\PhanLopModel;
 use App\Models\TTDichVuHocSinhModel;
 use App\Models\TTDiXeModel;
 use Illuminate\Console\Command;
@@ -37,7 +38,11 @@ class TinhHocPhiThang extends Command
             $hoc_phi->loai_hoc_phi = 2;
             $tong_dich_vu = 0;
             $tien_nang_khieu = 0;
-            $tong_hoc_phi = BangGiaModel::where('ten_gia','Học phí 1 tháng')->first()->gia;
+            $he_dao_tao = PhanLopModel::select('dm_hedaotao.*')
+            ->leftJoin('dm_hedaotao','dm_hedaotao.id','=','ql_phanlop.id_he_dao_tao')
+            ->where('ql_phanlop.id',$hoc_sinh->id_phan_lop)->first();
+            if(empty($he_dao_tao)) continue;
+            $tong_hoc_phi = BangGiaModel::where('ten_gia','Học phí hệ '.$he_dao_tao->ten_he_dao_tao.'')->first()->gia;
             $dich_vus = TTDichVuHocSinhModel::where('id_hoc_sinh',$hoc_sinh->id)->get(); 
             foreach($dich_vus as $dich_vu){
                 $bang_gia = BangGiaModel::where('id_dich_vu',$dich_vu->id_dich_vu)->first();
