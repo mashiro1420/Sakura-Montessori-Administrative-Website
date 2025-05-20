@@ -42,7 +42,7 @@ class TinhHocPhiThang extends Command
             ->leftJoin('dm_hedaotao','dm_hedaotao.id','=','ql_phanlop.id_he_dao_tao')
             ->where('ql_phanlop.id',$hoc_sinh->id_phan_lop)->first();
             if(empty($he_dao_tao)) continue;
-            $tong_hoc_phi = BangGiaModel::where('ten_gia','Học phí hệ '.$he_dao_tao->ten_he_dao_tao.'')->first()->gia;
+            $tong_hoc_phi = BangGiaModel::where('ten_gia','Học phí 1 tháng hệ '.$he_dao_tao->ten_he_dao_tao.'')->first()->gia;
             $dich_vus = TTDichVuHocSinhModel::where('id_hoc_sinh',$hoc_sinh->id)->get(); 
             foreach($dich_vus as $dich_vu){
                 $bang_gia = BangGiaModel::where('id_dich_vu',$dich_vu->id_dich_vu)->first();
