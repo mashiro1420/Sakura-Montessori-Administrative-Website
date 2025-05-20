@@ -62,7 +62,6 @@
         <thead>
           <tr>
             <th>Học sinh</th>
-            <th>Lớp</th>
             <th>Ngày</th>
             <th>Trạng thái</th>
           </tr>
@@ -70,8 +69,7 @@
         <tbody class="service-table-body">
           @foreach($diem_danhs as $diem_danh)
             <tr>
-              <td>{{$diem_danh->ho_ten}}</td>
-              <td>{{$diem_danh->ten_lop}}</td>
+              <td>{{$hoc_sinh->ho_ten}}</td>
               <td>{{$diem_danh->ngay}}</td>
               <td>{{$diem_danh->trang_thai==1?"Có mặt":"Vắng mặt"}}</td>
             </tr>

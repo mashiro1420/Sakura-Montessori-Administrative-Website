@@ -195,4 +195,5 @@ Route::middleware(['session.check', 'quyen.check:phu_huynh'])->group(function ()
     Route::get('ph_thanh_toan', [QLHocSinhController::class, 'viewPhuHuynhThanhToan'])->name('ph_thanh_toan');
     Route::get('ph_tai_khoan', [QLHocSinhController::class, 'viewPhuHuynhTaiKhoan'])->name('ph_tai_khoan');
     Route::get('ph_sua_tai_khoan', [QLHocSinhController::class, 'viewPhuHuynhSuaTaiKhoan'])->name('ph_sua_tai_khoan');
+    Route::post('xl_sua_ph',[QLHocSinhController::class, 'xlSuaPH']);
 });
