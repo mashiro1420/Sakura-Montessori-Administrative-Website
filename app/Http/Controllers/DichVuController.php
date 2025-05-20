@@ -18,6 +18,7 @@ use App\Models\TuanModel;
 use App\Models\TuyenXeModel;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Artisan;
 
 class DichVuController extends Controller
 {
@@ -205,6 +206,7 @@ public function xlSuaGia(Request $request)
         $tuyen_xe->ngay = date('Y-m-d');
         $tuyen_xe->bien_so_xe = $request->bien_so_xe;
         $tuyen_xe->save();
+        Artisan::call('app:tao-diem-danh-command');
         return redirect()->route('ql_lt')->with('bao_loi','Lưu thành công');
     }
     //DK bus
@@ -346,8 +348,32 @@ public function xlSuaGia(Request $request)
     }
     public function viewPhuHuynhTuyenXe(Request $request)
     {
-        $data = [];
-        $data['tuyen_xes'] = TuyenXeModel::all();
+        $hoc_sinh = HocSinhModel::find(session('id_hoc_sinh'));
+        if($hoc_sinh->di_bus==0) return redirect()->route('ph_td')->with('bao_loi','Học sinh không đi xe');
+        $query = LoTrinhXeModel::query()->select('*','lai_xe.ho_ten as ho_ten_lai_xe','monitor.ho_ten as ho_ten_monitor')
+        ->leftJoin('dm_tuyenxe','dm_tuyenxe.id','=','ql_lotrinhxe.id_tuyen_xe')
+        ->leftJoin('tt_hsdixe','tt_hsdixe.id_tuyen_xe','=','ql_lotrinhxe.id_tuyen_xe')
+        ->leftJoin('ql_nhanvien as lai_xe','lai_xe.id','=','ql_lotrinhxe.id_lai_xe')
+        ->leftJoin('ql_nhanvien as monitor','monitor.id','=','ql_lotrinhxe.id_monitor')
+        ->where('id_hoc_sinh',$hoc_sinh->id);
+        $data['lo_trinh_hom_nay'] =LoTrinhXeModel::query()->select('*','lai_xe.ho_ten as ho_ten_lai_xe','monitor.ho_ten as ho_ten_monitor','monitor_lh.sdt_rieng as sdt_monitor','lai_xe_lh.sdt_rieng as sdt_lai_xe')
+        ->leftJoin('dm_tuyenxe','dm_tuyenxe.id','=','ql_lotrinhxe.id_tuyen_xe')
+        ->leftJoin('tt_hsdixe','tt_hsdixe.id_tuyen_xe','=','ql_lotrinhxe.id_tuyen_xe')
+        ->leftJoin('ql_nhanvien as lai_xe','lai_xe.id','=','ql_lotrinhxe.id_lai_xe')
+        ->leftJoin('tt_lienhe as lai_xe_lh','lai_xe_lh.id_nhan_vien','=','lai_xe.id')
+        ->leftJoin('ql_nhanvien as monitor','monitor.id','=','ql_lotrinhxe.id_monitor')
+        ->leftJoin('tt_lienhe as monitor_lh','monitor_lh.id_nhan_vien','=','monitor.id')
+        ->where('id_hoc_sinh',$hoc_sinh->id)->where('ngay',date('Y-m-d'))->first();
+        if($request->filled('search_from')){
+            $query->where('ngay','>=',$request->search_from );
+            $data['search_from'] = $request->search_from;
+        }
+        if($request->filled('search_to')){
+            $query->where('ngay','<=',$request->search_to );
+            $data['search_to'] = $request->search_to;
+        }
+        $data['lo_trinh_xes'] = $query->orderBy('ngay','desc')->get();
+        // dd($data['lo_trinh_xes']);
         return view('Phu_huynh_tuyen_xe.phu_huynh_tuyen_xe', $data);
     }
     public function viewPhuHuynhThucDon(Request $request)

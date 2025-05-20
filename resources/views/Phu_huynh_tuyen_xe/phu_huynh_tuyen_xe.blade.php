@@ -18,30 +18,94 @@
       <h2 class="page-title">Tuyến xe</h2>
       <p class="text-muted mt-2">Thông tin tuyến xe hôm nay của con</p>
     </div>
+    <div class="search-panel">
+      @if(!empty($lo_trinh_hom_nay))
+      <div class="row g-3">
+        <div class="col-md-3">
+          <label for="search_from" class="form-label small text-muted">Ngày</label>
+          <input type="date" name="search_from" class="form-control border-start-0" value="{{ $lo_trinh_hom_nay->ngay}}" readonly>
+        </div>
+        <div class="col-md-3">
+          <label for="search_from" class="form-label small text-muted">Tuyến xe</label>
+          <input type="text" name="search_from" class="form-control border-start-0" value="{{ $lo_trinh_hom_nay->ten_tuyen_xe}}" readonly>
+        </div>
+        <div class="col-md-3">
+          <label for="search_from" class="form-label small text-muted">Biển số xe</label>
+          <input type="text" name="search_from" class="form-control border-start-0" value="{{ $lo_trinh_hom_nay->bien_so_xe}}" readonly>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-3">
+          <label for="search_from" class="form-label small text-muted">Tên monitor</label>
+          <input type="text" name="search_from" class="form-control border-start-0" value="{{ $lo_trinh_hom_nay->ho_ten_monitor}}" readonly>
+        </div>
+        <div class="col-md-3">
+          <label for="search_from" class="form-label small text-muted">Số điện thoại monitor</label>
+          <input type="text" name="search_from" class="form-control border-start-0" value="{{ $lo_trinh_hom_nay->sdt_monitor}}" readonly>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-3">
+          <label for="search_from" class="form-label small text-muted">Tên tài xế</label>
+          <input type="text" name="search_from" class="form-control border-start-0" value="{{ $lo_trinh_hom_nay->ho_ten_lai_xe}}" readonly>
+        </div>
+        <div class="col-md-3">
+          <label for="search_from" class="form-label small text-muted">Số điện thoại tài xế</label>
+          <input type="text" name="search_from" class="form-control border-start-0" value="{{ $lo_trinh_hom_nay->sdt_lai_xe}}" readonly>
+        </div>
+      </div>
+      @else
+        <p>Không có tuyến xe ngày hôm nay</p>
+      @endIf
+    </div>
+
+    <div class="search-panel">
+      <form class="row g-3" action="{{ route('ph_tx') }}" method="get">
+        @csrf
+        <div class="col-md-3">
+          <label for="search_from" class="form-label small text-muted">Từ ngày</label>
+          <input type="date" name="search_from" class="form-control border-start-0" value="{{ !empty($search_from)?$search_from:'' }}">
+        </div>
+        <div class="col-md-3">
+          <label for="search_to" class="form-label small text-muted">Đến ngày</label>
+          <input type="date" name="search_to" class="form-control border-start-0" value="{{ !empty($search_to)?$search_to:'' }}">
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end w-100">
+            <button class="btn btn-pink">
+              <i class="fas fa-search me-1"></i> Tìm kiếm
+            </button>
+            <button class="btn btn-secondary">
+              <i class="fas fa-sync-alt me-1"></i> Làm mới
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
     <div class="table-container">
       <div class="table-responsive">
         <table class="table">
           <thead>
             <tr>
-              <th width="5%">ID</th>
+              <th width="10%">Ngày</th>
               <th width="20%">Tuyến xe</th>
-              <th width="5%">Ngày</th>
-              <th width="25%">Lái xe</th>
-              <th width="10%">Monitor</th>
-              <th width="25%">Biển số xe</th>
+              <th width="20%">Monitor</th>
+              <th width="20%">Lái xe</th>
+              <th width="20%">Biển số xe</th>
               <th width="10%">Danh sách</th>
             </tr>
           </thead>
           <tbody class="service-table-body">
+            @foreach ($lo_trinh_xes as $lo_trinh_xe )
             <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td>{{ $lo_trinh_xe->ngay }}</td>
+              <td>{{ $lo_trinh_xe->ten_tuyen_xe }}</td>
+              <td>{{ $lo_trinh_xe->ho_ten_monitor }}</td>
+              <td>{{ $lo_trinh_xe->ho_ten_lai_xe }}</td>
+              <td>{{ $lo_trinh_xe->bien_so_xe }}</td>
+              <td>{{ $lo_trinh_xe->ngay }}</td>
             </tr>
+            @endforeach
           </tbody>
         </table>
       </div>

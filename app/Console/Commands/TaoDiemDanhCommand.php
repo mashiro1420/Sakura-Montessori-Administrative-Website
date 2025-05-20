@@ -35,7 +35,11 @@ class TaoDiemDanhCommand extends Command
             $diem_danh->ngay = date('Y-m-d');
             $diem_danh->trang_thai = 0;
             $diem_danh->loai_diem_danh = 1;
-            $diem_danh->save();
+            try{
+                $diem_danh->saveOrFail();
+            }catch(\Exception $e){
+                continue;
+            }
         }
         foreach ($di_bus as $hoc_sinh_di_bus) {
             $diem_danh = new DiemDanhModel();
@@ -43,7 +47,11 @@ class TaoDiemDanhCommand extends Command
             $diem_danh->ngay = date('Y-m-d');
             $diem_danh->trang_thai = 0;
             $diem_danh->loai_diem_danh = 2;
-            $diem_danh->save();
+            try{
+                $diem_danh->saveOrFail();
+            }catch(\Exception $e){
+                continue;
+            }
         }
     }
 }
