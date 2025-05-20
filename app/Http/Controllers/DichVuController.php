@@ -412,19 +412,28 @@ public function xlSuaGia(Request $request)
     //Phu huynh
     public function viewPhuHuynhDiemDanhXeBus(Request $request)
     {
-        $data = [];
-        $data = [];
-        $data['lo_trinh'] = LoTrinhXeModel::select('ql_lotrinhxe.*', 'dm_tuyenxe.ten_tuyen_xe', 'lai_xe.ho_ten as ho_ten_lai_xe', 'monitor.ho_ten as ho_ten_monitor')
-            ->leftjoin('ql_nhanvien as lai_xe', 'lai_xe.id', '=', 'ql_lotrinhxe.id_lai_xe')
-            ->leftjoin('ql_nhanvien as monitor', 'monitor.id', '=', 'ql_lotrinhxe.id_monitor')
-            ->leftJoin('dm_tuyenxe', 'dm_tuyenxe.id', '=', 'ql_lotrinhxe.id_tuyen_xe')
-            ->find($request->id);
-        $query = TTDiXeModel::query()->select('ql_hocsinh.*', 'dm_tuyenxe.ten_tuyen_xe')
-            ->leftJoin('ql_hocsinh', 'tt_hsdixe.id_hoc_sinh', '=', 'ql_hocsinh.id')
-            ->leftJoin('ql_lotrinhxe', 'ql_lotrinhxe.id_tuyen_xe', '=', 'tt_hsdixe.id_tuyen_xe')
-            ->leftJoin('dm_tuyenxe', 'ql_lotrinhxe.id_tuyen_xe', '=', 'dm_tuyenxe.id')
-            ->where('ql_lotrinhxe.id', $request->id);
-        $data['hoc_sinhs'] = $query->orderBy('id_hoc_sinh', 'ASC')->get();
+        $data['hoc_sinh'] = HocSinhModel::find(session('id_hoc_sinh'));
+        if(empty($data['hoc_sinh']->di_bus)) return redirect()->route('ph_td')->with('bao_loi','Học sinh chưa được phân lớp');
+        $diem_danhs = DiemDanhModel::query()->select('ql_diemdanh.*')
+        ->leftJoin('tt_hsdixe','tt_hsdixe.id_hoc_sinh','=','ql_diemdanh.id_hoc_sinh')
+
+        ->where('loai_diem_danh',2)
+        ->where('ql_diemdanh.id_hoc_sinh',session('id_hoc_sinh'));
+        if($request->filled('search_from')){
+            $diem_danhs->where('ngay','>=',$request->search_from );
+            $data['search_from'] = $request->search_from;
+        }
+        if($request->filled('search_to')){
+            $diem_danhs->where('ngay','<=',$request->search_to );
+            $data['search_to'] = $request->search_to;
+        }
+        if($request->filled('search_status')){
+            if($request->search_status==1) $data['search_status'] = 'present';
+            else $data['search_status'] = 'missing';
+            $diem_danhs->where('ql_diemdanh.trang_thai',$request->search_status );
+        }
+        $data['diem_danhs'] = $diem_danhs->orderBy('ngay','desc')->get();
+        // $data['hoc_sinhs'] = $query->orderBy('id_hoc_sinh', 'ASC')->get();
         return view('Phu_huynh_diem_danh.diem_danh_xe_bus', $data);
     }
 }
