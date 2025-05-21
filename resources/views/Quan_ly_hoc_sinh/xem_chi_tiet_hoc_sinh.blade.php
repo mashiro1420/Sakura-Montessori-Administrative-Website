@@ -96,6 +96,10 @@
               <input type="text" name="ngon_ngu" class="form-control" readonly value="{{$hoc_sinh->ngon_ngu}}" placeholder="Nhập ngôn ngữ" readonly>
             </div>
             <div class="search-item d-inline-block w-25">
+              <label for="noi_sinh">Nơi sinh</label>
+              <input type="text" name="noi_sinh" class="form-control" readonly placeholder="Nhập nơi sinh" value="{{$hoc_sinh->noi_sinh}}">
+            </div>
+            <div class="search-item d-inline-block w-25">
               <label for="thuong_tru">Thường trú</label>
               <input type="text" name="thuong_tru" class="form-control" readonly value="{{$hoc_sinh->thuong_tru}}" placeholder="Nhập thường trú" readonly>
             </div>
@@ -140,11 +144,7 @@
               <label for="chieu_cao">Chiều cao (CM)</label>
               <input type="number" name="chieu_cao" class="form-control" readonly placeholder="Nhập chiều cao" value="{{$hoc_sinh->chieu_cao}}">
             </div>
-            <div class="search-item d-inline-block w-25">
-              <label for="noi_sinh">Nơi sinh</label>
-              <input type="text" name="noi_sinh" class="form-control" readonly placeholder="Nhập nơi sinh" value="{{$hoc_sinh->noi_sinh}}">
-            </div>
-            <div class="search-item d-inline-block w-25">
+            <div class="search-item d-inline-block w-50">
               <label for="thong_tin_suc_khoe">Thông tin sức khỏe</label>
               <textarea type="text" name="thong_tin_suc_khoe" class="form-control" readonly placeholder="Nhập thông tin sức khỏe">{{$hoc_sinh->thong_tin_suc_khoe}}</textarea>
             </div>

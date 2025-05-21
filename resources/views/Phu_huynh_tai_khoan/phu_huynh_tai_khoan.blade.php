@@ -61,8 +61,10 @@
       <div class="col-md-3"><label>Khóa học</label><input type="text" class="form-control" readonly value="{{$hoc_sinh->ten_khoa_hoc}}"></div>
     </div>
   </div>
-
-  <!-- Thong tin phu huynh -->
+  <div class="card shadow-sm border-0 rounded-4 p-4">
+    <h2 class="text-primary mb-4" style="color: var(--primary-dark) !important;">Thông tin sức khỏe</h2>
+    <textarea type="text" name="thong_tin_suc_khoe" class="form-control" readonly>{{$hoc_sinh->thong_tin_suc_khoe}}</textarea>
+  </div>
   <div class="card shadow-sm border-0 rounded-4 p-4">
     <h2 class="text-primary mb-4" style="color: var(--primary-dark) !important;">Thông tin phụ huynh</h2>
     <div class="row g-3">
