@@ -376,13 +376,46 @@ class QLHocSinhController extends Controller
     // Phu huynh
     public function viewPhuHuynhThanhToan(Request $request)
     {
-        $data = [];
+        $ngay = date('Y-m-d');
+        $hoc_sinh = HocSinhModel::find(session('id_hoc_sinh'));
+        if($hoc_sinh->loai_hoc_phi == 0){
+            $data['quang_hoc_phi'] = KyModel::where('tu_ngay','<=',$ngay)->where('den_ngay','>=',$ngay)->first()->ten_ky;
+        }
+        elseif($hoc_sinh->loai_hoc_phi == 1){
+            $nam_hoc = KyModel::where('tu_ngay','<=',$ngay)->where('den_ngay','>=',$ngay)->first();
+            if($nam_hoc->ky ==1) $data['quang_hoc_phi'] = 'Năm học '.$nam_hoc->nam_hoc.' - '.($nam_hoc->nam_hoc+1);
+            else $data['quang_hoc_phi'] = 'Năm học '.($nam_hoc->nam_hoc-1).' - '.$nam_hoc->nam_hoc;
+        } 
+        else $data['quang_hoc_phi'] = 'Tháng '.date('m').' năm '.date('Y');
+
+        $query = HocPhiModel::query()
+            ->select('ql_hocphi.*','ql_hocphi.id as id', 'ql_hocsinh.ho_ten', 'tt_ky.*')
+            ->leftJoin('ql_hocsinh', 'ql_hocphi.id_hoc_sinh', '=', 'ql_hocsinh.id')
+            ->leftJoin('tt_ky',function($join){
+                $join->whereRaw('ql_hocphi.ngay_tao BETWEEN tt_ky.tu_ngay AND tt_ky.den_ngay');
+            })
+            ->where('ql_hocphi.id_hoc_sinh', session('id_hoc_sinh'));
+        $thanh_toan_hien_tai = HocPhiModel::orderBy('ql_hocphi.id', 'desc')->first();
+        if($thanh_toan_hien_tai->ngay_thanh_toan == null) $data['thanh_toan_hien_tai'] = $thanh_toan_hien_tai;
+        $data['thanh_toans'] = $query
+        ->whereNotNull('ngay_thanh_toan')
+        ->orderBy('ql_hocphi.id', 'desc')->get();
+        // dd($data['thanh_toans']);
+        // dd($thanh_toan_hien_tai->ngay_thanh_toan);
         return view('Phu_huynh_thanh_toan.phu_huynh_thanh_toan', $data);
     }
     public function viewPhuHuynhTaiKhoan(Request $request)
     {
         $data = [];
-        $data['hoc_sinh']=HocSinhModel::find(session('id_hoc_sinh'));
+        $data['hoc_sinh'] = HocSinhModel::select ('ql_hocsinh.*','dm_khoahoc.ten_khoa_hoc','tt_hsdixe.*','ql_hocsinh.id as hs_id', 'dm_lop.ten_lop','tt_ky.ten_ky')
+            ->leftJoin('dm_khoahoc','dm_khoahoc.id','=','ql_hocsinh.id_khoa_hoc')
+            ->leftJoin('tt_hsdixe','tt_hsdixe.id_hoc_sinh','=','ql_hocsinh.id')
+            ->leftJoin('dm_tuyenxe','dm_tuyenxe.id','=','tt_hsdixe.id_tuyen_xe')
+            ->leftJoin('ql_phanlop','ql_phanlop.id','=','ql_hocsinh.id_phan_lop')
+            ->leftJoin('dm_lop','dm_lop.id','=','ql_phanlop.id_lop')
+            ->leftJoin('tt_ky','tt_ky.id','=','ql_phanlop.id_ky')
+            ->find(session('id_hoc_sinh'));
+        // $data['hoc_sinh']=HocSinhModel::find(session('id_hoc_sinh'));
         return view('Phu_huynh_tai_khoan.phu_huynh_tai_khoan', $data);
     }
     public function viewPhuHuynhSuaTaiKhoan(Request $request)
@@ -397,15 +430,11 @@ class QLHocSinhController extends Controller
     {
         $hoc_sinh = HocSinhModel::find($request->id);
         $hoc_sinh->ho_ten = $request->ho_ten;
-        $hoc_sinh->ngay_nhap_hoc = $request->ngay_nhap_hoc;
-        $hoc_sinh->ngay_thoi_hoc = $request->ngay_thoi_hoc;
         $hoc_sinh->nickname = $request->nickname;
         $hoc_sinh->gioi_tinh = $request->gioi_tinh;
         $hoc_sinh->ngay_sinh = $request->ngay_sinh;
         $hoc_sinh->quoc_tich = $request->quoc_tich;
         $hoc_sinh->ngon_ngu = $request->ngon_ngu;
-        $hoc_sinh->can_nang = $request->can_nang;
-        $hoc_sinh->chieu_cao = $request->chieu_cao;
         $hoc_sinh->noi_sinh = $request->noi_sinh;
         $hoc_sinh->thong_tin_suc_khoe = $request->thong_tin_suc_khoe;
         $hoc_sinh->ho_ten_me = $request->ho_ten_me;

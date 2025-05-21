@@ -37,6 +37,7 @@
         <div class="col-md-3"><label>Quốc tịch</label><input type="text" name="quoc_tich" class="form-control" value="{{$hoc_sinh->quoc_tich}}"></div>
         <div class="col-md-3"><label>Ngôn ngữ</label><input type="text" name="ngon_ngu" class="form-control" value="{{$hoc_sinh->ngon_ngu}}"></div>
         <div class="col-md-3"><label>Thường trú</label><input type="text" name="thuong_tru" class="form-control" value="{{$hoc_sinh->thuong_tru}}"></div>
+        <div class="col-md-3"><label>Nơi sinh</label><input type="text" name="noi_sinh" class="form-control" value="{{$hoc_sinh->noi_sinh}}"></div>
         <div class="col-md-3"><label>Địa chỉ</label><input type="text" name="dia_chi" class="form-control" value="{{$hoc_sinh->dia_chi}}"></div>
       </div>
     </div>

@@ -127,7 +127,8 @@
               } else {
                 echo "Không đăng ký";
               }
-              @endphp">
+              @endphp
+              ">
             </div>
             <div class="search-item d-inline-block w-25">
               <label for="khoa_hoc">Khóa học</label>

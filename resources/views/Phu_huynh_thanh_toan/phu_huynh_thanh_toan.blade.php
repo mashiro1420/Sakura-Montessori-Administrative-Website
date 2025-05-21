@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bảng giá dịch vụ</title>
+  <title>Tra cứu học phí</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -20,30 +20,41 @@
     <h2 class="page-title">Tra cứu học phí</h2>
     <p class="text-muted mt-2">Học phí hiện tại và lịch sử học phí của học sinh</p>
   </div>
-  
-  <!-- Search Panel -->
   <div class="search-panel">
+    @if(!empty($thanh_toan_hien_tai))
     <div class="row g-3">
-      <div class="col-md-4">
-        <label for="search_ngay_tao" class="form-label small text-muted">Ngày tạo</label>
-        <input type="date" id="search_ngay_tao" name="search_ngay_tao" class="form-control">
+      <h3>Học phí {{ $quang_hoc_phi }}</h3>
+      <div class="col-md-3">
+        <label for="search_from" class="form-label small text-muted">Tổng tiền dịch vụ</label>
+        <input type="text" name="search_from" class="form-control border-start-0" value="{{ number_format($thanh_toan_hien_tai->tong_dich_vu)}}" readonly>
       </div>
-      <div class="col-md-4">
-        <label for="search_ngay_thanh_toan" class="form-label small text-muted">Ngày thanh toán</label>
-        <input type="date" id="search_ngay_thanh_toan" name="search_ngay_thanh_toan" class="form-control">
+      <div class="col-md-3">
+        <label for="search_from" class="form-label small text-muted">Tổng học phí</label>
+        <input type="text" name="search_from" class="form-control border-start-0" value="{{ number_format($thanh_toan_hien_tai->tong_hoc_phi)}}" readonly>
       </div>
-      <div class="col-md-3 d-flex align-items-end">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end w-100">
-          <button class="btn btn-pink">
-            <i class="fas fa-search me-1"></i> Tìm kiếm
-          </button>
-          <button class="btn btn-secondary">
-            <i class="fas fa-sync-alt me-1"></i> Làm mới
-          </button>
-        </div>
+      <div class="col-md-3">
+        <label for="search_from" class="form-label small text-muted">Phí phát triển nhà trường</label>
+        <input type="text" name="search_from" class="form-control border-start-0" value="{{ number_format($thanh_toan_hien_tai->phat_trien)}}" readonly>
+      </div>
+      <div class="col-md-3">
+        <label for="search_from" class="form-label small text-muted">Phí học môn năng khiếu</label>
+        <input type="text" name="search_from" class="form-control border-start-0" value="{{ number_format($thanh_toan_hien_tai->tien_nang_khieu)}}" readonly>
       </div>
     </div>
+    <div class="row g-3">
+      <div class="col-md-3">
+        <label for="search_from" class="form-label small text-muted">Tổng số tiền</label>
+        <input type="text" name="search_from" class="form-control border-start-0" value="{{ number_format($thanh_toan_hien_tai->tong_so_tien)}}" readonly>
+      </div>
+    </div>
+    @else
+      <div class="text-center" style="color: var(--primary-color);">
+        <h4>Học phí đã được đóng</h4>
+      </div>
+    @endIf
   </div>
+  <!-- Search Panel -->
+  
   
   <!-- Table -->
   <div class="table-container">
@@ -51,23 +62,42 @@
       <table class="table">
         <thead>
           <tr>
-            <th width="20%">Ngày tạo</th>
-            <th width="20%">Ngày thanh toán</th>
-            <th width="20%">Tổng dịch vụ</th>
-            <th width="20%">Phát triển</th>
-            <th width="20%">Tổng tiền</th>
+            <th width="10%">Loại học phí</th>
+            <th width="20%">Kỳ đóng học</th>
+            <th width="10%">Ngày thanh toán</th>
+            <th width="10%">Tổng học phí</th>
+            <th width="10%">Tổng dịch vụ</th>
+            <th width="10%">Phí phát triển</th>
+            <th width="10%">Tiền học năng khiếu</th>
+            <th width="10%">Tổng tiền</th>
           </tr>
         </thead>
         <tbody class="service-table-body">
-          @for ($i = 0; $i < 12; $i++)
+          @foreach ($thanh_toans as $thanh_toan)
+          @php
+            if($thanh_toan->loai_hoc_phi == 0){
+                $quang_hoc_phi_bang = $thanh_toan->ten_ky;
+            }
+            elseif($thanh_toan->loai_hoc_phi == 1){
+                if($thanh_toan->ky ==1) $quang_hoc_phi_bang = 'Năm học '.$thanh_toan->nam_hoc.' - '.($thanh_toan->nam_hoc+1);
+                else $quang_hoc_phi_bang = 'Năm học '.($thanh_toan->nam_hoc-1).' - '.$thanh_toan->nam_hoc;
+            }
+            else {
+              $parts = explode('-',$thanh_toan->ngay_tao);
+              $quang_hoc_phi_bang = 'Tháng '.$parts[1].' năm '.$parts[0];
+            }
+          @endphp
           <tr>
-            <td>2024-05-01</td>
-            <td>2024-05-10</td>
-            <td>{{ number_format(rand(200000, 500000)) }} VND</td>
-            <td>{{ number_format(rand(100000, 200000)) }} VND</td>
-            <td>{{ number_format(rand(300000, 700000)) }} VND</td>
+            <td>{{ $thanh_toan->loai_hoc_phi==0?'Học phí kỳ':($thanh_toan->loai_hoc_phi==1?'Học phí năm':'Học phí tháng') }}</td>
+            <td>{{ $quang_hoc_phi_bang }}</td>
+            <td>{{ $thanh_toan->ngay_thanh_toan }}</td>
+            <td>{{ number_format($thanh_toan->tong_hoc_phi) }} VND</td>
+            <td>{{ number_format($thanh_toan->tong_dich_vu) }} VND</td>
+            <td>{{ number_format($thanh_toan->phat_trien) }} VND</td>
+            <td>{{ number_format($thanh_toan->tien_nang_khieu) }} VND</td>
+            <td>{{ number_format($thanh_toan->tong_so_tien) }} VND</td>
           </tr>
-          @endfor
+          @endforeach
         </tbody>
       </table>
     </div>

@@ -25,15 +25,10 @@
     </div>
     <!-- Basic Info Grid -->
     <div class="row g-3">
-      <div class="col-md-3"><label>Mã học sinh</label><input type="text" class="form-control" readonly value="{{$hoc_sinh->id}}"></div>
+      <div class="col-md-3"><label>Mã học sinh</label><input type="text" class="form-control" readonly value="{{$hoc_sinh->hs_id}}"></div>
       <div class="col-md-3"><label>Họ và tên</label><input type="text" class="form-control" readonly value="{{$hoc_sinh->ho_ten}}"></div>
       <div class="col-md-3"><label>Nick name</label><input type="text" class="form-control" readonly value="{{$hoc_sinh->nickname}}"></div>
-      <div class="col-md-3"><label>Giới tính</label>
-        <select class="form-select" disabled>
-          <option value="1" {{$hoc_sinh->gioi_tinh=='1'?"selected":""}}>Nam</option>
-          <option value="0" {{$hoc_sinh->gioi_tinh=='2'?"selected":""}}>Nữ</option>
-        </select>
-      </div>
+      <div class="col-md-3"><label>Giới tính</label><input type="text" class="form-control" readonly value="{{$hoc_sinh->gioi_tinh=='1'?"Nam":"Nữ"}}"></div>
       <div class="col-md-3"><label>Ngày sinh</label><input type="date" class="form-control" readonly value="{{$hoc_sinh->ngay_sinh}}"></div>
       <div class="col-md-3"><label>Ngày nhập học</label><input type="date" class="form-control" readonly value="{{$hoc_sinh->ngay_nhap_hoc}}"></div>
       <div class="col-md-3"><label>Ngày thôi học</label><input type="date" class="form-control" readonly value="{{$hoc_sinh->ngay_thoi_hoc}}"></div>
@@ -56,7 +51,8 @@
         } else {
           echo 'Không đăng ký';
         }
-        @endphp">
+        @endphp
+        ">
       </div>
       <div class="col-md-3"><label>Khóa học</label><input type="text" class="form-control" readonly value="{{$hoc_sinh->ten_khoa_hoc}}"></div>
     </div>
