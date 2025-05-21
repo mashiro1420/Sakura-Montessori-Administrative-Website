@@ -17,8 +17,8 @@
 <div class="container content-container">
   <!-- Page Header -->
   <div class="page-header">
-    <h2 class="page-title">Bảng giá dịch vụ</h2>
-    <p class="text-muted mt-2">Danh sách các dịch vụ và mức giá áp dụng tại trường</p>
+    <h2 class="page-title">Tra cứu học phí</h2>
+    <p class="text-muted mt-2">Học phí hiện tại và lịch sử học phí của học sinh</p>
   </div>
   
   <!-- Search Panel -->

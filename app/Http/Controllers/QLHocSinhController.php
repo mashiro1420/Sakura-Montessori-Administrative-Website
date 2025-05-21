@@ -393,4 +393,38 @@ class QLHocSinhController extends Controller
         $data['khoa_hocs'] = KhoaHocModel::all();
         return view('Phu_huynh_tai_khoan.phu_huynh_sua_tai_khoan', $data);
     }
+    public function xlSuaPH(Request $request)
+    {
+        $hoc_sinh = HocSinhModel::find($request->id);
+        $hoc_sinh->ho_ten = $request->ho_ten;
+        $hoc_sinh->ngay_nhap_hoc = $request->ngay_nhap_hoc;
+        $hoc_sinh->ngay_thoi_hoc = $request->ngay_thoi_hoc;
+        $hoc_sinh->nickname = $request->nickname;
+        $hoc_sinh->gioi_tinh = $request->gioi_tinh;
+        $hoc_sinh->ngay_sinh = $request->ngay_sinh;
+        $hoc_sinh->quoc_tich = $request->quoc_tich;
+        $hoc_sinh->ngon_ngu = $request->ngon_ngu;
+        $hoc_sinh->can_nang = $request->can_nang;
+        $hoc_sinh->chieu_cao = $request->chieu_cao;
+        $hoc_sinh->noi_sinh = $request->noi_sinh;
+        $hoc_sinh->thong_tin_suc_khoe = $request->thong_tin_suc_khoe;
+        $hoc_sinh->ho_ten_me = $request->ho_ten_me;
+        $hoc_sinh->sdt_me = $request->sdt_me;
+        $hoc_sinh->email_me = $request->email_me;
+        $hoc_sinh->nghe_nghiep_me = $request->nghe_nghiep_me;
+        $hoc_sinh->cmnd_me = $request->cmnd_me;
+        $hoc_sinh->nam_sinh_me = $request->nam_sinh_me;
+        $hoc_sinh->quoc_tich_me = $request->quoc_tich_me;
+        $hoc_sinh->ho_ten_bo = $request->ho_ten_bo;
+        $hoc_sinh->sdt_bo = $request->sdt_bo;
+        $hoc_sinh->email_bo = $request->email_bo;
+        $hoc_sinh->nghe_nghiep_bo = $request->nghe_nghiep_bo;
+        $hoc_sinh->cmnd_bo = $request->cmnd_bo;
+        $hoc_sinh->nam_sinh_bo = $request->nam_sinh_bo;
+        $hoc_sinh->quoc_tich_bo = $request->quoc_tich_bo;
+        $hoc_sinh->thuong_tru = $request->thuong_tru;
+        $hoc_sinh->dia_chi = $request->dia_chi;
+        $hoc_sinh->save();
+        return redirect()->route('ql_hs');
+    }
 }

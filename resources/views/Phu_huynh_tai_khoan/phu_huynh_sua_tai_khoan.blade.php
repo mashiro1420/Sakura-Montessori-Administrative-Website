@@ -14,7 +14,7 @@
 @include('components/navbar')
 <div class="container content-container">
   <!-- Form sua thong tin hoc sinh -->
-  <form action="" method="POST">
+  <form action="{{url('xl_sua_hs')}}" method="POST">
     @csrf
     <div class="card shadow-sm border-0 rounded-4 mb-4 p-4">
         <div class="d-flex justify-content-between mb-4">
@@ -29,39 +29,15 @@
             </div>  
         </div>
       <div class="row g-3">
-        <div class="col-md-3"><label>Mã học sinh</label><input type="text" name="id" class="form-control" readonly value="{{$hoc_sinh->id}}"></div>
-        <div class="col-md-3"><label>Họ và tên</label><input type="text" name="ho_ten" class="form-control" value="{{$hoc_sinh->ho_ten}}"></div>
+        <div class="col-md-3"><label>Mã học sinh</label><input type="text" name="id" class="form-control" readonly value="{{$hoc_sinh->id}}" readonly></div>
+        <div class="col-md-3"><label>Họ và tên</label><input type="text" name="ho_ten" class="form-control" value="{{$hoc_sinh->ho_ten}}" readonly></div>
         <div class="col-md-3"><label>Nick name</label><input type="text" name="nickname" class="form-control" value="{{$hoc_sinh->nickname}}"></div>
-        <div class="col-md-3"><label>Giới tính</label>
-          <select name="gioi_tinh" class="form-select">
-            <option value="1" {{$hoc_sinh->gioi_tinh=='1'?"selected":""}}>Nam</option>
-            <option value="2" {{$hoc_sinh->gioi_tinh=='2'?"selected":""}}>Nữ</option>
-          </select>
-        </div>
+        <div class="col-md-3"><label>Giới tính</label><input type="text" name="gioi_tinh" class="form-control" value="{{$hoc_sinh->gioi_tinh=='1'?"Nam":"Nữ"}}"></div>
         <div class="col-md-3"><label>Ngày sinh</label><input type="date" name="ngay_sinh" class="form-control" value="{{$hoc_sinh->ngay_sinh}}"></div>
-        <div class="col-md-3"><label>Ngày nhập học</label><input type="date" name="ngay_nhap_hoc" class="form-control" value="{{$hoc_sinh->ngay_nhap_hoc}}"></div>
-        <div class="col-md-3"><label>Ngày thôi học</label><input type="date" name="ngay_thoi_hoc" class="form-control" value="{{$hoc_sinh->ngay_thoi_hoc}}"></div>
         <div class="col-md-3"><label>Quốc tịch</label><input type="text" name="quoc_tich" class="form-control" value="{{$hoc_sinh->quoc_tich}}"></div>
         <div class="col-md-3"><label>Ngôn ngữ</label><input type="text" name="ngon_ngu" class="form-control" value="{{$hoc_sinh->ngon_ngu}}"></div>
         <div class="col-md-3"><label>Thường trú</label><input type="text" name="thuong_tru" class="form-control" value="{{$hoc_sinh->thuong_tru}}"></div>
         <div class="col-md-3"><label>Địa chỉ</label><input type="text" name="dia_chi" class="form-control" value="{{$hoc_sinh->dia_chi}}"></div>
-        <div class="col-md-3"><label>Lớp</label><input type="text" name="ten_lop" class="form-control" value="{{$hoc_sinh->ten_lop." - ".$hoc_sinh->ten_ky}}"></div>
-        <div class="col-md-3"><label>Loại học phí</label>
-          <select name="loai_hoc_phi" class="form-select">
-            <option value="0" {{$hoc_sinh->loai_hoc_phi=='0'?"selected":""}}>Học phí kỳ</option>
-            <option value="1" {{$hoc_sinh->loai_hoc_phi=='1'?"selected":""}}>Học phí năm</option>
-            <option value="2" {{$hoc_sinh->loai_hoc_phi=='2'?"selected":""}}>Học phí tháng</option>
-          </select>
-        </div>
-        <div class="col-md-3"><label>Môn năng khiếu</label>
-          <select name="nang_khieu" class="form-select">
-            <option value="">Không đăng ký</option>
-            @foreach($nang_khieu as $mon)
-              <option value="{{$mon->id}}" {{$hoc_sinh->nang_khieu == $mon->id ? 'selected' : ''}}>{{$mon->ten_mon_hoc}}</option>
-            @endforeach
-          </select>
-        </div>
-        <div class="col-md-3"><label>Khóa học</label><input type="text" name="khoa_hoc" class="form-control" value="{{$hoc_sinh->ten_khoa_hoc}}"></div>
       </div>
     </div>
     <div class="card shadow-sm border-0 rounded-4 p-4">
