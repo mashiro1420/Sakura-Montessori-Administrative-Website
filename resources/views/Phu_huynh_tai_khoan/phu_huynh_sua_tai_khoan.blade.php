@@ -40,7 +40,7 @@
         <div class="col-md-3"><label>Địa chỉ</label><input type="text" name="dia_chi" class="form-control" value="{{$hoc_sinh->dia_chi}}"></div>
       </div>
     </div>
-    <div class="card shadow-sm border-0 rounded-4 p-4">
+    <div class="card shadow-sm border-0 rounded-4 mb-4 p-4">
       <h2 class="text-primary mb-4" style="color: var(--primary-dark) !important;">Thông tin sức khỏe</h2>
       <textarea type="text" name="thong_tin_suc_khoe" class="form-control" placeholder="Nhập thông tin sức khỏe">{{$hoc_sinh->thong_tin_suc_khoe}}</textarea>
     </div>
