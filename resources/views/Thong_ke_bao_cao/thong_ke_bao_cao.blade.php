@@ -45,7 +45,7 @@
             </div>
 
             <div class="data-container col-md-4">
-                <label for="">Thống kê số lượng giáo viên theo năm</label>
+                <label for="">Thống kê số lượng giáo viên theo năm học</label>
                 <canvas id="teachersPerYear"></canvas>
             </div>
 
@@ -67,14 +67,22 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <script>
+    const months = @json($months);
+    const years = @json($years);
+    const hs_thang = @json($hs_thang);
+    const hs_nam = @json($hs_nam);
+    const nv_thang = @json($nv_thang);
+    const nv_nam = @json($nv_nam);
+    const di_bus = @json($di_bus);
+    const doanh_thu = @json($doanh_thu);
     const chartConfigs = {
         studentsPerMonth: {
             type: 'bar',
             data: {
-                labels: ['Tháng 1', '2', '3', '4', '5', '6'],
+                labels: months,
                 datasets: [{
                     label: 'Số học sinh',
-                    data: [120, 135, 110, 150, 160, 170],
+                    data: hs_thang,
                     backgroundColor: 'rgba(59, 125, 221, 0.7)'
                 }]
             }
@@ -82,10 +90,10 @@
         studentsPerYear: {
             type: 'line',
             data: {
-                labels: ['2020', '2021', '2022', '2023', '2024'],
+                labels: years,
                 datasets: [{
                     label: 'Số học sinh',
-                    data: [500, 550, 600, 650, 700],
+                    data: hs_nam,
                     borderColor: 'rgba(59, 125, 221, 1)',
                     fill: false
                 }]
@@ -94,10 +102,10 @@
         teachersPerMonth: {
             type: 'bar',
             data: {
-                labels: ['Tháng 1', '2', '3', '4', '5', '6'],
+                labels: months,
                 datasets: [{
                     label: 'Số giáo viên',
-                    data: [45, 47, 50, 49, 48, 50],
+                    data: nv_thang,
                     backgroundColor: 'rgba(75, 192, 192, 0.7)'
                 }]
             }
@@ -105,10 +113,10 @@
         teachersPerYear: {
             type: 'line',
             data: {
-                labels: ['2020', '2021', '2022', '2023', '2024'],
+                labels: years,
                 datasets: [{
                     label: 'Số giáo viên',
-                    data: [200, 210, 215, 220, 230],
+                    data: nv_nam,
                     borderColor: 'rgba(75, 192, 192, 1)',
                     fill: false
                 }]
@@ -119,7 +127,7 @@
             data: {
                 labels: ['Đi xe buýt', 'Không đi xe buýt'],
                 datasets: [{
-                    data: [300, 400],
+                    data: di_bus,
                     backgroundColor: ['rgba(255, 206, 86, 0.7)', 'rgba(255, 99, 132, 0.7)']
                 }]
             }
@@ -127,10 +135,10 @@
         tuitionPerSemester: {
             type: 'bar',
             data: {
-                labels: ['Kỳ 1', 'Kỳ 2'],
+                labels: ['Kỳ 1', 'Kỳ 2','Tổng cả năm'],
                 datasets: [{
                     label: 'Số tiền thu được (triệu VND)',
-                    data: [2500, 2700],
+                    data: doanh_thu,
                     backgroundColor: 'rgba(153, 102, 255, 0.7)'
                 }]
             }

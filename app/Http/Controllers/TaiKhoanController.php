@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Exports\TaiKhoanExport;
 use App\Http\Controllers\Controller;
+use App\Models\HocPhiModel;
+use App\Models\HocSinhModel;
+use App\Models\KyModel;
+use App\Models\NhanVienModel;
 use App\Models\PhanQuyenModel;
 use App\Models\QuyenModel;
 use App\Models\TaiKhoanModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\DB;
@@ -94,7 +99,111 @@ class TaiKhoanController extends Controller
         return Excel::download(new TaiKhoanExport($query), 'export_tk.xlsx');
     }
     public function viewBaoCao(Request $request){
-        $data=[];
+        $current_year = date('Y');
+        $data['months']=[];
+        $data['years'] = [];
+        $data['hs_thang'] = [];
+        $data['nv_thang'] = [];
+        $data['hs_nam'] = [];
+        $data['nv_nam'] = [];
+        $ky_hien_tai = KyModel::where('tu_ngay','<=',date('Y-m-d'))->where('den_ngay','>=',date('Y-m-d'))->first();
+        $hoc_sinh_di_bus = HocSinhModel::where('trang_thai',1)->where('di_bus',1)->count();
+        $hoc_sinh_khong_di_bus = HocSinhModel::where('trang_thai',1)->where('di_bus',0)->count();
+        $data['di_bus'] = [$hoc_sinh_di_bus,$hoc_sinh_khong_di_bus];
+        if($ky_hien_tai->ky == 1){
+            $ky_sau = KyModel::find($ky_hien_tai->id+1);
+            $hp_ky_1 = HocPhiModel::where('ngay_tao','>=',$ky_hien_tai->tu_ngay)
+            ->where('ngay_tao','<=',$ky_hien_tai->den_ngay)
+            ->whereNotNull('ngay_thanh_toan')
+            ->where(function ($query)  {
+                $query->where('loai_hoc_phi',0)
+                ->orWhere('loai_hoc_phi',2);
+                })
+            ->sum('tong_so_tien');
+            $hp_ky_2 = HocPhiModel::where('ngay_tao','>=',$ky_sau->tu_ngay)
+            ->where('ngay_tao','<=',$ky_sau->den_ngay)
+            ->whereNotNull('ngay_thanh_toan')
+            ->where(function ($query)  {
+                $query->where('loai_hoc_phi',0)
+                ->orWhere('loai_hoc_phi',2);
+            })
+            ->sum('tong_so_tien');
+            $hp_nam = HocPhiModel::where('ngay_tao','>=',$ky_hien_tai->tu_ngay)
+            ->where('ngay_tao','<=',$ky_sau->den_ngay)
+            ->where('loai_hoc_phi',1)
+            ->whereNotNull('ngay_thanh_toan') 
+            ->sum('tong_so_tien');
+        }
+        else{
+            $ky_truoc = KyModel::find($ky_hien_tai->id-1);
+            $hp_ky_1 = HocPhiModel::where('ngay_tao','>=',$ky_truoc->tu_ngay)
+            ->where('ngay_tao','<=',$ky_truoc->den_ngay)
+            ->whereNotNull('ngay_thanh_toan')
+            ->where(function ($query)  {
+                $query->where('loai_hoc_phi',0)
+                ->orWhere('loai_hoc_phi',2);
+                })
+            ->sum('tong_so_tien');
+            $hp_ky_2 = HocPhiModel::where('ngay_tao','>=',$ky_hien_tai->tu_ngay)
+            ->where('ngay_tao','<=',$ky_hien_tai->den_ngay)
+            ->whereNotNull('ngay_thanh_toan')
+            ->where(function ($query)  {
+                $query->where('loai_hoc_phi',0)
+                ->orWhere('loai_hoc_phi',2);
+                })
+            ->sum('tong_so_tien');
+            $hp_nam = HocPhiModel::where('ngay_tao','>=',$ky_truoc->tu_ngay)
+            ->where('ngay_tao','<=',$ky_hien_tai->den_ngay)
+            ->where('loai_hoc_phi',1)
+            ->whereNotNull('ngay_thanh_toan') 
+            ->sum('tong_so_tien');
+        }
+        $data['doanh_thu'] = [($hp_ky_1+($hp_nam/2))/1000000, ($hp_ky_2+($hp_nam/2))/1000000,($hp_ky_1+$hp_ky_2+$hp_nam)/1000000];
+        // dd($data['doanh_thu']);
+        for ($i = 1;$i<=12;$i++){
+            $data['months'][] = 'Tháng '.$i;
+            $date = Carbon::create($current_year, $i, 1);
+            $lastDay = $date->endOfMonth()->toDateString();
+            $hoc_sinh_thang = HocSinhModel::where('ngay_nhap_hoc','<=',$lastDay)
+            ->where(function ($query) use ($lastDay)  {
+                    $query->where('ngay_thoi_hoc', null)
+                    ->orWhere('ngay_thoi_hoc','>', $lastDay);
+                    })->count();
+            $data['hs_thang'][] = $hoc_sinh_thang;
+            $gv_thang = NhanVienModel::leftJoin('dm_chucvu','dm_chucvu.id','=','ql_nhanvien.id_chuc_vu')
+            ->where('ngay_vao_lam','<=',$lastDay)
+            ->where(function ($query)  {
+                $query->where('bo_phan', 'Giáo viên VN')
+                ->orWhere('bo_phan','Giáo viên nước ngoài');
+                })
+            ->where(function ($query) use ($lastDay)  {
+                    $query->where('ngay_nghi_viec', null)
+                    ->orWhere('ngay_nghi_viec','>', $lastDay);
+                    })->count();
+            $data['nv_thang'][] = $gv_thang;
+        }
+        for($i = 2023;$i<=date('Y');$i++){
+            $data['years'][] = $i.' - '.$i+1;
+            $hoc_sinh_nam = HocSinhModel::where('ngay_nhap_hoc','>=',$i.'-07-01')
+            ->where(function ($query) use ($i)  {
+                $query->where('ngay_thoi_hoc', null)
+                ->orWhere('ngay_thoi_hoc','<=', ($i+1).'-06-30');
+            })->count();
+            $data['hs_nam'][] = $hoc_sinh_nam;
+            $gv_nam = NhanVienModel::leftJoin('dm_chucvu','dm_chucvu.id','=','ql_nhanvien.id_chuc_vu')
+            ->where('ngay_vao_lam','<=', ($i+1).'-06-30')
+            ->where(function ($query)  {
+                $query->where('bo_phan', 'Giáo viên VN')
+                ->orWhere('bo_phan','Giáo viên nước ngoài');
+            })
+            ->where(function ($query) use ($i)  {
+                $query->where('ngay_nghi_viec', null)
+                ->orWhere('ngay_nghi_viec','<=', ($i+1).'-06-30');
+            })->count();
+            $data['nv_nam'][] = $gv_nam;
+        } 
+        dump($data['nv_nam']);
+        
         return view('Thong_ke_bao_cao.thong_ke_bao_cao', $data);
     }
 }
