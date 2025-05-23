@@ -24,11 +24,10 @@
           <div class="page-header">
             <h2><i class="fa-solid fa-chalkboard-user"></i> Hiển thị thanh toán</h2>
           </div>
-          <form class="search-container" action="{{url('xl_thanh_toan')}}" method="post">
+          <form class="search-container" action="" method="post">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">
-                <input type="text" name="id" class="form-control" value="{{ $thanh_toan->id}}" hidden>
                 <label for="ho_ten">Tên học sinh</label>
                 <input type="text" name="ho_ten" class="form-control" value="{{ $thanh_toan->id_hoc_sinh.' - '.$thanh_toan->ho_ten}}" readonly>
               </div>
@@ -83,9 +82,10 @@
   <!-- Modal Upload File -->
 <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form id="import-form" action="" method="POST" enctype="multipart/form-data" class="modal-content">
+    <form id="import-form" action="{{url('xl_thanh_toan')}}" method="POST" enctype="multipart/form-data" class="modal-content">
       @csrf
       <div class="modal-header">
+      <input type="text" name="id" class="form-control" value="{{ $thanh_toan->id}}" hidden>
         <h5 class="modal-title" id="uploadModalLabel">Tải lên file thanh toán</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
       </div>
