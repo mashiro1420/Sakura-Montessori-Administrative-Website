@@ -49,6 +49,7 @@ class HocSinhImport implements ToModel, WithHeadingRow
             'quoc_tich_bo' => $row['quoc_tich_bo'],
             'thuong_tru' => $row['dia_chi_thuong_tru'],
             'dia_chi' => $row['dia_chi'],
+            'id_khoa_hoc' => $row['khoa_hoc'],
             'loai_hoc_phi' => $row['loai_hoc_phi']=="Học phí kỳ"?0:($row['loai_hoc_phi']=="Học phí năm"?1:2),
         ],['id'], ['ho_ten', 'ngay_nhap_hoc', 'ngay_thoi_hoc', 'nickname', 'gioi_tinh', 'ngay_sinh', 'quoc_tich', 'ngon_ngu', 'can_nang', 'chieu_cao', 'noi_sinh', 'thong_tin_suc_khoe', 'di_bus', 'ho_ten_me', 'sdt_me', 'email_me', 'nghe_nghiep_me', 'cmnd_me', 'nam_sinh_me', 'quoc_tich_me', 'ho_ten_bo', 'sdt_bo', 'email_bo', 'nghe_nghiep_bo', 'cmnd_bo', 'nam_sinh_bo', 'quoc_tich_bo', 'thuong_tru', 'dia_chi', 'loai_hoc_phi']);
         TaiKhoanModel::upsert([

@@ -43,9 +43,12 @@ class TinhHocPhiNam extends Command
             if(empty($he_dao_tao)) continue;
             $tong_hoc_phi = BangGiaModel::where('ten_gia','Học phí 1 tháng hệ '.$he_dao_tao->ten_he_dao_tao.'')->first()->gia*12;
             $dich_vus = TTDichVuHocSinhModel::where('id_hoc_sinh',$hoc_sinh->id)->get(); 
-            foreach($dich_vus as $dich_vu){
-                $bang_gia = BangGiaModel::where('id_dich_vu',$dich_vu->id_dich_vu)->first();
-                $tong_dich_vu += $bang_gia->gia*12;
+            if(count($dich_vus)!= 0){
+                foreach($dich_vus as $dich_vu){
+                    // echo $dich_vu->id_bang_gia;
+                    $bang_gia = BangGiaModel::find($dich_vu->id_bang_gia)->first();
+                    $tong_dich_vu += $bang_gia->gia*12;
+                }
             }
             if(!empty($hoc_sinh->id_nang_khieu)) $tien_nang_khieu += BangGiaModel::where('id_dich_vu',4)->first()->gia*12;
             $phi_phat_trien = BangGiaModel::where('ten_gia','Phí phát triển')->first()->gia*12;
