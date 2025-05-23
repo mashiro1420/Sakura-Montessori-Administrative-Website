@@ -74,7 +74,11 @@ class TaiKhoanController extends Controller
         $tai_khoan->mat_khau = md5($request->mat_khau_moi);
         $tai_khoan->save();
         session()->flash('bao_loi', 'Cập nhật mật khẩu thành công');
-        return redirect()->route('cai_dat_tk');
+        if(session('la_khach') == 'true'){
+            return redirect()->route('ph_sua_tai_khoan');
+        }else{
+            return redirect()->route('cai_dat_tk');
+        }
         
     }
     public function xlPhanQuyen(Request $request){

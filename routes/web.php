@@ -27,10 +27,10 @@ Route::get('/', function () {
 Route::get('dang_nhap',[DangNhapController::class, 'viewDangNhap'])->name('dang_nhap');
 Route::post('xl_dang_nhap',[DangNhapController::class, 'login']);
 Route::get('xl_dang_xuat',[DangNhapController::class, 'logout']);
+Route::post('xl_doi_mk',[TaiKhoanController::class, 'xlDoiMK']);
 Route::middleware(['session.check', 'quyen.check:tai_khoan'])->group(function () {
     Route::get('ql_tk',[TaiKhoanController::class, 'viewQuanLy'])->name('ql_tk');
     Route::get('cai_dat_tk',[TaiKhoanController::class, 'viewCaiDat'])->name('cai_dat_tk');
-    Route::post('xl_doi_mk',[TaiKhoanController::class, 'xlDoiMK']);
     Route::post('xl_quyen', [TaiKhoanController::class, 'xlPhanQuyen'])->name('xl_quyen');
     Route::get('export_tk',[TaiKhoanController::class, 'export'])->name('export_tk');
     Route::get('bao_cao_tk',[TaiKhoanController::class, 'viewBaoCao'])->name('bao_cao_tk');
