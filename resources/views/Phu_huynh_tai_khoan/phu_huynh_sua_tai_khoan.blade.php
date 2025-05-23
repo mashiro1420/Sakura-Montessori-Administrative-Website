@@ -20,6 +20,9 @@
         <div class="d-flex justify-content-between mb-4">
             <h2 class="text-primary m-0 p-0" style="color: var(--primary-dark) !important;">Sửa thông tin cơ bản</h2>
             <div class="button_container">
+                <a class="btn btn-warning" href="#" data-bs-toggle="modal" data-bs-target="#modalDoiMatKhau">
+                    Đổi mật khẩu
+                </a>
                 <button type="submit" class="btn btn-success">
                     <i class="fa-solid fa-circle-check"></i> Lưu thay đổi
                 </button>
@@ -67,7 +70,44 @@
     </div>
   </form>
 </div>
-
+<!-- Modal Doi Mat Khau -->
+  <div class="modal fade" id="modalDoiMatKhau" tabindex="-1" aria-labelledby="modalDoiMatKhauLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalDoiMatKhauLabel">Đổi mật khẩu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form class="search-container" action="{{url('xl_doi_mk')}}" method="post">
+          @csrf
+            <div class="filter-row">
+              <div class="mb-3">
+                <label for="tai_khoan">Tên tài khoản</label>
+                <input type="text" name="tai_khoan" class="form-control" value="{{ session('tai_khoan') }}" readonly>
+              </div>
+              <div class="mb-3">
+                <label for="mat_khau_cu">Mật khẩu cũ</label>
+                <input type="password" name="mat_khau_cu" class="form-control" placeholder="Nhập mật khẩu mới" required>
+              </div>
+              <div class="mb-3">
+                <label for="mat_khau_moi">Mật khẩu mới</label>
+                <input type="password" name="mat_khau_moi" class="form-control" placeholder="Nhập mật khẩu mới" required>
+              </div>
+              <div class="mb-3">
+                <label for="xac_nhan">Nhập lại mật khẩu mới</label>
+                <input type="password" name="xac_nhan" class="form-control" placeholder="Nhập lại mật khẩu mới" required>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <button type="submit" class="btn btn-primary">Lưu</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 @include('components/bao_loi')
