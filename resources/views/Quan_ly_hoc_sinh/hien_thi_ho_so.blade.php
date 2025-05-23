@@ -51,7 +51,7 @@
                 <div class="col-md-4">
                   <div class="search-item">
                     <label for="lop">Lớp</label>
-                    <input type="text" name="lop" class="form-control" readonly value="{{$hoc_sinh->id_phan_lop}}">
+                    <input type="text" name="lop" class="form-control" readonly value="{{$phan_lop->ten_lop}}">
                   </div>
                 </div>
               </div>

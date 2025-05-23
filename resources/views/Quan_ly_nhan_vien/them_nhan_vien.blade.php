@@ -61,7 +61,7 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="cmnd">Số căn cước công dân</label>
-                <input type="number" name="cmnd" class="form-control" placeholder="Nhập số căn cước công dân" >
+                <input type="text" name="cmnd" class="form-control" placeholder="Nhập số căn cước công dân" >
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="ngay_cap">Ngày cấp</label>

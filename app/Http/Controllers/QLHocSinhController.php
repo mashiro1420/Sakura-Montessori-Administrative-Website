@@ -110,8 +110,10 @@ class QLHocSinhController extends Controller
     public function viewHienThiHoSo(Request $request)
     {
         $data = [];
-        $data['giay_to'] = GiayToModel::where('id_hoc_sinh',$request->id)->get();
+        $data['giay_to'] = GiayToModel::select('ql_giaytohocsinh.*')->where('id_hoc_sinh',$request->id)->get();
         $data['hoc_sinh'] = HocSinhModel::find($request->id);
+        $data['phan_lop'] = PhanLopModel::leftJoin('dm_lop','dm_lop.id','=','ql_phanlop.id_lop')
+            ->find($data['hoc_sinh']->id_phan_lop);
         return view('Quan_ly_hoc_sinh.hien_thi_ho_so', $data);
     }
 //-------------------------------------------------
