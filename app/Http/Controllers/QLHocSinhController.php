@@ -186,6 +186,7 @@ class QLHocSinhController extends Controller
         $hoc_sinh->nam_sinh_me = $request->nam_sinh_me;
         $hoc_sinh->quoc_tich_me = $request->quoc_tich_me;
         $hoc_sinh->ho_ten_bo = $request->ho_ten_bo;
+        $hoc_sinh->id_nang_khieu = $request->nang_khieu;
         $hoc_sinh->sdt_bo = $request->sdt_bo;
         $hoc_sinh->email_bo = $request->email_bo;
         $hoc_sinh->nghe_nghiep_bo = $request->nghe_nghiep_bo;
