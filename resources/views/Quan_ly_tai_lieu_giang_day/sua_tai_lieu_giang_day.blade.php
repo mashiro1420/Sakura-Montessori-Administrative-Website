@@ -24,7 +24,7 @@
             <h2><i class="fa-solid fa-chalkboard-user"></i> Cập nhật tài liệu giảng dạy</h2>
           </div>
           <!-- Form to add new employee -->
-          <form class="search-container" action="{{url('xl_sua_tlgd')}}" method="post">
+          <form class="search-container" action="{{url('xl_sua_tlgd')}}" method="post" enctype="multipart/form-data">
           @csrf
             <div class="filter-row">
               <div class="search-item d-inline-block w-25">

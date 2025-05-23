@@ -103,7 +103,7 @@
               <div class="search-item d-inline-block w-25">
                 <label for="phong_hoc">Phòng học</label>
                 <select id="phong_hoc" name="phong_hoc" class="select2-elem form-select" required>
-                  <option value="">Chọn hoặc tìm kiếm</option>
+                  <option value="{{ $phan_lop->id_phong_hoc }}">{{ $phan_lop->Lop->ten_lop }}</option>
                   @foreach($phong_hocs as $phong_hoc)
                     <option value="{{ $phong_hoc->id }}" {{ $phong_hoc->id == $phan_lop->id_phong_hoc ? 'selected' : '' }}>
                       {{ $phong_hoc->ten_phong_hoc }}
@@ -132,6 +132,15 @@
                     <option value="{{ $khoa_hoc->id }}" {{ $khoa_hoc->id == $phan_lop->id_khoa_hoc ? 'selected' : '' }}>
                       {{ $khoa_hoc->ten_khoa_hoc }}
                     </option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="search-item d-inline-block w-25">
+                <label for="ky">Kỳ</label>
+                <select id="ky" name="ky" class="select2-elem form-select" data-placeholder="Chọn hoặc tìm kiếm" required>
+                  <option value="" disabled selected>Chọn hoặc tìm kiếm</option>
+                  @foreach($kys as $ky)
+                    <option value="{{$ky->id}}" {{ $ky->id == $phan_lop->id_ky ? 'selected' : '' }}>{{$ky->ten_ky}}</option>
                   @endforeach
                 </select>
               </div>

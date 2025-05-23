@@ -34,7 +34,12 @@ class TaoMenu extends Command
                 $menu = new ThucDonModel();
                 $menu->id_tuan = $tuan->id;
                 $menu->thu = $i;
-                $menu->save();
+                
+                try{
+                    $menu->saveOrFail();
+                }catch(\Exception $e){
+                    continue;
+                }
             }
         }
     }

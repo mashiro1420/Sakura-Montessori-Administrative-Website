@@ -201,9 +201,7 @@ class TaiKhoanController extends Controller
                 ->orWhere('ngay_nghi_viec','<=', ($i+1).'-06-30');
             })->count();
             $data['nv_nam'][] = $gv_nam;
-        } 
-        dump($data['nv_nam']);
-        
+        }
         return view('Thong_ke_bao_cao.thong_ke_bao_cao', $data);
     }
 }
