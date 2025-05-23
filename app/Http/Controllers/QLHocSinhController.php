@@ -156,7 +156,6 @@ class QLHocSinhController extends Controller
         $tai_khoan->tai_khoan = $ma_hs;
         $tai_khoan->id_hoc_sinh = $ma_hs;
         $tai_khoan->la_khach = true;
-        $tai_khoan->id_quyen = 2;
         $hoc_sinh->save();
         $tai_khoan->save();
         return redirect()->route('ql_hs');
