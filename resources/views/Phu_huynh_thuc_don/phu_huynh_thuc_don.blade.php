@@ -38,7 +38,7 @@
           <button class="btn btn-pink">
             <i class="fas fa-search me-1"></i> Tìm kiếm
           </button>
-          <button class="btn btn-secondary">
+          <button type="button" id="reset-btn" class="btn btn-secondary">
             <i class="fas fa-sync-alt me-1"></i> Làm mới
           </button>
         </div>
@@ -147,6 +147,9 @@
   </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+  document.getElementById('reset-btn').addEventListener('click', function () {
+    window.location.href = '{{ url("ph_td") }}';
+  });
   document.addEventListener('DOMContentLoaded', function () {
     const btnReset = document.querySelector('.btn-secondary');
 

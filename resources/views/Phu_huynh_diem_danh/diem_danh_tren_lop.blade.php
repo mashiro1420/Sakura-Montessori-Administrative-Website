@@ -46,7 +46,7 @@
           <button class="btn btn-pink">
             <i class="fas fa-search me-1"></i> Tìm kiếm
           </button>
-          <button class="btn btn-secondary">
+          <button type="button" id="reset-btn" class="btn btn-secondary">
             <i class="fas fa-sync-alt me-1"></i> Làm mới
           </button>
         </div>
@@ -94,6 +94,9 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 <script>
+  document.getElementById('reset-btn').addEventListener('click', function () {
+    window.location.href = '{{ url("ph_diem_danh_tren_lop") }}';
+  });
     const rows = document.querySelectorAll('.service-table-body tr');  
     const itemsPerPage = 5;  
     const maxPageLinks = 5;  

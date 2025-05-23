@@ -39,7 +39,7 @@
                 <button class="btn btn-primary">
                   <i class="fa-solid fa-search me-1"></i> Tìm kiếm
                 </button>
-                <button type="reset" id="reset-btn" class="btn btn-outline-secondary ms-2">
+                <button type="button" id="reset-btn" class="btn btn-outline-secondary ms-2">
                   <i class="fa-solid fa-rotate me-1"></i> Làm mới
                 </button>
               </div>
@@ -104,15 +104,7 @@
   });
    
   document.getElementById('reset-btn').addEventListener('click', function () {
-    const inputs = document.querySelectorAll('.search-container input, .search-container select');
-
-    inputs.forEach(input => {
-      if (input.tagName === 'SELECT') {
-        input.selectedIndex = 0;
-      } else {
-        input.value = '';
-      }
-    });
+    window.location.href = '{{ url("ql_dm_he_dao_tao") }}';
   });
    
   const rows = document.querySelectorAll('.table tbody tr');  

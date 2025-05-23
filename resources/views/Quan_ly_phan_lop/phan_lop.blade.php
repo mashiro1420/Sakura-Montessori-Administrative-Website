@@ -188,7 +188,7 @@
   });
   // Nút làm mới phần Phân lớp
   document.getElementById('reset-btn').addEventListener('click', function () {
-    const inputs = document.querySelectorAll('.search-container input, .search-container select');
+    const inputs = document.querySelectorAll('.search-container select');
 
     inputs.forEach(input => {
       if (input.tagName === 'SELECT') {

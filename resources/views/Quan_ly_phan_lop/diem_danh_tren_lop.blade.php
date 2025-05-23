@@ -68,14 +68,11 @@
             <div class="action-buttons">
               <div>
                 <button class="btn btn-primary" type="submit">
-                  <i class="fa-solid fa-search me-1"></i> Nộp điểm danh
-                </button>
-                <button type="reset" id="reset-btn" class="btn btn-outline-secondary ms-2">
-                  <i class="fa-solid fa-rotate me-1"></i> Làm mới
+                  Nộp điểm danh
                 </button>
               </div>
               <div>
-                <a class="btn btn-primary" href="#">
+                <a class="btn btn-primary" href="{{route('ql_phan_lop')}}">
                   <i class="fa-solid fa-arrow-left me-1"></i> Quay lại
                 </a>
                 {{-- <button class="btn btn-outline-secondary ms-2">
@@ -147,18 +144,7 @@
   hamBurger.addEventListener("click", function () {
     document.querySelector("#sidebar").classList.toggle("expand");
   });
-   
-  document.getElementById('reset-btn').addEventListener('click', function () {
-    const inputs = document.querySelectorAll('.search-container input, .search-container select');
-
-    inputs.forEach(input => {
-      if (input.tagName === 'SELECT') {
-        input.selectedIndex = 0;
-      } else {
-        input.value = '';
-      }
-    });
-  });
+  
    
   const rows = document.querySelectorAll('.table tbody tr');  
   const itemsPerPage = 5;  
