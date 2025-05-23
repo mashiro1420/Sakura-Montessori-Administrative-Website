@@ -54,7 +54,8 @@ class HocSinhExport implements FromCollection, WithHeadings
                 'Quốc tịch bố' => $hoc_sinhs->quoc_tich_bo,
                 'Đi bus' => $hoc_sinhs->di_bus==1?'Có':'Không',
                 'Ăn cơm' => $hoc_sinhs->an_com==1?'Có':'Không',
-                'Địa chỉ' => $hoc_sinhs->dia_chi
+                'Địa chỉ' => $hoc_sinhs->dia_chi,
+                'Khóa học' => $hoc_sinhs->ten_khoa_hoc,
             ];
         });
     }
@@ -94,9 +95,9 @@ class HocSinhExport implements FromCollection, WithHeadings
             'Năm sinh bố',
             'Quốc tịch bố',
             'Đi bus',
+            'Ăn cơm',
             'Địa chỉ',
-            'Người đưa đón',
-            'Liên hệ khẩn',
+            'Khóa học',
         ];
     }
 }

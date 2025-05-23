@@ -313,31 +313,25 @@ class QLHocSinhController extends Controller
         return redirect()->back()->with('bao_loi','Lưu thành công');
     }
     public function export(Request $request){
-        $query = HocSinhModel::query()->select ('*');
+        $query = HocSinhModel::query()->select ('ql_hocsinh.*','dm_khoahoc.ten_khoa_hoc')->leftJoin('dm_khoahoc','dm_khoahoc.id','=','ql_hocsinh.id_khoa_hoc');
         if ($request->has('tk_ho_ten') && !empty($request->tk_ho_ten)){
             $query->where('ho_ten','like','%'.$request->tk_ho_ten.'%');
-            $data['tk_ho_ten'] = $request->tk_ho_ten;
         }
         if ($request->has('tk_gioi_tinh') && $request->tk_gioi_tinh!=""){
             $query->where('gioi_tinh',$request->tk_gioi_tinh);
-            $data['tk_gioi_tinh'] = $request->tk_gioi_tinh==0?"Nữ":"Nam";
         }
         if ($request->has('tk_quoc_tich') && !empty($request->tk_quoc_tich)){
             $query->where('quoc_tich','like','%'.$request->tk_quoc_tich.'%');
-            $data['tk_quoc_tich'] = $request->tk_quoc_tich;
         }
         if ($request->has('tk_ngay_nhap_hoc') && !empty($request->tk_ngay_nhap_hoc)){
             $query->where('ngay_nhap_hoc',$request->tk_ngay_nhap_hoc);
-            $data['tk_ngay_nhap_hoc'] = $request->tk_ngay_nhap_hoc;
         }
         if ($request->has('tk_ngay_thoi_hoc') && !empty($request->tk_ngay_thoi_hoc)){
             $query->where('ngay_thoi_hoc',$request->tk_ngay_thoi_hoc);
-            $data['tk_ngay_thoi_hoc'] = $request->tk_ngay_thoi_hoc;
         }
         if ($request->has('tk_trang_thai') && $request->tk_trang_thai!=""){
             dump($request->trang_thai);
             $query->where('trang_thai',$request->tk_trang_thai);
-            $data['tk_trang_thai'] = $request->tk_trang_thai==0?"active":"inactive";
         }
         $query = $query->orderBy('id')->get();
         return Excel::download(new HocSinhExport($query), 'export_hs.xlsx');
