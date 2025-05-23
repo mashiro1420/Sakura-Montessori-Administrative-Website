@@ -121,13 +121,7 @@
   document.getElementById('reset-btn').addEventListener('click', function () {
     const inputs = document.querySelectorAll('.search-container input, .search-container select');
 
-    inputs.forEach(input => {
-      if (input.tagName === 'SELECT') {
-        input.selectedIndex = 0;
-      } else {
-        input.value = '';
-      }
-    });
+     window.location.href = '{{ url("ql_dk_bus_hs") }}';
   });
    
   const rows = document.querySelectorAll('.table tbody tr');  
