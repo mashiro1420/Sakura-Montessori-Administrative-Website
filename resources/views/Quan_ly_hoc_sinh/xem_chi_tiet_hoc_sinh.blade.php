@@ -118,9 +118,9 @@
             <div class="search-item d-inline-block w-25">
               <label for="nang_khieu">Môn năng khiếu</label>
               <input type="text" name="nang_khieu" class="form-control" readonly placeholder="Nhập địa chỉ" value="@php
-              if(!empty($hoc_sinh->nang_khieu)){
+              if(!empty($hoc_sinh->id_nang_khieu)){
                 foreach ($nang_khieu as $mon) {
-                  if ($mon->id == $hoc_sinh->nang_khieu) {
+                  if ($mon->id == $hoc_sinh->id_nang_khieu) {
                     echo $mon->ten_mon_hoc;
                   }
                 }
