@@ -82,8 +82,8 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="nang_khieu">Môn năng khiếu</label>
-                <select name="loai_hoc_phi" class="form-select" required>
-                  <option value="0" {{empty($hoc_sinh->nang_khieu)?"selected":""}}>Không đăng ký</option>
+                <select name="nang_khieu" class="form-select">
+                  <option value="" >Không đăng ký</option>
                   @foreach ($nang_khieu as $mon)
                   <option value="{{ $mon->id }}">{{$mon->ten_mon_hoc}}</option>
                   @endforeach

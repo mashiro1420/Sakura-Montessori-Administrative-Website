@@ -82,8 +82,8 @@
               </div>
               <div class="search-item d-inline-block w-25">
                 <label for="nang_khieu">Môn năng khiếu</label>
-                <select name="nang_khieu" class="form-select" required>
-                  <option value="0" {{empty($hoc_sinh->nang_khieu)?"selected":""}}>Không đăng ký</option>
+                <select name="nang_khieu" class="form-select" >
+                  <option value="" {{empty($hoc_sinh->nang_khieu)?"selected":""}}>Không đăng ký</option>
                   @foreach ($nang_khieu as $mon)
                   <option value="{{ $mon->id }}" {{$hoc_sinh->nang_khieu==$mon->id?"selected":""}}>{{$mon->ten_mon_hoc}}</option>
                   @endforeach
@@ -94,7 +94,7 @@
                 <select id="khoa_hoc" name="khoa_hoc" class="select2-elem form-select" data-placeholder="Chọn hoặc tìm kiếm" required>
                   <option value="" disabled selected>Chọn hoặc tìm kiếm</option>
                   @foreach($khoa_hocs as $khoa_hoc)
-                    <option value="{{$khoa_hoc->id}}" {{ $hoc_sinh->id_khoa==$khoa_hoc->id?"selected":"" }}>{{$khoa_hoc->ten_khoa_hoc}}</option>
+                    <option value="{{$khoa_hoc->id}}" {{ $hoc_sinh->id_khoa_hoc==$khoa_hoc->id?"selected":"" }}>{{$khoa_hoc->ten_khoa_hoc}}</option>
                   @endforeach
                 </select>
               </div>

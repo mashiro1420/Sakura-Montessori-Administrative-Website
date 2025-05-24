@@ -100,6 +100,7 @@ public function xlSuaGia(Request $request)
         }
         foreach($ds_diem_danh as $diem_danh){
             $di_hoc = DiemDanhModel::where('id_hoc_sinh', $diem_danh)->where('ngay',date('Y-m-d'))->where('loai_diem_danh',2)->first();
+            if(empty($di_hoc)) continue;
             $di_hoc->trang_thai = 1;
             $di_hoc->save();
         }

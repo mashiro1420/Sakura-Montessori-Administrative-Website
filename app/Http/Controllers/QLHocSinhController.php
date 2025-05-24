@@ -152,6 +152,7 @@ class QLHocSinhController extends Controller
         $hoc_sinh->quoc_tich_bo = $request->quoc_tich_bo;
         $hoc_sinh->thuong_tru = $request->thuong_tru;
         $hoc_sinh->dia_chi = $request->dia_chi;
+        $hoc_sinh->id_nang_khieu = $request->nang_khieu;
         $hoc_sinh->id_khoa_hoc = $request->khoa_hoc;
         $hoc_sinh->loai_hoc_phi = $request->loai_hoc_phi;
         $tai_khoan = new TaiKhoanModel();
@@ -231,7 +232,7 @@ class QLHocSinhController extends Controller
             }
         }
         $hoc_sinh->save();
-        return redirect()->route('ql_hs');
+        return redirect()->route('ql_hs')->with('bao_loi','Lưu thành công');
     }
     public function xlThoiHoc(Request $request)
     {

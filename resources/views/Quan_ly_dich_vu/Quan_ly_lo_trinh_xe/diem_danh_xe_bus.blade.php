@@ -50,9 +50,10 @@
             </div>
           </div>
           <form  action="{{ url('xl_diem_danh_bus') }}" method="post">
-              @csrf
+            @csrf
             <div class="action-buttons">
               <div>
+                <input type="text" name="ds_diem_danh" id="ds_diem_danh" hidden>
                 <button class="btn btn-primary" type="submit">
                   Nộp điểm danh
                 </button>
@@ -63,15 +64,15 @@
                 </a>
               </div>
             </div>
+          </form>
           </div>
-          <form action="{{ url('import_hs') }}" method="post" enctype="multipart/form-data" id="import-form">
+          <form action="{{ url('xl_upload_diem_danh') }}" method="post" enctype="multipart/form-data" id="import-form">
             @csrf
             <input type="file" name="file" id="file-input" class="d-none" required>
             <button type="submit" name="import" class="btn btn-outline-secondary ms-2 mb-2" id="import-button">Upload điểm danh</button>
           </form>
             <!-- Table Section -->
             <div class="data-container">
-              <input type="text" name="ds_diem_danh" id="ds_diem_danh" hidden>
               <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -100,7 +101,6 @@
                 @endforeach
               </tbody>
             </table>
-          </form>
           <!-- Pagination -->
           <div class="pagination-container">
             <nav>
