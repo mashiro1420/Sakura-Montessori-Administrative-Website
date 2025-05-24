@@ -17,6 +17,7 @@ use App\Models\TTDiXeModel;
 use App\Models\TuanModel;
 use App\Models\TuyenXeModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Artisan;
 
@@ -109,10 +110,15 @@ public function xlSuaGia(Request $request)
     public function xlUploadDiemDanhBus(Request $request)
     {
         $tuyen_xe = LoTrinhXeModel::find($request->id);
+        if(!empty($tuyen_xe->danh_sach)){
+            if(File::exists('DS_diem_danh/'.$tuyen_xe->ngay .'/'. $tuyen_xe->danh_sach)){
+                File::delete('DS_diem_danh/'.$tuyen_xe->ngay .'/'. $tuyen_xe->danh_sach);
+            }
+        }
         if ($request->hasFile('file')) {
             $file = $request->file;
             $filename = md5(time().rand(1,100) . $request->file->getClientOriginalName()) . '.' . $request->file->getClientOriginalExtension();
-            $file->move('DS_diem_danh/'.$tuyen_xe->ngay.$tuyen_xe->tuyen_xe.'', $filename);
+            $file->move('DS_diem_danh/'.$tuyen_xe->ngay.'', $filename);
             $tuyen_xe->danh_sach = $filename;
         }
         $tuyen_xe->save();
