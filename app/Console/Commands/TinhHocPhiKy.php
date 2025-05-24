@@ -46,8 +46,9 @@ class TinhHocPhiKy extends Command
             if(count($dich_vus)!= 0){
                 foreach($dich_vus as $dich_vu){
                     // echo $dich_vu->id_bang_gia;
-                    $bang_gia = BangGiaModel::find($dich_vu->id_bang_gia)->first();
-                    $tong_dich_vu += $bang_gia->gia*6;
+                    $bang_gia = BangGiaModel::find($dich_vu->id_bang_gia);
+                    // echo $bang_gia->ten_gia.$dich_vu->id_bang_gia;
+                    $tong_dich_vu += ($bang_gia->gia*6);
                 }
             }
             if(!empty($hoc_sinh->id_nang_khieu)) $tien_nang_khieu += BangGiaModel::where('id_dich_vu',4)->first()->gia*6;

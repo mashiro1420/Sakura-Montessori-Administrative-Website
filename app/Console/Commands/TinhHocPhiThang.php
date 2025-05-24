@@ -47,7 +47,7 @@ class TinhHocPhiThang extends Command
             if(count($dich_vus)!= 0){
                 foreach($dich_vus as $dich_vu){
                     // echo $dich_vu->id_bang_gia;
-                    $bang_gia = BangGiaModel::find($dich_vu->id_bang_gia)->first();
+                    $bang_gia = BangGiaModel::find($dich_vu->id_bang_gia);
                     $tong_dich_vu += $bang_gia->gia;
                 }
             }
