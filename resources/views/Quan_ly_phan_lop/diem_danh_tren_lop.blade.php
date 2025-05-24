@@ -88,6 +88,11 @@
               </div>
             </div>
           </div>
+          <form action="{{ url('import_hs') }}" method="post" enctype="multipart/form-data" id="import-form">
+            @csrf
+            <input type="file" name="file" id="file-input" class="d-none" required>
+            <button type="submit" name="import" class="btn btn-outline-secondary ms-2 mb-2" id="import-button">Upload điểm danh</button>
+          </form>
           <!-- Table Section -->
           <div class="data-container">
             <input type="text" name="ds_diem_danh" id="ds_diem_danh" hidden>
@@ -270,6 +275,15 @@
                 hiddenInput.value = selectedIds.join(',');
             });
         });
+    });
+  </script>
+  <script>
+    document.getElementById('import-button').addEventListener('click', function() {
+      document.getElementById('file-input').click();  
+    });
+
+    document.getElementById('file-input').addEventListener('change', function() {
+      document.getElementById('import-form').submit();  
     });
   </script>
 @include('components/bao_loi')
