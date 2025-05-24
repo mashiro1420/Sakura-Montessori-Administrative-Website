@@ -68,6 +68,7 @@
           </div>
           <form action="{{ url('xl_upload_diem_danh') }}" method="post" enctype="multipart/form-data" id="import-form">
             @csrf
+            <input type="text" hidden name="id" value="{{$lo_trinh->id}}">
             <input type="file" name="file" id="file-input" class="d-none" required>
             <button type="submit" name="import" class="btn btn-outline-secondary ms-2 mb-2" id="import-button">Upload điểm danh</button>
           </form>

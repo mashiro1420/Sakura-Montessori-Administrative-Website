@@ -121,7 +121,17 @@
                   <td>{{$lo_trinh_xe->ten_lai_xe}}</td>
                   <td>{{$lo_trinh_xe->ten_monitor}}</td>
                   <td>{{$lo_trinh_xe->bien_so_xe}}</td>
-                  <td>{{$lo_trinh_xe->danh_sach}}</td>
+                  <td>
+                    @if(!empty($lo_trinh_xe->danh_sach))
+                      <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#fileModal"
+                              data-file="{{ asset('DS_diem_danh/'.$lo_trinh_xe->ngay.'/'.$lo_trinh_xe->danh_sach) }}"
+                              data-filename="{{ $lo_trinh_xe->danh_sach }}">
+                        <i class="fas fa-eye"></i> Hiển thị
+                      </button>
+                    @else
+                      <span class="text-muted">Không có file</span>
+                    @endif
+                  </td>
                   <td class="action-column">
                     <a class="action-button" title="Chỉnh sửa" href="{{route('sua_lt',['id' => $lo_trinh_xe->id])}}"><i class="fa-solid fa-edit"></i></a>
                     <a class="action-button" title="Điểm danh xe bus" href="{{route('diem_danh_bus',['id' => $lo_trinh_xe->id])}}"><i class="fa-solid fa-user-check"></i></a>
@@ -148,6 +158,23 @@
                 </li>
               </ul>
             </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!-- Modal xem file -->
+  <div class="modal fade" id="fileModal" tabindex="-1" aria-labelledby="fileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="fileModalLabel">Xem file</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+        </div>
+        <div class="modal-body d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+          <div id="fileViewerContainer" class="w-100 text-center">
+            <iframe id="fileViewerIframe" src="" width="100%" height="600px" frameborder="0" style="display: none;"></iframe>
+            <img id="fileViewerImage" src="" class="img-fluid d-block mx-auto" style="max-height: 600px; display: none;" />
           </div>
         </div>
       </div>
@@ -249,6 +276,50 @@
   createPagination(1);
   displayPageData(1);
   </script>
+  <script>
+  const fileModal = document.getElementById('fileModal');
+  const fileViewerIframe = document.getElementById('fileViewerIframe');
+  const fileViewerImage = document.getElementById('fileViewerImage');
+
+  fileModal.addEventListener('show.bs.modal', function (event) {
+    const button = event.relatedTarget;
+    const fileUrl = button.getAttribute('data-file');
+    const filename = button.getAttribute('data-filename') || '';
+    const extension = filename.split('.').pop().toLowerCase();
+
+    // Reset
+    fileViewerIframe.style.display = 'none';
+    fileViewerImage.style.display = 'none';
+    fileViewerIframe.src = '';
+    fileViewerImage.src = '';
+
+    // Xác định loại file
+    const isImage = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(extension);
+    const isPDF = extension === 'pdf';
+    const isDoc = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'].includes(extension);
+    const isText = extension === 'txt';
+
+    if (isImage) {
+      fileViewerImage.src = fileUrl;
+      fileViewerImage.style.display = 'block';
+    } else if (isPDF) {
+      fileViewerIframe.src = fileUrl;
+      fileViewerIframe.style.display = 'block';
+    } else if (isDoc || isText) {
+      // Dùng Google Docs Viewer cho file mềm
+      fileViewerIframe.src = `https://docs.google.com/gview?url=${fileUrl}&embedded=true`;
+      fileViewerIframe.style.display = 'block';
+    } else {
+      fileViewerIframe.src = fileUrl;
+      fileViewerIframe.style.display = 'block';
+    }
+  });
+
+  fileModal.addEventListener('hidden.bs.modal', function () {
+    fileViewerIframe.src = '';
+    fileViewerImage.src = '';
+  });
+</script>
 @include('components/bao_loi')
 </body>
 </html>

@@ -106,7 +106,7 @@ public function xlSuaGia(Request $request)
         }
         return redirect()->back()->with('bao_loi','Lưu thành công');
     }
-    public function xlUploadDiemDanh(Request $request)
+    public function xlUploadDiemDanhBus(Request $request)
     {
         $tuyen_xe = LoTrinhXeModel::find($request->id);
         if ($request->hasFile('file')) {

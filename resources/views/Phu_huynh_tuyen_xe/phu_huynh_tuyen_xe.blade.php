@@ -108,7 +108,7 @@
               <td>
                 @if(!empty($lo_trinh_xe->danh_sach))
                   <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#fileModal"
-                          data-file="{{ asset('Diem_danh/'.$lo_trinh_xe->danh_sach) }}"
+                          data-file="{{ asset('DS_diem_danh/'.$lo_trinh_xe->ngay.'/'.$lo_trinh_xe->danh_sach) }}"
                           data-filename="{{ $lo_trinh_xe->danh_sach }}">
                     <i class="fas fa-eye"></i> Hiển thị
                   </button>
