@@ -312,7 +312,7 @@
     </div>
     <div class="modal fade" id="uploadChuyenLopModal" tabindex="-1" aria-labelledby="uploadChuyenLop" aria-hidden="true">
       <div class="modal-dialog">
-        <form id="import-form" action="" method="POST" enctype="multipart/form-data" class="modal-content">
+        <form id="import-form" action="{{ url('xl_chuyen_lop') }}" method="POST" enctype="multipart/form-data" class="modal-content">
           @csrf
           <div class="modal-header">
             <h5 class="modal-title" id="uploadChuyenLop">Khai báo chuyển lớp</h5>
