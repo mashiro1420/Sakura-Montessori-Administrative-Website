@@ -234,13 +234,14 @@ class PhanLopController extends Controller
         ->where('id_phan_lop',$request->id);
         $query = $query->get();
         $phan_lop = PhanLopModel::leftJoin('dm_phonghoc','ql_phanlop.id_phong_hoc','=','dm_phonghoc.id')
-        ->leftJoin('dm_lop','ql_phanlop.id_lop','=','dm_nhanvien.id')
+        ->leftJoin('dm_lop','ql_phanlop.id_lop','=','dm_lop.id')
         ->leftJoin('dm_khoi','ql_phanlop.id_khoi','=','dm_khoi.id')
         ->leftJoin('dm_hedaotao','ql_phanlop.id_he_dao_tao','=','dm_hedaotao.id')
         ->leftJoin('dm_khoahoc','ql_phanlop.id_khoa_hoc','=','dm_khoahoc.id')
         ->leftJoin('tt_ky','ql_phanlop.id_ky','=','tt_ky.id')
-        ->where('ql_phanlop.id', $request->id)->first;
-        return Excel::download(new LopExport($query), ''.$phan_lop->ten_lop.$phan_lop->ten_ky.'.xlsx');
+        ->where('ql_phanlop.id', $request->id)->first();
+        // dd($request->id);
+        return Excel::download(new LopExport($query), ''.$phan_lop->ten_lop.' '.$phan_lop->ten_ky.'.xlsx');
     }
     public function xlDiemDanh(Request $request)
     {

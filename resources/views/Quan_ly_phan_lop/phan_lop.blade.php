@@ -37,7 +37,7 @@
           <!-- Form to add new employee -->
           <div class="search-item">
             <label for="status-filter">Tải file danh sách học sinh</label>
-            <form action="{{ route('import_lop') }}" method="post" enctype="multipart/form-data" id="import-form">
+            <form action="{{ route('import_lop',['id'=>$phan_lop->pl_id]) }}" method="post" enctype="multipart/form-data" id="import-form">
               @csrf
               <input type="file" name="file" id="file-input" class="d-none" required>
               <button type="submit" name="import" class="btn btn-outline-secondary ms-2" id="import-button">Import Excel</button>
@@ -109,7 +109,7 @@
                   <i class="fa-solid fa-rotate me-1"></i> Làm mới
                 </button>
                 <button class="btn btn-outline-secondary ms-2">
-                  <a href="{{route('export_lop',[])}}">
+                  <a href="{{route('export_lop',['id'=>$phan_lop->pl_id])}}">
                     <i class="fa-solid fa-file-export me-1"></i> Xuất Excel
                   </a>
                 </button>

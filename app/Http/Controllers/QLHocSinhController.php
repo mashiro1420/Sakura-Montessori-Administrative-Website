@@ -428,7 +428,7 @@ class QLHocSinhController extends Controller
         $hoc_sinh = HocSinhModel::find($request->id);
         $hoc_sinh->ho_ten = $request->ho_ten;
         $hoc_sinh->nickname = $request->nickname;
-        $hoc_sinh->gioi_tinh = $request->gioi_tinh;
+        $hoc_sinh->gioi_tinh = ($request->gioi_tinh=='Nam' ? 1 : 0);
         $hoc_sinh->ngay_sinh = $request->ngay_sinh;
         $hoc_sinh->quoc_tich = $request->quoc_tich;
         $hoc_sinh->ngon_ngu = $request->ngon_ngu;
@@ -451,6 +451,6 @@ class QLHocSinhController extends Controller
         $hoc_sinh->thuong_tru = $request->thuong_tru;
         $hoc_sinh->dia_chi = $request->dia_chi;
         $hoc_sinh->save();
-        return redirect()->route('ql_hs');
+        return redirect()->route('ph_tai_khoan')->with('bao_loi','Lưu thành công');
     }
 }

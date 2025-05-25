@@ -24,7 +24,6 @@ class TaiKhoanExport implements FromCollection, WithHeadings
                 'Tài khoản' => $tai_khoans->tai_khoan,
                 'Mã nhân viên' => $tai_khoans->id_nhan_vien,
                 'Mã học sinh' => $tai_khoans->id_hoc_sinh,
-                'Quyền' => $tai_khoans->ten_quyen,
             ];
         });
     }
@@ -33,7 +32,6 @@ class TaiKhoanExport implements FromCollection, WithHeadings
         return ['STT',
         'Tài khoản',
         'Mã nhân viên',
-        'Mã học sinh',
-        'Quyền'];
+        'Mã học sinh'];
     }
 }

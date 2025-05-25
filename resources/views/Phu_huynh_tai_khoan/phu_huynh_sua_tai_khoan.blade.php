@@ -14,7 +14,7 @@
 @include('components/navbar')
 <div class="container content-container">
   <!-- Form sua thong tin hoc sinh -->
-  <form action="{{url('xl_sua_hs')}}" method="POST">
+  <form action="{{url('xl_sua_ph')}}" method="POST">
     @csrf
     <div class="card shadow-sm border-0 rounded-4 mb-4 p-4">
         <div class="d-flex justify-content-between mb-4">

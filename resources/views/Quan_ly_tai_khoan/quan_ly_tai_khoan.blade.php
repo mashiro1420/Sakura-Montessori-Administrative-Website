@@ -80,9 +80,6 @@
                 </button>
               </div>
               <div>
-                <a class="btn btn-primary" href="{{route('them_hs')}}">
-                  <i class="fa-solid fa-plus me-1"></i> Thêm học sinh mới
-                </a>
                 <button class="btn btn-outline-secondary ms-2">
                   <a href="{{route('export_tk',[
                       'tk_tai_khoan'=>!empty($tk_tai_khoan)?$tk_tai_khoan:"",

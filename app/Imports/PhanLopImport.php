@@ -28,8 +28,10 @@ class PhanLopImport implements ToCollection
             $hoc_sinh = HocSinhModel::find($item[1]);
             if (!empty($hoc_sinh)) {
                 $hoc_sinh->id_phan_lop = $this->id_lop;
+                // dump($hoc_sinh);
+                $hoc_sinh->save();
             }
-            $hoc_sinh->save();
         }
+        // dd($this->id_lop);
     }
 }

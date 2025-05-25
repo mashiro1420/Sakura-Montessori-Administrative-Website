@@ -97,8 +97,7 @@ class TaiKhoanController extends Controller
     }
 
     public function export(Request $request){
-        $query = TaiKhoanModel::query()->select ('*')
-        ->leftJoin('dm_quyen','ql_taikhoan.id_quyen','=','dm_quyen.id');
+        $query = TaiKhoanModel::query()->select ('*');
         $query = $query->get();
         return Excel::download(new TaiKhoanExport($query), 'export_tk.xlsx');
     }
